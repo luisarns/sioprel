@@ -55,7 +55,8 @@
 								['peppermint','Rojo'],
 								['gray','Gris'],
 								['slate','Slate'],
-								['blue','Azul']
+								['blue','Azul'],
+								['silverCherry','PlataCereza']
 							],
 							value: 'blue'
 						})
