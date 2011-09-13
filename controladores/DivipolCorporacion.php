@@ -2,15 +2,18 @@
 	header("Content-Type: text/plain");
 	require_once 'Configuracion.php';
 	require_once 'FunDivipol.php';
-
+	
+	if($_POST['nivel'] < $_POST['nivelmax']){
+	
 	$raizCoddivipol;
 	$raizNivel;
 	$codCorpo;
-
+	$nivelmax;
 	if(isset($_POST['coddivipol']) && isset($_POST['nivel'])){
 		$raizCoddivipol = $_POST['coddivipol'];
-		$raizNivel = $_POST['nivel'];
-		$codCorpo = $_POST['codcorpo'];
+		$raizNivel      = $_POST['nivel'];
+		$codCorpo       = $_POST['codcorpo'];
+		$nivelmax       = $_POST['nivelmax'];
 	} else {
 		die( "Error, debe definir los par&aacute;metros para el componente"); 
 	}
@@ -60,18 +63,18 @@ EOF;
 		foreach($arrHijos as $nHijo){
 			$cdcrdivipol = substr($nHijo['coddivipol'],0,getNumDigitos($nHijo['codnivel']));
 			$nHijo['text'] = $cdcrdivipol.'-'.htmlentities($nHijo['descripcion']);
-			$nHijo['leaf'] = ($nHijo['codnivel'] != 4)? (tieneHijos($cdcrdivipol,intval($nHijo['codnivel']),$sqlite))? false : true : true;
+			$nHijo['leaf'] = ($nHijo['codnivel'] < $nivelmax)? (tieneHijos($cdcrdivipol,intval($nHijo['codnivel']),$sqlite))? false : true : true;
 			array_push($nodos,$nHijo);
 		}
 	} else if($sqlite->numRows() == 1 ){
 		$cdcrdivipol = substr($arrHijos['coddivipol'],0,getNumDigitos($arrHijos['codnivel']));
 		$arrHijos['text'] = $cdcrdivipol.'-'.htmlentities($arrHijos['descripcion']);
-		$arrHijos['leaf'] = ($arrHijos['codnivel'] != 4)?(tieneHijos($cdcrdivipol,intval($arrHijos['codnivel']),$sqlite))? false : true : true;
+		$arrHijos['leaf'] = ($arrHijos['codnivel'] < $nivelmax)?(tieneHijos($cdcrdivipol,intval($arrHijos['codnivel']),$sqlite))? false : true : true;
 		array_push($nodos,$arrHijos);
 	}
 	
 	$sqlite->close();
 	echo json_encode($nodos);
 	unset($sqlite);
-	
+	}
 ?>

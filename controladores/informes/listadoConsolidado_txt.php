@@ -101,17 +101,15 @@ EOF;
 	//Creando el escritor
 	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
 	
-	
 	//Asignado las propiedades del archivo csv
 	$objWriter->setDelimiter(',');
 	$objWriter->setEnclosure('');
 	$objWriter->setLineEnding("\r\n");
 	$objWriter->setSheetIndex(0);
 	
-	//Buscar un metodo para enviar al cliente el archivo
 	$objWriter->save('php://output');
 	
-	//cierro la base de datos 
+	//cierro la base de datos
 	$sqlite->close();
 	unset($sqlite);
 ?>
