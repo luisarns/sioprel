@@ -56,7 +56,7 @@
 								['gray','Gris'],
 								['slate','Slate'],
 								['blue','Azul'],
-								['silverCherry','PlataCereza']
+								['silverCherry','Plateado']
 							],
 							value: 'blue'
 						})
@@ -84,7 +84,8 @@
 						layout: 'fit',
 						style:  'width:100%;height:99%',
 						fitToFrame: true,
-						autoScroll: true
+						autoScroll: true//,
+						//items : [{ xtype : 'panel', id : 'panelCentral', border : false }]
 					}
 				]
 			});
