@@ -15,6 +15,9 @@
 	<script type="text/javascript" src="lib/MultiSelect.js"></script>
 	<script type="text/javascript" src="lib/js/global.js"></script>
 	
+	<!-- Plugin para buscar en una grid-->
+	<script type="text/javascript" src="lib/js/buscarPlugin.js"></script>
+	
 	<!--Titulo de la pagina-->
 	<title>Estad&iacute;sticas Electorales</title>
 	
