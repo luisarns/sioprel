@@ -18,6 +18,11 @@
 	<!-- Plugin para buscar en una grid-->
 	<script type="text/javascript" src="lib/js/buscarPlugin.js"></script>
 	
+	<!--Cargo los componentes de la corporacion y la divipol -->
+	<script type="text/javascript" src="lib/js/cmpDivipol.js"></script>
+	<script type="text/javascript" src="lib/js/corporacion.js"></script>
+	<script type="text/javascript" src="lib/js/barraExportar.js"></script>
+	
 	<!--Titulo de la pagina-->
 	<title>Estad&iacute;sticas Electorales</title>
 	
@@ -83,12 +88,11 @@
 						region: 'center',
 						xtype:  'panel',
 						frame:  true, 
-						id:     'central',
+						id:     'panelCentral',
 						layout: 'fit',
 						style:  'width:100%;height:99%',
-						fitToFrame: true,
-						autoScroll: true//,
-						//items : [{ xtype : 'panel', id : 'panelCentral', border : false }]
+						autoScroll: true,
+						items : [{ xtype : 'panel', id : 'central', border : false }]
 					}
 				]
 			});

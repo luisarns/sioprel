@@ -1,1 +1,1 @@
-<?php 	session_start(); 	$_SESSION['coddivipol']     = $_POST['coddivipol'];	$_SESSION['codnivel']       = $_POST['codnivel'];		//Enviar los datos usando la session para que se muestre el listado de elegidos		$salida = array("success" => true, "msg" => "Consultando elegidos..." );	echo json_encode($salida);?>
+<?php 	$datos = array(); //para la prueba de interaccion con el cliente	echo json_encode($datos);?>
