@@ -11,7 +11,7 @@
 		$sqlite = new SPSQLite(PATH_DB . 'elecciones2011.db');
 		
 		$query =<<<EOF
-		SELECT idcomuna,descripcion
+		SELECT idcomuna,codcomuna,descripcion
 		FROM pcomuna
 		WHERE coddivipol = '$coddivipol' AND codnivel = $codnivel
 EOF;
@@ -22,9 +22,11 @@ EOF;
 		
 		if($numRows > 1){
 			foreach($rows as $row){
+				$row['descripcion'] = htmlentities($row['descripcion']);
 				array_push($comunas,$row);
 			}
 		} else if ($numRows == 1) {
+			$rows['descripcion'] = htmlentities($rows['descripcion']);
 			array_push($comunas,$rows);
 		}
 		
