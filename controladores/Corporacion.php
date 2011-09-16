@@ -2,19 +2,18 @@
 	header("Content-Type: text/plain");
 	require_once 'Configuracion.php';
 	
-	$sqlite = new SPSQLite(PATH_DB . 'elecciones2011.db');
-	$query ='SELECT codcorporacion as codcorpo , descripcion as descorpo, codnivel, tipoeleccion FROM pcorporaciones ORDER BY codcorporacion';
+	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos") ;
 	
-	$sqlite->query($query);
-	$rows = $sqlite->returnRows('assoc');
+	$query ='SELECT codcorporacion,descripcion,codnivel,tipoeleccion FROM pcorporaciones ORDER BY codcorporacion';
+	$result = ibase_query($firebird,$query);
 	
-	$corpo = array();
-	foreach($rows as $row){
-		$row['descorpo'] = htmlentities($row['descorpo']);
-		array_push($corpo,$row);
+	$datos = array();
+	while($row = ibase_fetch_object($result)){
+		array_push($datos,array('codcorpo'=>$row->CODCORPORACION,'descorpo'=>$row->DESCRIPCION,'codnivel'=>$row->CODNIVEL,'tipoeleccion'=>$row->TIPOELECCION));
 	}
 	
-	$sqlite->close();
-	echo json_encode($corpo);
-	unset($sqlite);
+	ibase_free_result($result);
+	ibase_close($firebird);
+	echo json_encode($datos);
+	
 ?>

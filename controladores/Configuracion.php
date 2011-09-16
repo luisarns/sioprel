@@ -1,4 +1,5 @@
 <?php
-	require_once '../SPSQLiteClass-0.6/SPSQLite.class.php';
-	define('PATH_DB','../../dbdir/');
+$host     = $_SERVER["DOCUMENT_ROOT"].'/../dbdir/siprel.gdb';
+$username = 'SYSDBA';
+$password = 'masterkey';
 ?>
