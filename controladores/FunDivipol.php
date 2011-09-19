@@ -28,7 +28,7 @@
  * @return	bool
  * @access public
  */
- function tieneHijos($codcordivipol,$codnivel,$sqlite){
+ function tieneHijos($codcordivipol,$codnivel,$firebird){
 	if($codnivel != 4 && is_numeric($codcordivipol) && is_numeric($codnivel)){
 		$cdnvhijos = $codnivel + 1;
 	
@@ -36,9 +36,10 @@
 		SELECT COUNT(*) as num FROM pdivipol 
 		WHERE coddivipol LIKE $codcordivipol || '%' AND codnivel = $cdnvhijos
 SON;
-		$sqlite->query($query);
-		$qresul = $sqlite->returnRows('assoc');
-		return ($qresul['num'] > 0)? true : false;
+		$result = ibase_query($firebird,$query);
+		
+		$row = ibase_fetch_object($result);
+		return ($row->NUM > 0)? true : false;
 	}
 	return false;
  }
