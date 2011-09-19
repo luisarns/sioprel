@@ -25,5 +25,5 @@ EOF;
 	
 	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
 	$result   = ibase_query($firebird,$query);
-
+	
 ?>
