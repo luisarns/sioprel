@@ -4,17 +4,16 @@
 	require_once 'Configuracion.php';
 	
 	$datos = json_decode(str_replace("\\","",$_POST['datos']));
-	$_SESSION['consolidadoPartido'] = serialize($datos);
+	$_SESSION['consolidadoLista'] = serialize($datos);
 	
+	require_once 'consolidadoLista_inc.php';
 	
-	require_once 'consolidadoPartido_inc.php';
-	
-	$salida = array();
+	 $salida = array();
 	while($row = ibase_fetch_object($result)){
 		$ars = array(
 		'divipol'=>$row->DIVIPOL
-		,'codigo'=>$row->CODIGO
-		,'partido'=>htmlentities($row->PARTIDO)
+		,'corporacion'=>$row->CORPORACION
+		,'descripcion'=>htmlentities($row->DESCRIPCION)
 		,'votos'=>$row->VOTOS
 		);
 		array_push($salida,$ars);
