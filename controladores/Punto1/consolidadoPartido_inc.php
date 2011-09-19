@@ -1,8 +1,7 @@
 <?php 
 	/** 
 	* Este archivo recibe un objeto de nombre $datos cuyas propiedades son los filtros
-	* y retorna a arreglo asociativo $rows (con el resultado de la consulta ) y 
-	* $numRows con el numero de registros devueltos por la consulta
+	* y retorna un resource $result (con el resultado de la consulta )
 	*/
 	$coddivcorto = substr($datos->coddivipol,0,getNumDigitos($datos->codnivel));
 	$corpdesc = $datos->descripcion;
@@ -24,10 +23,9 @@
 	GROUP BY pp.codpartido,pp.descripcion ORDER BY votos DESC
 EOF;
 	
-	$sqlite = new SPSQLite(PATH_DB.'elecciones2011.db');
-	$sqlite->query($query);
-	$rows = $sqlite->returnRows('assoc');
-	$numRows = $sqlite->numRows();
-	$sqlite->close();
-	unset($sqlite);
+	//echo $query;
+	
+	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
+	$result   = ibase_query($firebird,$query);
+	
 ?>

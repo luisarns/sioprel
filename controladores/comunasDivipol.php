@@ -8,7 +8,7 @@
 		$coddivipol      = $_POST['coddivipol'];
 		$codnivel       = $_POST['codnivel'];
 		
-		$sqlite = new SPSQLite(PATH_DB . 'elecciones2011.db');
+		$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
 		
 		$query =<<<EOF
 		SELECT idcomuna,codcomuna,descripcion
@@ -16,22 +16,15 @@
 		WHERE coddivipol = '$coddivipol' AND codnivel = $codnivel
 EOF;
 	
-		$sqlite->query($query);
-		$rows = $sqlite->returnRows('assoc');
-		$numRows = $sqlite->numRows();
-		
-		if($numRows > 1){
-			foreach($rows as $row){
-				$row['descripcion'] = htmlentities($row['descripcion']);
-				array_push($comunas,$row);
-			}
-		} else if ($numRows == 1) {
-			$rows['descripcion'] = htmlentities($rows['descripcion']);
-			array_push($comunas,$rows);
+		$result = ibase_query($firebird,$query);
+		while($row = ibase_fetch_object($result)){
+			$comuna = array('idcomuna'=>$row->IDCOMUNA,'codcomuna'=>$row->CODCOMUNA,'descripcion'=>htmlentities($row->DESCRIPCION));
+			array_push($comunas,$comuna);
 		}
 		
-		$sqlite->close();
+		ibase_free_result($result);
+		ibase_close($firebird);
 	}
 	echo json_encode($comunas);
-	unset($sqlite);
+
 ?>
