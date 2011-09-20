@@ -7,7 +7,12 @@
 	$codnivel   = $_POST['codnivel'];
 	$codcordivi = substr($coddivipol,0,getNumDigitos($codnivel));
 	
-	$sqlite = new SPSQLite(PATH_DB . 'elecciones2011.db');
+	$datos['coddivipol'] = $coddivipol;
+	$datos['codnivel'] = $codnivel;
+	$_SESSION['votaPartMunicipio'] = serialize($datos);
+	
+	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
+	
 	$query =<<<EOF
 	SELECT c2.codpartido as codpartido, c2.descripcion as descripcion, sum(c1.votos) as votos
 	FROM 
@@ -22,26 +27,19 @@
 	WHERE c1.idcandidato = c2.idcandidato
 	GROUP BY c2.codpartido,c2.descripcion ORDER BY c2.codpartido
 EOF;
-	//Actualizar la consulta para generar un consolidado por partidos
 	
-	//echo $query;//Just Test
-	
-	$sqlite->query($query);
-	$rows = $sqlite->returnRows('assoc');
-	$numRows = $sqlite->numRows();
-	
-	$arrCandidatos = array();
-	if($numRows > 1){	
-		foreach($rows as $row){
-			$row['descripcion'] = htmlentities($row['descripcion']);
-			array_push($arrCandidatos,$row);
-		}
-	}else if($numRows == 1){
-		$rows['descripcion'] = htmlentities($rows['descripcion']);
-		array_push($arrCandidatos,$rows);
+	$result   = ibase_query($firebird,$query);
+	$arrPartidos = array();
+	while($row = ibase_fetch_object($result)){
+		$partido = array();
+		$partido['codpartido']  = $row->CODPARTIDO;
+		$partido['descripcion'] = htmlentities($row->DESCRIPCION);
+		$partido['votos'] = $row->VOTOS;
+		array_push($arrPartidos,$partido);
 	}
 	
-	$sqlite->close();
-	echo json_encode($arrCandidatos);
-	unset($sqlite);
+	ibase_free_result($result);
+	ibase_close($firebird);
+	echo json_encode($arrPartidos);
+	
 ?>
