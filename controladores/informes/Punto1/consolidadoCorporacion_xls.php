@@ -3,7 +3,7 @@
 	date_default_timezone_set('America/Bogota');
 	
 	header("Content-type: application/vnd.ms-excel");
-	header("Content-Disposition: attachment; filename=informe.xls");
+	header("Content-Disposition: attachment; filename=consolidadoCorporacion.xls");
 	header('Cache-Control: max-age=0');
 	
 	
