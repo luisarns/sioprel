@@ -7,36 +7,33 @@
 	$codnivel   = $_POST['codnivel'];
 	$codcordivi = substr($coddivipol,0,getNumDigitos($codnivel));
 	
-	$sqlite = new SPSQLite(PATH_DB . 'elecciones2011.db');
+	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
+	
 	$query =<<<EOF
 	SELECT mv.idcandidato as idcandidato ,pc.nombres as nombres ,pc.apellidos as apellidos ,sum(mv.numvotos) as votos
 	FROM pmesas pm, mvotos mv, pcandidatos pc
 	WHERE pm.coddivipol LIKE '$codcordivi' || '%'
+	AND pc.coddivipol LIKE '$codcordivi' || '%' AND pc.codnivel = $codnivel
 	AND mv.codtransmision = pm.codtransmision
 	AND pc.idcandidato = mv.idcandidato
 	GROUP BY mv.idcandidato,pc.nombres,pc.apellidos ORDER BY mv.idcandidato
 EOF;
-	
-	//echo $query;//Just Test
-	
-	$sqlite->query($query);
-	$rows = $sqlite->returnRows('assoc');
-	$numRows = $sqlite->numRows();
+
+	//echo $query.'<br/>';
+	$result   = ibase_query($firebird,$query);
 	
 	$arrCandidatos = array();
-	if($numRows > 1){	
-		foreach($rows as $row){
-			$row['nombres'] = htmlentities($row['nombres']);
-			$row['apellidos'] = htmlentities($row['apellidos']);
-			array_push($arrCandidatos,$row);
-		}
-	}else if($numRows == 1){
-		$rows['nombres'] = htmlentities($rows['nombres']);
-		$rows['apellidos'] = htmlentities($rows['apellidos']);
-		array_push($arrCandidatos,$rows);
+	while($row = ibase_fetch_object($result)){
+		$candidato = array();
+		$candidato['idcandidato'] = $row->IDCANDIDATO;
+		$candidato['nombres'] = htmlentities($row->NOMBRES);
+		$candidato['apellidos'] = htmlentities($row->APELLIDOS);
+		$candidato['votos'] = $row->VOTOS;
+		array_push($arrCandidatos,$candidato);
 	}
 	
-	$sqlite->close();
+	ibase_free_result($result);
+	ibase_close($firebird);
 	echo json_encode($arrCandidatos);
-	unset($sqlite);
+	
 ?>
