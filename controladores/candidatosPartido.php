@@ -5,27 +5,27 @@
 	$codpartido = $_POST['codpartido'];
 	$estado = "INSCRIPTO";
 	
-	$sqlite = new SPSQLite(PATH_DB . 'elecciones2011.db');
-	$query ='SELECT codcandidato,nombres,apellidos, "'.$estado.'" estado FROM PCANDIDATOS WHERE codpartido = '.$codpartido.' ORDER BY codcandidato';
-	
-	$sqlite->query($query);
-	$rows = $sqlite->returnRows('assoc');
-	$numRows = $sqlite->numRows();
+	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
+	$query    =<<<EOF
+	SELECT idcandidato, nombres, apellidos, '$estado' estado 
+	FROM pcandidatos 
+	WHERE codpartido = $codpartido AND codcandidato <> 0
+	ORDER BY codcandidato
+EOF;
+	$result   = ibase_query($firebird,$query);
 	
 	$arrCandidatos = array();
-	if($numRows > 1){	
-		foreach($rows as $row){
-			$row['nombres'] = htmlentities($row['nombres']);
-			$row['apellidos'] = htmlentities($row['apellidos']);
-			array_push($arrCandidatos,$row);
-		}
-	}else if($numRows == 1){
-		$rows['nombres'] = htmlentities($rows['nombres']);
-		$rows['apellidos'] = htmlentities($rows['apellidos']);
-		array_push($arrCandidatos,$rows);
+	while($row = ibase_fetch_object($result)){
+		$candidato = array();
+		$candidato['idcandidato'] = $row->IDCANDIDATO;
+		$candidato['nombres'] = htmlentities($row->NOMBRES);
+		$candidato['apellidos'] = htmlentities($row->APELLIDOS);
+		$candidato['estado'] = $row->ESTADO;
+		array_push($arrCandidatos,$candidato);
 	}
 	
-	$sqlite->close();
+	ibase_free_result($result);
+	ibase_close($firebird);
 	echo json_encode($arrCandidatos);
-	unset($sqlite);
+
 ?>
