@@ -34,9 +34,9 @@
 	//Agregando los valores al informe
 	$cont = 2;
 	while($row = ibase_fetch_object($result)) {
-		$objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,$row->DIVIPOL);
+		$objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,utf8_encode($row->DIVIPOL));
 		$objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,$row->CODIGO);
-		$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,$row->DESCRIPCION);
+		$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,utf8_encode($row->DESCRIPCION));
 		$objPHPExcel->getActiveSheet()->setCellValue('D'.$cont,$row->TIPOVOTOS);
 		$objPHPExcel->getActiveSheet()->setCellValue('E'.$cont,$row->VOTOS);
 		$cont++;

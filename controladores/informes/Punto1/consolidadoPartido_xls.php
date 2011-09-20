@@ -35,7 +35,7 @@
 	while($row = ibase_fetch_object($result)) {
 		$objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,$row->DIVIPOL);
 		$objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,$row->CODIGO);
-		$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,$row->PARTIDO);
+		$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,utf8_encode($row->PARTIDO));
 		$objPHPExcel->getActiveSheet()->setCellValue('D'.$cont,$row->VOTOS);
 		$cont++;
 	}

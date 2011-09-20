@@ -33,8 +33,8 @@
 	$cont = 2;
 	while($row = ibase_fetch_object($result)) {
 		$objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,$row->CODIGO);
-		$objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,$row->NOMBRES);
-		$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,$row->APELLIDOS);
+		$objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,utf8_encode($row->NOMBRES));
+		$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,utf8_encode($row->APELLIDOS));
 		$objPHPExcel->getActiveSheet()->setCellValue('D'.$cont,$row->VOTOS);
 		$cont++;
 	}
