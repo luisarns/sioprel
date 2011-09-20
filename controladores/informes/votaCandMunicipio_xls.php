@@ -1,17 +1,13 @@
 <?php
 	session_start();
-	date_default_timezone_set('America/Bogota');
-	
 	header("Content-type: application/vnd.ms-excel");
 	header("Content-Disposition: attachment; filename=votaCandMunicipio.xls");
 	header('Cache-Control: max-age=0');
 	
-	
 	require_once 'Configuracion.php';
 	$datos = unserialize($_SESSION['votaCandMunicipio']);
-	// var_dump($datos);
-	require_once 'votaCandMunicipio_inc.php';
 	
+	require_once 'votaCandMunicipio_inc.php';
 	
 	$objPHPExcel = new PHPExcel();
 	
@@ -35,8 +31,8 @@
 	$cont = 2;
 	while($row = ibase_fetch_object($result)) {
 		$objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,$row->CODIGO);
-		$objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,$row->NOMBRES);
-		$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,$row->APELLIDOS);
+		$objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,utf8_encode($row->NOMBRES));
+		$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,utf8_encode($row->APELLIDOS));
 		$objPHPExcel->getActiveSheet()->setCellValue('D'.$cont,$row->VOTOS);
 		$cont++;
 	}
@@ -50,6 +46,5 @@
 	
 	//Creando el escritor
 	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-
 	$objWriter->save('php://output');
 ?>

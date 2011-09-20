@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 	
 	<!--Elementos necesarios para usar Extjs2.0-->
 	<link rel="stylesheet" type="text/css" href="lib/extjs/resources/css/ext-all.css" />
@@ -114,7 +114,7 @@
 		
 		principal.show();
 		
-		actualizarPanel('menu',URL_SIPREL+'html/menu.html'); //Las formas deben estar incluidas en un script
+		actualizarPanel('menu',URL_SIPREL+'html/menu.html'); 
 		
 	});
 	</script>
