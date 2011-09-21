@@ -1,16 +1,8 @@
-<?php 
-	session_start();
-	header("Content-Type: text/plain");
-	require_once 'Configuracion.php';
-	require_once 'FunDivipol.php';
+<?php
 	
-	$coddivipol = $_POST['coddivipol'];
-	$codnivel   = $_POST['codnivel'];
+	$coddivipol = $datos['coddivipol'];
+	$codnivel   = $datos['codnivel'];
 	$codcordivi = substr($coddivipol,0,getNumDigitos($codnivel));
-	
-	$datos['coddivipol'] = $coddivipol;
-	$datos['codnivel'] = $codnivel;
-	$_SESSION['votaPartMunicipio'] = serialize($datos);
 	
 	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
 	
@@ -29,18 +21,5 @@
 	GROUP BY c2.codpartido,c2.descripcion ORDER BY c2.codpartido
 EOF;
 	
-	$result   = ibase_query($firebird,$query);
-	$arrPartidos = array();
-	while($row = ibase_fetch_object($result)){
-		$partido = array();
-		$partido['codpartido']  = $row->CODPARTIDO;
-		$partido['descripcion'] = htmlentities($row->DESCRIPCION);
-		$partido['votos'] = $row->VOTOS;
-		array_push($arrPartidos,$partido);
-	}
-	
-	ibase_free_result($result);
-	ibase_close($firebird);
-	echo json_encode($arrPartidos);
-	
+	$result   = ibase_query($firebird,$query);	
 ?>
