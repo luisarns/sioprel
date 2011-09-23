@@ -2,25 +2,22 @@
 	header("Content-Type: text/plain");
 	require_once 'Configuracion.php';
 	
+	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
 	
-	$sqlite = new SPSQLite(PATH_DB . 'elecciones2011.db');
-	$query ='SELECT codpartido as id , descripcion as nombre FROM ppartidos ORDER BY codpartido';
+	$query ="SELECT codpartido as id , descripcion as nombre FROM ppartidos ORDER BY codpartido";
 	
-	$sqlite->query($query);
-	$rows = $sqlite->returnRows('assoc');
+	$result   = ibase_query($firebird,$query);
 	
-	$circunscripcion = array();
-	if($sqlite->numRows() > 1 ){
-		foreach($rows as $row){
-			$row['nombre'] = htmlentities($row['nombre']);
-			array_push($circunscripcion,$row);
-		}
-	} else if ($sqlite->numRows() == 1){
-		$rows['nombre'] = htmlentities($rows['nombre']);
-		array_push($circunscripcion,$rows);
+	$partidos = array();
+	while($row = ibase_fetch_object($result)){
+		$partido = array();
+		$partido['id'] = $row->ID;
+		$partido['nombre'] = htmlentities($row->NOMBRE);
+		array_push($partidos,$partido);
 	}
 	
-	$sqlite->close();
-	echo json_encode($circunscripcion);
-	unset($sqlite);
+	ibase_free_result($result);
+	ibase_close($firebird);
+	
+	echo json_encode($partidos);
 ?>
