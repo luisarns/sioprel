@@ -46,11 +46,11 @@ EOF;
 		if($raizNivel == 2 && $codCorpo == 5 && $idComuna == -1){ //2 MUNICIPIO Y 5 JAL
 			$nivel = $raizNivel;
 			$query =<<<EOF
-		SELECT pd.coddivipol as coddivipol ,pc.descripcion as descripcion ,pd.codnivel as codnivel ,pc.idcomuna as idcomuna
-		FROM pdivipol pd, pcomuna pc
-		WHERE pd.coddivipol = pc.coddivipol AND pd.codnivel = pc.codnivel AND
-		pd.coddivipol = $raizCoddivipol AND pd.codnivel = $nivel
-		ORDER BY pc.idcomuna
+			SELECT pd.coddivipol as coddivipol ,pc.descripcion as descripcion ,pd.codnivel as codnivel ,pc.idcomuna as idcomuna
+			FROM pdivipol pd, pcomuna pc
+			WHERE pd.coddivipol = pc.coddivipol AND pd.codnivel = pc.codnivel AND
+			pd.coddivipol = $raizCoddivipol AND pd.codnivel = $nivel
+			ORDER BY pc.idcomuna
 EOF;
 		}
 			
