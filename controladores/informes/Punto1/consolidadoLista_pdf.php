@@ -25,8 +25,8 @@
 	
 	
 	$objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A1', 'UBICACION')
-            ->setCellValue('B1', 'CORPORACION')
+            ->setCellValue('A1', utf8_encode('DIVISIÓN POLÍTICA'))
+            ->setCellValue('B1', utf8_encode('CORPORACIÓN'))
             ->setCellValue('C1', 'NOMBRE')
             ->setCellValue('D1', 'VOTOS');
 	
