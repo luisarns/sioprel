@@ -12,6 +12,9 @@
 	//La votacion obtenida por los candidatos de la corporacion
 	$datos['coddivipol'] = $coddivipol;
 	$datos['codnivel'] = $codnivel;
+	$datos['codcorporacion'] = $codcorporacion;
+	$datos['nivcorpo'] = $nivcorpo;
+	
 	$_SESSION['votaCandMunicipio'] = serialize($datos);
 	
 	$codcordivi = substr($coddivipol,0,getNumDigitos($codnivel));
@@ -29,7 +32,6 @@
 	GROUP BY pc.codpartido,pc.codcandidato,pc.nombres,pc.apellidos 
 	ORDER BY pc.codpartido, pc.codcandidato;
 EOF;
-	// echo $query;
 
 	$result   = ibase_query($firebird,$query);
 	

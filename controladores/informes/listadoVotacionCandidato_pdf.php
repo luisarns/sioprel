@@ -1,69 +1,15 @@
 <?php
 	session_start();
-	// header("Content-type: application/pdf");
-	// header("Content-Disposition: attachment; filename=listadoVotacionCandidato.pdf");
-	// header('Cache-Control: max-age=0');
 	
 	require_once 'Configuracion.php';
 	$datos = unserialize($_SESSION['listadoVotacionCandidato']);
 	require_once 'listadoVotacionCandidato_inc.php';
 	
-	// $objPHPExcel = new PHPExcel();
-	
-	// //usar tcpdf
-	
-	// //Defino las propiedades
-	// $objPHPExcel->getProperties()->setCreator("Ing. Luis A. Sanchez")
-						 // ->setLastModifiedBy("Ing. Luis A. Sanchez")
-						 // ->setTitle("Office 2007 XLSX Test Document")
-						 // ->setSubject("Office 2007 XLSX Test Document")
-						 // ->setDescription("Listado Votacion Candidato.")
-						 // ->setKeywords("office 2005 openxml")
-						 // ->setCategory("");
-	
-	// $objPHPExcel->setActiveSheetIndex(0)
-            // ->setCellValue('A1', 'CODIGO')
-            // ->setCellValue('B1', 'NOMBRES')
-			// ->setCellValue('C1', 'APELLIDOS')
-			// ->setCellValue('D1', 'PARTIDO')
-            // ->setCellValue('E1', 'VOTOS');
-						 
-	
-	// $cont = 2;
-	// while($row = ibase_fetch_object($result)){
-		// $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,$row->CODIGO);
-		// $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,utf8_encode($row->NOMBRES));
-		// $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,utf8_encode($row->APELLIDOS));
-		// $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont,utf8_encode($row->DESCRIPCION));
-		// $objPHPExcel->getActiveSheet()->setCellValue('E'.$cont,$row->VOTOS);
-		// $cont++;
-	// }
-	// $styleArray = array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN,'color' => array('rgb' => '000000')));
-	// $objPHPExcel->getActiveSheet()->getStyle('A2:E'.($cont-1))->getBorders()->applyFromArray($styleArray);
-	
-	// $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(10);
-	// $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(25);
-	// $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(25);
-	// $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(35);
-	// $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(10);
-	
-	// ibase_free_result($result);
-	// ibase_close($firebird);
-	
-	// //Creando el escritor
-	// $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'PDF');
-	// $objWriter->setSheetIndex(0);
-	
-	// $objWriter->save('php://output');
-	
-	
-	
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-	//Uso de tcpdf y guardo el documento en la carpeta actual
+	//////////////////////////////////////////TCPDF////////////////////////////////////////////////////////
 	require_once('../../tcpdf/config/lang/eng.php');
 	require_once('../../tcpdf/tcpdf.php');
 	
-	//crear la cabecera para el pdf
+	//creando la cabecera para el pdf
 	$page_orientacion = 'P';
 	$pdf_unit = 'mm';
 	$pdf_page_format = 'A4';
@@ -152,6 +98,7 @@
 	$pdf->SetTextColor(0);
 	$pdf->SetFont('','',8);
 	// Data
+	$pagActual = $pdf->getPage();
 	
 	$fill = 0;
 	while($row = ibase_fetch_object($result)) {
@@ -161,6 +108,11 @@
 		$pdf->Cell($w[3], 6, $row->VOTOS, 'LR', 0, 'L', $fill,'',$stretch);
 		$pdf->Ln();
 		$fill=!$fill;
+		
+		// if($pdf->getPage() > $pagActual){
+			// $pagActual = $pdf->getPage();
+		// }
+		//buscar un metodo que me indique si estoy en otra hoja
 	}
 	
 	//Cierro la coneccion a la base de datos
