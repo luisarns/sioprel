@@ -1,19 +1,11 @@
 <?php
 	session_start();
 	
-	require_once 'Configuracion.php';
+	require_once 'ConfiguracionTCPDF.php';
 	$datos = unserialize($_SESSION['listadoVotacionCandidato']);
 	require_once 'listadoVotacionCandidato_inc.php';
 	
 	//////////////////////////////////////////TCPDF////////////////////////////////////////////////////////
-	require_once('../../tcpdf/config/lang/eng.php');
-	require_once('../../tcpdf/tcpdf.php');
-	
-	//creando la cabecera para el pdf
-	$page_orientacion = 'P';
-	$pdf_unit = 'mm';
-	$pdf_page_format = 'A4';
-	
 	//creo el nuevo documento pdf
 	$pdf = new TCPDF($page_orientacion, $pdf_unit, $pdf_page_format, true, 'UTF-8', false);
 	
@@ -24,33 +16,17 @@
 	$pdf->SetSubject('Listado Votacion Candidato');
 	$pdf->SetKeywords('Votacion, Candidatos, Listado, Elecciones, Colombia');
 	
-	//La cabecera y pie de pagina del documento
-	$pathLogo = "../../images/registraduria.png";
-	$logowidth = 30;
-	$headertitle = "ESTADISTICAS ELECTORALES";
-	$headerstring = "Listado Votacion Candidato";
+	$headerstring = utf8_encode("Listado Votación Candidato");
 	$pdf->SetHeaderData($pathLogo, $logowidth, $headertitle, $headerstring);
 	
-	//asigno la fuente de la cabecera y el pie de pagina
-	$fontmain = "helvetica";
-	$fontmainsize = 10;
-	$fontdata = "helvetica";
-	$fontdatasize = 8;
+	//La fuente para la cabecera y pie de pagina
 	$pdf->setHeaderFont(Array($fontmain, '', $fontmainsize));
 	$pdf->setFooterFont(Array($fontdata, '', $fontdatasize));
 	
-	// Asigno la fuente por defecto
-	$fontmnspace = "courier";
+	// Fuente por defecto
 	$pdf->SetDefaultMonospacedFont($fontmnspace);
 	
-	//Los margenes de las paginas
-	$marginleft  = 15;
-	$margintop   = 27;
-	$marginright = 15;
-	$marginheader = 5;
-	$marginfooter = 10;
-	$marginbottom = 25;
-	$imgscalert = 1.25;
+	//Los margenes de las pagina, cabecera y pie de pagina
 	$pdf->SetMargins($marginleft, $margintop, $marginright);
 	$pdf->SetHeaderMargin($marginheader);
 	$pdf->SetFooterMargin($marginfooter);
@@ -73,6 +49,7 @@
 	
 	//Cabeceras de las columnas
 	$header = array('NOMBRES', 'APELLIDOS', 'PARTIDO','VOTOS');
+	$w = array(38, 38, 90,18); //Tamanyo de las columnas
 	
 	//Inicio Iteracion
 	$pdf->SetFillColor(255, 0, 0);
@@ -81,15 +58,14 @@
 	$pdf->SetLineWidth(0.3);
 	$pdf->SetFont('', 'B');
 	
-	//para ajustar el texto a la celda
-	//Hay otra opcion que es reducir el tamano del texto mostrado
+	//Ajusto el texto a la celda con la opcion stretch o redusco el tamanyo
+	// de este para hacer que quepa en la celda
 	$stretch = 0;
 	
 	// Header
-	$w = array(35, 35, 90,18);
 	$num_headers = count($header);
 	for($i = 0; $i < $num_headers; ++$i) {
-		$pdf->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1,'',$stretch);
+		$pdf->Cell($w[$i], 6, $header[$i], 1, 0, 'C', 1,'',$stretch);
 	}
 	$pdf->Ln();
 	
@@ -97,8 +73,9 @@
 	$pdf->SetFillColor(224, 235, 255);
 	$pdf->SetTextColor(0);
 	$pdf->SetFont('','',8);
+	// $pdf->SetFont('');
 	// Data
-	$pagActual = $pdf->getPage();
+	// $pagActual = $pdf->getPage();
 	
 	$fill = 0;
 	while($row = ibase_fetch_object($result)) {
@@ -108,11 +85,6 @@
 		$pdf->Cell($w[3], 6, $row->VOTOS, 'LR', 0, 'L', $fill,'',$stretch);
 		$pdf->Ln();
 		$fill=!$fill;
-		
-		// if($pdf->getPage() > $pagActual){
-			// $pagActual = $pdf->getPage();
-		// }
-		//buscar un metodo que me indique si estoy en otra hoja
 	}
 	
 	//Cierro la coneccion a la base de datos
@@ -121,5 +93,5 @@
 	
 	//Guardo el documento en el servidor
 	$pdf->Output('listatoVotacionCandidato.pdf', 'D');
-	//////////////////////////////////////////////////////////////////////////////////////////////////
+	unset($pdf);
 ?>

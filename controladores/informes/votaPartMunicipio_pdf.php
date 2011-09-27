@@ -1,54 +1,84 @@
 <?php
 	session_start();
-	header("Content-type: application/pdf");
-	header("Content-Disposition: attachment; filename=votaPartMunicipio.pdf");
-	header('Cache-Control: max-age=0');
 	
-	require_once 'Configuracion.php';
+	require_once 'ConfiguracionTCPDF.php';
 	$datos = unserialize($_SESSION['votaPartMunicipio']);
-	
 	require_once 'votaPartMunicipio_inc.php';
 	
-	$objPHPExcel = new PHPExcel();
+	//////////////////////////////////////////INICIO CONFIGURACION PDF//////////////////////////////////////////
+	$pdf = new TCPDF($page_orientacion, $pdf_unit, $pdf_page_format, true, 'UTF-8', false);
 	
-	//Defino las propiedades
-	$objPHPExcel->getProperties()->setCreator("Ing. Luis A. Sanchez")
-						 ->setLastModifiedBy("Ing. Luis A. Sanchez")
-						 ->setTitle("Office 2007 XLSX Test Document")
-						 ->setSubject("Office 2007 XLSX Test Document")
-						 ->setDescription("Votacion Partido Municipio.")
-						 ->setKeywords("office 2005 openxml")
-						 ->setCategory("");
+	//la informacion del documento
+	$pdf->SetCreator('TCPDF');
+	$pdf->SetAuthor('Luis A. Nunez');
+	$pdf->SetTitle('Estadisticas Electorales');
+	$pdf->SetSubject('Resumen Votación Pardito');
+	$pdf->SetKeywords('Votacion, Candidatos, Partidos, Resumen, Elecciones');
 	
+	$headerstring = utf8_encode("Resumen Votación Pardito");
+	$pdf->SetHeaderData($pathLogo, $logowidth, $headertitle, $headerstring);
 	
-	$objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A1', 'CODPARTIDO')
-            ->setCellValue('B1', 'DESCRIPCION')
-            ->setCellValue('C1', 'VOTOS');
-			
-	//Agregando los valores al informe
-	$cont = 2;
-	while($row = ibase_fetch_object($result)) {
-		$objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,$row->CODPARTIDO);
-		$objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,utf8_encode($row->DESCRIPCION));
-		$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,$row->VOTOS);
-		$cont++;
-	}
-	$styleArray = array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN,'color' => array('rgb' => '000000')));
-	$objPHPExcel->getActiveSheet()->getStyle('A2:C'.($cont-1))->getBorders()->applyFromArray($styleArray);
+	//La fuente para la cabecera y pie de pagina
+	$pdf->setHeaderFont(Array($fontmain, '', $fontmainsize));
+	$pdf->setFooterFont(Array($fontdata, '', $fontdatasize));
 	
+	// Fuente por defecto
+	$pdf->SetDefaultMonospacedFont($fontmnspace);
+	
+	//Los margenes de las pagina, cabecera y pie de pagina
+	$pdf->SetMargins($marginleft, $margintop, $marginright);
+	$pdf->SetHeaderMargin($marginheader);
+	$pdf->SetFooterMargin($marginfooter);
 
-	$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(16);
-	$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(75);
-	$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(10);
+	//set auto page breaks
+	$pdf->SetAutoPageBreak(TRUE, $marginbottom);
+
+	//set image scale factor
+	$pdf->setImageScale($imgscalert);
+
+	//set some language-dependent strings
+	$pdf->setLanguageArray($l);
+	//////////////////////////////////////////FIN CONFIGURACION PDF//////////////////////////////////////////
 	
+	$pdf->SetFont('helvetica', '', 12);
+	$pdf->AddPage();
+	$header = array('CODPARTIDO', utf8_encode('DESCRIPCIÓN'),'VOTOS');
+	$w = array(35,90,18);
+	
+	$pdf->SetFillColor(255, 0, 0);
+	$pdf->SetTextColor(255);
+	$pdf->SetDrawColor(128, 0, 0);
+	$pdf->SetLineWidth(0.3);
+	$pdf->SetFont('', 'B');
+	
+	$stretch = 0;
+	
+	// Header
+	$num_headers = count($header);
+	for($i = 0; $i < $num_headers; ++$i) {
+		$pdf->Cell($w[$i], 6, $header[$i], 1, 0, 'C', 1,'',$stretch);
+	}
+	$pdf->Ln();
+	
+	$pdf->SetFillColor(224, 235, 255);
+	$pdf->SetTextColor(0);
+	$pdf->SetFont('','',8);
+	
+	// Datos
+	$fill = 0;
+	while($row = ibase_fetch_object($result)) {
+		$pdf->Cell($w[0], 6, $row->CODPARTIDO, 'LR', 0, 'L', $fill,'',$stretch);
+		$pdf->Cell($w[1], 6, utf8_encode($row->DESCRIPCION), 'LR', 0, 'L', $fill,'',$stretch);
+		$pdf->Cell($w[2], 6, $row->VOTOS, 'LR', 0, 'L', $fill,'',$stretch);
+		$pdf->Ln();
+		$fill=!$fill;
+	}
 	
 	ibase_free_result($result);
 	ibase_close($firebird);
 	
-	//Creando el escritor
-	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'PDF');
-	$objWriter->setSheetIndex(0);
+	//Envio el documento al cliente
+	$pdf->Output('resumenVotacionPartido.pdf', 'D');
+	unset($pdf);
 	
-	$objWriter->save('php://output');
 ?>
