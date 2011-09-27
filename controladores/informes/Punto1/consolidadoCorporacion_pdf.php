@@ -1,61 +1,93 @@
 <?php
 	session_start();
-	date_default_timezone_set('America/Bogota');
 	
-	header("Content-type: application/pdf");
-	header("Content-Disposition: attachment; filename=consolidadoCorporacion.pdf");
-	header('Cache-Control: max-age=0');
-	
-	
-	require_once 'Configuracion.php';
+	require_once 'ConfiguracionTCPDF.php';
 	$datos = unserialize($_SESSION['consolidadoCorporacion']);
 	require_once 'consolidadoCorporacion_inc.php';
 	
+	//creo el nuevo documento pdf
+	$pdf = new TCPDF($page_orientacion, $pdf_unit, $pdf_page_format, true, 'UTF-8', false);
 	
-	$objPHPExcel = new PHPExcel();
+	//la informacion del documento
+	$pdf->SetCreator('TCPDF');
+	$pdf->SetAuthor('Luis A. Nunez');
+	$pdf->SetTitle('Estadisticas Electorales');
+	$pdf->SetSubject('Consolidado Corporacion');
+	$pdf->SetKeywords('Votacion, Listas, Consolidado, Elecciones, Colombia');
 	
-	//Defino las propiedades
-	$objPHPExcel->getProperties()->setCreator("Ing. Luis A. Sanchez")
-						 ->setLastModifiedBy("Ing. Luis A. Sanchez")
-						 ->setTitle("Office 2007 XLSX Test Document")
-						 ->setSubject("Office 2007 XLSX Test Document")
-						 ->setDescription("Consolidado Corporacion.")
-						 ->setKeywords("office 2005 openxml")
-						 ->setCategory("");
+	$headerstring = utf8_encode("Consolidado Corporación");
+	$pdf->SetHeaderData($pathLogo, $logowidth, $headertitle, $headerstring);
 	
+	//La fuente para la cabecera y pie de pagina
+	$pdf->setHeaderFont(Array($fontmain, '', $fontmainsize));
+	$pdf->setFooterFont(Array($fontdata, '', $fontdatasize));
 	
-	$objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A1', 'UBICACION')
-            ->setCellValue('B1', 'CODIGO')
-            ->setCellValue('C1', 'NOMBRE')
-			->setCellValue('D1', 'TIPOVOTO')
-            ->setCellValue('E1', 'VOTOS');
-			
-	//Agregando los valores al informe
-	$cont = 2;
-	while($row = ibase_fetch_object($result)) {
-		$objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,utf8_encode($row->DIVIPOL));
-		$objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,$row->CODIGO);
-		$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,utf8_encode($row->DESCRIPCION));
-		$objPHPExcel->getActiveSheet()->setCellValue('D'.$cont,$row->TIPOVOTOS);
-		$objPHPExcel->getActiveSheet()->setCellValue('E'.$cont,$row->VOTOS);
-		$cont++;
+	// Fuente por defecto
+	$pdf->SetDefaultMonospacedFont($fontmnspace);
+	
+	//Los margenes de las pagina, cabecera y pie de pagina
+	$pdf->SetMargins($marginleft, $margintop, $marginright);
+	$pdf->SetHeaderMargin($marginheader);
+	$pdf->SetFooterMargin($marginfooter);
+
+	//set auto page breaks
+	$pdf->SetAutoPageBreak(TRUE, $marginbottom);
+
+	//set image scale factor
+	$pdf->setImageScale($imgscalert);
+
+	//set some language-dependent strings
+	$pdf->setLanguageArray($l);
+	//////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	// asigno la fuente del documento
+	$pdf->SetFont('helvetica', '', 11);
+	
+	//Adiciono una pagina
+	$pdf->AddPage();
+	
+	//Cabeceras de las columnas
+	$header = array(utf8_encode('DIVISIÓN POLÍTICA'),'NOMBRE','TIPOVOTO','VOTOS');
+	$w = array(38,40,40,18); //Tamanyo de las columnas
+	
+	//Inicio Iteracion
+	$pdf->SetFillColor(255, 0, 0);
+	$pdf->SetTextColor(255);
+	$pdf->SetDrawColor(128, 0, 0);
+	$pdf->SetLineWidth(0.3);
+	$pdf->SetFont('', 'B');
+	
+	//Ajusto el texto a la celda con la opcion stretch o redusco el tamanyo
+	$stretch = 0;
+	
+	// Header
+	$num_headers = count($header);
+	for($i = 0; $i < $num_headers; ++$i) {
+		$pdf->Cell($w[$i], 6, $header[$i], 1, 0, 'C', 1,'',$stretch);
 	}
+	$pdf->Ln();
 	
-	$styleArray = array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN,'color' => array('rgb' => '000000')));
-	$objPHPExcel->getActiveSheet()->getStyle('A2:E'.($cont-1))->getBorders()->applyFromArray($styleArray);
-	$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(18);
-	$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(20);
-	$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(20);
-	$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(20);
-	$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(10);
+	//Datos
+	$pdf->SetFillColor(224, 235, 255);
+	$pdf->SetTextColor(0);
+	$pdf->SetFont('','',8);
+	
+	$fill = 0;
+	while($row = ibase_fetch_object($result)) {
+		$pdf->Cell($w[0], 6, utf8_encode($row->DIVIPOL), 'LR', 0, 'L', $fill,'',$stretch);
+		//$pdf->Cell($w[1], 6, utf8_encode($row->CODIGO), 'LR', 0, 'L', $fill,'',$stretch);
+		$pdf->Cell($w[1], 6, utf8_encode($row->DESCRIPCION), 'LR', 0, 'L', $fill,'',$stretch);
+		$pdf->Cell($w[2], 6, $row->TIPOVOTOS, 'LR', 0, 'L', $fill,'',$stretch);
+		$pdf->Cell($w[3], 6, $row->VOTOS, 'LR', 0, 'L', $fill,'',$stretch);
+		$pdf->Ln();
+		$fill=!$fill;
+	}
+	$pdf->Cell(array_sum($w), 0, '', 'T');
 	
 	ibase_free_result($result);
 	ibase_close($firebird);
 	
-	//Creando el escritor
-	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'PDF');
-	$objWriter->setSheetIndex(0);
-
-	$objWriter->save('php://output');
+	//Guardo el documento en el servidor
+	$pdf->Output('consolidadoCorporacion.pdf', 'D');
+	unset($pdf);
 ?>
