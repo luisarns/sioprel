@@ -3,7 +3,7 @@
 	require_once 'Configuracion.php';
 	
 	$codpartido = $_POST['codpartido'];
-	$estado = "INSCRIPTO";
+	$estado = "INSCRITO";
 	
 	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
 	$query    =<<<EOF
