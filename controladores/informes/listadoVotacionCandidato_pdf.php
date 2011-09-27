@@ -59,7 +59,6 @@
 	$pdf->SetFont('', 'B');
 	
 	//Ajusto el texto a la celda con la opcion stretch o redusco el tamanyo
-	// de este para hacer que quepa en la celda
 	$stretch = 0;
 	
 	// Header
@@ -73,9 +72,6 @@
 	$pdf->SetFillColor(224, 235, 255);
 	$pdf->SetTextColor(0);
 	$pdf->SetFont('','',8);
-	// $pdf->SetFont('');
-	// Data
-	// $pagActual = $pdf->getPage();
 	
 	$fill = 0;
 	while($row = ibase_fetch_object($result)) {
@@ -86,6 +82,7 @@
 		$pdf->Ln();
 		$fill=!$fill;
 	}
+	$pdf->Cell(array_sum($w), 0, '', 'T');//Para mostrar la linea al final de la tabla
 	
 	//Cierro la coneccion a la base de datos
 	ibase_free_result($result);
