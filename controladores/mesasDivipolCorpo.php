@@ -2,33 +2,29 @@
 	header("Content-Type: text/plain");
 	require_once 'Configuracion.php';
 	
-	$coddivipol      = $_GET['coddivipol'];
-	$codnivel       = $_GET['codnivel'];
-	$codcorporacion = $_GET['codcorporacion'];
+	$coddivipol     = $_POST['coddivipol'];
+	$codnivel       = $_POST['codnivel'];
+	$codcorporacion = $_POST['codcorporacion'];
 	
-	$sqlite = new SPSQLite(PATH_DB . 'elecciones2011.db');
+	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg()) ;
 	
 	$query =<<<EOF
-	SELECT codtransmision as codTx , codmesa as mesa FROM pmesas
-	WHERE coddivipol = $coddivipol AND codnivel = $codnivel
+	SELECT codtransmision,codmesa FROM pmesas
+	WHERE coddivipol = '$coddivipol' AND codnivel = $codnivel
 	AND codcorporacion = $codcorporacion
 EOF;
 	
-	$sqlite->query($query);
-	$rows = $sqlite->returnRows('assoc');
-	$numRows = $sqlite->numRows();
-	
+	$result = ibase_query($firebird,$query);
+	$numRows = 0;
 	$mesas = array("total"=>$numRows,"datos"=>array());
 	
-	if($numRows > 1){
-		foreach($rows as $row){
-			array_push($mesas['datos'],$row);
-		}
-	} else if ($numRows == 1) {
-		array_push($mesas['datos'],$rows);
+	while($row = ibase_fetch_object($result)) {
+		$mesa = array('codTx'=>$row->CODTRANSMISION,'mesa'=>$row->CODMESA);
+		array_push($mesas["datos"],$mesa);
+		$mesas["total"]++;
 	}
 	
-	$sqlite->close();
+	ibase_free_result($result);
+	ibase_close($firebird);
 	echo json_encode($mesas);
-	unset($sqlite);
 ?>
