@@ -28,4 +28,7 @@
 	
 	$salida = array("success" => true, "msg" => "Consultando consolidado..." );
 	echo json_encode($salida);
+	
+	//aqui hacer la consulta de los datos crear los archivos con la configuracion
+	
 ?>
