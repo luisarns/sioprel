@@ -2,7 +2,10 @@
 	header("Content-Type: text/plain");
 	require_once 'Configuracion.php';
 	
-	$codpartido = $_POST['codpartido'];
+	$jsonStr = $_POST['datos'];
+	$datos = json_decode(str_replace("\\","",$jsonStr));
+	
+	$codpartido = $datos->codpartido;
 	$estado = "INSCRITO";
 	
 	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
@@ -12,6 +15,7 @@
 	WHERE codpartido = $codpartido AND codcandidato <> 0
 	ORDER BY codpartido,codcandidato
 EOF;
+	
 	$result   = ibase_query($firebird,$query);
 	
 	$arrCandidatos = array();

@@ -1,15 +1,16 @@
 <?php 
-	session_start();	
+	session_start(); 
 	header("Content-Type: text/plain");	
 	require_once 'Configuracion.php';
 	require_once 'FunDivipol.php';
 	
-	$datos = json_decode(str_replace("\\","",$_POST['datos']));
-	$_SESSION['listadoListas'] = serialize($datos);
-	// require_once 'listadoListas_inc.php';
+	$jsonStr = $_POST['datos'];
+	$datos = json_decode(str_replace("\\","",$jsonStr));
+	$_SESSION['consolidadoPartidoLista'] = serialize($datos);
 	
+	require_once('consolidadoPartidoLista_inc.php');
 	
-	$arrListListas = array();
+	$arConParLis = array();
 	// while($row = ibase_fetch_object($result)){
 		// $listLista = array();
 		// $listLista['codigo']    = $row->CODIGO;
@@ -20,8 +21,10 @@
 		// array_push($arrListListas,$listLista);
 	// }
 	
+	
 	// ibase_free_result($result);
 	// ibase_close($firebird);
 	
-	echo json_encode($arrListListas);
+	echo json_encode($arConParLis);
+	
 ?>
