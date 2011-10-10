@@ -36,7 +36,7 @@
 			
 			if($candidato->CODPARTIDO == $partido->CODIGO) {
 				$cand = array();
-				$cand['codigo']  = $candidato->CODPARTIDO .'-'.$candidato->CODCANDIDATO;
+				$cand['codigo']  = $partido->CODIGO.'-'.$candidato->CODCANDIDATO;
 				$cand['partido'] = htmlentities($candidato->DESCRIPCION);
 				$cand['votos']   = $candidato->VOTOS;
 				array_push($arrConPar,$cand);

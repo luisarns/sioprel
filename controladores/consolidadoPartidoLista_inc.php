@@ -40,7 +40,7 @@ EOF;
 	$query1 = null;
 	if(isset($datos->detallado)){
 		$query1 =<<<EOR
-		SELECT pc.codpartido,pc.codcandidato, pc.nombres || ' ' || pc.apellidos as descripcion, SUM(mv.numvotos) as votos
+		SELECT pc.codpartido,pc.codcandidato, pc.nombres ||' '|| CASE WHEN pc.apellidos IS NULL THEN 'LISTA' ELSE pc.apellidos END as descripcion, SUM(mv.numvotos) as votos
 		FROM PMESAS pm, PCANDIDATOS pc, MVOTOS mv
 		WHERE pm.codtransmision = mv.codtransmision $texto1
 		AND pc.idcandidato = mv.idcandidato $texto2
@@ -54,5 +54,7 @@ EOR;
 		$result1 = ibase_query($firebird,$query1);
 	}
 	$result   = ibase_query($firebird,$query);
-
+//(CASE pc.apellidos  WHEN NULL THEN '(LISTA)' ELSE pc.apellidos END)
+//CASE i WHEN NULL THEN
+//AND pc.codcandidato <> 0
 ?>
