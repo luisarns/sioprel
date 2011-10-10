@@ -1,23 +1,63 @@
 <?php
 
-	// $codcorpo    = $datos->codcorpo;
-	// $nivcorpo    = $datos->nivcorpo;
-	// $codcordiv   = substr($datos->coddivipol,0,getNumDigitos($nivcorpo));
-	// $coddivcorto = substr($datos->coddivipol,0,getNumDigitos($datos->codnivel));
+	$codcorpo    = $datos->codcorporacion;
+	$nivcorpo    = $datos->corpnivel;
+	$codcordiv   = substr($datos->coddivipol,0,getNumDigitos($nivcorpo));
+	$coddivcorto = substr($datos->coddivipol,0,getNumDigitos($datos->codnivel));
 	
-	// $firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
+	$texto1 = "";
+	$texto2 = "";
+	$texto3 = "";
 	
-	// $query =<<<EOF
-	// SELECT pp.codpartido ||'-'|| pc.codcandidato as codigo, pc.nombres, pc.apellidos, pp.descripcion, sum(mv.numvotos) as votos
-    // FROM ppartidos pp, pcandidatos pc, pmesas pm, mvotos mv
-    // WHERE pc.coddivipol LIKE '$codcordiv'   || '%' AND pc.codnivel = $nivcorpo AND pc.codcorporacion = $codcorpo
-    // AND pm.coddivipol   LIKE '$coddivcorto' || '%' AND pm.codtransmision = mv.codtransmision
-    // AND pc.idcandidato = mv.idcandidato AND pp.codpartido = pc.codpartido AND pc.codcandidato <> 0
-    // GROUP BY pp.codpartido,pc.codcandidato,pc.nombres, pc.apellidos,pp.descripcion;
-// EOF;
+	if(isset($datos->codpartido)){
+		$texto3 = "AND pp.codpartido = $datos->codpartido ";
+	}
+	if(isset($datos->idmesa)){
+		$texto1 = "AND pm.codtransmision = '$datos->codtransmision' ";
+	}
+	if(isset($datos->idcomuna)){
+		$texto2 = "AND pc.idcomuna = $datos->idcomuna ";
+	}
 	
-	// //pc.codcandidato <> 0 para seleccionar solo los candidatos evitar las listas
+	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
 	
-	// $result   = ibase_query($firebird,$query);
+	$query =<<<EOF
+	SELECT pp.codpartido as codigo ,pp.descripcion, SUM(mv.numvotos) as votos
+	FROM PPARTIDOS pp, PMESAS pm, PCANDIDATOS pc, MVOTOS mv
+	WHERE pp.codpartido = pc.codpartido $texto1
+	AND pm.codtransmision = mv.codtransmision $texto2
+	AND pc.idcandidato = mv.idcandidato $texto3
+	AND pc.coddivipol LIKE '$codcordiv' || '%'
+	AND pm.coddivipol LIKE '$coddivcorto' || '%'
+	AND pc.codnivel = $nivcorpo
+	AND pm.codcorporacion = $codcorpo
+	GROUP BY pp.codpartido, pp.descripcion
+	ORDER BY votos DESC;
+EOF;
+	
+	//Query para traer los los candidatos cuando la opcion detallado esta activada
+	// $query1 =<<<EOR
+	// SELECT pp.codpartido as codigo ,pp.descripcion, SUM(mv.numvotos) as votos
+	// FROM PPARTIDOS pp, PMESAS pm, PCANDIDATOS pc, MVOTOS mv
+	// WHERE pp.codpartido = pc.codpartido $texto1
+	// AND pm.codtransmision = mv.codtransmision $texto2
+	// AND pc.idcandidato = mv.idcandidato $texto3
+	// AND pc.coddivipol LIKE '$codcordiv' || '%'
+	// AND pm.coddivipol LIKE '$coddivcorto' || '%'
+	// AND pc.codnivel = $nivcorpo
+	// AND pm.codcorporacion = $codcorpo
+	// GROUP BY pp.codpartido, pp.descripcion
+	// ORDER BY votos DESC;
+// EOR;
+	
+	//Hacer la consulta 2 para estraer los candidatos por partido, junto con el consolidado de la votacion obtenida por
+	//cada candidato
+	
+	// echo $query;
+	
+	//Hacer una union de las dos consultas para cuando detallado es seleccionado
+	//Hacer la consulta de los candidatos cuando detallado esta seleccionado
+	
+	$result   = ibase_query($firebird,$query);
 
 ?>

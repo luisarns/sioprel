@@ -7,6 +7,7 @@
 	$corpdesc = $datos->descripcion;
 	$texto1 = "";
 	$texto2 = "";
+	
 	if(isset($datos->codTransmision)){
 		$texto1 = "AND pm.codtransmision = '$datos->codTransmision'";
 	}
@@ -22,9 +23,6 @@
 	AND pc.idcandidato = mv.idcandidato $texto1
 	GROUP BY pp.codpartido,pp.descripcion ORDER BY votos DESC
 EOF;
-	
-	//aqui falta la divipol para saber de que mesas es que se va a obtener la votacion
-	
 	
 	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
 	$result   = ibase_query($firebird,$query);

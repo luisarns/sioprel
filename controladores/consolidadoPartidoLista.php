@@ -10,21 +10,21 @@
 	
 	require_once('consolidadoPartidoLista_inc.php');
 	
-	$arConParLis = array();
-	// while($row = ibase_fetch_object($result)){
-		// $listLista = array();
-		// $listLista['codigo']    = $row->CODIGO;
-		// $listLista['nombres']   = htmlentities($row->NOMBRES);
-		// $listLista['apellidos'] = htmlentities($row->APELLIDOS);
-		// $listLista['partido']   = htmlentities($row->DESCRIPCION);
-		// $listLista['votos']     = $row->VOTOS;
-		// array_push($arrListListas,$listLista);
-	// }
+	$arrConPar = array();
+	while($row = ibase_fetch_object($result)){
+		$conspart = array();
+		$conspart['codigo']  = $row->CODIGO;
+		$conspart['partido'] = htmlentities($row->DESCRIPCION);
+		$conspart['votos']   = $row->VOTOS;
+		array_push($arrConPar,$conspart);
+	}
 	
+	//Guardar los registros de los partidos en un temporal al igual que los de los candidatos
+	//cuando el temporal contenga registro de los candidatos
 	
-	// ibase_free_result($result);
-	// ibase_close($firebird);
+	ibase_free_result($result);
+	ibase_close($firebird);
 	
-	echo json_encode($arConParLis);
+	echo json_encode($arrConPar);
 	
 ?>
