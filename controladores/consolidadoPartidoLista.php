@@ -10,19 +10,44 @@
 	
 	require_once('consolidadoPartidoLista_inc.php');
 	
-	$arrConPar = array();
-	while($row = ibase_fetch_object($result)){
-		$conspart = array();
-		$conspart['codigo']  = $row->CODIGO;
-		$conspart['partido'] = htmlentities($row->DESCRIPCION);
-		$conspart['votos']   = $row->VOTOS;
-		array_push($arrConPar,$conspart);
+	$partidos = array();
+	$candidatos = array();
+	
+	//Guardo temporalmente los datos
+	while($row = ibase_fetch_object($result)) {
+		array_push($partidos,$row);
+	}
+	if($result1 != null){
+		while($row = ibase_fetch_object($result1)) {
+			array_push($candidatos,$row);
+		}
 	}
 	
-	//Guardar los registros de los partidos en un temporal al igual que los de los candidatos
-	//cuando el temporal contenga registro de los candidatos
+	$arrConPar = array();
+	foreach($partidos as $partido) {
+		
+		$conspart = array();
+		$conspart['codigo']  = $partido->CODIGO;
+		$conspart['partido'] = htmlentities($partido->DESCRIPCION);
+		$conspart['votos']   = $partido->VOTOS;
+		array_push($arrConPar,$conspart);
+		
+		foreach($candidatos as $candidato) {
+			
+			if($candidato->CODPARTIDO == $partido->CODIGO) {
+				$cand = array();
+				$cand['codigo']  = $candidato->CODPARTIDO .'-'.$candidato->CODCANDIDATO;
+				$cand['partido'] = htmlentities($candidato->DESCRIPCION);
+				$cand['votos']   = $candidato->VOTOS;
+				array_push($arrConPar,$cand);
+			}
+
+		}
+		
+	}
 	
 	ibase_free_result($result);
+	if($result1 != null){ibase_free_result($result1);}
 	ibase_close($firebird);
 	
 	echo json_encode($arrConPar);
