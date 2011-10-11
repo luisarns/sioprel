@@ -41,7 +41,6 @@
 				$cand['votos']   = $candidato->VOTOS;
 				array_push($arrConPar,$cand);
 			}
-
 		}
 		
 	}

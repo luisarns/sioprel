@@ -1,56 +1,57 @@
 <?php
 
-	// $codcorpo    = $datos->codcorpo;
-	// $nivcorpo    = $datos->nivcorpo;
-	// $codcordiv   = substr($datos->coddivipol,0,getNumDigitos($nivcorpo));
-	// $coddivcorto = substr($datos->coddivipol,0,getNumDigitos($datos->codnivel));
+	$codcorpo    = $datos->codcorporacion;
+	$nivcorpo    = $datos->corpnivel;
+	$codcordiv   = substr($datos->coddivipol,0,getNumDigitos($nivcorpo));
+	$coddivcorto = substr($datos->coddivipol,0,getNumDigitos($datos->codnivel));
 	
-	// $firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
+	$texto1 = "";
+	$texto2 = "";
+	$texto3 = "";
+	$txt4 = "";
 	
-	// $query =<<<EOF
-	// SELECT pp.codpartido ||'-'|| pc.codcandidato as codigo, pc.nombres, pc.apellidos, pp.descripcion, sum(mv.numvotos) as votos
-    // FROM ppartidos pp, pcandidatos pc, pmesas pm, mvotos mv
-    // WHERE pc.coddivipol LIKE '$codcordiv'   || '%' AND pc.codnivel = $nivcorpo AND pc.codcorporacion = $codcorpo
-    // AND pm.coddivipol   LIKE '$coddivcorto' || '%' AND pm.codtransmision = mv.codtransmision
-    // AND pc.idcandidato = mv.idcandidato AND pp.codpartido = pc.codpartido AND pc.codcandidato <> 0
-    // GROUP BY pp.codpartido,pc.codcandidato,pc.nombres, pc.apellidos,pp.descripcion;
-// EOF;
+	if(isset($datos->codpartido)){
+		$texto3 = "AND pp.codpartido = $datos->codpartido ";
+		$txt4 = "AND pc.codpartido = $datos->codpartido ";
+	}
+	if(isset($datos->idmesa)){
+		$texto1 = "AND pm.codtransmision = '$datos->codtransmision' ";
+	}
+	if(isset($datos->idcomuna)){
+		$texto2 = "AND pc.idcomuna = $datos->idcomuna ";
+	}
 	
-	// //pc.codcandidato <> 0 para seleccionar solo los candidatos evitar las listas
+	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
 	
-	// $result   = ibase_query($firebird,$query);
+	$query =<<<EOF
+	SELECT pp.codpartido as codigo ,pp.descripcion, SUM(mv.numvotos) as votos
+	FROM PPARTIDOS pp, PMESAS pm, PCANDIDATOS pc, MVOTOS mv
+	WHERE pp.codpartido = pc.codpartido $texto1
+	AND pm.codtransmision = mv.codtransmision $texto2
+	AND pc.idcandidato = mv.idcandidato $texto3
+	AND pc.coddivipol LIKE '$codcordiv' || '%'
+	AND pm.coddivipol LIKE '$coddivcorto' || '%'
+	AND pc.codnivel = $nivcorpo
+	AND pm.codcorporacion = $codcorpo
+	GROUP BY pp.codpartido, pp.descripcion;
+EOF;
 	
-	// $objPHPExcel = new PHPExcel();
-	
-	// //Defino las propiedades
-	// $objPHPExcel->getProperties()->setCreator("Ing. Luis A. Sanchez")
-						 // ->setLastModifiedBy("Ing. Luis A. Sanchez")
-						 // ->setTitle("Office 2007 XLSX Test Document")
-						 // ->setSubject("Office 2007 XLSX Test Document")
-						 // ->setDescription("Votacion Partido Municipio.")
-						 // ->setKeywords("office 2005 openxml")
-						 // ->setCategory("");
-	
-	
-	// $objPHPExcel->setActiveSheetIndex(0)
-            // ->setCellValue('A1', 'CODPARTIDO')
-            // ->setCellValue('B1', 'DESCRIPCION')
-            // ->setCellValue('C1', 'VOTOS');
-			
-	// //Agregando los valores al informe
-	// $cont = 2;
-	// while($row = ibase_fetch_object($result)) {
-		// $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,$row->CODPARTIDO);
-		// $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,utf8_encode($row->DESCRIPCION));
-		// $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,$row->VOTOS);
-		// $cont++;
-	// }
-
-	// $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(14);
-	// $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(100);
-	// $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(10);
-	
-	// ibase_free_result($result);
-	// ibase_close($firebird);
-	
+	$result1 = null;
+	$query1 = null;
+	if(isset($datos->detallado)){
+		$query1 =<<<EOR
+		SELECT pc.codpartido,pc.codcandidato, pc.nombres ||' '|| CASE WHEN pc.codcandidato = 0 THEN '(LISTA)' ELSE pc.apellidos END as descripcion, SUM(mv.numvotos) as votos
+		FROM PMESAS pm, PCANDIDATOS pc, MVOTOS mv
+		WHERE pm.codtransmision = mv.codtransmision $texto1
+		AND pc.idcandidato = mv.idcandidato $texto2
+		AND pc.coddivipol LIKE '$codcordiv' || '%'
+		AND pm.coddivipol LIKE '$coddivcorto'  || '%'
+		AND pm.codcorporacion = $codcorpo $txt4
+		AND pc.codnivel = $nivcorpo
+		GROUP BY pc.codpartido,pc.codcandidato,descripcion;
+EOR;
+		
+		$result1 = ibase_query($firebird,$query1);
+	}
+	$result   = ibase_query($firebird,$query);
 ?>
