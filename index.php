@@ -4,6 +4,7 @@
 	
 	<!--Elementos necesarios para usar Extjs2.0-->
 	<link rel="stylesheet" type="text/css" href="lib/extjs/resources/css/ext-all.css" />
+	<link rel="stylesheet" type="text/css" href="css/main.css" />
 	<script type="text/javascript" src="lib/extjs/adapter/ext/ext-base.js"></script>
 	<script type="text/javascript" src="lib/extjs/ext-all-debug.js"></script>
 	
@@ -47,28 +48,39 @@
 					{   
 						xtype   : 'panel',
 						region  : 'north',
+						border  : false,
 						id      : 'norte',
-						cls     : 'titulo',
-						buttons : [
-						new Ext.form.ComboBox({
-							xtype : 'combo',
-							id    : 'usu_combo_theme',
-							name  : 'idcombotheme',
-							forceSelection : true,
-							fieldLabel     : 'Tema',
-							editable       : false,
-							width          : '30',
-							triggerAction  : 'all',
-							store : [
-								['peppermint','Rojo'],
-								['gray','Gris'],
-								['slate','Slate'],
-								['blue','Azul'],
-								['silverCherry','Plateado']
-							],
-							value: 'blue'
-						})
-						]
+						layout  : 'column',
+						width   : 600,
+						height  : 40,
+						items   : [
+							{
+								columnWidth: .99,
+								xtype : 'panel',
+								html: "<div style='height: 30px;'>ESTAD&Iacute;STICAS ELECTORALES</div>"
+							},
+							{
+								width  : 170,
+								height : 32,
+								items :	new Ext.form.ComboBox({
+										xtype : 'combo',
+										hideLabel : true,
+										id    : 'usu_combo_theme',
+										name  : 'idcombotheme',
+										forceSelection : true,
+										editable       : false,
+										triggerAction  : 'all',
+										store : [
+											['peppermint','Rojo'],
+											['gray','Gris'],
+											['slate','Slate'],
+											['blue','Azul'],
+											['silverCherry','Plateado']
+										],
+										value: 'blue'
+									})
+							}
+						 ]
 					},
 					{
 						xtype:        'panel',
