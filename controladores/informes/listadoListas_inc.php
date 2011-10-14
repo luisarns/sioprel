@@ -7,6 +7,11 @@
 	
 	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
 	
+	$txt = "";
+	if(isset($datos->idcomuna)) {
+		$txt = "AND pc.idcomuna = $datos->idcomuna ";
+	}
+	
 	$query =<<<EOF
 	SELECT pc.nombres as descripcion, SUM(mv.numvotos) as votos
 		FROM PMESAS pm, PCANDIDATOS pc, MVOTOS mv
@@ -15,7 +20,7 @@
 		AND pc.coddivipol LIKE '$codcordiv' || '%'
 		AND pm.coddivipol LIKE '$coddivcorto' || '%'
 		AND pm.codcorporacion = $codcorpo 
-		AND pc.codnivel = $nivcorpo
+		AND pc.codnivel = $nivcorpo $txt
         AND pc.codcandidato = 0
 		GROUP BY pc.nombres
         ORDER BY votos DESC

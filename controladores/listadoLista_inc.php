@@ -5,6 +5,11 @@
 	$codcordiv   = substr($datos->coddivipol,0,getNumDigitos($nivcorpo));
 	$coddivcorto = substr($datos->coddivipol,0,getNumDigitos($datos->codnivel));
 	
+	$txt = "";
+	if(isset($datos->idcomuna)) {
+		$txt = "AND pc.idcomuna = $datos->idcomuna ";
+	}
+	
 	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
 	
 	$query =<<<EOF
@@ -15,7 +20,7 @@
 		AND pc.coddivipol LIKE '$codcordiv' || '%'
 		AND pm.coddivipol LIKE '$coddivcorto' || '%'
 		AND pm.codcorporacion = $codcorpo 
-		AND pc.codnivel = $nivcorpo
+		AND pc.codnivel = $nivcorpo $txt
         AND pc.codcandidato = 0
 		GROUP BY pc.nombres
         ORDER BY votos DESC
