@@ -1,136 +1,69 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	
-	<!--Elementos necesarios para usar Extjs2.0-->
-	<link rel="stylesheet" type="text/css" href="lib/extjs/resources/css/ext-all.css" />
 	<link rel="stylesheet" type="text/css" href="css/main.css" />
-	<script type="text/javascript" src="lib/extjs/adapter/ext/ext-base.js"></script>
-	<script type="text/javascript" src="lib/extjs/ext-all-debug.js"></script>
-	
-	<!--Para el idioma -->
-	<script type="text/javascript" src="lib/extjs/build/locale/ext-lang-es.js"></script>
-	
-	<!--Archivos complementarios para usar funciones utiles -->
-	<script type="text/javascript" src="lib/Ext.ux.grid.Search.js"></script>
-	<script type="text/javascript" src="lib/MultiSelect.js"></script>
-	<script type="text/javascript" src="lib/js/global.js"></script>
-	
-	<!-- Plugin para buscar en una grid-->
-	<script type="text/javascript" src="lib/js/buscarPlugin.js"></script>
-	
-	<!--Cargo los componentes de la corporacion y la divipol -->
-	<script type="text/javascript" src="lib/js/cmpDivipol.js"></script>
-	<script type="text/javascript" src="lib/js/corporacion.js"></script>
-	<script type="text/javascript" src="lib/js/barraExportar.js"></script>
-	
-	<!--Titulo de la pagina-->
+	<link href="css/style.css" rel="stylesheet" type="text/css" />
 	<title>Estad&iacute;sticas Electorales</title>
-	
-	<!--Pantalla principal del sistema-->
-	<script type="text/javascript">
-	Ext.onReady(function(){
-		Ext.ns('Siprel');
-		Ext.QuickTips.init();
-		Ext.BLANK_IMAGE_URL = 'lib/extjs/resources/images/default/s.gif';
-		
-		
-		
-		//Menu del sistema
-		Siprel.Window = Ext.extend(Ext.Viewport, {
-			layout: 'border',
-			frame: true,
-			border: true,
-			autoScroll: true,
-			initComponent : function() {
-				Ext.apply(this,{
-					items : [
-					{   
-						xtype   : 'panel',
-						region  : 'north',
-						border  : false,
-						id      : 'norte',
-						layout  : 'column',
-						width   : 600,
-						height  : 40,
-						items   : [
-							{
-								columnWidth: .99,
-								xtype : 'panel',
-								html: "<div style='height: 30px;'>ESTAD&Iacute;STICAS ELECTORALES</div>"
-							},
-							{
-								width  : 170,
-								height : 32,
-								items :	new Ext.form.ComboBox({
-										xtype : 'combo',
-										hideLabel : true,
-										id    : 'usu_combo_theme',
-										name  : 'idcombotheme',
-										forceSelection : true,
-										editable       : false,
-										triggerAction  : 'all',
-										store : [
-											['peppermint','Rojo'],
-											['gray','Gris'],
-											['slate','Slate'],
-											['blue','Azul'],
-											['silverCherry','Plateado']
-										],
-										value: 'blue'
-									})
-							}
-						 ]
-					},
-					{
-						xtype:        'panel',
-						border:       false,
-						title:        'Men&uacute; principal',
-						id:           'panelMenu',
-						region:       'west',
-						style:        'width:18%;',
-						split:        true, 
-						titlebar:     true,
-						collapsible:  true,
-						frame:        true,
-						autoScroll: true,
-						items :  [ { xtype : 'panel', id : 'menu', border : false } ]
-					},
-					{
-						region: 'center',
-						xtype:  'panel',
-						frame:  true, 
-						id:     'panelCentral',
-						layout: 'fit',
-						style:  'width:100%;height:99%',
-						autoScroll: true,
-						items : [{ xtype : 'panel', id : 'central', border : false }]
-					}
-				]
-			});
-			
-			Siprel.Window.superclass.initComponent.apply(this, arguments);			
-			},
-			afterRender : function() {
-				Siprel.Window.superclass.afterRender.apply(this, arguments);
-				Ext.getCmp('usu_combo_theme').on('select', function(combo, record, indice){
-					var tema = Ext.getCmp('usu_combo_theme').getValue();
-					Ext.util.CSS.swapStyleSheet('theme','lib/extjs/resources/css/xtheme-'+tema+'.css');
-				});
-			}
-		});
-		
-		var principal = new Siprel.Window({
-			name:'Siprel'
-		});
-		
-		principal.show();
-		
-		actualizarPanel('menu',URL_SIPREL+'html/menu.html'); 
-		
-	});
-	</script>
 </head>
 <body>
+<div id="headerbg">
+  <div id="headerblank">
+    <div id="header">
+      <h1>Estad&iacute;sticas Electorales</h1>
+	</div>
+  </div>
+</div>
+
+<div id="contentbg">
+  <div id="contentblank">
+    <div id="content">
+      <div id="contentleft">
+        <div id="leftnavheading">
+          <h4>Menu principal</h4>
+        </div>
+        <div id="leftnav">
+          <ul>
+            <li><a href="/?opcion=1" class="leftnav">Consolidado Partido Lista </a></li>
+            <li><a href="/?opcion=2" class="leftnav">Consolidado Partido Departamental </a></li>
+            <li><a href="#" class="leftnav">Resumen Votaci&oacute;n Candidatos</a></li>
+            <li><a href="#" class="leftnav">Resumen Votaci&oacute;n Partido </a></li>
+            <li><a href="#" class="leftnav">Elegidos Corporaciones </a></li>
+            <li><a href="#" class="leftnav">Listado Votaci&oacute;n Candidatos</a></li>
+            <li><a href="#" class="leftnav">Resumen Curules Asignadas</a></li>
+            <li><a href="#" class="leftnav">Listas Mayor Votaci&oacute;n</a></li>
+            <li><a href="#" class="leftnav">Sollicitudin viverra. </a></li>
+            <li><a href="#" class="leftnav">Elegidos Asignaci&oacute;n Curules</a></li>
+          </ul>
+        </div>
+      </div>
+	  
+      <div id="contentmid">
+		<!-- Codigo dinamico que me permite cumplir con los requerimientos -->
+		<?php
+			switch($_GET['opcion']){
+				
+				case 1:
+					require("contenido/consolidadoPartidoLista.php");
+				break;
+				
+				default:
+					echo "HOME PRINCIPAL";//Un require para el home
+			}
+		?>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="footerbg">
+  <div id="footerblank">
+    <div id="footer">
+      <div id="copyrights">© Copyright Information Goes Here. All Rights Reserved.</div>
+    </div>
+  </div>
+</div>
+
 </body>
+
 </html>
