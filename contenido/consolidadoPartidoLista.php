@@ -112,7 +112,14 @@
 		
 		$texto1 = (isset($_GET['mesa']) && $_GET['mesa'] != "-")?" AND pm.codtransmision = '".$_GET['mesa']."'  ":"";
 		$texto2 = (isset($_GET['comuna']) && $_GET['comuna'] != "-")?" AND pc.idcomuna = ".$_GET['comuna']:"";
-		$texto3 = (isset($_GET['partido']) && $_GET['partido'] != "-")?" AND pp.codpartido = ".$_GET['partido']:"";
+		$texto3 = "";
+		$txt4 = "";
+		if(isset($_GET['partido']) && $_GET['partido'] != "-"){
+			$texto3 = " AND pp.codpartido = ".$_GET['partido'];
+			$txt4 = "AND pc.codpartido = ".$_GET['partido'];
+		}
+		// (isset($_GET['partido']) && $_GET['partido'] != "-")?" AND pp.codpartido = ".$_GET['partido']:"";
+		
 		
 		$query =<<<EOF
 		SELECT pp.codpartido as codigo ,pp.descripcion, SUM(mv.numvotos) as votos
@@ -130,11 +137,40 @@ EOF;
 		$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
 		$result   = ibase_query($firebird,$query);
 		
+		$result1 = null;
+		$query1 = null;
+		if(isset($_GET['detallado']) && $_GET['detallado'] == 1) {
+			$query1 =<<<EOR
+			SELECT pc.codpartido,pc.codcandidato, pc.nombres ||' '|| CASE WHEN pc.codcandidato = 0 THEN '(LISTA)' ELSE pc.apellidos END as descripcion, SUM(mv.numvotos) as votos
+			FROM PMESAS pm, PCANDIDATOS pc, MVOTOS mv
+			WHERE pm.codtransmision = mv.codtransmision $texto1
+			AND pc.idcandidato = mv.idcandidato $texto2
+			AND pc.coddivipol LIKE '$codcordiv' || '%'
+			AND pm.coddivipol LIKE '$coddivipol'  || '%'
+			AND pm.codcorporacion = $codcorporacion $txt4
+			AND pc.codnivel = $nivcorpo
+			GROUP BY pc.codpartido,pc.codcandidato,descripcion;
+EOR;
+			$result1 = ibase_query($firebird,$query1);
+		}
+			
+		$candidatos = array();
+		if($result1 != null){
+			while($row = ibase_fetch_object($result1)) {
+				array_push($candidatos,$row);
+			}
+		}
+		
+		//Definir url con los parametros para la generacion de los reportes
+		$urlReportes  = "http://".$_SERVER['HTTP_HOST'];
+		$urlReportes .="/reportes/repConPartidolista.php?codcorporacion=$codcorporacion&nivcorpo=$nivcorpo&coddivipol=$coddivipol&codnivel=$codnivel&opcion=1&formato=";
+		
+		
 	?>
 
 	<!-- En esta parte incluyo el codigo necesario para mostrar la tabla con los datos de la consulta -->
 	<!-- Adicionar los links para hacer la descarga de los correspondientes reportes -->
-	<table>
+	<table border="1">
 		<tr>
 			<th>Codigo</th>
 			<th>Nombre</th>
@@ -145,10 +181,31 @@ EOF;
 				<td><?php echo $row->CODIGO?></td>
 				<td><?php echo htmlentities($row->DESCRIPCION)?></td>
 				<td><?php echo $row->VOTOS?></td>
+				
 			</tr>
+			<?php 
+				foreach($candidatos as $candidato) { 
+					if($candidato->CODPARTIDO == $row->CODIGO) { ?>
+						<tr>
+						<td><?php echo $row->CODIGO .'-'.$candidato->CODCANDIDATO ?></td>
+						<td><?php echo htmlentities($candidato->DESCRIPCION)?></td>
+						<td><?php echo $candidato->VOTOS?></td>
+						<tr>
+			<?php }} ?>
 		<?php } ?>
+		<tr>
+		<table>
+			<tr>
+			<td><h4>Descargar</h4></td>
+			<td><a href="<?php echo $urlReportes."pdf"?>" target="_BLANK"><img src="images/pdf.png"/></a><td>
+			<td><img src="images/pdf.png"/><td>
+			<td><img src="images/pdf.png"/><td>
+			<td><img src="images/pdf.png"/><td>
+			<td><img src="images/pdf.png"/><td>
+			</tr>
+		</table>
+		</tr>
 	</table>
-
 	
 	<?php 
 		//Cierro la conexion
@@ -157,10 +214,3 @@ EOF;
 	?>
 
 <?php } ?>
-
-
-
-<!--Mostrar la tabla en el segundo caso cuando se envio la peticion-->
-<!-- Aqui abajo va el codigo necesario para contruir la tabla con los datos y los links para hacer la descarga 
-	de los reportes
--->
