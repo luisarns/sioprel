@@ -85,13 +85,18 @@
 		require('conexion.php');
 		include_once('FunDivipol.php');
 		
+		$urlReportes = "http://".$_SERVER['HTTP_HOST']."/reportes/repConPartidolista.php?";
+		
 		$codcorporacion = $_GET['corporacion'];
 		$nivcorpo  = getNivelCorporacion($codcorporacion);
+		
+		$urlReportes.="codcorporacion=$codcorporacion";
 		
 		
 		//Codigo para generar el coddivipol
 		$coddivipol = $_GET['departamento'];
 		$codnivel   = 1;
+		
 		
 		if(isset($_GET['municipio']) && $_GET['municipio'] != "-" ){
 			$coddivipol .= $_GET['municipio'];
@@ -108,18 +113,31 @@
 			}
 		}
 		
+		$urlReportes.="&nivcorpo=$nivcorpo&coddivipol=$coddivipol&codnivel=$codnivel&opcion=1";
+		
 		$codcordiv = substr($coddivipol,0,getNumDigitos($nivcorpo));
 		
-		$texto1 = (isset($_GET['mesa']) && $_GET['mesa'] != "-")?" AND pm.codtransmision = '".$_GET['mesa']."'  ":"";
-		$texto2 = (isset($_GET['comuna']) && $_GET['comuna'] != "-")?" AND pc.idcomuna = ".$_GET['comuna']:"";
+		$texto1 = " ";
+		if(isset($_GET['mesa']) && $_GET['mesa'] != "-"){
+			$texto1 = " AND pm.codtransmision = '".$_GET['mesa']."'";
+			$urlReportes.="&codtransmision=".$_GET['mesa'];
+		}
+		
+		$texto2 ="";
+		if(isset($_GET['comuna']) && $_GET['comuna'] != "-"){
+			$texto2 = " AND pc.idcomuna = ".$_GET['comuna'];
+			$urlReportes.="&idcomuna=".$_GET['comuna'];
+		}
+		
 		$texto3 = "";
 		$txt4 = "";
 		if(isset($_GET['partido']) && $_GET['partido'] != "-"){
 			$texto3 = " AND pp.codpartido = ".$_GET['partido'];
 			$txt4 = "AND pc.codpartido = ".$_GET['partido'];
+			$urlReportes.="&codpartido=".$_GET['partido'];
 		}
-		// (isset($_GET['partido']) && $_GET['partido'] != "-")?" AND pp.codpartido = ".$_GET['partido']:"";
 		
+		$urlReportes.="&formato=";
 		
 		$query =<<<EOF
 		SELECT pp.codpartido as codigo ,pp.descripcion, SUM(mv.numvotos) as votos
@@ -160,11 +178,6 @@ EOR;
 				array_push($candidatos,$row);
 			}
 		}
-		
-		//Definir url con los parametros para la generacion de los reportes
-		$urlReportes  = "http://".$_SERVER['HTTP_HOST'];
-		$urlReportes .="/reportes/repConPartidolista.php?codcorporacion=$codcorporacion&nivcorpo=$nivcorpo&coddivipol=$coddivipol&codnivel=$codnivel&opcion=1&formato=";
-		
 		
 	?>
 
