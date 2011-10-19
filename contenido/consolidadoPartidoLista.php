@@ -55,13 +55,8 @@
 	<!--//-->
 	</div>
 	
-	
-	<div id="divselzona" style="display:none;">
-	<!-- 
-	Zona : <select id="selzona" name="zona" onChange="alert('Cambio la zona')">
-	<option value = "-" > Seleccione un municipio </option> </select>
-	 -->
-	</div>
+	<!--//-->
+	<div id="divselzona" style="display:none;"></div>
 	
 	<div id="divselcomuna" style="display:none;">
 	Comuna : <select id="selcomuna" name="comuna" onChange="alert('Cambio la comuna')">

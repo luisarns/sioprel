@@ -148,11 +148,67 @@ function comunaCargaPuesto(idcomuna) {
 }
 
 
-function zonaCargaPuesto(sel) {
+function zonaCargaPuesto(zona) {
+	
+	document.formPrincipal.municipio.disabled = true;
+	var divipol = document.formPrincipal.departamento.value + document.formPrincipal.municipio.value;
+	
+	var ajax = nuevoAjax();
+	var selectDestino = document.getElementById('selpuesto');
+	
+	ajax.open("GET", "contenido/cargarPuestos.php?zona="+zona+"&divipol="+divipol, true);
+	ajax.onreadystatechange= function () {
+		if (ajax.readyState == 1) {
+			selectDestino.length=0;
+			var nuevaOpcion=document.createElement("option"); 
+			nuevaOpcion.value=0; 
+			nuevaOpcion.innerHTML="Cargando...";
+			selectDestino.appendChild(nuevaOpcion);
+			selectDestino.disabled=true;
+		}
+		if (ajax.readyState == 4) {
+			selectDestino.parentNode.innerHTML=ajax.responseText;
+		}
+	}
+	ajax.send(null);
+	
+	var selMuncp = document.formPrincipal.puesto.value = '-';
+	var divMuncp = document.getElementById('divselpuesto');
+	if(divMuncp.style.display == "none") {
+		mostrar('divselpuesto');
+	}
 	
 }
 
-function cargarMesas(sel){
+function cargarMesas(divipol){
+	
+	//Carga las mesas dada la divipol 
+	document.formPrincipal.zona.disabled = true;
+	var corpo = document.formPrincipal.corporacion.value;
+	
+	var ajax = nuevoAjax();
+	var selectDestino = document.getElementById('selmesa');
+	
+	ajax.open("GET", "contenido/cargarMesas.php?divipol="+divipol+"&corporacion="+corpo, true);
+	ajax.onreadystatechange= function () {
+		if (ajax.readyState == 1) {
+			selectDestino.length=0;
+			var nuevaOpcion=document.createElement("option");
+			nuevaOpcion.value=0; 
+			nuevaOpcion.innerHTML="Cargando...";
+			selectDestino.appendChild(nuevaOpcion);
+			selectDestino.disabled=true;
+		}
+		if (ajax.readyState == 4) {
+			selectDestino.parentNode.innerHTML=ajax.responseText;
+		}
+	}
+	ajax.send(null);
+	
+	var divMuncp = document.getElementById('divselmesa');
+	if(divMuncp.style.display == "none") {
+		mostrar('divselmesa');
+	}
 	
 }
 
