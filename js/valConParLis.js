@@ -7,10 +7,17 @@ function validar(form){
 	if(form.corporacion.value == '-'){
 		alert("Seleccione una corporación");
 		return false;
-	}else if(form.partido.value == '-'){
-		alert("Seleccione un partido");
+	}else if(form.departamento.value == '-'){
+		alert("Seleccione un departamento");
 		return false;
 	}
+	
+	form.corporacion.disabled = false;
+	form.zona.disabled = false;
+	form.municipio.disabled = false;
+	form.departamento.disabled = false;
+	form.comuna.disabled = false;
+	
 	return true;
 }
 

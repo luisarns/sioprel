@@ -21,6 +21,9 @@
 		}
 		
 		echo "</select>";
+		
+		ibase_free_result($result);
+		ibase_close($cnh);
 	}
 	
 ?>
