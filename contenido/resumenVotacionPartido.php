@@ -69,7 +69,7 @@ EOF;
 	<table border="1">
 		<tr>
 			<th>Código</th>
-			<th>Nombre</th>
+			<th>Descripción</th>
 			<th>Votos</th>
 		</tr>
 		<?php while($row = ibase_fetch_object($result)) { ?>
