@@ -49,6 +49,6 @@
 
 <?php } else if ( $_GET['consultar'] == "Consultar") { ?>
 	
-	
+	<?php echo "Generando el listado"; ?>
 	
 <?php } ?>

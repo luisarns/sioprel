@@ -1,5 +1,23 @@
 function validar(form){
-	return false;
+	
+	if(form.corporacion.value == '-'){
+		alert("Seleccione una corporación");
+		return false;
+	}else if(form.departamento.value == '-'){
+		alert("Seleccione un departamento");
+		return false;
+	}else if (form.municipio.value == '-') {
+		alert("Seleccione un municipio");
+		return false;
+	}else if (document.getElementById('divselcomuna').style.display != 'none' && form.comuna.value == '-') {
+		alert("Seleccione una comuna");
+		return false
+	}
+	
+	document.formPrincipal.corporacion.disabled = false;
+	document.formPrincipal.departamento.disabled = false;
+	
+	return true;
 }
 
 function mostrarDepto(sel){
