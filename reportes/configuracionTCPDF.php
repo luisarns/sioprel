@@ -14,11 +14,7 @@
 	$pdf_page_format = 'A4';
 
 	//La cabecera y pie de pagina del documento
-	$pathLogo = "../../images/registraduria.png";
-	$logowidth = 30;
-
-	//La cabecera y pie de pagina del documento
-	$pathLogo = "../../images/registraduria.png";
+	$pathLogo = "registraduria.png";
 	$logowidth = 30;
 	$headertitle = utf8_encode("ESTADÍSTICAS ELECTORALES");
 	
@@ -41,4 +37,11 @@
 	
 	//Fuente por defecto
 	$fontmnspace = "courier";
+	
+	// $pagina = "";
+	// $pagina = "";
+	// $pagina = "";
+	// $pagina = "";
+	// $pagina = "";
+	// $pagina = "";
 ?>

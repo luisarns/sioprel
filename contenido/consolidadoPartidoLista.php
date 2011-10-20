@@ -203,7 +203,7 @@ EOR;
 						<td><?php echo $row->CODIGO .'-'.$candidato->CODCANDIDATO ?></td>
 						<td><?php echo htmlentities($candidato->DESCRIPCION)?></td>
 						<td><?php echo $candidato->VOTOS?></td>
-						<tr>
+						</tr>
 			<?php }} ?>
 		<?php } ?>
 		<tr>

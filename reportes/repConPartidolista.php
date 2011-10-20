@@ -2,6 +2,6 @@
 	if($_GET['formato'] != "pdf"){
 	
 	} else {
-		echo $_GET['formato'];
+		require_once('consolidadoPartidoLista_pdf.php');
 	}
 ?>
