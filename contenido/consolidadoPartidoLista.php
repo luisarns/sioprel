@@ -137,8 +137,6 @@
 			$urlReportes.="&codpartido=".$_GET['partido'];
 		}
 		
-		$urlReportes.="&formato=";
-		
 		$query =<<<EOF
 		SELECT pp.codpartido as codigo ,pp.descripcion, SUM(mv.numvotos) as votos
 		FROM PPARTIDOS pp, PMESAS pm, PCANDIDATOS pc, MVOTOS mv
@@ -170,8 +168,11 @@ EOF;
 			GROUP BY pc.codpartido,pc.codcandidato,descripcion;
 EOR;
 			$result1 = ibase_query($firebird,$query1);
+			$urlReportes.="&detallado=".$_GET['detallado'];
 		}
 			
+		$urlReportes.="&formato=";
+		
 		$candidatos = array();
 		if($result1 != null){
 			while($row = ibase_fetch_object($result1)) {
@@ -210,19 +211,18 @@ EOR;
 		<table>
 			<tr>
 			<td><h4>Descargar</h4></td>
-			<td><a href="<?php echo $urlReportes."pdf"?>" target="_BLANK"><img src="images/pdf.png"/></a><td>
-			<td><img src="images/pdf.png"/><td>
-			<td><img src="images/pdf.png"/><td>
-			<td><img src="images/pdf.png"/><td>
-			<td><img src="images/pdf.png"/><td>
+			<td><a href="<?php echo $urlReportes."pdf"?>" target="_BLANK"><img src="images/logo_pdf.png" alt="pdf" height="50" width="50" /></a><td>
+			<td><a href="<?php echo $urlReportes."xls"?>" target="_BLANK"><img src="images/logo_xls.jpg"  alt="xls" height="50" width="50" /></a><td>
+			<td><a href="<?php echo $urlReportes."doc"?>" target="_BLANK"><img src="images/logo_doc.jpg"  alt="doc" height="50" width="50" /></a><td>
+			<td><a href="<?php echo $urlReportes."txt"?>" target="_BLANK"><img src="images/logo_text.jpg" alt="txt" height="50" width="50" /></a><td>
 			</tr>
 		</table>
 		</tr>
 	</table>
 	
 	<?php 
-		//Cierro la conexion
 		ibase_free_result($result);
+		if($result1 != null){ibase_free_result($result1);}
 		ibase_close($firebird);
 	?>
 
