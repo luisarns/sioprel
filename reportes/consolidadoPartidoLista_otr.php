@@ -64,7 +64,7 @@
 	ibase_close($firebird);
 	
 	//Creando el escritor en funcion del formato al que se quiera exportar el documento
-	switch($_GET['formato']){
+	switch($_GET['formato']) {
 		case 'xls':
 			header("Content-type: application/vnd.ms-excel");
 			header("Content-Disposition: attachment; filename=consolidadoPartidoLista.xls");
