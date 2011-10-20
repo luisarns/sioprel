@@ -2,7 +2,6 @@
 	require_once('configuracionOTR.php');
 	require_once('resumenVotacionCandidato_inc.php');
 	
-	
 	//Defino las propiedades
 	$objPHPExcel = new PHPExcel();
 	
@@ -21,7 +20,7 @@
             ->setCellValue('C1', 'APELLIDOS')
             ->setCellValue('D1', 'VOTOS');
 			
-	//Agregando los valores al informe
+
 	$cont = 2;
 	while($row = ibase_fetch_object($result)) {
 		$objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,$row->CODIGO);
@@ -35,8 +34,10 @@
 	$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
 	$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
 	
+	
 	ibase_free_result($result);
 	ibase_close($firebird);
+	
 	
 	switch($_GET['formato']){
 		case 'xls':
@@ -69,4 +70,6 @@
 			$objWriter->save('php://output');
 		break;
 	}
+	
+	
 ?>

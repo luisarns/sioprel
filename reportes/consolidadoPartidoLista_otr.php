@@ -9,11 +9,13 @@
 	while($row = ibase_fetch_object($result)) {
 		array_push($partidos,$row);
 	}
+	
 	if($result1 != null) {
 		while($row = ibase_fetch_object($result1)) {
 			array_push($candidatos,$row);
 		}
 	}
+	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	$objPHPExcel = new PHPExcel();
