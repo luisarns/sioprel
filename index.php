@@ -26,7 +26,7 @@
             <li><a href="/?opcion=1" class="leftnav">Consolidado Partido Lista </a></li>
             <li><a href="/?opcion=2" class="leftnav">Consolidado Partido Departamental </a></li>
             <li><a href="/?opcion=3" class="leftnav">Resumen Votaci&oacute;n Candidatos</a></li>
-            <li><a href="#" class="leftnav">Resumen Votaci&oacute;n Partido </a></li>
+            <li><a href="/?opcion=4" class="leftnav">Resumen Votaci&oacute;n Partido </a></li>
             <li><a href="#" class="leftnav">Elegidos Corporaciones </a></li>
             <li><a href="#" class="leftnav">Listado Votaci&oacute;n Candidatos</a></li>
             <li><a href="#" class="leftnav">Resumen Curules Asignadas</a></li>
@@ -51,6 +51,10 @@
 				case 3:
 					require("contenido/resumenVotacionCandidato.php");
 				break;
+				case 4:
+					require("contenido/resumenVotacionPartido.php");
+				break;
+				
 				default:
 					echo "HOME PRINCIPAL";//Un require para el home
 			}
