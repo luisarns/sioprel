@@ -137,6 +137,7 @@
 			$urlReportes.="&codpartido=".$_GET['partido'];
 		}
 		
+		//Esta consulta no esta completa, hay que actualizarla
 		$query =<<<EOF
 		SELECT pp.codpartido as codigo ,pp.descripcion, SUM(mv.numvotos) as votos
 		FROM PPARTIDOS pp, PMESAS pm, PCANDIDATOS pc, MVOTOS mv

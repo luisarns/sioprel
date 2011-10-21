@@ -81,6 +81,7 @@
 		AND pc.coddivipol LIKE '$cordivi' || '%' AND pc.codnivel = $nivcorpo
 		AND mv.codtransmision = pm.codtransmision AND pc.codcandidato <> 0
 		AND pc.idcandidato = mv.idcandidato AND pc.codcorporacion = $codcorporacion
+		AND pm.codcorporacion = $codcorporacion
 		GROUP BY pc.codpartido,pc.codcandidato,pc.nombres,pc.apellidos 
 		ORDER BY pc.codpartido, pc.codcandidato
 EOF;

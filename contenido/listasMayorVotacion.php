@@ -82,13 +82,15 @@
 		}
 		
 		$query =<<<EOF
-		SELECT pp.codpartido ||'-'|| pc.codcandidato as codigo, pc.nombres, pc.apellidos, pp.descripcion, sum(mv.numvotos) as votos
-		FROM ppartidos pp, pcandidatos pc, pmesas pm, mvotos mv, pdivipol pd
+		SELECT pc.nombres as descripcion, SUM(mv.numvotos) as votos
+		FROM pcandidatos pc, pmesas pm, mvotos mv, pdivipol pd
 		WHERE pc.coddivipol LIKE '$codcordiv'   || '%' AND pc.codnivel = $nivcorpo AND pc.codcorporacion = $codcorporacion
 		AND pd.coddivipol   LIKE '$coddivcorto' || '%' AND pm.codtransmision = mv.codtransmision
-		AND pc.idcandidato = mv.idcandidato AND pp.codpartido = pc.codpartido AND pc.codcandidato <> 0
+		AND pc.idcandidato = mv.idcandidato AND pc.codcandidato = 0
+		AND pm.codcorporacion = $codcorporacion
 		AND pd.coddivipol = pm.coddivipol AND pd.codnivel = 4 $txt
-		GROUP BY pp.codpartido,pc.codcandidato,pc.nombres, pc.apellidos,pp.descripcion
+		GROUP BY pc.nombres
+		ORDER BY votos DESC
 EOF;
 		
 		$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
@@ -96,23 +98,15 @@ EOF;
 		
 	?>
 	
-	<!-- Codigo de la tabla que se genera en esta consulta-->
 	<table border="1">
 		<tr>
-			<th>Código</th>
-			<th>Nombres</th>
-			<th>Apellidos</th>
-			<th>Partido</th>
+			<th>Lista</th>
 			<th>Votos</th>
 		</tr>
 		<?php while($row = ibase_fetch_object($result)) { ?>
 			<tr>
-				<td><?php echo $row->CODIGO?></td>
-				<td><?php echo htmlentities($row->NOMBRES)?></td>
-				<td><?php echo htmlentities($row->APELLIDOS)?></td>
 				<td><?php echo htmlentities($row->DESCRIPCION)?></td>
 				<td><?php echo $row->VOTOS?></td>
-				
 			</tr>
 		<?php } ?>
 		<tr>
