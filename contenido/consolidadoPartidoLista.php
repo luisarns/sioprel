@@ -1,4 +1,3 @@
-<!-- Caso inicial cuando muestro el formulario para hacer los filtros -->
 <?php if(!isset($_GET['consultar'])) { ?>
 	<?php
 		include_once('corporaciones.php');
@@ -92,7 +91,6 @@
 		
 		$urlReportes.="codcorporacion=$codcorporacion";
 		
-		
 		//Codigo para generar el coddivipol
 		$coddivipol = $_GET['departamento'];
 		$codnivel   = 1;
@@ -126,6 +124,7 @@
 		$texto2 ="";
 		if(isset($_GET['comuna']) && $_GET['comuna'] != "-"){
 			$texto2 = " AND pc.idcomuna = ".$_GET['comuna'];
+			$texto2 .= " AND pd.idcomuna = ".$_GET['comuna'];
 			$urlReportes.="&idcomuna=".$_GET['comuna'];
 		}
 		
@@ -140,16 +139,19 @@
 		//Esta consulta no esta completa, hay que actualizarla
 		$query =<<<EOF
 		SELECT pp.codpartido as codigo ,pp.descripcion, SUM(mv.numvotos) as votos
-		FROM PPARTIDOS pp, PMESAS pm, PCANDIDATOS pc, MVOTOS mv
+		FROM PPARTIDOS pp, PMESAS pm, PCANDIDATOS pc, MVOTOS mv, pdivipol pd
 		WHERE pp.codpartido = pc.codpartido $texto1
+		AND pd.coddivipol LIKE '$coddivipol' || '%' AND pd.codnivel = 4
+		AND pm.coddivipol = pd.coddivipol
 		AND pm.codtransmision = mv.codtransmision $texto2
 		AND pc.idcandidato = mv.idcandidato $texto3
 		AND pc.coddivipol LIKE '$codcordiv'  || '%'
-		AND pm.coddivipol LIKE '$coddivipol' || '%'
 		AND pc.codnivel = $nivcorpo
 		AND pm.codcorporacion = $codcorporacion
-		GROUP BY pp.codpartido, pp.descripcion;
+		GROUP BY pp.codpartido, pp.descripcion
 EOF;
+		
+		// echo $query."<br/>";
 		
 		$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
 		$result   = ibase_query($firebird,$query);

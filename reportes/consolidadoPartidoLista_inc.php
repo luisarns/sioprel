@@ -25,15 +25,16 @@
 	
 	$query =<<<EOF
 		SELECT pp.codpartido as codigo ,pp.descripcion, SUM(mv.numvotos) as votos
-		FROM PPARTIDOS pp, PMESAS pm, PCANDIDATOS pc, MVOTOS mv
+		FROM PPARTIDOS pp, PMESAS pm, PCANDIDATOS pc, MVOTOS mv, pdivipol pd
 		WHERE pp.codpartido = pc.codpartido $texto1
+		AND pd.coddivipol LIKE '$coddivipol' || '%' AND pd.codnivel = 4
+		AND pm.coddivipol = pd.coddivipol
 		AND pm.codtransmision = mv.codtransmision $texto2
 		AND pc.idcandidato = mv.idcandidato $texto3
 		AND pc.coddivipol LIKE '$codcordiv'  || '%'
-		AND pm.coddivipol LIKE '$coddivipol' || '%'
 		AND pc.codnivel = $nivcorpo
 		AND pm.codcorporacion = $codcorporacion
-		GROUP BY pp.codpartido, pp.descripcion;
+		GROUP BY pp.codpartido, pp.descripcion
 EOF;
 	
 	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());

@@ -10,12 +10,17 @@ function validar(form){
 	}else if(form.departamento.value == '-'){
 		alert("Seleccione un departamento");
 		return false;
+		
+	}else if (document.getElementById('divselcomuna').style.display != 'none' && form.comuna.value == '-') {
+		alert("Seleccione una comuna");
+		return false
 	}
 	
 	form.corporacion.disabled = false;
-	form.zona.disabled = false;
-	form.municipio.disabled = false;
 	form.departamento.disabled = false;
+	form.municipio.disabled = false;
+	
+	form.zona.disabled = false;
 	form.comuna.disabled = false;
 	
 	return true;
