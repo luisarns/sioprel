@@ -9,7 +9,7 @@
 	<script type="text/javascript" src="js/ajax.js"></script>
 	<script type="text/javascript" src="js/valLisEleCorp.js"></script>
 	
-	<h3>Formulario Resumen Votación Candidato</h3>
+	<h3>Formulario Listado Elegidos Corporación</h3>
 	<form name="formPrincipal" method="GET" onSubmit="return validar(this);">
 	
 		<!--//-->
@@ -117,8 +117,6 @@
 		AND pp.codpartido = pc.codpartido
 		AND pc.codcorporacion = $codcorporacion
 EOF;
-
-		// echo "<br/>".$query."<br/>";
 
 		$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
 		$result   = ibase_query($firebird,$query);

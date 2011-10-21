@@ -1,6 +1,5 @@
-<?php
+<?php	
 	
-	// $opcion   = $_GET['opcion'];
 	$divipol  = $_GET['divipol'];
 	
 	require('conexion.php');
@@ -22,6 +21,5 @@
 	
 	ibase_free_result($result);
 	ibase_close($cnh);
-	
 	
 ?>
