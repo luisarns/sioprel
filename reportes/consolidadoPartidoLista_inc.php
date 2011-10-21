@@ -57,4 +57,5 @@ EOF;
 EOR;
 		$result1 = ibase_query($firebird,$query1);
 	}
+	
 ?>

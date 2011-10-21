@@ -57,12 +57,24 @@
 					require("contenido/resumenVotacionPartido.php");
 				break;
 				
+				case 5:
+					require("contenido/listadoElegidos.php");
+				break;
+				
 				case 6:
 					require("contenido/listadoVotacionCandidato.php");
 				break;
 				
+				case 7:
+					require("contenido/resumenCurulesAsignadas.php");
+				break;
+				
 				case 8:
 					require("contenido/listasMayorVotacion.php");
+				break;
+				
+				case 9:
+					require("contenido/elegidosAsignCurules.php");
 				break;
 				
 				default:
