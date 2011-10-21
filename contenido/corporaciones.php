@@ -1,10 +1,18 @@
 <?php
 	require('conexion.php');
 	
+	$txt = "";
+	if(isset($tipoEleccion)){
+		$txt = " WHERE tipoeleccion = $tipoEleccion ";
+	}
+	
 	$cnh = ibase_connect($host,$username,$password) or die ("No se pudo conectar la base de datos"); 
-	$query = "SELECT codcorporacion,descripcion FROM pcorporaciones ORDER BY codcorporacion";
+	$query = "SELECT codcorporacion,descripcion FROM pcorporaciones $txt ORDER BY codcorporacion ";
 	$result = ibase_query($cnh,$query);
 	$corporaciones = array();
+	
+	
+	
 	while($row = ibase_fetch_object($result)) {
 			$corporacion = array();
 			$corporacion['id'] = $row->CODCORPORACION;

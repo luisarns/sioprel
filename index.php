@@ -23,16 +23,15 @@
         </div>
         <div id="leftnav">
           <ul>
-            <li><a href="/?opcion=1" class="leftnav">Consolidado Partido Lista </a></li>
-            <li><a href="/?opcion=2" class="leftnav">Consolidado Partido Departamental </a></li>
-            <li><a href="/?opcion=3" class="leftnav">Resumen Votaci&oacute;n Candidatos</a></li>
-            <li><a href="/?opcion=4" class="leftnav">Resumen Votaci&oacute;n Partido </a></li>
-            <li><a href="/?opcion=5" class="leftnav">Elegidos Corporaciones </a></li>
-            <li><a href="/?opcion=6" class="leftnav">Listado Votaci&oacute;n Candidatos</a></li>
-            <li><a href="/?opcion=7" class="leftnav">Resumen Curules Asignadas</a></li>
-            <li><a href="/?opcion=8" class="leftnav">Listas Mayor Votaci&oacute;n</a></li>
-            <li><a href="/?opcion=9" class="leftnav">Sollicitudin viverra. </a></li>
-            <li><a href="/?opcion=10" class="leftnav">Elegidos Asignaci&oacute;n Curules</a></li>
+            <li><a href="/?opcion=1"  class="leftnav">Consolidado Partido Lista </a></li>
+            <li><a href="/?opcion=2"  class="leftnav">Consolidado Partido Departamental </a></li>
+            <li><a href="/?opcion=3"  class="leftnav">Resumen Votaci&oacute;n Candidatos</a></li>
+            <li><a href="/?opcion=4"  class="leftnav">Resumen Votaci&oacute;n Partido </a></li>
+            <li><a href="/?opcion=5"  class="leftnav">Elegidos Corporaciones </a></li>
+            <li><a href="/?opcion=6"  class="leftnav">Listado Votaci&oacute;n Candidatos</a></li>
+            <li><a href="/?opcion=7"  class="leftnav">Resumen Curules Asignadas</a></li>
+            <li><a href="/?opcion=8"  class="leftnav">Listas Mayor Votaci&oacute;n</a></li>
+            <li><a href="/?opcion=9"  class="leftnav">Elegidos Asignaci&oacute;n Curules</a></li>
           </ul>
         </div>
       </div>
@@ -45,18 +44,27 @@
 				case 1:
 					require("contenido/consolidadoPartidoLista.php");
 				break;
+				
 				case 2:
 					require("contenido/consolidadoPartidoDepto.php");
 				break;
+				
 				case 3:
 					require("contenido/resumenVotacionCandidato.php");
 				break;
+				
 				case 4:
 					require("contenido/resumenVotacionPartido.php");
 				break;
+				
 				case 6:
 					require("contenido/listadoVotacionCandidato.php");
 				break;
+				
+				case 8:
+					require("contenido/listasMayorVotacion.php");
+				break;
+				
 				default:
 					echo "HOME PRINCIPAL";
 			}
