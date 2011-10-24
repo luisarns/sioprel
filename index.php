@@ -20,7 +20,7 @@
      
 	 <div id="contentleft">
         <div id="leftnavheading">
-          <h4>Menu principal</h4>
+          <h4>Men&uacute; principal</h4>
         </div>
         <div id="leftnav">
           <ul>

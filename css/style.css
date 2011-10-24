@@ -18,7 +18,7 @@ h1,h2,h3,h4,h5,h6,span
 		float:left;
 		margin:0px;
 		padding:0px;
-		/*background-image: url(images/headerbg.jpg);*/
+		background-image: url(images/headerBg.jpg);
 		background-repeat:repeat-x;
 	}
 #headerblank
@@ -36,8 +36,8 @@ h1,h2,h3,h4,h5,h6,span
 		float: left;
 		margin:0px;
 		padding:0px;
-		/*background-image:url(images/header.jpg);*/
-		background-repeat:no-repeat;
+		/*background-image:url(images/header.jpg);
+		background-repeat:no-repeat;*/
 	}
 
 #menu
