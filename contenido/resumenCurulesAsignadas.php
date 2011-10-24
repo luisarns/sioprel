@@ -52,7 +52,7 @@
 		
 		<!--//-->
 		<input type="submit" name="consultar" value="Consultar"/><input type="reset" name="limpiar" value="Limpiar" />
-		<input type="hidden" name="opcion"  value="8"/>
+		<input type="hidden" name="opcion"  value="7"/>
 		
 	</form>
 	
