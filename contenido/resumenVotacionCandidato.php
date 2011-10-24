@@ -212,6 +212,7 @@ EOF;
 			</td>
 		</tr>
 	</table>
+	
 	<?php 
 		ibase_free_result($result);
 		ibase_close($firebird);
