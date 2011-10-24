@@ -9,62 +9,118 @@
 	<script type="text/javascript" src="js/ajax.js"></script>
 	<script type="text/javascript" src="js/valLisEleCorp.js"></script>
 	
-	<h3>Formulario Listado Elegidos Corporación</h3>
+	<!--<h3>Formulario Listado Elegidos Corporación</h3>-->
 	<form name="formPrincipal" method="GET" onSubmit="return validar(this);">
-	
-		<!--//-->
-		Corporaci&oacute;n : <select name="corporacion" onChange="mostrarDepto(this.value)" >
-		<option value = "-" > - </option>
-		<?php foreach($corporaciones as $corporacion){ ?>
-		<option value=<?php echo $corporacion['id'] ?> > <?php echo $corporacion['nombre'] ?> </option>
-		<?php } ?>
-		</select>
-		<br/>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+		<tr>
+			<td width="5%" background="../images/ds_comp_bars_gral.jpg">
+			<img src="../images/ds_comp_izq_bar_gral.jpg" width="25" height="25" />
+			</td>
+			<td width="83%" background="../images/ds_comp_bars_gral.jpg">
+				<font size="2"><strong>Formulario Elegidos Corporación</strong></font>
+			</td>
+			<td width="12%" align="right" background="../images/ds_comp_bars_gral.jpg">
+				<img src="../images/ds_comp_der_bar_gral.jpg" width="25" height="25" />
+			</td>
+		</tr>
+		</table>
 		
-		<!--//-->
-		Partido : <select name="partido" >
-		<option value = "-" > - </option>
-		<?php foreach($partidos as $partido){ ?>
-		<option value=<?php echo $partido['id'] ?> > <?php echo $partido['nombre'] ?> </option>
-		<?php } ?>
-		</select>
-		<!--//-->
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+		<tr>
+			<td class="regOscuro" align="left">
+				<STRONG>&nbsp;</STRONG>
+			</td>
+		</tr>
+		</table>
 		
-		<!--//-->
-		Sexo : <select name="sexo" >
-		<option value = "-" > - </option>
-		<option value = "M" > Masculino </option>
-		<option value = "F" > Femenino </option>
-		</select>
-		<!--//-->
+		<table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuave">
+			<tr>
+				<td class="regSuaveleft" >Corporaci&oacute;n :</td>
+				<td class="regSuaveleft">
+					<select name="corporacion" onChange="mostrarDepto(this.value)" >
+					<option value = "-" > - </option>
+					<?php foreach($corporaciones as $corporacion){ ?>
+					<option value=<?php echo $corporacion['id'] ?> > <?php echo $corporacion['nombre'] ?> </option>
+					<?php } ?>
+					</select>
+				</td>
+				
+				<td class="regSuaveleft">Sexo :</td>
+				<td class="regSuaveleft">
+					<select name="sexo" >
+						<option value = "-" > - </option>
+						<option value = "M" > Masculino </option>
+						<option value = "F" > Femenino </option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td class="regSuaveleft" >Partido :</td>
+				<td class="regSuaveleft" colspan="3">
+					<select name="partido" >
+						<option value = "-" > - </option>
+						<?php foreach($partidos as $partido){ ?>
+						<option value=<?php echo $partido['id'] ?> > <?php echo $partido['nombre'] ?> </option>
+						<?php } ?>
+					</select>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="regSuaveleft" colspan="2">
+					<div id="divseldepto" style="display:none;">
+					Departamento : <select name="departamento" onChange="cargarMunicipios(this.value)">
+					<option value = "-" > - </option>
+					<?php foreach($departamentos as $departamento) { ?>
+					<option value=<?php echo $departamento['id'] ?> > <?php echo $departamento['nombre'] ?> </option>
+					<?php } ?>
+					</select>
+					</div>
+				</td>
+				<td class="regSuaveleft" colspan="2">
+					<div id="divselmunicipio" style="display:none;">
+					Municipio : <select id="selmunicipio" name="municipio" onChange="alert('Cambio el municipio')">
+					<option value = "-" > Seleccione un departamento </option> </select>
+					<!--//-->
+					</div>
+				</td>
+			</tr>
+			
+			<tr>
+				<td class="regSuaveleft" colspan="3">
+					<div id="divselcomuna" style="display:none;">
+					Comuna : <select id="selcomuna" name="comuna" onChange="alert('Cambio la comuna')">
+					<option value = "-" > Seleccione un municipio </option> </select>
+					</div>
+				</td>
+				<td class="regSuaveleft">&nbsp;</td>
+			</tr>
+			
+		</table>
 		
-		<!-- Manejo de radio buttons -->
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+			<tr>
+				<td align="center" class='regOscuroCenter'>   
+					<input type="submit" class="hospital" name="consultar" value="Consultar"/>
+					<input type="reset"  class="hospital" name="limpiar" value="Limpiar" />
+				</td>
+			</tr>
+		</table>
+
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+			<tr>
+
+				<td background="../images/ds_comp_bari_gral.jpg">
+					<img src="../images/ds_comp_izq_bari_gral.jpg" width="25" height="25">
+				</td>
+				<td background="../images/ds_comp_bari_gral.jpg">&nbsp;</td>
+				<td align="right" background="../images/ds_comp_bari_gral.jpg">
+					<img src="../images/ds_comp_der_bari_gral.jpg" width="25" height="25">
+				</td>
+					
+			</tr>
+		</table>
 		
-		<!--//-->
-		<div id="divseldepto" style="display:none;">
-		Departamento : <select name="departamento" onChange="cargarMunicipios(this.value)">
-		<option value = "-" > - </option>
-		<?php foreach($departamentos as $departamento) { ?>
-		<option value=<?php echo $departamento['id'] ?> > <?php echo $departamento['nombre'] ?> </option>
-		<?php } ?>
-		</select>
-		</div>
-		
-		<div id="divselmunicipio" style="display:none;">
-		Municipio : <select id="selmunicipio" name="municipio" onChange="alert('Cambio el municipio')">
-		<option value = "-" > Seleccione un departamento </option> </select>
-		<!--//-->
-		</div>
-		
-		<div id="divselcomuna" style="display:none;">
-		Comuna : <select id="selcomuna" name="comuna" onChange="alert('Cambio la comuna')">
-		<option value = "-" > Seleccione un municipio </option> </select>
-		<!--//-->
-		</div>
-		<br/>
-		
-		<!-- Los votones para envio de los datos al servidor -->
-		<input type="submit" name="consultar" value="Consultar"/><input type="reset" name="limpiar" value="Limpiar" />
 		<input type="hidden" name="opcion"  value="5"/>
 	
 	</form>
@@ -123,7 +179,39 @@ EOF;
 		
 	?>
 	
-	<table border="1">
+	<table>
+	<tr>
+		<td><h4>Descargar</h4></td>
+		<td><a href="<?php echo $urlReportes."pdf"?>" target="_BLANK"><img src="images/logo_pdf.png"  alt="pdf" height="35" width="35" /></a><td>
+		<td><a href="<?php echo $urlReportes."xls"?>" target="_BLANK"><img src="images/logo_xls.jpg"  alt="xls" height="35" width="35" /></a><td>
+		<td><a href="<?php echo $urlReportes."doc"?>" target="_BLANK"><img src="images/logo_doc.jpg"  alt="doc" height="35" width="35" /></a><td>
+		<td><a href="<?php echo $urlReportes."txt"?>" target="_BLANK"><img src="images/logo_text.jpg" alt="txt" height="35" width="35" /></a><td>
+	</tr>
+	</table>
+	
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+		<tr>
+			<td width="5%" background="../images/ds_comp_bars_gral.jpg">
+			<img src="../images/ds_comp_izq_bar_gral.jpg" width="25" height="25" />
+			</td>
+			<td width="83%" background="../images/ds_comp_bars_gral.jpg">
+				<font size="2"><strong>Listado Elegidos Corporación </strong></font>
+			</td>
+			<td width="12%" align="right" background="../images/ds_comp_bars_gral.jpg">
+				<img src="../images/ds_comp_der_bar_gral.jpg" width="25" height="25" />
+			</td>
+		</tr>
+	</table>
+	
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+		<tr>
+			<td class="regOscuro" align="left">
+				<STRONG>&nbsp;</STRONG>
+			</td>
+		</tr>
+	</table>
+	
+	<table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuave">
 		<tr>
 			<th>Nombres</th>
 			<th>Apellidos</th>
@@ -138,16 +226,26 @@ EOF;
 				<td><?php echo $row->NUMVOTOS?></td>
 			</tr>
 		<?php } ?>
+	</table>
+	
+	
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 		<tr>
-		<table>
-			<tr>
-			<td><h4>Descargar</h4></td>
-			<td><a href="<?php echo $urlReportes."pdf"?>" target="_BLANK"><img src="images/logo_pdf.png"  alt="pdf" height="50" width="50" /></a><td>
-			<td><a href="<?php echo $urlReportes."xls"?>" target="_BLANK"><img src="images/logo_xls.jpg"  alt="xls" height="50" width="50" /></a><td>
-			<td><a href="<?php echo $urlReportes."doc"?>" target="_BLANK"><img src="images/logo_doc.jpg"  alt="doc" height="50" width="50" /></a><td>
-			<td><a href="<?php echo $urlReportes."txt"?>" target="_BLANK"><img src="images/logo_text.jpg" alt="txt" height="50" width="50" /></a><td>
-			</tr>
-		</table>
+			<td class="regOscuro" align="left">
+				<STRONG>&nbsp;</STRONG>
+			</td>
+		</tr>
+	</table>
+	
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+		<tr>
+			<td background="../images/ds_comp_bari_gral.jpg">
+				<img src="../images/ds_comp_izq_bari_gral.jpg" width="25" height="25">
+			</td>
+			<td background="../images/ds_comp_bari_gral.jpg">&nbsp;</td>
+			<td align="right" background="../images/ds_comp_bari_gral.jpg">
+				<img src="../images/ds_comp_der_bari_gral.jpg" width="25" height="25">
+			</td>
 		</tr>
 	</table>
 	
