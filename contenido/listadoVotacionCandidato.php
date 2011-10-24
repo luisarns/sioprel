@@ -94,6 +94,15 @@ EOF;
 	?>
 	
 	<!-- Codigo de la tabla que se genera en esta consulta-->
+	<table>
+			<tr>
+			<td><h4>Descargar</h4></td>
+			<td><a href="<?php echo $urlReportes."pdf"?>" target="_BLANK"><img src="images/logo_pdf.png"  alt="pdf" height="35" width="35" /></a><td>
+			<td><a href="<?php echo $urlReportes."xls"?>" target="_BLANK"><img src="images/logo_xls.jpg"  alt="xls" height="35" width="35" /></a><td>
+			<td><a href="<?php echo $urlReportes."doc"?>" target="_BLANK"><img src="images/logo_doc.jpg"  alt="doc" height="35" width="35" /></a><td>
+			<td><a href="<?php echo $urlReportes."txt"?>" target="_BLANK"><img src="images/logo_text.jpg" alt="txt" height="35" width="35" /></a><td>
+			</tr>
+	</table>
 	<table border="1">
 		<tr>
 			<th>Código</th>
@@ -109,20 +118,8 @@ EOF;
 				<td><?php echo htmlentities($row->APELLIDOS)?></td>
 				<td><?php echo htmlentities($row->DESCRIPCION)?></td>
 				<td><?php echo $row->VOTOS?></td>
-				
 			</tr>
 		<?php } ?>
-		<tr>
-		<table>
-			<tr>
-			<td><h4>Descargar</h4></td>
-			<td><a href="<?php echo $urlReportes."pdf"?>" target="_BLANK"><img src="images/logo_pdf.png" alt="pdf" height="50" width="50" /></a><td>
-			<td><a href="<?php echo $urlReportes."xls"?>" target="_BLANK"><img src="images/logo_xls.jpg"  alt="xls" height="50" width="50" /></a><td>
-			<td><a href="<?php echo $urlReportes."doc"?>" target="_BLANK"><img src="images/logo_doc.jpg"  alt="doc" height="50" width="50" /></a><td>
-			<td><a href="<?php echo $urlReportes."txt"?>" target="_BLANK"><img src="images/logo_text.jpg" alt="txt" height="50" width="50" /></a><td>
-			</tr>
-		</table>
-		</tr>
 	</table>
 	
 	<?php 

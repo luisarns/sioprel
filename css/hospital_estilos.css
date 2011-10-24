@@ -1,0 +1,2197 @@
+body{
+	font-family: tahoma;
+	font-size: 12px;
+	font-weight: normal;
+	color: #000000;
+	scrollbar-arrow-color:#66CC9A;
+	scrollbar-base-color:#6D8693;
+	scrollbar-shadow-color:#F3F3F3;
+	scrollbar-face-color:#003366;
+	scrollbar-highlight-color:#F3F3F3;
+	scrollbar-dark-shadow-color:white;
+	scrollbar-3d-light-color:#284F6F;
+	background: white;
+}
+
+/* ----------------------------------------------------------- */
+/* Titulos */
+
+.titulo1 {
+	color: #003399;
+	font-size: 14px;
+	font-weight: bold;
+	padding:10;
+}
+
+.tituloVentanaDetalle {
+	color: navy;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: left;
+}
+
+a {
+	color: navy;
+	text-decoration: none;
+	font-weight: normal;
+	vertical-align:middle;
+}
+
+a:hover {
+	color: #0099CC;
+	text-decoration: underline;
+	font-weight: normal;
+	vertical-align:middle;
+}
+
+a:visited {
+	color: #666666;
+	text-decoration: none;
+	font-weight: normal;
+	vertical-align:middle;
+}
+
+a:active {
+	color: black;
+	text-decoration: none;
+	font-weight: normal;
+	vertical-align:middle;
+}
+
+/***************************************************************/
+
+a.enlace1 {
+  	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #256D24;
+	text-decoration: none;
+	font-weight: bold;
+	vertical-align:middle;
+}
+
+a.enlace1:hover{
+	color: #256D24;
+	text-decoration: underline;
+	font-weight: bold;
+	vertical-align:middle;
+}
+
+a.enlace1:visited{
+	color: #256D24;
+	text-decoration: none;
+	font-weight: bold;
+	vertical-align:middle;
+}
+
+a.enlace1:active {
+	color: #256D24;
+	text-decoration: none;
+	font-weight: bold;
+	vertical-align:middle;
+}
+
+.enlaceDetalle {
+  	color: navy;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+a.enlaceAux {
+  	color: #FFFFFF;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+a.enlaceAux:visited{
+	color: #FFFFFF;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+a.enlaceAux:active {
+	color: #FFFFFF;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+a.enlaceAux:hover{
+	color: #FFFFFF;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+/* ----------------------------------------------------------- */
+/* Tablas */
+
+td {
+	font-family:verdana,tahoma,arial,helvetica;
+	font-size: 11px;
+	font-weight: normal;
+}
+
+
+.lt {
+	font-family:verdana,tahoma,arial,helvetica;
+	font-size: 11px;
+	font-weight: normal;
+	text-align:right;
+}
+
+
+th {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+.campo {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	background-color :#EEEEEE;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.servicio {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+	background: #B7B7FF;
+}
+
+.disponible {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #000000;
+	background-color:#AAEDB1;
+}
+
+.inactivo {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+	background: #E1E1E1;;
+}
+
+.visita {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+	background: #deba7b;
+}
+
+.tituloCelda {
+color: #4680B3;
+font-size: 10px;
+font-weight : bold;
+background-color: #E7ECF5;
+}
+
+/* ----------------------------------------------------------- */
+/* Formularios */
+
+TextArea {
+	font:normal 11px verdana, tahoma, arial, helvetica;
+	color:#222262;
+	background-color:#FFFFFF;
+	border-style:groove;
+	vertical-align:middle;
+}
+
+Select {
+	font:verdana,tahoma,arial,helvetica;
+	font-size:9pt;
+	color:#222262;
+	background-color:#FFFFFF;
+	font-weight: normal;
+	vertical-align: middle;
+}
+
+Button {
+	font-size:7pt;
+	background-color:#003366;
+	font-family:verdana,tahoma,arial,helvetica;
+	font-weight:bold;
+	vertical-align:middle;
+}
+
+.InputBox {
+	border-style:groove;
+	Border-Right: #a1a1a1 0px solid;
+	Border-Top: #a1a1a1 0px solid;
+	Border-Left: #a1a1a1 0px solid;
+	Border-Bottom: #a1a1a1 0px solid;
+	Color: #000000;
+	vertical-align:middle;
+}
+
+Input {
+	font:verdana,tahoma,arial,helvetica;
+	font-size:9pt; font-weight : normal;
+	border-style:groove;
+	Border-Right: #577CB5 1px solid;
+	Border-Top: #577CB5 1px solid;
+	Border-Left: #577CB5 1px solid;
+	Border-Bottom: #577CB5 1px solid;
+	Color: #222262;
+	BackGround-Color: #ffffff;
+	vertical-align: middle;
+}
+
+Input.Hospital {
+	font:verdana,tahoma,arial,helvetica;
+	font-size:7pt; font-weight : normal;
+	border-style:groove;
+	Border-Right: #003366 2px solid;
+	Border-Top: #C5DFEB 2px solid;
+	Border-Left: #C5DFEB 2px solid;
+	Border-Bottom: #003366 2px solid;
+	Color: #D2E7F0;
+	BackGround-Color: #4474A4;
+	width: 70px;
+	vertical-align: middle;
+}
+
+label.checkbox_checked {
+	background: transparent;	
+	display: block;
+	margin: 10px 0;
+	padding-left: 25px;
+}
+label.checkbox_unchecked  {
+	background: transparent;	
+	display: block;
+	margin: 10px 0;
+	padding-left: 25px;
+}
+
+label.radio_checked {
+	background: transparent;	
+	display: block;
+	margin: 10px 0;
+	padding-left: 25px;
+}
+label.radio_unchecked  {
+	background: transparent;	
+	display: block;
+	margin: 10px 0;
+	padding-left: 25px;
+}
+
+Input.HospitalP {
+	font:verdana,tahoma,arial,helvetica;
+	font-size:7pt; font-weight : normal;
+	border-style:groove;
+	Border-Right: #003366 2px solid;
+	Border-Top: #C5DFEB 2px solid;
+	Border-Left: #C5DFEB 2px solid;
+	Border-Bottom: #003366 2px solid;
+	Color: #D2E7F0;
+	BackGround-Color: #4474A4;
+	width: 100px;
+	vertical-align:middle;
+}
+
+Input.HospitalB {
+	font:verdana,tahoma,arial,helvetica;
+	font-size:7pt; font-weight : normal;
+	border-style:groove;
+	Border-Right: #003366 2px solid;
+	Border-Top: #C5DFEB 2px solid;
+	Border-Left: #C5DFEB 2px solid;
+	Border-Bottom: #003366 2px solid;
+	Color: #FFCC33;
+	BackGround-Color: #4474A4;
+	width: 70px;
+	vertical-align:middle;
+}
+
+
+
+	TR.selectRow {
+	BackGround-Color: #BAD2E0;
+	vertical-align:middle;
+}
+
+/* ----------------------------------------------------------- */
+/* Bordes */
+
+.obligatorio {
+	border: thin solid #AAAAAA;
+}
+.error {
+	border: thin solid red;
+}
+.norequerida {
+	border: thin dotted #AAAAAA;
+}
+
+/* ----------------------------------------------------------- */
+/* ToolTips */
+
+.tooltiptitle {
+	Color: #FFFFFF;
+	Text-Decoration: none;
+	Cursor: Default;
+	Font-Family: verdana,tahoma,arial;
+	Font-Weight: bold;
+	Font-Size: 7pt;
+}
+
+.tooltipcontent {
+	Color: #000000;
+	Text-Decoration: none;
+	Cursor: Default;
+	Font-Family: verdana,tahoma,arial;
+	Font-Size: 7pt;
+}
+
+#ToolTip {
+	Position:absolute;
+	Width: 100px;
+	Top: 0px;
+	Left: 0px;
+	Z-index:4;
+	Visibility:hidden;
+}
+
+/* ----------------------------------------------------------- */
+/* Barras de Títulos */
+
+.titDatos {
+	color: #FFFFFF;
+	background: #316531;
+}
+
+.titAlerta {
+	color: #FF0000;
+	background: white;
+}
+
+.titInfo {
+	color: white;
+	background: black;
+}
+
+.titSelect {
+	color: white;
+	background: cyan;
+}
+
+.TablaRegs {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:20%;
+	width:60%;
+	height:20%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.documento {
+	position:relative;
+	left:0%;
+	top:0%;
+	overflow:auto;
+	width:100%;
+	height:25%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.documentoPX {
+	position:relative;
+	left:0px;
+	top:0px;
+	overflow:auto;
+	width:982px;
+	height:275px;
+	background-position: center;
+	vertical-align: top;
+}
+
+.progMedica {
+	position:relative;
+	left:83px;
+	top:0px;
+	overflow:auto;
+	width:815px;
+	height:200px;
+	background-position: center;
+	vertical-align: top;
+}
+
+.admisionRecaudo {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:15%;
+	background-position: center;
+	vertical-align: top;
+}
+.consultaRecaudo {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:50%;
+	background-position: center;
+	vertical-align: top;
+	background-color:#F2F5F9;
+}
+.consulta {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:45%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.Periodo {
+	position:relative;
+	overflow:auto;
+	left:10.7%;
+	width:78%;
+	height:45%;
+	background-position: center;
+	vertical-align: top;
+}
+
+
+.Contrato {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:10.5%;
+	width:78%;
+	height:25%;
+	background-position: center;
+	vertical-align: middle;
+}
+.ContratoB {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:10.5%;
+	width:78%;
+	height:45%;
+	background-position: center;
+	vertical-align: middle;
+}
+
+.detalleContrato {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:10.5%;
+	width:78%;
+	height:40%;
+	background-position: center;
+	vertical-align: top;
+}
+.detalleAlcance {
+	position:relative;
+	overflow:auto;
+	width:100%;
+	background-position: left;
+	vertical-align: top;
+	border-style:groove;
+	background-color:#D9E5F3;
+	Border: #577CB5 1px solid;	
+}
+
+.detalleTarifa {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:10.5%;
+	width:78%;
+	height:20%;
+	background-position: center;
+	vertical-align: top;
+}
+.detalleTarifaProveedor {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:10.5%;
+	width:78%;
+	height:50%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.detalleNotasFacturas{
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:10.5%;
+	width:78%;
+	height:20%;
+	background-position: center;
+	vertical-align: top;
+}
+.detalleOpciones {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:90%;
+	height:75%;
+	background-position: left;
+	vertical-align: top;
+}
+
+
+.listaConsultas {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:100%;
+	background-position: left;
+	vertical-align: top;
+}
+
+.tablaReportes {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:12%;
+	background-position: center;
+	vertical-align: top;
+}
+
+
+.detalleReportes {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:60%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.detalleReportes2 {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:40%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.detalleReportes3 {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:45%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.detalleReportes4 {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:22%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.detalleReportes5 {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:49%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.detalleReportesFlotaIzq {
+	position:relative;
+	overflow:auto;
+	float:left;
+	top:0%;
+	left:0%;
+	width:72%;
+	height:43%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.detalleReportesFlotaDer {
+	position:relative;
+	overflow:auto;
+	float:right;
+	top:0%;
+	left:0%;
+	width:26%;
+	height:43%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.detalleReportes6 {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:24%;
+	background-position: center;
+	vertical-align: top;
+}
+.detalleReportes7 {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:14%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.detalleReports7 {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:19%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.detalleReports8 {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:16%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.detalleReportes8 {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:17%;
+	background-position: center;
+	vertical-align: top;
+}
+.detalleReportes9 {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:17%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.detallePaquete {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:30%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.TablaProcess {
+	top:9%;
+	left:10%;
+	overflow:auto;
+	width:100%;
+	height:44%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.detalleAdmision {
+	top:0%;
+	left:0%;
+	overflow:auto;
+	width:100%;
+	height:25%;
+	background-position: center;
+	vertical-align: top;
+}
+.TablaModif {
+	top:9%;
+	left:10%;
+	overflow:auto;
+	width:100%;
+	height:600%;
+	background-position: center;
+	vertical-align: top;
+}
+
+
+.TablaModif {
+	top:9%;
+	left:0%;
+	overflow:auto;
+	width:100%;
+	height:0%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.TablaBita {
+	position:relative;
+	left:0px;
+	top:0px;
+	overflow:auto;
+	width:970px;
+	background-position: center;
+	vertical-align: top;
+}
+
+
+/* ----------------------------------------------------------- */
+/* Barras de Registros */
+.regSuave {
+	color: black;
+	border-style:none;
+	background-color:#D9E5F3;
+	Border-Right: #003366 0px solid;
+	Border-Top: #577CB5 0px solid;
+	Border-Left: #577CB5 0px solid;
+	Border-Bottom: #003366 0px solid;
+	text-align:left;
+}
+.regSuaveBorde {
+	color: black;
+	border-style:none;
+	background-color:#D9E5F3;
+	Border-Right: #003366 1px solid;
+	Border-Top: #577CB5 1px solid;
+	Border-Left: #577CB5 1px solid;
+	Border-Bottom: #003366 1px solid;
+	text-align:left;
+}
+.regSuaveBlanco {
+	color: black;
+	border-style: dotted;
+	background-color:#D9E5F3;
+	Border-Right: #003366 0px solid;
+	Border-Top: #577CB5 0px solid;
+	Border-Left: #577CB5 0px solid;
+	Border-Bottom: #003366 0px solid;
+}
+
+.regDisabled {
+	color: black;
+	border-style:none;
+	text-align: center;
+	background-color:#CCCCCC;
+	Border-Right: #003366 0px solid;
+	Border-Top: #577CB5 0px solid;
+	Border-Left: #577CB5 0px solid;
+	Border-Bottom: #003366 0px solid;
+}
+.separaFormulario {
+	color: black;
+	border-style:none;
+	background-color:#D9E5F3;
+	Border-Right: #003366 0px solid;
+	Border-Top: #577CB5 0px solid;
+	Border-Left: #577CB5 0px solid;
+	Border-Bottom: #003366 0px solid;
+	text-align: center;
+}
+.regSuaveCenter {
+	color: black;
+	border-style:none;
+	background-color:#D9E5F3;
+	Border-Right: #003366 0px solid;
+	Border-Top: #577CB5 0px solid;
+	Border-Left: #577CB5 0px solid;
+	Border-Bottom: #003366 0px solid;
+	text-align: center;
+}
+
+.regSuaveLeft {
+	color: black;
+	border-style:none;
+	background: #D9E5F3;
+	Border-Right: #003366 0px solid;
+	Border-Top: #577CB5 0px solid;
+	Border-Left: #577CB5 0px solid;
+	Border-Bottom: #003366 0px solid;
+	text-align: left;
+}
+
+.regSuaveFNavy {
+	color: navy;
+	border-style:none;
+	background: #D9E5F3;
+	Border-Right: #003366 0px solid;
+	Border-Top: #577CB5 0px solid;
+	Border-Left: #577CB5 0px solid;
+	Border-Bottom: #003366 0px solid;
+}
+
+.regSuaveRight {
+	color: black;
+	border-style:none;
+	background: #D9E5F3;
+	Border-Right: #E7ECF5 0px solid;
+	Border-Top: #E7ECF5 0px solid;
+	Border-Left: #E7ECF5 0px solid;
+	Border-Bottom:#E7ECF5 0px solid;
+	text-align: right;
+}
+
+.regSuaveR {
+	color: black;
+	border-style:none;
+	background-color:#D9E5F3;
+	Border-Right: #003366 0px solid;
+	Border-Top: #577CB5 0px solid;
+	Border-Left: #577CB5 0px solid;
+	Border-Bottom: #003366 0px solid;
+	text-align: right;
+}
+
+.regSuaveRightBorde {
+	color: black;
+	border-style:groove;
+	background: #D9E5F3;
+	Border-Right: #E7ECF5 1px solid;
+	Border-Top: #E7ECF5 1px solid;
+	Border-Left: #E7ECF5 1px solid;
+	Border-Bottom:#E7ECF5 1px solid;
+	text-align: right;
+}
+
+.regFuerte {
+	color: white;
+	BackGround-Color: #336699;
+	<!--BackGround-Color: #4474A4;-->
+	Border-Right: #003366 2px solid;
+	Border-Top: #C5DFEB 2px solid;
+	Border-Left: #C5DFEB 2px solid;
+	Border-Bottom: #003366 2px solid;
+	text-align: left;
+	font-weight: bold;
+	border-style:ridge;
+}
+
+.regClaveDetalle {
+	color: black;
+	border-style:none;
+	background: #D9E5F3;
+	Border-Right: #003366 0px solid;
+	Border-Top: #577CB5 0px solid;
+	Border-Left: #577CB5 0px solid;
+	Border-Bottom: #003366 0px solid;
+	text-align: right;
+	font-weight: bold;
+}
+
+.regDetalle {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	background-color :#E7ECF5;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: left;
+}
+
+.regSepDetalle {
+	color: black;
+	border-style:none;
+	background: #D9E5F3;
+	Border-Right: #003366 0px solid;
+	Border-Top: #577CB5 1px solid;
+	Border-Left: #577CB5 0px solid;
+	Border-Bottom: #003366 0px solid;
+	text-align: left;
+	font-weight: bold;
+}
+
+.regCol {
+	color: black;
+	border-style:none;
+	background-color:#E1E1E1;
+	Border-Right: #BBD3E1 0px solid;
+	Border-Top: #477EAB 0px solid;
+	Border-Left: #477EAB 0px solid;
+	Border-Bottom: #BBD3E1 0px solid;
+	text-align: center;
+	font-weight: bold;
+}
+
+.regColOscuro {
+	color: black;
+	border-style:none;
+	background-color:#bad2e0;/*;4474A4*/
+	Border-Right: #BBD3E1 0px solid;
+	Border-Top: #477EAB 0px solid;
+	Border-Left: #477EAB 0px solid;
+	Border-Bottom: #BBD3E1 0px solid;
+	text-align: center;
+	font-weight: bold;
+}
+
+
+.regColRight {
+	color: black;
+	background-color:#D1D1D1;
+	Border-Right: #E1E1E1 1px outset;
+	Border-Top: #E1E1E1 1px outset;
+	Border-Left: #E1E1E1 1px outset;
+	Border-Bottom: #E1E1E1 1px outset;
+	text-align: right;
+	font-weight: bold;
+}
+
+.regColRight2 {
+	color: black;
+	background-color:#D1D1D1;
+	Border-Right: #FFFFFF 2px solid;
+	Border-Top: #FFFFFF 2px solid;
+	Border-Left: #FFFFFF 2px solid;
+	Border-Bottom: #FFFFFF 2px solid;
+	text-align: right;
+	font-weight: bold;
+}
+
+.regTit {
+	color: black;
+	border-style:none;
+	background-color:#E1E1E1;
+	Border-Right: #BBD3E1 0px solid;
+	Border-Top: #477EAB 0px solid;
+	Border-Left: #477EAB 0px solid;
+	Border-Bottom: #BBD3E1 0px solid;
+	text-align: center;
+	font-weight: bold;
+	Font-Size: 10pt;
+}
+
+
+
+.regOscuro {
+	color: black;
+	border-style:none;
+	background-color:#E1E1E1;
+	Border-Right: #BBD3E1 0px solid;
+	Border-Top: #477EAB 0px solid;
+	Border-Left: #477EAB 0px solid;
+	Border-Bottom: #BBD3E1 0px solid;
+	text-align:left;
+}
+
+
+
+.regOscuroBordeOscuro {
+	color: black;
+	background-color:#E1E1E1;
+	Border-Right: #E1E1E1 1px outset;
+	Border-Top: #E1E1E1 1px outset;
+	Border-Left: #E1E1E1 1px outset;
+	Border-Bottom: #E1E1E1 1px outset;
+	font-weight: bold;
+}
+
+.regOscuroCenter {
+	color: black;
+	border-style:none;
+	background-color:#E1E1E1;
+	Border-Right: #BBD3E1 0px solid;
+	Border-Top: #477EAB 0px solid;
+	Border-Left: #477EAB 0px solid;
+	Border-Bottom: #BBD3E1 0px solid;
+	text-align:center;
+}
+
+
+.regOscuro2 {
+	color: black;
+	border-style:none;
+	background-color:#E1E1E1;
+	Border-Right: #BBD3E1 0px solid;
+	Border-Top: #477EAB 0px solid;
+	Border-Left: #477EAB 0px solid;
+	Border-Bottom: #BBD3E1 0px solid;
+	text-align:left;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.regCenter {
+	color: black;
+	border-style:none;
+	background: #E1E1E1;
+	Border-Right: #BBD3E1 0px solid;
+	Border-Top: #477EAB 0px solid;
+	Border-Left: #477EAB 0px solid;
+	Border-Bottom: #BBD3E1 0px solid;
+	text-align:center;
+}
+
+.regSelect {
+	color: black;
+}
+
+.tdBarra {
+	color: #BAD2E0;
+	border-style:groove;
+	Border-Right: gray 0px solid;
+	Border-Bottom: gray 0px solid;
+	Border-Top: white 0px solid;
+	Border-Left: white 0px solid;
+	background-color: #bad2e0;
+}
+
+.subtitInfo {
+	color: white;
+	border-style:groove;
+	Border-Right: #a1a1a1 1px solid;
+	Border-Top: #a1a1a1 1px solid;
+	Border-Left: #a1a1a1 1px solid;
+	Border-Bottom: #a1a1a1 1px solid;
+	background-color: #003466;
+	Font-Size: 7pt;
+}
+
+.coolTable
+{
+	behavior: url(../../../web/script/lib/behaviors/coolTable.htc);
+	sortNoneImageUrl: ../../../web/media/image/_behaviors/sortBlank.gif;
+	sortUpImageUrl: ../../../web/media/image/_behaviors/sortUp.gif;
+	sortDownImageUrl: ../../../web/media/image/_behaviors/sortDown.gif;
+	posUpImageUrl: ../../../web/media/image/_behaviors/uparrow.gif;
+	posDownImageUrl: ../../../web/media/image/_behaviors/downarrow.gif;
+	position: relative;
+	margin: 0px;
+	width: 100%;
+	highlightBackgroundColor: #CCCCCC;
+	highlightBorderColor: #000000;
+	color: windowtext;
+	cursor: pointer;
+}
+
+.titHeader {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	color: black;
+	text-align: center;
+}
+
+.elementoActual {
+	border: 1px solid #AAAAAA;
+	background-color: #AAAAAA;
+	color: black;
+	font-weight: normal;
+}
+
+.DivPagina {
+	position:static;
+	overflow:auto;
+	top:0%;
+	left:50%;
+	width:100%;
+	height:20%;
+	background-position: left;
+}
+
+.TablaReporte {
+	position:relative;
+	left:0px;
+	top:0px;
+	overflow:auto;
+	width:965px;
+	height:0px;
+	background-position: center;
+	vertical-align: top;
+}
+
+.TablaReporte1 {
+	position:relative;
+	left:0px;
+	top:0px;
+	overflow:auto;
+	width:790px;
+	height:250px;
+	background-position: center;
+	vertical-align: top;
+}
+
+.TablaReporteA {
+	position:relative;
+	left:10.7%;
+	top:0px;
+	overflow:auto;
+	width:790px;
+	height:250px;
+	background-position: center;
+	vertical-align: top;
+}
+
+.TablaReporteB {
+	position:relative;
+	left:10.7%;
+	top:0px;
+	overflow:auto;
+	width:78%;
+	height:150px;
+	background-position: center;
+	vertical-align: middle;
+}
+
+
+.TablaReporte2 {
+	position:relative;
+	left:0px;
+	top:0px;
+	overflow:auto;
+	width:98%;
+	height:150px;
+	background-position: center;
+	vertical-align: top;
+}
+
+.detalleBandejaAdmision {
+	position:relative;
+	left:0px;
+	top:0px;
+	overflow:auto;
+	width:98%;
+	height:250px;
+	background-position: center;
+	vertical-align: top;
+}
+
+.Cuestionario {
+	position:relative;
+	left:0px;
+	top:0px;
+	overflow:auto;
+	width:745px;
+	height:500px;
+	background-position: center;
+	vertical-align: top;
+}
+
+.campo2 {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	background-color :#E7ECF5;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+
+.resaltarCelda {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #000000;
+	background-color: #D9E5F3;
+}
+
+.campo2Center{
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	background-color :#E7ECF5;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: center;
+}
+
+.resaltarCenter {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	background-color: #D9E5F3;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: center;
+}
+
+.resaltar {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	background-color: #D9E5F3;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.resaltar2 {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: white;
+	background-color: #B3D9FF;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.resaltarTesoreria {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	background-color: #EEEEEE;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.Cuestionario2 {
+	position:relative;
+	left:0px;
+	top:0px;
+	overflow:auto;
+	width:745px;
+	height:100px;
+	background-position: center;
+	vertical-align: top;
+}
+.Cuestionario3 {
+	position:relative;
+	left:0px;
+	top:0px;
+	overflow:auto;
+	width:745px;
+	height:200px;
+	background-position: center;
+	vertical-align: top;
+}
+.campo3 {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #FFFFFF;
+	background-color: #6A87CA;
+	text-align: center;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.cotizarAdmision {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:4.5%;
+	width:90.5%;
+	height:8%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.cotizarServicio {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:1.5%;
+	width:94.7%;
+	height:100px;
+	background-position: center;
+	vertical-align: top;
+}
+
+
+.vistaBuscar {
+	position:absolute;
+	overflow:auto;
+	top:100px;
+	left:50px;
+	width:100px;
+	height:100px;
+	background-position: center;
+	position: absolute;
+	vertical-align: top;
+}
+.buscarAdmision {
+	left : 50px;
+	width :380px;
+	top : 100px;
+	height : 250px;
+	position : absolute;
+	visibility :hidden;
+	color: black;
+	border-style:none;
+}
+.buscarAdmisionNovedad {
+	left : 50px;
+	width :380px;
+	top : 0px;
+	height : 250px;
+	position : absolute;
+	visibility :hidden;
+	color: black;
+	border-style:none;
+
+
+}
+
+.internobuscaradmision {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:70%;
+	background-position: center;
+	vertical-align: top;
+	background-color:white;
+}
+.buscarFacturasReliquidar {
+	left : 50px;
+	width :600px;
+	top : 100px;
+	height : 300px;
+	position : absolute;
+	visibility :hidden;
+	color: black;
+	border-style:none;
+	background-color:#D9E5F3;
+	Border-Right: #003366 0px solid;
+	Border-Top: #577CB5 0px solid;
+	Border-Left: #577CB5 0px solid;
+	Border-Bottom: #003366 0px solid;
+	text-align:left;
+
+}
+.internobuscarFacturasReliquidar {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:100%;
+	background-position: center;
+	vertical-align: top;
+	background-color:white;
+
+}
+.buscarFacturasAReliquidar {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:10.5%;
+	width:78%;
+	height:50%;
+	background-position: center;
+	vertical-align: top;
+}
+.detalleTurnos {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:10.5%;
+	width:78%;
+	height:20%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.modificaturno {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:10.5%;
+	width:78%;
+	height:6.3%;
+	background-position: center;
+	vertical-align: top;
+}
+.detalleAdmisiones {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:10.5%;
+	width:78%;
+	height:50%;
+	background-position: center;
+	vertical-align: top;
+}
+.detalleAdmisiones2 {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:10.5%;
+	width:78%;
+	height:20%;
+	background-position: center;
+	vertical-align: top;
+}
+
+Input.Hospitalbutton {
+	font:verdana,tahoma,arial,helvetica;
+	font-size:7pt; font-weight : normal;
+	border-style:groove;
+	Border-Right: #003366 2px solid;
+	Border-Top: #C5DFEB 2px solid;
+	Border-Left: #C5DFEB 2px solid;
+	Border-Bottom: #003366 2px solid;
+	Color: #D2E7F0;
+	BackGround-Color: #4474A4;
+	width: 105px;
+}
+.detalleAdmisionesentrega {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:5%;
+	width:90%;
+	height:20%;
+	background-position: center;
+	vertical-align: top;
+}
+.detalleAdmisionesentrega2 {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:5%;
+	width:90%;
+	height:10%;
+	background-position: center;
+	vertical-align: top;
+}
+.ordenesfacturas {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:10.5%;
+	width:78%;
+	height:20%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.detalleAutorizacionConsumoP{
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:10.5%;
+	width:78%;
+	height:60%;
+	background-position: center;
+	vertical-align: top;
+}
+.divsoportesadmision2 {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:4.8%;
+	width:90%;
+	height:50%;
+	background-position: center;
+	vertical-align: top;
+	background-color:#D9E5F3;
+}
+
+.regColLeft {
+	color: black;
+	border-style:none;
+	background-color:#E1E1E1;
+	Border-Right: #BBD3E1 0px solid;
+	Border-Top: #477EAB 0px solid;
+	Border-Left: #477EAB 0px solid;
+	Border-Bottom: #BBD3E1 0px solid;
+	text-align: Left;
+	font-weight: bold;
+}
+
+.divsoportesadmision {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:4.8%;
+	width:45%;
+	height:50%;
+	background-position: center;
+	vertical-align: top;
+	background-color:#D9E5F3;
+}
+.divbuscarpersonas {
+	position:absolute;
+	top:0%;
+	left:0%;
+	width:50%;
+	height:60%;
+	background-position: center;
+	vertical-align: top;
+	background-color:#D9E5F3;
+}
+.divinternobuscarpersonas {
+	position:relative;
+	overflow:auto;
+	background-position: center;
+	height:200px;
+	vertical-align: top;
+	background-color:#D9E5F3;
+}
+
+.Contrato2 {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:70%;
+	background-position: center;
+	vertical-align: middle;
+}
+.divalertaingadmision{
+	position:absolute;
+	top:120px;
+	left:550px;
+	width:390px;
+	height:40px;
+	clip: rect(0px 390px 300px 0px);
+	z-index: 140;
+	visibility: hidden;
+	background-position: right;
+	vertical-align: top;
+	background-color:#D9E5F3;
+	Border-Right: #477EAB 3px solid;
+	Border-Top: #477EAB 1px solid;
+	Border-Left: #477EAB 1px solid;
+	Border-Bottom: #477EAB 2px solid;
+}
+.clasificarCartera {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:40%;
+	background-position: center;
+	vertical-align: top;
+	background-color:#F2F5F9;
+}
+
+.divgenerarpagoadmision{
+	position:absolute;
+	top:75px;
+	left:550px;
+	width:300px;
+	height:40px;
+	clip: rect(0px 300px 300px 0px);
+	z-index:120;
+	visibility: hidden;
+	background-position: right;
+	vertical-align: top;
+	background-color:#D9E5F3;
+	Border-Right: #477EAB 3px solid;
+	Border-Top: #477EAB 1px solid;
+	Border-Left: #477EAB 1px solid;
+	Border-Bottom: #477EAB 2px solid;
+	color: Navy;
+}
+
+.regColSinNegrita {
+	color: black;
+	border-style:none;
+	background-color:#E1E1E1;
+	Border-Right: #BBD3E1 0px solid;
+	Border-Top: #477EAB 0px solid;
+	Border-Left: #477EAB 0px solid;
+	Border-Bottom: #BBD3E1 0px solid;
+	text-align: center;
+}
+
+.divliquidarpagoadmision{
+	position:absolute;
+	overflow:auto;
+	top:105px;
+	left:435px;
+	width:500px;
+	height:205px;
+	z-index:120;
+	visibility: hidden;
+	background-position: right;
+	vertical-align: top;
+	background-color:#D9E5F3;
+	Border-Right: #477EAB 3px solid;
+	Border-Top: #477EAB 1px solid;
+	Border-Left: #477EAB 1px solid;
+	Border-Bottom: #477EAB 2px solid;
+	color: Navy;
+}
+
+.subtitulo {
+	color: black;
+	border-style:none;
+	background-color:#E1E1E1;
+	Border-Right: #BBD3E1 0px solid;
+	Border-Top: #477EAB 0px solid;
+	Border-Left: #477EAB 0px solid;
+	Border-Bottom: #BBD3E1 0px solid;
+	Font-Size: 7pt;
+	font-weight: bold;
+}
+
+.subtitulofonazul {
+	color: black;
+	border-style:none;
+	background-color:#D9E5F3;
+	Border-Right: #BBD3E1 0px solid;
+	Border-Top: #477EAB 0px solid;
+	Border-Left: #477EAB 0px solid;
+	Border-Bottom: #BBD3E1 0px solid;
+	Font-Size: 7pt;
+	font-weight: bold;
+}
+
+.smalltext {
+	color: black;
+	border-style:none;
+	background-color:#D9E5F3;
+	Border-Right: #BBD3E1 0px solid;
+	Border-Top: #477EAB 0px solid;
+	Border-Left: #477EAB 0px solid;
+	Border-Bottom: #BBD3E1 0px solid;
+	Font-Size: 6pt;
+	color: Navy;
+}
+
+.coolTableBand
+{
+	behavior: url(../../../web/script/lib/behaviors/coolTable.htc);
+	sortNoneImageUrl: ../../../web/media/image/behaviors/sortBlank.gif;
+	sortUpImageUrl: ../../../web/media/image/behaviors/sortUp.gif;
+	sortDownImageUrl: ../../../web/media/image/behaviors/sortDown.gif;
+	posUpImageUrl: ../../../web/media/image/behaviors/uparrow.gif;
+	posDownImageUrl: ../../../web/media/image/behaviors/downarrow.gif;
+	position: relative;
+	margin: 0px;
+	width: 100%;
+	font: menu;
+	highlightBackgroundColor: #bbc9ba;
+	highlightBorderColor: black;
+	color: windowtext;
+	cursor: pointer;
+}
+
+.regColWithoutAlign{
+	color: black;
+	border-style:none;
+	background-color:#E1E1E1;
+	Border-Right: #BBD3E1 0px solid;
+	Border-Top: #477EAB 0px solid;
+	Border-Left: #477EAB 0px solid;
+	Border-Bottom: #BBD3E1 0px solid;
+	font-weight: bold;
+}
+
+input.BotonAdmisionSmall {
+	font:tahoma,verdana,arial,helvetica;
+	font-size:7pt; font-weight : normal;
+	border-style:groove;
+	Border-Right: #003366 2px solid;
+	Border-Top: #C5DFEB 2px solid;
+	Border-Left: #C5DFEB 2px solid;
+	Border-Bottom: #003366 2px solid;
+	Color: #D2E7F0;
+	BackGround-Color: #4474A4;
+	width: 50px;
+}
+
+input.BotonBuscarSmall {
+	font:tahoma,verdana,arial,helvetica;
+	font-size:7pt; font-weight : normal;
+	border-style:groove;
+	Border-Right: #003366 2px solid;
+	Border-Top: #C5DFEB 2px solid;
+	Border-Left: #C5DFEB 2px solid;
+	Border-Bottom: #003366 2px solid;
+	Color: #D2E7F0;
+	BackGround-Color: #4474A4;
+	width: 20px;
+}
+.campo3Left{
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+	background-color :#E7ECF5;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: left;
+}
+
+.resaltar3left {
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+	background-color: #D9E5F3;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: left;
+}
+
+
+.campo4Left{
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	background-color :#E7ECF5;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: left;
+}
+.campo4Center{
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	background-color :#E7ECF5;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: center;
+}
+.resaltar4Left{
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	background-color: #D9E5F3;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: left;
+}
+
+.resaltar4Center{
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	background-color: #D9E5F3;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: center;
+}
+
+.listadosstockbase {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:7.3%;
+	width:85%;
+	height:20%;
+	background-position: center;
+	vertical-align: top;
+}
+.listadosconsumostock {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:7.3%;
+	width:85%;
+	height:50%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.registrarTarifa {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:4.8%;
+	width:90%;
+	height:50%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.gestionGlosaExterna {
+	position:relative;
+	left:0%;
+	top:0%;
+	overflow:auto;
+	width:100%;
+	height:15%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.listadoseguimientocronicos {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:7.3%;
+	width:85%;
+	height:40%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.regOscuroBold {
+	color: black;
+	border-style:none;
+	background-color:#E1E1E1;
+	Border-Right: #BBD3E1 0px solid;
+	Border-Top: #477EAB 0px solid;
+	Border-Left: #477EAB 0px solid;
+	Border-Bottom: #BBD3E1 0px solid;
+	text-align:left;
+	font-weight: bold;
+}
+
+.regOscuroTxt {
+	color: black;
+	border-style:none;
+	background-color:#E1E1E1;
+	Border-Right: #BBD3E1 0px solid;
+	Border-Top: #477EAB 0px solid;
+	Border-Left: #477EAB 0px solid;
+	Border-Bottom: #BBD3E1 0px solid;
+	text-align:left;
+	font-size: 10px;
+}
+
+.buscarAdmisionPoP {
+	left : 50px;
+	width :420px;
+	top : 100px;
+	height : 250px;
+	position : absolute;
+	visibility :hidden;
+	color: black;
+	border-style:none;
+	clip: rect(0px 420px 420 0px);
+	z-index:120;
+	background-color:#D9E5F3;
+	Border-Right: #477EAB 3px solid;
+	Border-Top: #477EAB 1px solid;
+	Border-Left: #477EAB 1px solid;
+	Border-Bottom: #477EAB 2px solid;
+	color: Navy;
+
+}
+	.Azul      {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #0033CC; }
+	.InputAzul {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #0033CC; border: 1px solid #C0C0C0; background: #FFFFFF; }
+	.InputAzulNo {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #0033CC; border: 0px solid #C0C0C0; background: #FFFFFF; }
+	.CeldaAzul {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #0033CC; background: #FFFFFF; }
+
+	.Azul2      {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #FFFFFF; background: #0033CC; }
+	.InputAzul2 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #FFFFFF; border: 1px solid #C0C0C0; background: #0033CC; }
+	.InputAzul2No {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #FFFFFF; border: 0px solid #C0C0C0; background: #0033CC; }
+	.CeldaAzul2 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #FFFFFF; background: #0033CC; }
+
+	.Azul3      {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #000000; background: #4474A4; }
+	.InputAzul3 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #000000; border: 1px solid #C0C0C0; background: #4474A4; }
+	.InputAzul3No {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #000000; border: 0px solid #C0C0C0; background: #4474A4; }
+	.CeldaAzul3 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #000000; background: #4474A4; }
+
+	.Azul4      {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #1F01C9; }
+	.InputAzul4 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #1F01C9; border: 1px solid #C0C0C0; background: #FFFFFF; }
+	.InputAzul4No {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #1F01C9; border: 0px solid #C0C0C0; background: #FFFFFF; }
+	.CeldaAzul4 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #1F01C9; background: #FFFFFF; }
+
+
+	.Verde    {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #006600; }
+	.InputVerde {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #006600; border: 1px solid #C0C0C0; background: #FFFFFF; }
+	.InputVerdeNo {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #006600; border: 0px solid #C0C0C0; background: #FFFFFF; }
+	.CeldaVerde {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #006600; background: #FFFFFF; }
+
+	.Verde2    {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #FFFFFF; background: #006600; }
+	.InputVerde2 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #FFFFFF; border: 1px solid #C0C0C0; background: #006600; }
+	.InputVerde2No {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #FFFFFF; border: 0px solid #C0C0C0; background: #006600; }
+	.CeldaVerde2 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #FFFFFF; background: #006600; }
+
+	.Verde3    {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #000000; background: #009966; }
+	.InputVerde3 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #000000; border: 1px solid #C0C0C0; background: #009966; }
+	.InputVerde3No {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #000000; border: 0px solid #C0C0C0; background: #009966; }
+	.CeldaVerde3 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #000000; background: #009966; }
+
+	.Verde4      {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #148D03; }
+	.InputVerde4 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #148D03; border: 1px solid #C0C0C0; background: #FFFFFF; }
+	.InputVerde4No {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #148D03; border: 0px solid #C0C0C0; background: #FFFFFF; }
+	.CeldaVerde4 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #148D03; background: #FFFFFF; }
+
+	.Verde5    {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #006600; }
+	.InputVerde5 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #006600; border: 1px solid #C0C0C0; background: #D7F1A0; }
+	.InputVerde5No {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #006600; border: 0px solid #C0C0C0; background: #D7F1A0; }
+	.CeldaVerde5 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #006600; background: #D7F1A0; }
+
+	.Verde6    {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #009966; }
+	.InputVerde6 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #009966; border: 1px solid #C0C0C0; background: #D7F1A0; }
+	.InputVerde6No {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #009966; border: 0px solid #C0C0C0; background: #D7F1A0; }
+	.CeldaVerde6 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #009966; background: #D7F1A0; }	
+
+
+	.Rojo      {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #CC0011; }
+	.InputRojo {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #CC0011; border: 1px solid #C0C0C0; background: #FFFFFF; }
+	.InputRojoNo {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #CC0011; border: 0px solid #C0C0C0; background: #FFFFFF; }
+	.CeldaRojo {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #CC0011; background: #FFFFFF; }
+
+	.Rojo2      {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #FFFFFF; background: #CC0011;  }
+	.InputRojo2 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #FFFFFF; border: 1px solid #C0C0C0; background: #CC0011; }
+	.InputRojo2No {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #FFFFFF; border: 0px solid #C0C0C0; background: #CC0011; }
+	.CeldaRojo2 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #FFFFFF; background: #CC0011; }
+
+	.Rojo3      {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #FFFFFF; background: #FF0044;  }
+	.InputRojo3 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #FFFFFF; border: 1px solid #C0C0C0; background: #FF0044; }
+	.InputRojo3No {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #FFFFFF; border: 0px solid #C0C0C0; background: #FF0044; }
+	.CeldaRojo3 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #FFFFFF; background: #FF0044; }
+
+	.Rojo4      {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #A00E27; }
+	.InputRojo4 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #A00E27; border: 1px solid #C0C0C0; background: #FFFFFF; }
+	.InputRojo4No {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #A00E27; border: 0px solid #C0C0C0; background: #FFFFFF; }
+	.CeldaRojo4 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #A00E27; background: #FFFFFF; }
+
+	.Amarillo      {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #AAAA00; }
+	.InputAmarillo {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #AAAA00; border: 1px solid #C0C0C0; background: #FFFFFF; }
+	.InputAmarilloNo {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #AAAA00; border: 0px solid #C0C0C0; background: #FFFFFF; }
+	.CeldaAmarillo {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #AAAA00; background: #FFFFFF; }
+
+	.Amarillo2      {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #FFFFFF;background: #AAAA00; }
+	.InputAmarillo2 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #FFFFFF; border: 1px solid #C0C0C0; background: #AAAA00; }
+	.InputAmarillo2No {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #FFFFFF; border: 0px solid #C0C0C0; background: #AAAA00; }
+	.CeldaAmarillo2 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #FFFFFF; background: #AAAA00; }
+
+	.Amarillo3      {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #000000;background: #FFFF00; }
+	.InputAmarillo3 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #000000; border: 1px solid #C0C0C0; background: #FFFF00; }
+	.InputAmarillo3No {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #000000; border: 0px solid #C0C0C0; background: #FFFF00; }
+	.CeldaAmarillo3 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #000000; background: #FFFF00; }
+
+	.Amarillo4      {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #B8C104; }
+	.InputAmarillo4 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #B8C104; border: 1px solid #C0C0C0; background: #FFFFFF; }
+	.InputAmarillo4No {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #B8C104; border: 0px solid #C0C0C0; background: #FFFFFF; }
+	.CeldaAmarillo4 {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #B8C104; background: #FFFFFF; }
+
+	.Negro      {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #000000; }
+	.InputNegro {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #000000; border: 1px solid #C0C0C0; background: #FFFFFF; }
+	.InputNegroNo {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #000000; border: 0px solid #C0C0C0; background: #FFFFFF; }
+	.CeldaNegro {font-family: Verdana, Arial, Helvetica, Tahoma; font-SIZE: 9pt; color: #000000; background: #FFFFFF; }
+
+	
+	.OnlyLeerTxt {
+	color: black;
+	border-style:groove;
+	background-color:#EEEEEE;
+	Border-Right: #BBD3E1 1px solid;
+	Border-Top: #477EAB 1px solid;
+	Border-Left: #477EAB 1px solid;
+	Border-Bottom: #BBD3E1 1px solid;
+	text-align:left;
+	font-size: 10px;
+   }
+   
+   .OnlyLeerLK{
+    visibility :hidden;
+	}
+	 
+	.divdiagnosticosadmision{
+	position:relatve;
+	width:100%;
+	height:80px;
+	overflow:auto;
+	background-position: center;
+	vertical-align: top;
+	color: Navi;
+}
+
+	.divdiagnosticoscabecera{
+	position:relatve;
+	width:100%;
+	height:20px;
+	background-position: center;
+	vertical-align: top;
+	background-color:#D9E5F3;
+	color: Navi;
+}
+
+.campoObligatorioOculto {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #000000;	
+	display:none;
+	text-align: center;
+	font-weight: bold;
+}
+
+.campoObligatorio {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #000000;	
+	text-align: center;
+	font-weight: bold;
+	
+}
+
+.cabeceracotizarServicio {
+	position:relative;
+	overflow:no;
+	top:0%;
+	left:0.6%;
+	width:98%;
+	height:45px;
+	background-position: center;
+	vertical-align: top;
+}
+
+.divcapturahora{
+	position:absolute;
+	top:75px;
+	left:550px;
+	width:180px;
+	height:30px;
+	clip: rect(0px 295px 295px 0px);
+	z-index:120;
+	visibility: hidden;
+	background-position: right;
+	vertical-align: top;
+	background-color:#D9E5F3;
+	Border-Right: #477EAB 3px solid;
+	Border-Top: #477EAB 1px solid;
+	Border-Left: #477EAB 1px solid;
+	Border-Bottom: #477EAB 2px solid;
+	color: Navy;
+}
+.divCalendario {
+	width 	: 100%;
+	height 	: 250px;
+	overflow: auto;
+	position: relative;
+	color	: black;
+	border-style:groove;
+	border: #577CB5 1px solid;
+}
+
+.botonCalendario {
+text-align:center;
+background-position:bottom left;
+width:16px;
+height:15px;
+cursor:pointer;
+background-color:transparent;
+border:none;
+font-weight:bold;
+font-family:inherit;
+
+background-image: url('../media/image/calendario.gif');
+background-repeat: no-repeat;
+}
+.TablaReporte3 {
+	position:relative;
+	left:0px;
+	top:0px;
+	overflow:auto;
+	width:100%;
+	height:150px;
+	background-position: center;
+	vertical-align: top;
+}
+
+.TablaReporte4 {
+	position:relative;
+	left:0;
+	top:0px;
+	overflow:auto;
+	width:768px;
+	height:150px;
+	background-position: center;
+	text-align:center;
+	vertical-align: top;
+}
+
+
+
+.DIVdetalleOrdenMedica {
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:2.5%;
+	width:93%;
+	height:100px;
+	vertical-align: top;
+}
+
+.RadioTransparente{
+    background-color: transparent; 
+    border:0;
+}
+
+.DIVtratamiento{
+	position:relative;
+	overflow:auto;
+	top:0%;
+	left:0%;
+	width:100%;
+	height:28%;
+	background-position: center;
+	vertical-align: top;
+}
+
+.DIVdetalleAlcance {
+	position:relative;
+	overflow:auto;
+	width:100%;
+	height:100%;
+	bottom:0%;
+	top:0%;	
+	right:0%;
+	left:0%;
+}
+.DIVdetalleAlcance2 {
+	position:relative;
+	overflow:auto;
+	width:150px;
+	height:100%;
+	bottom:0%;
+	top:0%;	
+	right:0%;
+	left:0%;
+}
+
+.registrarCosto {
+	position:relative;
+	overflow:auto;
+	left:4.5%;
+	width:90.4%;
+	height:20%;
+	background-position: center;
+	vertical-align: top;
+}
+.divDocumentoSoporte {
+	position:relative;
+	left:0.0%;
+	top:0px;
+	overflow:auto;
+	width:100%;
+	height:150px;
+	background-position: center;
+	vertical-align: middle;
+}
+.campoLeft{
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	background-color :#E7ECF5;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: Left;
+}

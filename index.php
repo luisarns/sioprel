@@ -17,7 +17,8 @@
 <div id="contentbg">
   <div id="contentblank">
     <div id="content">
-      <div id="contentleft">
+     
+	 <div id="contentleft">
         <div id="leftnavheading">
           <h4>Menu principal</h4>
         </div>
@@ -37,7 +38,6 @@
       </div>
 	  
       <div id="contentmid">
-		<!-- Codigo dinamico que me permite cumplir con los requerimientos -->
 		<?php
 			switch($_GET['opcion']){
 				
