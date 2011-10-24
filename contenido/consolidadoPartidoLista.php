@@ -343,7 +343,7 @@ EOR;
 		</tr>
 	</table>
 	
-	<?php 
+	<?php
 		ibase_free_result($result);
 		if($result1 != null){ibase_free_result($result1);}
 		ibase_close($firebird);
