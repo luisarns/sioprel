@@ -223,7 +223,7 @@ EOF;
 				<td><?php echo htmlentities($row->NOMBRES)?></td>
 				<td><?php echo htmlentities($row->APELLIDOS)?></td>
 				<td><?php echo htmlentities($row->DESCRIPCION)?></td>
-				<td><?php echo $row->NUMVOTOS?></td>
+				<td><?php echo number_format($row->NUMVOTOS)?></td>
 			</tr>
 		<?php } ?>
 	</table>

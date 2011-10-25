@@ -23,7 +23,7 @@
 	while($row = ibase_fetch_object($result)) {
 		$objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,$row->CODPARTIDO);
 		$objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,utf8_encode($row->DESCRIPCION));
-		$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,$row->VOTOS);
+		$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,number_format($row->VOTOS));
 		$cont++;
 	}
 

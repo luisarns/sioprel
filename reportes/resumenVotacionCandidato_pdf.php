@@ -73,7 +73,7 @@
 		$pdf->Cell($w[0], 6, utf8_encode($row->CODIGO), 'LR', 0, 'L', $fill,'',$stretch);
 		$pdf->Cell($w[1], 6, utf8_encode($row->NOMBRES), 'LR', 0, 'L', $fill,'',$stretch);
 		$pdf->Cell($w[2], 6, utf8_encode($row->APELLIDOS), 'LR', 0, 'L', $fill,'',$stretch);
-		$pdf->Cell($w[3], 6, $row->VOTOS, 'LR', 0, 'L', $fill,'',$stretch);
+		$pdf->Cell($w[3], 6, number_format($row->VOTOS), 'LR', 0, 'L', $fill,'',$stretch);
 		$pdf->Ln();
 		$fill=!$fill;
 	}

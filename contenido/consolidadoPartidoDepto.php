@@ -1,3 +1,3 @@
 <?php
-	echo "Consolidado Partido Departamental";
+	echo "Requerimiento no implementado";
 ?>

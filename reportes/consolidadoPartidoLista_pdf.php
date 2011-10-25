@@ -90,7 +90,7 @@
 			if($candidato->CODPARTIDO == $partido->CODIGO) {
 				$pdf->Cell($w[0], 6, $partido->CODIGO.'-'.$candidato->CODCANDIDATO, 'LR', 0, 'L', $fill,'',$stretch);
 				$pdf->Cell($w[1], 6, utf8_encode($candidato->DESCRIPCION), 'LR', 0, 'L', $fill,'',$stretch);
-				$pdf->Cell($w[2], 6, $candidato->VOTOS, 'LR', 0, 'L', $fill,'',$stretch);
+				$pdf->Cell($w[2], 6, number_format($candidato->VOTOS), 'LR', 0, 'L', $fill,'',$stretch);
 				$pdf->Ln();
 			}
 		}

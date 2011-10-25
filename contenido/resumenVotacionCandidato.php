@@ -187,7 +187,7 @@ EOF;
 				<td><?php echo $row->CODIGO?></td>
 				<td><?php echo htmlentities($row->NOMBRES)?></td>
 				<td><?php echo htmlentities($row->APELLIDOS)?></td>
-				<td><?php echo $row->VOTOS?></td>
+				<td><?php echo number_format($row->VOTOS)?></td>
 			</tr>
 		<?php } ?>
 		

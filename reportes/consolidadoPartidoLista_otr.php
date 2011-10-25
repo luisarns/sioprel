@@ -39,7 +39,7 @@
 		
 		$objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,$partido->CODIGO);
 		$objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,utf8_encode($partido->DESCRIPCION));
-		$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,$partido->VOTOS);
+		$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,number_format($partido->VOTOS));
 		//Hacer un cambio de color para las celdas de los partidos
 		$cont++;
 		
@@ -47,7 +47,7 @@
 			if($candidato->CODPARTIDO == $partido->CODIGO) {
 				$objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,$partido->CODIGO.'-'.$candidato->CODCANDIDATO);
 				$objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,utf8_encode($candidato->DESCRIPCION));
-				$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,$candidato->VOTOS);
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,number_format($candidato->VOTOS));
 				$cont++;
 			}
 		}

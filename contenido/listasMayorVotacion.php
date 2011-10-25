@@ -184,7 +184,7 @@ EOF;
 		<?php while($row = ibase_fetch_object($result)) { ?>
 			<tr>
 				<td><?php echo htmlentities($row->DESCRIPCION)?></td>
-				<td><?php echo $row->VOTOS?></td>
+				<td><?php echo number_format($row->VOTOS)?></td>
 			</tr>
 		<?php } ?>
 	</table>

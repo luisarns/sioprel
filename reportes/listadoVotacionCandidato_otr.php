@@ -27,7 +27,7 @@
 		$objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,utf8_encode($row->NOMBRES));
 		$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,utf8_encode($row->APELLIDOS));
 		$objPHPExcel->getActiveSheet()->setCellValue('D'.$cont,utf8_encode($row->DESCRIPCION));
-		$objPHPExcel->getActiveSheet()->setCellValue('E'.$cont,$row->VOTOS);
+		$objPHPExcel->getActiveSheet()->setCellValue('E'.$cont,number_format($row->VOTOS));
 		$cont++;
 	}
 	

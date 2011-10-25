@@ -307,7 +307,7 @@ EOR;
 			<tr>
 				<td><?php echo $row->CODIGO?></td>
 				<td><?php echo htmlentities($row->DESCRIPCION)?></td>
-				<td><?php echo $row->VOTOS?></td>
+				<td><?php echo number_format($row->VOTOS)?></td>
 				
 			</tr>
 			<?php 
@@ -316,7 +316,7 @@ EOR;
 						<tr>
 						<td><?php echo $row->CODIGO .'-'.$candidato->CODCANDIDATO ?></td>
 						<td><?php echo htmlentities($candidato->DESCRIPCION)?></td>
-						<td><?php echo $candidato->VOTOS?></td>
+						<td><?php echo number_format($candidato->VOTOS)?></td>
 						</tr>
 			<?php }} ?>
 		<?php } ?>

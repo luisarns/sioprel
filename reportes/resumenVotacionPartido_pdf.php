@@ -67,7 +67,7 @@
 	while($row = ibase_fetch_object($result)) {
 		$pdf->Cell($w[0], 6, $row->CODPARTIDO, 'LR', 0, 'L', $fill,'',$stretch);
 		$pdf->Cell($w[1], 6, utf8_encode($row->DESCRIPCION), 'LR', 0, 'L', $fill,'',$stretch);
-		$pdf->Cell($w[2], 6, $row->VOTOS, 'LR', 0, 'L', $fill,'',$stretch);
+		$pdf->Cell($w[2], 6, number_format($row->VOTOS), 'LR', 0, 'L', $fill,'',$stretch);
 		$pdf->Ln();
 		$fill=!$fill;
 	}

@@ -155,7 +155,7 @@ EOF;
 			<tr>
 				<td><?php echo $row->CODPARTIDO?></td>
 				<td><?php echo htmlentities($row->DESCRIPCION)?></td>
-				<td><?php echo $row->VOTOS?></td>
+				<td><?php echo number_format($row->VOTOS)?></td>
 			</tr>
 		<?php } ?>
 	</table>

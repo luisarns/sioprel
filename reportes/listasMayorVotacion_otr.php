@@ -21,7 +21,7 @@
 	$cont = 2;
 	while($row = ibase_fetch_object($result)) {
 		$objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,utf8_encode($row->DESCRIPCION));
-		$objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,$row->VOTOS);
+		$objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,number_format($row->VOTOS));
 		$cont++;
 	}
 	$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
