@@ -12,13 +12,16 @@
 <div id="headerbg">
   <div id="headerblank">
     <div id="header">
-	  
 	  <div class="sio"><img src="/images/logosio.jpg" width="200" height="100" alt="Soluciones Integrales De Oficinas" /></div>
-	  <div class="escudo"><img src="/images/escudo.png" width="97" height="100" alt="Escudo de Colombia" /></div>
-      <h1>
+	  
+	  <!--<div class="escudo"><img src="/images/escudo.png" width="97" height="100" alt="Escudo de Colombia" /></div>
+	  <div class="escudo"><img src="/images/Registraduria-logo.jpg" width="97" height="100" alt="Escudo de Colombia" /></div>-->
+	  
+      <h1 style="color:#DFDFDF;">
 		Estad&iacute;sticas Electorales<br/>
 		Escrutinio 2011
 	  </h1>
+	  
 	</div>
   </div>
 </div>
@@ -100,7 +103,7 @@
     <div id="footer">
       <div id="copyrights">
 	  SIO WEB SOLUTIONS © Copyright 2011<br/>
-	  <div id="#designedby"><a class="designedby" href="#">Luis A. Nuñez lnunez.system@gmail.com</a></div>
+	  <!-- <div id="#designedby"><a class="designedby" href="#">Luis A. Nuñez lnunez.system@gmail.com</a></div>-->
 	  </div>
     </div>
   </div>
