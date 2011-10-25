@@ -23,7 +23,7 @@ h1,h2,h3,h4,h5,h6,span {
 }
 
 #headerblank {
-	width:1024px;
+	width:100%;/*1024px*/
 	height:100px;
 	float: none;
 	margin:0 auto;
@@ -104,6 +104,7 @@ h1,h2,h3,h4,h5,h6,span {
 	margin:0px;
 	padding:41px 0 0 146px;
 }
+
 /*
 #footerbox {
 	width:215px;
@@ -254,7 +255,7 @@ h1,h2,h3,h4,h5,h6,span {
 	text-align: right;
 }
 
-Input.Hospital {
+input.hospital {
 	font:verdana,tahoma,arial,helvetica;
 	font-size:7pt; font-weight : normal;
 	border-style:groove;
@@ -289,7 +290,7 @@ Input.Hospital {
 	text-align:center;
 }
 
-/*---------------------------------------------Estilo para el menu principal---------------------------------------------*/
+/*---------------------------------------------Estilos para el menu principal---------------------------------------------*/
 .escudo {
     float: right;
 	/*width: 100px;*/
@@ -297,4 +298,13 @@ Input.Hospital {
 .sio {
     float: left;
 	/*width: 100px;*/
+}
+
+div.cs{
+	width:220px;/*Width text box*/
+	margin:0 2px;
+	border:3px solid red;
+	padding:5px;
+	color:yellow;
+	background-color:blue;
 }
