@@ -12,7 +12,11 @@
 <div id="headerbg">
   <div id="headerblank">
     <div id="header">
-      <h1>Estad&iacute;sticas Electorales</h1>
+	  <div class="escudo"><img src="/images/escudo.png" width="97" height="100" alt="Escudo de Colombia" /></div>
+      <h1>
+		Estad&iacute;sticas Electorales<br/>
+		Escrutinio 2011
+	  </h1>
 	</div>
   </div>
 </div>
