@@ -2,6 +2,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 	<link rel="stylesheet" type="text/css" href="css/main.css" />
+	<link rel="stylesheet" type="text/css" href="css/menu.css" />
 	<link href="css/style.css" rel="stylesheet" type="text/css" />
 	<title>Estad&iacute;sticas Electorales</title>
 </head>
@@ -12,6 +13,7 @@
     <div id="header">
       <h1>Estad&iacute;sticas Electorales</h1>
 	</div>
+	
   </div>
 </div>
 
@@ -20,13 +22,14 @@
     <div id="content">
      
 	 <div id="contentleft">
-        <div id="leftnavheading">
+        <!--<div id="leftnavheading">
           <h4>Men&uacute; principal</h4>
-        </div>
-        <div id="leftnav">
-          <ul><!-- quitar el id--><!-- id="navlist"---> 
+        </div>-->
+        <!--<div id="leftnav">-->
+			<div id="menu22">
+          <ul>
             <li><a href="/?opcion=1">Consolidado Partido Lista </a></li>
-            <li><a href="/?opcion=2">Consolidado Partido Departamental </a></li>
+            <li><a href="/?opcion=2">Consolidado Partido Depto </a></li>
             <li><a href="/?opcion=3">Resumen Votaci&oacute;n Candidatos</a></li>
             <li><a href="/?opcion=4">Resumen Votaci&oacute;n Partido </a></li>
             <li><a href="/?opcion=5">Elegidos Corporaciones </a></li>
@@ -35,8 +38,9 @@
             <li><a href="/?opcion=8">Listas Mayor Votaci&oacute;n</a></li>
             <li><a href="/?opcion=9">Elegidos Asignaci&oacute;n Curules</a></li>
           </ul>
-        </div>
-      </div>
+		  </div>
+        <!--</div>-->
+     </div>
 	  
       <div id="contentmid">
 		<?php
@@ -79,7 +83,7 @@
 				break;
 				
 				default:
-					echo "HOME PRINCIPAL";
+					echo "HOME PRINCIPAL"; //Mostrar una imagen centrada con informacion aluciba a las elecciones
 			}
 		?>
       </div>
@@ -91,7 +95,7 @@
 <div id="footerbg">
   <div id="footerblank">
     <div id="footer">
-      <div id="copyrights">© Copyright Information Goes Here. All Rights Reserved.</div>
+      <div id="copyrights">SIO WEB SOLUTIONS © Copyright 2011</div>
     </div>
   </div>
 </div>
