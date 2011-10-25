@@ -4,6 +4,7 @@
 body {
 	margin:0px;
 	padding:0px;
+	background-color:#D8D8D8 ;
 }
 
 h1,h2,h3,h4,h5,h6,span {
@@ -147,6 +148,7 @@ h1,h2,h3,h4,h5,h6,span {
 	text-align:center;
 	text-decoration:none;
 }
+
 #copyrights {
 	width:715px;
 	float:left;
@@ -154,9 +156,10 @@ h1,h2,h3,h4,h5,h6,span {
 	padding:0px;
 	font-family:Arial;
 	font-size:11px;
-	color:#401400;
+	color:black;/*#401400*/
 	text-align:center;
 }
+
 #designedby {
 	width:715px;
 	float:left;
@@ -165,14 +168,16 @@ h1,h2,h3,h4,h5,h6,span {
 	font-family:Arial;
 	font-size:11px;
 	font-weight:bold;
-	color:#401400;
+	color:black;/*#401400*/
 	text-align:center;
 }
+
 .designedby {
 	font-family:Arial;
 	font-size:11px;
 	font-weight:bold;
-	color:#ee7e1f;
+	color:black;/*#ee7e1f*/
+	
 	text-align:center;
 	text-decoration:none;
 }
@@ -181,7 +186,7 @@ h1,h2,h3,h4,h5,h6,span {
 	font-family:Arial;
 	font-size:11px;
 	font-weight:bold;
-	color:#ee7e1f;
+	color:black;
 	text-align:center;
 	text-decoration:underline;
 }
@@ -290,70 +295,3 @@ Input.Hospital {
 }
 
 /*---------------------------------------------Estilo para el menu principal---------------------------------------------*/
-/*#navlist
-{
-	color: white;
-	background: #17a;
-	border-bottom: 0.2em solid #17a;
-	border-right: 0.2em solid #17a;
-	padding: 0 1px;
-	margin-left: 0;
-	width: 12em;
-	font: normal 0.8em Verdana, sans-serif;
-}
-
-#navlist li
-{
-	list-style: none;
-	margin: 0;
-	font-size: 1em;
-}
-
-#navlist a
-{
-	display: block;
-	text-decoration: none;
-	margin-bottom: 0.5em;
-	margin-top: 0.5em;
-	color: white;
-	background: #39c;
-	border-width: 1px;
-	border-style: solid;
-	border-color: #5bd #035 #068 #6cf;
-	border-left: 1em solid #fc0;
-	padding: 0.25em 0.5em 0.4em 0.75em;
-}
-
-#navlist a#current { border-color: #5bd #035 #068 #f30; }
-
-#navlist a
-{	
-	width: 99%;
-}
-
-#navlist a
-{
-	voice-family: "\"}\"";
-	voice-family: inherit;
-	width: 9.6em;
-}
-
-#navcontainer>#navlist a
-{
-	width: auto;
-}
-
-#navlist a:hover, #navlist a#current:hover
-{
-	background: #28b;
-	border-color: #069 #6cf #5bd #fc0;
-	padding: 0.4em 0.35em 0.25em 0.9em;
-}
-
-#navlist a:active, #navlist a#current:active
-{
-	background: #17a;
-	border-color: #069 #6cf #5bd white;
-	padding: 0.4em 0.35em 0.25em 0.9em;
-}
-*/

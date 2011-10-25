@@ -93,10 +93,8 @@
     <div id="footer">
       <div id="copyrights">
 	  SIO WEB SOLUTIONS © Copyright 2011<br/>
-	  <div id="#designedby"><a class="designedby" href="#">Luis A. Nuñez lnunez.system@gmail.com</a></div>
+	  <!--<div id="#designedby"><a class="designedby" href="#">Luis A. Nuñez lnunez.system@gmail.com</a></div>-->
 	  </div>
-      
-	  
     </div>
   </div>
 </div>
