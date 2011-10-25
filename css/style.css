@@ -82,7 +82,7 @@ h1,h2,h3,h4,h5,h6,span {
 /*--------------------------------------------------------------CONTENTPART-------------------------------------------------END--------------------------------------------------------------*/	
 #footerbg {
 	width:100%;
-	height:200px;/*354px*/
+	height:100px;/*354px*/
 	float:left;
 	margin:0px;
 	padding:0px;
@@ -90,7 +90,7 @@ h1,h2,h3,h4,h5,h6,span {
 
 #footerblank {
 	width:1024px;/*1004*/
-	height:200px;/*354px*/
+	height:100px;/*354px*/
 	float:none;
 	margin:0 auto;
 	padding:0px;
@@ -98,20 +98,20 @@ h1,h2,h3,h4,h5,h6,span {
 
 #footer {
 	width:858px;
-	height:150px;/*313px*/
+	height:100px;/*313px*/
 	float:left;
 	margin:0px;
 	padding:41px 0 0 146px;
 }
-
+/*
 #footerbox {
 	width:215px;
 	height:168px;
 	float:left;
 	margin:0px;
 	padding:0px;
-}
-
+}*/
+/*
 #footermid {
 	width:215px;
 	height:168px;
@@ -119,7 +119,8 @@ h1,h2,h3,h4,h5,h6,span {
 	margin:0 35px 0 35px;
 	padding:0px;
 }
-
+*/
+/*
 #footerlast {
 	width:215px;
 	height:168px;
@@ -140,6 +141,7 @@ h1,h2,h3,h4,h5,h6,span {
 	text-align:center;
 	text-decoration:none;
 }
+*/
 
 #copyrights {
 	width:715px;
@@ -189,6 +191,7 @@ h1,h2,h3,h4,h5,h6,span {
 	padding:0 0 0 293px;
 }
 
+/*----------------------------Codigo externo Diego----------------------------*/
 .regOscuro {
 	color: black;
 	border-style:none;
@@ -288,5 +291,9 @@ Input.Hospital {
 /*---------------------------------------------Estilo para el menu principal---------------------------------------------*/
 .escudo {
     float: right;
+	/*width: 100px;*/
+}
+.sio {
+    float: left;
 	/*width: 100px;*/
 }
