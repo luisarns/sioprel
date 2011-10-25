@@ -6,6 +6,7 @@
 	<title>Estad&iacute;sticas Electorales</title>
 </head>
 <body>
+
 <div id="headerbg">
   <div id="headerblank">
     <div id="header">
@@ -23,16 +24,16 @@
           <h4>Men&uacute; principal</h4>
         </div>
         <div id="leftnav">
-          <ul>
-            <li><a href="/?opcion=1"  class="leftnav">Consolidado Partido Lista </a></li>
-            <li><a href="/?opcion=2"  class="leftnav">Consolidado Partido Departamental </a></li>
-            <li><a href="/?opcion=3"  class="leftnav">Resumen Votaci&oacute;n Candidatos</a></li>
-            <li><a href="/?opcion=4"  class="leftnav">Resumen Votaci&oacute;n Partido </a></li>
-            <li><a href="/?opcion=5"  class="leftnav">Elegidos Corporaciones </a></li>
-            <li><a href="/?opcion=6"  class="leftnav">Listado Votaci&oacute;n Candidatos</a></li>
-            <li><a href="/?opcion=7"  class="leftnav">Resumen Curules Asignadas</a></li>
-            <li><a href="/?opcion=8"  class="leftnav">Listas Mayor Votaci&oacute;n</a></li>
-            <li><a href="/?opcion=9"  class="leftnav">Elegidos Asignaci&oacute;n Curules</a></li>
+          <ul><!-- quitar el id--><!-- id="navlist"---> 
+            <li><a href="/?opcion=1">Consolidado Partido Lista </a></li>
+            <li><a href="/?opcion=2">Consolidado Partido Departamental </a></li>
+            <li><a href="/?opcion=3">Resumen Votaci&oacute;n Candidatos</a></li>
+            <li><a href="/?opcion=4">Resumen Votaci&oacute;n Partido </a></li>
+            <li><a href="/?opcion=5">Elegidos Corporaciones </a></li>
+            <li><a href="/?opcion=6">Listado Votaci&oacute;n Candidatos</a></li>
+            <li><a href="/?opcion=7">Resumen Curules Asignadas</a></li>
+            <li><a href="/?opcion=8">Listas Mayor Votaci&oacute;n</a></li>
+            <li><a href="/?opcion=9">Elegidos Asignaci&oacute;n Curules</a></li>
           </ul>
         </div>
       </div>

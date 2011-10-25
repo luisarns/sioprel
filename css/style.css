@@ -279,28 +279,38 @@ h1,h2,h3,h4,h5,h6,span
 		float:left;
 		margin:0px;
 		padding:0px;
+		/*background-image: url(images/registraduria.png);*//* Registraduria-logo.jpg*/
+		
+		
 	}
+	/*CAmbiando*/
 #contentblank
 	{
-		width:1004px;
+		width:1024px;/*1004px*/
 		float: none;
 		margin:0 auto;
 		padding:0px;
 	}		
 #content
 	{
-		width:1004px;
+		width:1024px;/*1004px*/
 		float: left;
 		margin:0px;
 		padding:0px;
+		/*position: absolute;*/ /*Esta propiedad no estaba*/
+		
 	}
+
 #contentleft
 	{
-		width:215px;/*215px*/
+		width:220;/*215px*/
 		float: left;
 		margin:0px;
-		padding:34px 0 33px 52px;
+		padding:0;
+		/*padding: 0 10px 10px 0;*/
+		
 	}
+	
 #leftheading
 	{
 		width:216px;
@@ -433,13 +443,15 @@ h1,h2,h3,h4,h5,h6,span
 		font-family:Georgia;
 		font-size:22px;
 		color:#0000CD;/*7e8901*/
+		
 	}
 #leftnavheading h4
 	{
 		width:216px;
 		float: left;
 		margin:0px;
-		padding:0px;
+		padding:0 0 0 10px;
+		/*padding:0px;*/
 		font-family:Georgia;
 		font-size:22px;
 		font-weight:normal;
@@ -450,7 +462,9 @@ h1,h2,h3,h4,h5,h6,span
 		width:220px;
 		float: left;
 		margin:0px;
-		padding:0px;
+		padding:0 0 0 15px;
+		/*padding:0px;*/
+		/*text-align: left;*/
 	}
 #leftnav ul
 	{
@@ -533,13 +547,16 @@ h1,h2,h3,h4,h5,h6,span
 /*-------------------------------------------------------------------------------------LEFTRPART----------------------------------------------------------------END--*/	
 #contentmid
 	{
-		width:650px;
+		width:730;/*650px*/
 		float:left;
 		margin:0px;
-		padding:34px 0 33px 34px;
+		/*padding:35px;*/
+		padding: 37px 0 0 35px;
 		/*background-image:url(images/vline.jpg);
 		background-repeat:repeat-y;*/
 	}
+	
+	
 .midheading
 	{
 		width:435px;
@@ -974,7 +991,7 @@ h1,h2,h3,h4,h5,h6,span
 	}
 #footerblank
 	{
-		width:1004px;
+		width:1024px;/*1004*/
 		height:200px;/*354px*/
 		float:none;
 		margin:0 auto;
@@ -1333,4 +1350,71 @@ Input.Hospital {
 	text-align:center;
 }
 
-	
+/*---------------------------------------------Estilo para el menu principal---------------------------------------------*/
+#navlist
+{
+	color: white;
+	background: #17a;
+	border-bottom: 0.2em solid #17a;
+	border-right: 0.2em solid #17a;
+	padding: 0 1px;
+	margin-left: 0;
+	width: 12em;
+	font: normal 0.8em Verdana, sans-serif;
+}
+
+#navlist li
+{
+	list-style: none;
+	margin: 0;
+	font-size: 1em;
+}
+
+#navlist a
+{
+	display: block;
+	text-decoration: none;
+	margin-bottom: 0.5em;
+	margin-top: 0.5em;
+	color: white;
+	background: #39c;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #5bd #035 #068 #6cf;
+	border-left: 1em solid #fc0;
+	padding: 0.25em 0.5em 0.4em 0.75em;
+}
+
+#navlist a#current { border-color: #5bd #035 #068 #f30; }
+
+#navlist a
+{	
+	width: 99%;
+}
+
+#navlist a
+{
+	voice-family: "\"}\"";
+	voice-family: inherit;
+	width: 9.6em;
+}
+
+#navcontainer>#navlist a
+{
+	width: auto;
+}
+
+#navlist a:hover, #navlist a#current:hover
+{
+	background: #28b;
+	border-color: #069 #6cf #5bd #fc0;
+	padding: 0.4em 0.35em 0.25em 0.9em;
+}
+
+#navlist a:active, #navlist a#current:active
+{
+	background: #17a;
+	border-color: #069 #6cf #5bd white;
+	padding: 0.4em 0.35em 0.25em 0.9em;
+}
+
