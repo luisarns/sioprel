@@ -6,6 +6,7 @@
 	<link href="css/style.css" rel="stylesheet" type="text/css" />
 	<title>Estad&iacute;sticas Electorales</title>
 </head>
+
 <body>
 
 <div id="headerbg">
@@ -13,23 +14,19 @@
     <div id="header">
       <h1>Estad&iacute;sticas Electorales</h1>
 	</div>
-	
   </div>
 </div>
+
 
 <div id="contentbg">
   <div id="contentblank">
     <div id="content">
      
 	 <div id="contentleft">
-        <!--<div id="leftnavheading">
-          <h4>Men&uacute; principal</h4>
-        </div>-->
-        <!--<div id="leftnav">-->
-			<div id="menu22">
+		<div id="menu22">
           <ul>
             <li><a href="/?opcion=1">Consolidado Partido Lista </a></li>
-            <li><a href="/?opcion=2">Consolidado Partido Depto </a></li>
+            <li><a href="/?opcion=2">Consolidado Partido Depto. </a></li>
             <li><a href="/?opcion=3">Resumen Votaci&oacute;n Candidatos</a></li>
             <li><a href="/?opcion=4">Resumen Votaci&oacute;n Partido </a></li>
             <li><a href="/?opcion=5">Elegidos Corporaciones </a></li>
@@ -38,8 +35,7 @@
             <li><a href="/?opcion=8">Listas Mayor Votaci&oacute;n</a></li>
             <li><a href="/?opcion=9">Elegidos Asignaci&oacute;n Curules</a></li>
           </ul>
-		  </div>
-        <!--</div>-->
+	  </div>
      </div>
 	  
       <div id="contentmid">
@@ -83,7 +79,7 @@
 				break;
 				
 				default:
-					echo "HOME PRINCIPAL"; //Mostrar una imagen centrada con informacion aluciba a las elecciones
+					echo "HOME PRINCIPAL";//Mostrar una imagen en el centro de la pagina aluciba a las elecciones y escrutinio
 			}
 		?>
       </div>
@@ -95,7 +91,12 @@
 <div id="footerbg">
   <div id="footerblank">
     <div id="footer">
-      <div id="copyrights">SIO WEB SOLUTIONS © Copyright 2011</div>
+      <div id="copyrights">
+	  SIO WEB SOLUTIONS © Copyright 2011<br/>
+	  <div id="#designedby"><a class="designedby" href="#">Luis A. Nuñez lnunez.system@gmail.com</a></div>
+	  </div>
+      
+	  
     </div>
   </div>
 </div>
