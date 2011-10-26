@@ -14,7 +14,22 @@ function validar(form){
 			return false;
 		}
 	}
-	return true;
+	
+	var param = "?corporacion="+form.corporacion.value;
+	param += "&departamento="+form.departamento.value;
+	param += "&municipio="+form.municipio.value;
+	param += "&comuna="+form.comuna.value;
+	
+	var ajax = nuevoAjax();
+	ajax.open("GET", "contenido/tablaMayorVotacion.php"+param, true);
+	ajax.onreadystatechange= function () {
+		if (ajax.readyState == 4) {
+			document.getElementById('tblmayorvotacion').innerHTML=ajax.responseText;
+		}
+	}
+	ajax.send(null);
+	
+	return false;
 }
 
 function mostrarOcultarDepto(sel) {
