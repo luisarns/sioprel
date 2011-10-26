@@ -11,12 +11,40 @@ function validar(form){
 		alert("Seleccione un departamento");
 		return false;
 		
-	}else if (document.getElementById('divselcomuna').style.display != 'none' && form.comuna.value == '-') {
-		alert("Seleccione una comuna");
-		return false
+	}else if(form.corporacion.value==5) {
+		if(form.municipio.value=="-") {
+			alert("Seleccione un municipio");
+			return false;
+		}else if(form.comuna.value=="-") {
+			alert("Seleccione una comuna");
+			return false;
+		}
 	}
 	
-	return true;
+	var param = "?corporacion="+form.corporacion.value;
+	param += "&departamento="+form.departamento.value;
+	param += "&municipio="+form.municipio.value;
+	param += "&comuna="+form.comuna.value;
+	param += "&partido="+form.partido.value;
+	param += "&puesto="+form.puesto.value;
+	param += "&mesa="+form.mesa.value;
+	
+	if(form.detallado.checked){
+		param += "&detallado="+form.detallado.value;
+	}
+	if(document.getElementById('selcomuna').style.display=="block"){
+		param += "&zona="+form.zona.value;
+	}
+	
+	var ajax = nuevoAjax();
+	ajax.open("GET", "contenido/tablaConParList.php"+param, true);
+	ajax.onreadystatechange= function () {
+		if (ajax.readyState == 4) {
+			document.getElementById('tbConParList').innerHTML=ajax.responseText;
+		}
+	}
+	ajax.send(null);
+	return false;
 }
 
 
