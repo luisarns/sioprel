@@ -9,7 +9,7 @@
 	$result = ibase_query($cnh,$query);
 	
 	echo "Zona : <select id='selzona' name='zona' onChange='zonaCargaPuesto(this.value)' >";
-	echo "<option value = '-' >-</option>";
+	echo "<option value = '-' >-Ninguna-</option>";
 	while($row = ibase_fetch_object($result)) {
 		echo "<option value = '$row->CODZONA' >$row->CODZONA-$row->DESCRIPCION</option>";
 	}	

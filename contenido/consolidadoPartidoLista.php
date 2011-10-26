@@ -44,7 +44,7 @@
 				<td class="regSuaveleft" >Corporaci&oacute;n :</td>
 				<td class="regSuave">
 					<select name="corporacion" onChange="mostrarOcultarDepto(this.value)">
-						<option value = "-" > - </option>
+						<option value = "-" >-Ninguna-</option>
 						<?php foreach($corporaciones as $corporacion){ ?>
 						<option value=<?php echo $corporacion['id'] ?> > <?php echo $corporacion['nombre'] ?> </option>
 						<?php } ?>
@@ -59,7 +59,7 @@
 				<td class="regSuaveleft" width="20%">Partido :</td>
 				<td class="regSuave" colspan="3" width="75%">
 					<select name="partido">
-						<option value = "-" > - </option>
+						<option value = "-" >-Ninguna-</option>
 						<?php foreach($partidos as $partido){ ?>
 						<option value=<?php echo $partido['id'] ?> > <?php echo $partido['nombre'] ?> </option>
 						<?php } ?>
@@ -75,7 +75,7 @@
 				<td class="regSuave">
 					<div id="combDepartamento" style="display:none;">
 						<select name="departamento" onChange="cargarMunicipios(this.value)">
-							<option value = "-" > - </option>
+							<option value = "-" >-Ninguna-</option>
 							<?php foreach($departamentos as $departamento) { ?>
 							<option value=<?php echo $departamento['id'] ?> > <?php echo $departamento['nombre'] ?> </option>
 							<?php } ?>
@@ -86,7 +86,8 @@
 				<td class="regSuave" colspan="2">
 					<div id="divselmunicipio" style="display:none;">
 						<select id="selmunicipio" name="municipio" onChange="alert('Cambio el municipio')">
-							<option value = "-" > Seleccione un departamento </option> 
+							<option value = "-" > Seleccione un departamento </option>
+							<!-- Poblar este campo si hay seleccionado un departamento -->
 						</select>
 					</div>
 				</td>
@@ -161,8 +162,9 @@
 		</table>
 		
 		<input type="hidden" name="opcion"  value="1"/>
-		
+
 	</form>
+	
 <?php } else if ( $_GET['consultar'] == "Consultar") { ?>
 
 	<?php
@@ -221,7 +223,6 @@
 			$urlReportes.="&codpartido=".$_GET['partido'];
 		}
 		
-		//Esta consulta no esta completa, hay que actualizarla
 		$query =<<<EOF
 		SELECT pp.codpartido as codigo ,pp.descripcion, SUM(mv.numvotos) as votos
 		FROM PPARTIDOS pp, PMESAS pm, PCANDIDATOS pc, MVOTOS mv, pdivipol pd
@@ -235,8 +236,6 @@
 		AND pm.codcorporacion = $codcorporacion
 		GROUP BY pp.codpartido, pp.descripcion
 EOF;
-		
-		// echo $query."<br/>";
 		
 		$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
 		$result   = ibase_query($firebird,$query);
@@ -270,8 +269,6 @@ EOR;
 		
 	?>
 
-	<!-- En esta parte incluyo el codigo necesario para mostrar la tabla con los datos de la consulta -->
-	<!-- Adicionar los links para hacer la descarga de los correspondientes reportes -->
 	<table>
 		<tr>
 			<td><h4>Descargar</h4></td>

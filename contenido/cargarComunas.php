@@ -11,7 +11,7 @@
 	
 	
 	echo "Comuna : <select id='selcomuna' name='comuna' onChange='comunaCargaPuesto(this.value)' >";
-	echo "<option value = '-' >-</option>";
+	echo "<option value = '-' >-Ninguna-</option>";
 	
 	while($row = ibase_fetch_object($result)) {
 		echo "<option value = '$row->IDCOMUNA' >$row->CODCOMUNA-$row->DESCRIPCION</option>";

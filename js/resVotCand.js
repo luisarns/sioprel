@@ -32,14 +32,12 @@ function mostrarDepto(sel){
 		divDepto.style.display = "none";
 	}
 	
+	ocultarIniciar('divselmunicipio','selmunicipio');
+	ocultarIniciar('divselcomuna','selcomuna');
 }
 
 function cargarMunicipios(sel){
-	
 	if(sel != '-') {
-		
-		//Desactivo el campo de la corporacion
-		document.formPrincipal.corporacion.disabled = true;
 		var corpo = document.formPrincipal.corporacion.value;
 		
 		var ajax = nuevoAjax();
@@ -47,21 +45,13 @@ function cargarMunicipios(sel){
 		
 		ajax.open("GET", "contenido/cargarMunicipios.php?opcion="+sel+"&corporacion="+corpo, true);
 		ajax.onreadystatechange= function () {
-			if (ajax.readyState == 1) {
-				selectDestino.length=0;
-				var nuevaOpcion=document.createElement("option"); 
-				nuevaOpcion.value=0; 
-				nuevaOpcion.innerHTML="Cargando...";
-				selectDestino.appendChild(nuevaOpcion); 
-				selectDestino.disabled=true;
-			}
 			if (ajax.readyState == 4) {
 				selectDestino.parentNode.innerHTML=ajax.responseText;
 			}
 		}
+		
 		ajax.send(null);
 		
-		//muestra el div del municipio
 		var selMuncp = document.formPrincipal.municipio.value = '-';
 		var divMuncp = document.getElementById('divselmunicipio');
 		if(divMuncp.style.display == "none") {
@@ -69,41 +59,34 @@ function cargarMunicipios(sel){
 		}
 		
 	} else {
-		ocultar('divselmunicipio');
+		ocultarIniciar('divselmunicipio','selmunicipio');
 	}
-	
+	ocultarIniciar('divselcomuna','selcomuna');
 }
 
 function cargarComunas(sel) {
-	
-	document.formPrincipal.departamento.disabled = true;
-	var divipol = document.formPrincipal.departamento.value + sel;
-	
-	var ajax = nuevoAjax();
-	var selectDestino = document.getElementById('selcomuna');
-	
-	ajax.open("GET", "contenido/cargarComunas.php?divipol="+divipol, true);
-	ajax.onreadystatechange= function () {
-		if (ajax.readyState == 1) {
-			selectDestino.length=0;
-			var nuevaOpcion=document.createElement("option"); 
-			nuevaOpcion.value=0; 
-			nuevaOpcion.innerHTML="Cargando...";
-			selectDestino.appendChild(nuevaOpcion); 
-			selectDestino.disabled=true;
+	if(sel != '-') {
+		var divipol = document.formPrincipal.departamento.value + sel;
+		
+		var ajax = nuevoAjax();
+		var selectDestino = document.getElementById('selcomuna');
+		
+		ajax.open("GET", "contenido/cargarComunas.php?divipol="+divipol, true);
+		ajax.onreadystatechange= function () {
+			if (ajax.readyState == 4) {
+				selectDestino.parentNode.innerHTML=ajax.responseText;
+			}
 		}
-		if (ajax.readyState == 4) {
-			selectDestino.parentNode.innerHTML=ajax.responseText;
+		ajax.send(null);
+		
+		var selMuncp = document.formPrincipal.comuna.value = '-';
+		var divMuncp = document.getElementById('divselcomuna');
+		if(divMuncp.style.display == "none") {
+			mostrar('divselcomuna');
 		}
+	} else {
+		ocultarIniciar('divselcomuna','selcomuna');
 	}
-	ajax.send(null);
-	
-	var selMuncp = document.formPrincipal.comuna.value = '-';
-	var divMuncp = document.getElementById('divselcomuna');
-	if(divMuncp.style.display == "none") {
-		mostrar('divselcomuna');
-	}
-	
 }
 
 function mostrar(id){
@@ -114,6 +97,14 @@ function mostrar(id){
 function ocultar(id){
 	var div	= document.getElementById(id);
 	div.style.display = "none";
+}
+
+
+function ocultarIniciar(divId,comboId) {
+	if(document.getElementById(divId).style.display=="block") {
+		document.getElementById(divId).style.display="none";
+		document.getElementById(comboId).value="-";
+	}
 }
 
 function cargarZonas(sel){}

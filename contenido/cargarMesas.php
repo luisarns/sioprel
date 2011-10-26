@@ -10,7 +10,7 @@
 	$result = ibase_query($cnh,$query);
 	
 	echo "Mesa : <select id='selmesa' name='mesa'>";
-	echo "<option value = '-' >-</option>";
+	echo "<option value = '-' >-Ninguna-</option>";
 	while($row = ibase_fetch_object($result)) {
 		echo "<option value = '$row->CODTRANSMISION' >$row->CODMESA</option>";
 	}	

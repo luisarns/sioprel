@@ -15,7 +15,7 @@
 		$fun = ($corpo != 5)?"cargarZonas":"cargarComunas";
 		
 		echo "Municipio : <select name='municipio' id='selmunicipio' onChange = $fun(this.value)>";
-		echo "<option value = '-' >-</option>";
+		echo "<option value = '-' >-Ninguna-</option>";
 		
 		while($row = ibase_fetch_object($result)) {
 			echo "<option value = '$row->CODMUNICIPIO' >$row->DESCRIPCION</option>";
