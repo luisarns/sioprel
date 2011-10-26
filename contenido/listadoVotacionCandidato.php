@@ -74,7 +74,6 @@
 		<tr>
 			<td align="center" class='regOscuroCenter'>   
 				<input type="submit" class="hospital" name="consultar" value="Consultar"/>
-				<!--<input type="reset" class="hospital" name="limpiar" value="Limpiar" />-->
 			</td>
 		</tr>
 	</table>

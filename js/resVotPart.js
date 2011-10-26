@@ -1,3 +1,4 @@
+
 function validar(form){
 	
 	if(form.departamento.value == '-'){
@@ -5,7 +6,19 @@ function validar(form){
 		return false;
 	}
 	
-	return true;
+	var param = "?departamento="+form.departamento.value;
+	param += "&municipio="+form.municipio.value;
+	
+	var ajax = nuevoAjax();
+	ajax.open("GET", "contenido/tablaResVotPar.php"+param, true);
+	ajax.onreadystatechange= function () {
+		if (ajax.readyState == 4) {
+			document.getElementById('tbResVotPar').innerHTML=ajax.responseText;
+		}
+	}
+	ajax.send(null);
+	
+	return false;
 }
 
 function cargarMunicipios(sel){

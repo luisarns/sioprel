@@ -1,4 +1,5 @@
-function validar(form){
+
+function validar(form) {
 	if(form.corporacion.value == '-'){
 		alert("Seleccione una corporación");
 		return false;
@@ -15,19 +16,19 @@ function validar(form){
 		}
 	}
 	
-	// var param = "?corporacion="+form.corporacion.value;
-	// param += "&departamento="+form.departamento.value;
-	// param += "&municipio="+form.municipio.value;
-	// param += "&comuna="+form.comuna.value;
+	var param = "?corporacion="+form.corporacion.value;
+	param += "&departamento="+form.departamento.value;
+	param += "&municipio="+form.municipio.value;
+	param += "&comuna="+form.comuna.value;
 	
-	// var ajax = nuevoAjax();
-	// ajax.open("GET", "contenido/tablaMayorVotacion.php"+param, true);
-	// ajax.onreadystatechange= function () {
-		// if (ajax.readyState == 4) {
-			// document.getElementById('tblmayorvotacion').innerHTML=ajax.responseText;
-		// }
-	// }
-	// ajax.send(null);
+	var ajax = nuevoAjax();
+	ajax.open("GET", "contenido/tablaResCurAsig.php"+param, true);
+	ajax.onreadystatechange= function () {
+		if (ajax.readyState == 4) {
+			document.getElementById('tbResCurAsig').innerHTML=ajax.responseText;
+		}
+	}
+	ajax.send(null);
 	
 	return false;
 }

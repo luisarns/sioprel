@@ -9,12 +9,31 @@ function validar(form){
 	}else if (form.municipio.value == '-') {
 		alert("Seleccione un municipio");
 		return false;
-	}else if (document.getElementById('divselcomuna').style.display != 'none' && form.comuna.value == '-') {
-		alert("Seleccione una comuna");
-		return false
+	}else if(form.corporacion.value==5) {
+		if(form.municipio.value=="-") {
+			alert("Seleccione un municipio");
+			return false;
+		}else if(form.comuna.value=="-") {
+			alert("Seleccione una comuna");
+			return false;
+		}
 	}
 	
-	return true;
+	var param = "?corporacion="+form.corporacion.value;
+	param += "&departamento="+form.departamento.value;
+	param += "&municipio="+form.municipio.value;
+	param += "&comuna="+form.comuna.value;
+	
+	var ajax = nuevoAjax();
+	ajax.open("GET", "contenido/tablaResVotCand.php"+param, true);
+	ajax.onreadystatechange= function () {
+		if (ajax.readyState == 4) {
+			document.getElementById('tbResVotCand').innerHTML=ajax.responseText;
+		}
+	}
+	ajax.send(null);
+	return false;
+	
 }
 
 function mostrarDepto(sel){
