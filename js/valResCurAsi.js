@@ -1,12 +1,8 @@
-/**
-* Valida que los datos del formulario se hayan ingresado correctamente 
-* antes de enviar los datos al servidor.
-*/
 function validar(form){
-	if(form.corporacion.value == '-') {
+	if(form.corporacion.value == '-'){
 		alert("Seleccione una corporación");
 		return false;
-	}else if(form.departamento.value == '-') {
+	}else if(form.departamento.value == '-'){
 		alert("Seleccione un departamento");
 		return false;
 	}else if(form.corporacion.value==5) {
@@ -19,24 +15,24 @@ function validar(form){
 		}
 	}
 	
-	var param = "?corporacion="+form.corporacion.value;
-	param += "&departamento="+form.departamento.value;
-	param += "&municipio="+form.municipio.value;
-	param += "&comuna="+form.comuna.value;
+	// var param = "?corporacion="+form.corporacion.value;
+	// param += "&departamento="+form.departamento.value;
+	// param += "&municipio="+form.municipio.value;
+	// param += "&comuna="+form.comuna.value;
 	
-	var ajax = nuevoAjax();
-	ajax.open("GET", "contenido/tablaListVotacionCandidato.php"+param, true);
-	ajax.onreadystatechange= function () {
-		if (ajax.readyState == 4) {
-			document.getElementById('tbLisVotCand').innerHTML=ajax.responseText;
-		}
-	}
-	ajax.send(null);
+	// var ajax = nuevoAjax();
+	// ajax.open("GET", "contenido/tablaMayorVotacion.php"+param, true);
+	// ajax.onreadystatechange= function () {
+		// if (ajax.readyState == 4) {
+			// document.getElementById('tblmayorvotacion').innerHTML=ajax.responseText;
+		// }
+	// }
+	// ajax.send(null);
+	
 	return false;
 }
 
-function mostrarOcultarDepto(sel){
-
+function mostrarOcultarDepto(sel) {
 	var selDepto = document.formPrincipal.departamento.value = '-';
 	var divDepto = document.getElementById('divseldepto');
 	
@@ -46,12 +42,11 @@ function mostrarOcultarDepto(sel){
 	} else {
 		ocultar('divseldepto');
 	}
-
 	ocultarIniciar('divselmunicipio','selmunicipio');
 	ocultarIniciar('divselcomuna','selcomuna');
 }
 
-function cargarMunicipios(sel){
+function cargarMunicipios(sel) {
 	if(sel != '-') {
 		var corpo = document.formPrincipal.corporacion.value;
 		
@@ -91,6 +86,7 @@ function cargarComunas(sel) {
 				selectDestino.parentNode.innerHTML=ajax.responseText;
 			}
 		}
+		
 		ajax.send(null);
 		
 		var selMuncp = document.formPrincipal.comuna.value = '-';
