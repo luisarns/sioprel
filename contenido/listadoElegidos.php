@@ -6,7 +6,6 @@
 		include_once('departamentos.php');
 	?>
 	
-	<script type="text/javascript" src="js/ajax.js"></script>
 	<script type="text/javascript" src="js/valLisEleCorp.js"></script>
 	
 	<!--<h3>Formulario Listado Elegidos Corporación</h3>-->
@@ -38,7 +37,7 @@
 				<td class="regSuaveleft" >Corporaci&oacute;n :</td>
 				<td class="regSuaveleft">
 					<select name="corporacion" onChange="mostrarDepto(this.value)" >
-					<option value = "-" > - </option>
+					<option value = "-" >-Ninguna-</option>
 					<?php foreach($corporaciones as $corporacion){ ?>
 					<option value=<?php echo $corporacion['id'] ?> > <?php echo $corporacion['nombre'] ?> </option>
 					<?php } ?>
@@ -48,7 +47,7 @@
 				<td class="regSuaveleft">Sexo :</td>
 				<td class="regSuaveleft">
 					<select name="sexo" >
-						<option value = "-" > - </option>
+						<option value = "-" >-Ninguna-</option>
 						<option value = "M" > Masculino </option>
 						<option value = "F" > Femenino </option>
 					</select>
@@ -58,7 +57,7 @@
 				<td class="regSuaveleft" >Partido :</td>
 				<td class="regSuaveleft" colspan="3">
 					<select name="partido" >
-						<option value = "-" > - </option>
+						<option value = "-" >-Ninguna-</option>
 						<?php foreach($partidos as $partido){ ?>
 						<option value=<?php echo $partido['id'] ?> > <?php echo $partido['nombre'] ?> </option>
 						<?php } ?>
@@ -70,7 +69,7 @@
 				<td class="regSuaveleft" colspan="2">
 					<div id="divseldepto" style="display:none;">
 					Departamento : <select name="departamento" onChange="cargarMunicipios(this.value)">
-					<option value = "-" > - </option>
+					<option value = "-" >-Ninguna-</option>
 					<?php foreach($departamentos as $departamento) { ?>
 					<option value=<?php echo $departamento['id'] ?> > <?php echo $departamento['nombre'] ?> </option>
 					<?php } ?>

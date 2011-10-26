@@ -14,9 +14,6 @@ function validar(form){
 		return false
 	}
 	
-	document.formPrincipal.corporacion.disabled = false;
-	document.formPrincipal.departamento.disabled = false;
-	
 	return true;
 }
 
@@ -86,24 +83,6 @@ function cargarComunas(sel) {
 		}
 	} else {
 		ocultarIniciar('divselcomuna','selcomuna');
-	}
-}
-
-function mostrar(id){
-	var div	= document.getElementById(id);
-	div.style.display = "block";
-}
-
-function ocultar(id){
-	var div	= document.getElementById(id);
-	div.style.display = "none";
-}
-
-
-function ocultarIniciar(divId,comboId) {
-	if(document.getElementById(divId).style.display=="block") {
-		document.getElementById(divId).style.display="none";
-		document.getElementById(comboId).value="-";
 	}
 }
 

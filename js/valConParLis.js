@@ -93,7 +93,6 @@ function cargarZonas(sel) {
 	
 }
 
-
 function cargarComunas(sel) {
 	
 	if(sel != '-') {
@@ -125,7 +124,6 @@ function cargarComunas(sel) {
 	
 }
 
-
 function comunaCargaPuesto(idcomuna) {
 	
 	if(idcomuna != '-') {
@@ -156,7 +154,6 @@ function comunaCargaPuesto(idcomuna) {
 	ocultarIniciar('divselmesa','selmesa');
 	
 }
-
 
 function zonaCargaPuesto(zona) {
 	
@@ -236,22 +233,4 @@ function mostrarOcultarDepto(sel){
 	ocultarIniciar('divselcomuna','selcomuna');
 	ocultarIniciar('divselpuesto','selpuesto');
 	ocultarIniciar('divselmesa','selmesa');
-}
-
-
-function mostrar(id){
-	var div	= document.getElementById(id);
-	div.style.display = "block";
-}
-
-function ocultarIniciar(divId,comboId) {
-	if(document.getElementById(divId).style.display=="block") {
-		document.getElementById(divId).style.display="none";
-		document.getElementById(comboId).value="-";
-	}
-}
-
-function ocultar(id){
-	var div	= document.getElementById(id);
-	div.style.display = "none";
 }

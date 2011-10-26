@@ -5,6 +5,8 @@
 	<link rel="stylesheet" type="text/css" href="css/main.css" />
 	<link rel="stylesheet" type="text/css" href="css/menu.css" />
 	<link href="css/style.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="js/ajax.js"></script>
 	<title>Estad&iacute;sticas Electorales</title>
 </head>
 

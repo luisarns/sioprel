@@ -5,7 +5,6 @@
 		include_once('partidos.php');
 		include_once('departamentos.php');
 	?>
-	<script type="text/javascript" src="js/ajax.js"></script>
 	<script type="text/javascript" src="js/valConParLis.js"> </script>
 
 

@@ -5,10 +5,7 @@
 		include_once('departamentos.php');
 	?>
 
-	<script type="text/javascript" src="js/ajax.js"></script>
 	<script type="text/javascript" src="js/valLisMayVota.js"> </script>
-
-	<!--<h3>Formulario Resumen Curules Asignadas</h3>-->
 	<form name="formPrincipal" method="GET" onSubmit="return validar(this);">
 		
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
@@ -39,7 +36,7 @@
 				
 				<td class="regSuaveleft">
 					<select name="corporacion" onChange="mostrarOcultarDepto(this.value)">
-					<option value = "-" > - </option>
+					<option value = "-" >-Ninguna-</option>
 					<?php foreach($corporaciones as $corporacion){ ?>
 					<option value=<?php echo $corporacion['id'] ?> > <?php echo $corporacion['nombre'] ?> </option>
 					<?php } ?>
@@ -48,7 +45,7 @@
 				<td class="regSuaveleft" colspan="2">
 					<div id="divseldepto" style="display:none;">
 					Departamento : <select name="departamento" onChange="cargarMunicipios(this.value)">
-					<option value = "-" > - </option>
+					<option value = "-" >-Ninguna-</option>
 					<?php foreach($departamentos as $departamento) { ?>
 					<option value=<?php echo $departamento['id'] ?> > <?php echo $departamento['nombre'] ?> </option>
 					<?php } ?>
@@ -63,14 +60,12 @@
 					<div id="divselmunicipio" style="display:none;">
 					Municipio : <select id="selmunicipio" name="municipio" onChange="alert('Cambio el municipio')">
 					<option value = "-" > Seleccione un departamento </option> </select>
-					<!--//-->
 					</div>
 				</td>
 				<td class="regSuaveleft" colspan="2">
 					<div id="divselcomuna" style="display:none;">
 					Comuna : <select id="selcomuna" name="comuna" onChange="alert('Cambio la comuna')">
 					<option value = "-" > Seleccione un municipio </option> </select>
-					<!--//-->
 					</div>
 				</td>
 			</tr>
@@ -212,7 +207,7 @@ EOF;
 		</tr>
 	</table>
 	
-	<?php 
+	<?php
 		ibase_free_result($result);
 		ibase_close($firebird);
 	?>

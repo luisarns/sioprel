@@ -4,7 +4,6 @@
 		include_once('departamentos.php');
 	?>
 
-	<script type="text/javascript" src="js/ajax.js"></script>
 	<script type="text/javascript" src="js/valLisVotCand.js"> </script>
 
 	<!--<h3>Formulario Listado Votación Candidato</h3>-->
@@ -36,7 +35,7 @@
 				<td class="regSuaveleft" >Corporaci&oacute;n :</td>
 				<td class="regSuaveleft">
 					<select name="corporacion" onChange="mostrarOcultarDepto(this.value)">
-					<option value = "-" > - </option>
+					<option value = "-" >-Ninguna-</option>
 					<?php foreach($corporaciones as $corporacion){ ?>
 					<option value=<?php echo $corporacion['id'] ?> > <?php echo $corporacion['nombre'] ?> </option>
 					<?php } ?>
@@ -45,7 +44,7 @@
 				<td class="regSuaveleft" colspan="2">
 					<div id="divseldepto" style="display:none;">
 					Departamento : <select name="departamento" onChange="cargarMunicipios(this.value)">
-					<option value = "-" > - </option>
+					<option value = "-" >-Ninguna-</option>
 					<?php foreach($departamentos as $departamento) { ?>
 					<option value=<?php echo $departamento['id'] ?> > <?php echo $departamento['nombre'] ?> </option>
 					<?php } ?>
