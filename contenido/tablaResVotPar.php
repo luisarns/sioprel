@@ -46,7 +46,7 @@ EOF;
 		<img src="../images/ds_comp_izq_bar_gral.jpg" width="25" height="25" />
 		</td>
 		<td width="83%" background="../images/ds_comp_bars_gral.jpg">
-			<font size="2"><strong>Resumen Votación Partido</strong></font>
+			<font size="2"><strong>Resumen Votaci&oacute;n Partido</strong></font>
 		</td>
 		<td width="12%" align="right" background="../images/ds_comp_bars_gral.jpg">
 			<img src="../images/ds_comp_der_bar_gral.jpg" width="25" height="25" />
@@ -64,8 +64,8 @@ EOF;
 
 <table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuave">
 	<tr>
-		<th>Código</th>
-		<th>Descripción</th>
+		<th>C&oacute;digo</th>
+		<th>Descripci&oacute;n</th>
 		<th>Votos</th>
 	</tr>
 	<?php while($row = ibase_fetch_object($result)) { ?>

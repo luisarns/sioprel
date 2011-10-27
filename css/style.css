@@ -105,46 +105,6 @@ h1,h2,h3,h4,h5,h6,span {
 	padding:41px 0 0 146px;
 }
 
-/*
-#footerbox {
-	width:215px;
-	height:168px;
-	float:left;
-	margin:0px;
-	padding:0px;
-}*/
-/*
-#footermid {
-	width:215px;
-	height:168px;
-	float:left;
-	margin:0 35px 0 35px;
-	padding:0px;
-}
-*/
-/*
-#footerlast {
-	width:215px;
-	height:168px;
-	float:left;
-	margin:0px;
-	padding:0px;
-}
-	
-#footerlinks {
-	width:715px;
-	float:left;
-	margin:25px 0 0 0;
-	padding:0px;
-	font-family:Arial;
-	font-size:11px;
-	font-weight:bold;
-	color:#ee7e1f;
-	text-align:center;
-	text-decoration:none;
-}
-*/
-
 #copyrights {
 	width:715px;
 	float:left;
@@ -291,10 +251,6 @@ input.hospital {
 }
 
 /*---------------------------------------------Estilos para el menu principal---------------------------------------------*/
-.escudo {
-    float: right;
-	/*width: 100px;*/
-}
 .sio {
     float: left;
 	/*width: 100px;*/

@@ -8,8 +8,7 @@
 	$nivcorpo  = getNivelCorporacion($codcorporacion);
 	
 	$urlReportes.="codcorporacion=$codcorporacion";
-	
-	//Codigo para generar el coddivipol
+		
 	$coddivipol = $_GET['departamento'];
 	$codnivel   = 1;
 	
@@ -102,20 +101,20 @@ EOR;
 
 <table>
 	<tr>
-		<td><h4>Descargar</h4></td>
-		<td><a href="<?php echo $urlReportes."pdf"?>" target="_BLANK"><img src="images/logo_pdf.png"  alt="pdf" height="35" width="35" /></a><td>
-		<td><a href="<?php echo $urlReportes."xls"?>" target="_BLANK"><img src="images/logo_xls.jpg"  alt="xls" height="35" width="35" /></a><td>
-		<td><a href="<?php echo $urlReportes."doc"?>" target="_BLANK"><img src="images/logo_doc.jpg"  alt="doc" height="35" width="35" /></a><td>
-		<td><a href="<?php echo $urlReportes."txt"?>" target="_BLANK"><img src="images/logo_text.jpg" alt="txt" height="35" width="35" /></a><td>
+		<td><a href="<?php echo $urlReportes."pdf"?>" target="_BLANK"><img src="images/logo_pdf.png"  alt="pdf" height="20" width="20" /></a><td>
+		<td><a href="<?php echo $urlReportes."xls"?>" target="_BLANK"><img src="images/logo_xls.jpg"  alt="xls" height="20" width="20" /></a><td>
+		<td><a href="<?php echo $urlReportes."doc"?>" target="_BLANK"><img src="images/logo_doc.jpg"  alt="doc" height="20" width="20" /></a><td>
+		<td><a href="<?php echo $urlReportes."txt"?>" target="_BLANK"><img src="images/logo_text.jpg" alt="txt" height="20" width="20" /></a><td>
 	</tr>
 </table>
+
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr>
 		<td width="5%" background="../images/ds_comp_bars_gral.jpg">
 			<img src="../images/ds_comp_izq_bar_gral.jpg" width="25" height="25" />
 		</td>
 		<td width="83%" background="../images/ds_comp_bars_gral.jpg">
-			<font size="2"><strong>Consolidado Partido Lista </strong></font>
+			<strong>Consolidado Partido Lista </strong>
 		</td>
 		<td width="12%" align="right" background="../images/ds_comp_bars_gral.jpg">
 			<img src="../images/ds_comp_der_bar_gral.jpg" width="25" height="25" />
