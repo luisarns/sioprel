@@ -2,8 +2,6 @@
 	include_once('corporaciones.php');
 	include_once('departamentos.php');
 ?>
-
-<script type="text/javascript" src="js/ajax.js"></script>
 <script type="text/javascript" src="js/resVotCand.js"></script>
 
 <form name="formPrincipal" method="GET" onSubmit="return validar(this);">
@@ -68,6 +66,7 @@
 				</div>
 			</td>
 		</tr>
+		
 	</table>
 	
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
@@ -95,4 +94,5 @@
 	<input type="hidden" name="opcion"  value="3"/>
 
 </form>
+
 <div id="tbResVotCand"> </div>
