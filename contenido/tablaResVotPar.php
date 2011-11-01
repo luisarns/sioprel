@@ -13,7 +13,7 @@
 	
 	$query =<<<EOF
 	SELECT c2.codpartido as codpartido, c2.descripcion as descripcion, sum(c1.votos) as votos
-	FROM 
+	FROM
 	   (SELECT mv.idcandidato,sum(mv.numvotos) as votos
 		FROM pmesas pm, mvotos mv
 		WHERE pm.codtransmision = mv.codtransmision
@@ -30,14 +30,14 @@ EOF;
 	$result   = ibase_query($firebird,$query);
 	
 ?>
+
 <table>
-<tr>
-	<td><h4>Descargar</h4></td>
-	<td><a href="<?php echo $urlReportes."pdf"?>" target="_BLANK"><img src="images/logo_pdf.png"  alt="pdf" height="35" width="35" /></a><td>
-	<td><a href="<?php echo $urlReportes."xls"?>" target="_BLANK"><img src="images/logo_xls.jpg"  alt="xls" height="35" width="35" /></a><td>
-	<td><a href="<?php echo $urlReportes."doc"?>" target="_BLANK"><img src="images/logo_doc.jpg"  alt="doc" height="35" width="35" /></a><td>
-	<td><a href="<?php echo $urlReportes."txt"?>" target="_BLANK"><img src="images/logo_text.jpg" alt="txt" height="35" width="35" /></a><td>
-</tr>
+	<tr>
+		<td><a href="<?php echo $urlReportes."pdf"?>" target="_BLANK"><img src="images/logo_pdf.png"  alt="pdf" height="20" width="20" /></a><td>
+		<td><a href="<?php echo $urlReportes."xls"?>" target="_BLANK"><img src="images/logo_xls.jpg"  alt="xls" height="20" width="20" /></a><td>
+		<td><a href="<?php echo $urlReportes."doc"?>" target="_BLANK"><img src="images/logo_doc.jpg"  alt="doc" height="20" width="20" /></a><td>
+		<td><a href="<?php echo $urlReportes."txt"?>" target="_BLANK"><img src="images/logo_text.jpg" alt="txt" height="20" width="20" /></a><td>
+	</tr>
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">

@@ -88,8 +88,7 @@
 					require("contenido/elegidosAsignCurules.php");
 				break;
 				
-				default:
-					// echo "HOME PRINCIPAL";//Mostrar una imagen en el centro de la pagina aluciba a las elecciones y escrutinio
+				default:					
 			}
 		?>
       </div>
