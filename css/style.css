@@ -7,13 +7,6 @@ body {
 	/*background-color:#D8D8D8;*//*#C2E0FF*/
 }
 
-/*
-h1,h2,h3,h4,h5,h6,span {
-	margin:0px;
-	padding:0px;
-}
-*/
-	
 #headerbg {
 	width:100%;
 	height:100px;
@@ -23,7 +16,7 @@ h1,h2,h3,h4,h5,h6,span {
 }
 
 #headerblank {
-	width:100%;/*1024px*/
+	width:100%;
 	height:100px;
 	float: none;
 	margin:0 auto;
@@ -35,6 +28,10 @@ h1,h2,h3,h4,h5,h6,span {
 	float: left;
 }
 
+.sio {
+    float: left;
+}
+
 /*-------------------------------------------------------------------------------------HEADERPART--------------------------------------------------END--------------------------------------*/	
 #contentbg {
 	width:100%;
@@ -44,54 +41,45 @@ h1,h2,h3,h4,h5,h6,span {
 }
 
 #contentblank {
-	width:100%;/*1024*/
+	width:100%;
 	float: none;
 	margin:0 auto;
 	padding:0px;
 }
 	
 #content {
-	width:100%;/*1024*/
+	width:100%;
 	float: left;
 	margin:0px;
 	padding:0px;
 }
 
 #contentleft {
-	width:220px;/*220px*/
+	width:220px;
 	float: left;
 	margin:0px;
 	padding:0;
 }
-	
-#imagen {
-	width:220px;
-	float: left;
-	margin:0px;
-	padding: 4px 0 0 12px;
-	display:block;
-}
 
-/*-------------------------------------------------------------------------------------LEFTRPART----------------------------------------------------------------END--*/	
 #contentmid {
-	width:70%;/*730px*/
+	width:70%;
 	float:left;
 	margin:0px;
 	padding: 37px 0 0 35px;
 }
+
 /*--------------------------------------------------------------CONTENTPART-------------------------------------------------END--------------------------------------------------------------*/	
 #footerbg {
 	width:100%;
-	height:100px;/*354px*/
+	height:100px;
 	float:left;
-	/*margin:0px;
-	padding:0px;*/
-	/*background-color:#99CCFF;*/
+	margin:0px;
+	padding:0px;
 }
 
 #footerblank {
-	width:1024px;/*1004*/
-	height:100px;/*354px*/
+	width:1024px;
+	height:100px;
 	float:none;
 	margin:0 auto;
 	padding:0px;
@@ -99,7 +87,7 @@ h1,h2,h3,h4,h5,h6,span {
 
 #footer {
 	width:858px;
-	height:100px;/*313px*/
+	height:100px;
 	float:left;
 	margin:0px;
 	padding:41px 0 0 146px;
@@ -112,45 +100,8 @@ h1,h2,h3,h4,h5,h6,span {
 	padding:0px;
 	font-family:Arial;
 	font-size:11px;
-	color:black;/*#401400*/
-	text-align:center;
-}
-
-#designedby {
-	width:715px;
-	float:left;
-	margin:5px 0 0 0;
-	padding:0px;
-	font-family:Arial;
-	font-size:11px;
-	font-weight:bold;
-	color:black;/*#401400*/
-	text-align:center;
-}
-
-.designedby {
-	font-family:Arial;
-	font-size:11px;
-	font-weight:bold;
-	color:black;/*#ee7e1f*/
-	text-align:center;
-	text-decoration:none;
-}
-	
-.designedby:hover {
-	font-family:Arial;
-	font-size:11px;
-	font-weight:bold;
 	color:black;
 	text-align:center;
-	text-decoration:underline;
-}
-
-#validation {
-	width:422px;
-	float:left;
-	margin:5px 0 0 0;
-	padding:0 0 0 293px;
 }
 
 /*----------------------------Codigo externo Diego----------------------------*/
@@ -248,10 +199,4 @@ input.hospital {
 	Border-Left: #477EAB 0px solid;
 	Border-Bottom: #BBD3E1 0px solid;
 	text-align:center;
-}
-
-/*---------------------------------------------Estilos para el menu principal---------------------------------------------*/
-.sio {
-    float: left;
-	/*width: 100px;*/
 }

@@ -3,27 +3,28 @@
 	$divipol  = $_GET['divipol'];
 	
 	$txt = "";
-	if(isset($_GET['idcomuna'])){
+	if (isset($_GET['idcomuna'])) {
 		$txt = "AND idcomuna = ".$_GET['idcomuna'];
 	}
 	
-	if(isset($_GET['zona'])){
+	if (isset($_GET['zona'])) {
 		$divipol .= $_GET['zona'];
 	}
 	
 	require('conexion.php');
 	
-	$cnh = ibase_connect($host,$username,$password) or die ("No se pudo conectar la base de datos"); 
-	$query = "SELECT coddivipol,codpuesto,descripcion FROM pdivipol WHERE coddivipol LIKE $divipol || '%' AND codnivel = 4 $txt ORDER BY codpuesto,descripcion";
-	$result = ibase_query($cnh,$query);
+	$coneccion = ibase_connect($host,$username,$password) or die ("No se pudo conectar la base de datos"); 
+	$query = "SELECT coddivipol,codpuesto,descripcion FROM pdivipol WHERE coddivipol LIKE $divipol || '%' "
+		   . "AND codnivel = 4 $txt ORDER BY codpuesto,descripcion";
+	$result = ibase_query($coneccion,$query);
 	
 	echo "Puesto : <select id='selpuesto' name='puesto' onChange='cargarMesas(this.value)' >";
 	echo "<option value = '-' >-Ninguna-</option>";
-	while($row = ibase_fetch_object($result)) {
+	while ($row = ibase_fetch_object($result)) {
 		echo "<option value = '$row->CODDIVIPOL' >$row->CODPUESTO-$row->DESCRIPCION</option>";
-	}	
+	}
 	echo "</select>";
 	
 	ibase_free_result($result);
-	ibase_close($cnh);
+	ibase_close($coneccion);
 ?>

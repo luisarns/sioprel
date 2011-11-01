@@ -6,27 +6,27 @@
 
 <script type="text/javascript" src="js/valConParLis.js"> </script>
 
-<form name="formPrincipal" method="GET" onSubmit="return validar(this);">
+<form name="formPrincipal" method="GET" onSubmit="return validar(this);" >
 
 	<!--Tabla imagen titulo superior -->
-	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" >
 		<tr>
-			<td width="5%" background="../images/ds_comp_bars_gral.jpg">
+			<td width="5%" background="../images/ds_comp_bars_gral.jpg" >
 				<img src="../images/ds_comp_izq_bar_gral.jpg" width="25" height="25" />
 			</td>
-			<td width="83%" background="../images/ds_comp_bars_gral.jpg">
-				<font size="2"><strong>Consolidado Partido Lista </strong></font>
+			<td width="83%" background="../images/ds_comp_bars_gral.jpg" >
+				<strong>Consolidado Partido Lista </strong>
 			</td>
-			<td width="12%" align="right" background="../images/ds_comp_bars_gral.jpg">
+			<td width="12%" align="right" background="../images/ds_comp_bars_gral.jpg" >
 				<img src="../images/ds_comp_der_bar_gral.jpg" width="25" height="25" />
 			</td>
 		</tr>
 	</table>
 	
 	<!--Tabla imagen gris superior -->
-	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" >
 		<tr>
-			<td class="regOscuro" align="left">
+			<td class="regOscuro" align="left" >
 				<STRONG>&nbsp;</STRONG>
 			</td>
 		</tr>
@@ -34,20 +34,20 @@
 	
 	
 	<!--Tabla con los campos de filtrado -->
-	<table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuave">
+	<table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuave" >
 		
 		<!--Fila 1 -->
 		<tr>
 			<td class="regSuaveleft" >Corporaci&oacute;n :</td>
-			<td class="regSuave">
-				<select name="corporacion" onChange="mostrarOcultarDepto(this.value)">
+			<td class="regSuave" >
+				<select name="corporacion" onChange="mostrarOcultarDepto(this.value)" >
 					<option value = "-" >-Ninguna-</option>
-					<?php foreach($corporaciones as $corporacion){ ?>
+					<?php foreach($corporaciones as $corporacion) { ?>
 					<option value=<?php echo $corporacion['id'] ?> > <?php echo $corporacion['nombre'] ?> </option>
 					<?php } ?>
 				</select>
 			</td>
-			<td class="regSuaveleft" colspan="2">Detallado : <input type="checkbox" value="1" name="detallado"/></td>
+			<td class="regSuaveleft" colspan="2">Detallado : <input type="checkbox" value="1" name="detallado" /> </td>
 		</tr>
 		<!--Fila 1 END-->
 		
@@ -102,7 +102,6 @@
 					</select>
 				</div>
 			</td>
-			
 		</tr>
 		
 		<tr>
