@@ -14,7 +14,7 @@
 			<img src="../images/ds_comp_izq_bar_gral.jpg" width="25" height="25" />
 			</td>
 			<td width="83%" background="../images/ds_comp_bars_gral.jpg">
-				<font size="2"><strong>Formulario Listas Mayor Votación</strong></font>
+				<strong>Formulario Listas Mayor Votación</strong>
 			</td>
 			<td width="12%" align="right" background="../images/ds_comp_bars_gral.jpg">
 				<img src="../images/ds_comp_der_bar_gral.jpg" width="25" height="25" />

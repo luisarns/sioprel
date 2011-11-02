@@ -96,7 +96,6 @@ EOR;
 			array_push($candidatos,$row);
 		}
 	}
-	
 ?>
 
 <table>

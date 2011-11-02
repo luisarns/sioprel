@@ -13,7 +13,7 @@
 		<img src="../images/ds_comp_izq_bar_gral.jpg" width="25" height="25" />
 		</td>
 		<td width="83%" background="../images/ds_comp_bars_gral.jpg">
-			<font size="2"><strong>Formulario Elegidos Corporación</strong></font>
+			<strong>Formulario Elegidos Corporación</strong>
 		</td>
 		<td width="12%" align="right" background="../images/ds_comp_bars_gral.jpg">
 			<img src="../images/ds_comp_der_bar_gral.jpg" width="25" height="25" />
@@ -30,6 +30,7 @@
 	</table>
 	
 	<table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuave">
+		
 		<tr>
 			<td class="regSuaveleft" >Corporaci&oacute;n :</td>
 			<td class="regSuaveleft">
@@ -50,6 +51,7 @@
 				</select>
 			</td>
 		</tr>
+		
 		<tr>
 			<td class="regSuaveleft" >Partido :</td>
 			<td class="regSuaveleft" colspan="3">
