@@ -43,7 +43,7 @@
 				<select name="corporacion" onChange="mostrarOcultarDepto(this.value)" >
 					<option value = "-" >-Ninguna-</option>
 					<?php foreach($corporaciones as $corporacion) { ?>
-					<option value=<?php echo $corporacion['id'] ?> > <?php echo $corporacion['nombre'] ?> </option>
+					<option value="<?php echo $corporacion['id'] ?>" > <?php echo $corporacion['nombre'] ?> </option>
 					<?php } ?>
 				</select>
 			</td>
@@ -58,7 +58,7 @@
 				<select name="partido">
 					<option value = "-" >-Ninguna-</option>
 					<?php foreach($partidos as $partido){ ?>
-					<option value=<?php echo $partido['id'] ?> > <?php echo $partido['nombre'] ?> </option>
+					<option value="<?php echo $partido['id'] ?>" > <?php echo $partido['nombre'] ?> </option>
 					<?php } ?>
 				</select>
 			</td>
@@ -74,7 +74,7 @@
 					<select name="departamento" onChange="cargarMunicipios(this.value)">
 						<option value = "-" >-Ninguna-</option>
 						<?php foreach($departamentos as $departamento) { ?>
-						<option value=<?php echo $departamento['id'] ?> > <?php echo $departamento['nombre'] ?> </option>
+						<option value="<?php echo $departamento['id'] ?>" > <?php echo $departamento['nombre'] ?> </option>
 						<?php } ?>
 					</select>
 				</div>
