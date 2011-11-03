@@ -6,7 +6,6 @@ function validar(form)
 {
     if (form.departamento.value == '-') {
         alert("Seleccione un departamento");
-//        document.getElementById('tbConParDepto').innerHTML = "";
         return false;
     }
     

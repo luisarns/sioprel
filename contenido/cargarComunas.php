@@ -13,7 +13,7 @@
     echo "<option value = '-' >-Ninguna-</option>";
 
     while ($row = ibase_fetch_object($result)) {
-            echo "<option value = '$row->IDCOMUNA' >utf8_encode($row->CODCOMUNA-$row->DESCRIPCION)</option>";
+            echo "<option value = '$row->IDCOMUNA' >$row->CODCOMUNA-" . utf8_encode($row->DESCRIPCION) . "</option>";
     }
 
     echo '</select>';
