@@ -12,7 +12,7 @@
 			<img src="../images/ds_comp_izq_bar_gral.jpg" width="25" height="25" />
 			</td>
 			<td width="83%" background="../images/ds_comp_bars_gral.jpg">
-				<font size="2"><strong>Resumen Votación Candidatos </strong></font>
+				<strong>Resumen Votación Candidatos </strong>
 			</td>
 			<td width="12%" align="right" background="../images/ds_comp_bars_gral.jpg">
 				<img src="../images/ds_comp_der_bar_gral.jpg" width="25" height="25" />
@@ -36,7 +36,7 @@
 				<select name="corporacion" onChange="mostrarDepto(this.value)">
 					<option value = "-" > -Ninguna- </option>
 					<?php foreach($corporaciones as $corporacion){ ?>
-					<option value=<?php echo $corporacion['id'] ?> > <?php echo $corporacion['nombre'] ?> </option>
+					<option value="<?php echo $corporacion['id'] ?>" > <?php echo $corporacion['nombre'] ?> </option>
 					<?php } ?>
 				</select>
 			</td>
@@ -45,7 +45,7 @@
 				Departamento : <select name="departamento" onChange="cargarMunicipios(this.value)">
 				<option value = "-" > -Ninguna- </option>
 				<?php foreach($departamentos as $departamento) { ?>
-				<option value=<?php echo $departamento['id'] ?> > <?php echo $departamento['nombre'] ?> </option>
+				<option value="<?php echo $departamento['id'] ?>" > <?php echo $departamento['nombre'] ?> </option>
 				<?php } ?>
 				</select>
 				</div>

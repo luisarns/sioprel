@@ -1,101 +1,103 @@
 <?php
-	require('conexion.php');
-	include_once('FunDivipol.php');
-	
-	$urlReportes = "http://".$_SERVER['HTTP_HOST']."/reportes/repConPartidolista.php?";
-	
-	$codcorporacion = $_GET['corporacion'];
-	$nivcorpo  = getNivelCorporacion($codcorporacion);
-	
-	$urlReportes.="codcorporacion=$codcorporacion";
-		
-	$coddivipol = $_GET['departamento'];
-	$codnivel   = 1;
-	
-	
-	if(isset($_GET['municipio']) && $_GET['municipio'] != "-" ){
-		$coddivipol .= $_GET['municipio'];
-		$codnivel = 2;
-		
-		if(isset($_GET['zona']) && $_GET['zona'] != "-" ){
-			$coddivipol .= $_GET['zona'];
-			$codnivel = 3;
-		}
-		
-		if(isset($_GET['puesto']) && $_GET['puesto'] !="-"){
-			$coddivipol = $_GET['puesto'];
-			$codnivel = 4;
-		}
-	}
-	
-	$urlReportes.="&nivcorpo=$nivcorpo&coddivipol=$coddivipol&codnivel=$codnivel&opcion=1";
-	
-	$codcordiv = substr($coddivipol,0,getNumDigitos($nivcorpo));
-	
-	$texto1 = " ";
-	if(isset($_GET['mesa']) && $_GET['mesa'] != "-"){
-		$texto1 = " AND pm.codtransmision = '".$_GET['mesa']."'";
-		$urlReportes.="&codtransmision=".$_GET['mesa'];
-	}
-	
-	$texto2 ="";
-	if(isset($_GET['comuna']) && $_GET['comuna'] != "-"){
-		$texto2 = " AND pc.idcomuna = ".$_GET['comuna'];
-		$texto2 .= " AND pd.idcomuna = ".$_GET['comuna'];
-		$urlReportes.="&idcomuna=".$_GET['comuna'];
-	}
-	
-	$texto3 = "";
-	$txt4 = "";
-	if(isset($_GET['partido']) && $_GET['partido'] != "-"){
-		$texto3 = " AND pp.codpartido = ".$_GET['partido'];
-		$txt4 = "AND pc.codpartido = ".$_GET['partido'];
-		$urlReportes.="&codpartido=".$_GET['partido'];
-	}
-	
-	$query =<<<EOF
-	SELECT pp.codpartido as codigo ,pp.descripcion, SUM(mv.numvotos) as votos
-	FROM PPARTIDOS pp, PMESAS pm, PCANDIDATOS pc, MVOTOS mv, pdivipol pd
-	WHERE pp.codpartido = pc.codpartido $texto1
-	AND pd.coddivipol LIKE '$coddivipol' || '%' AND pd.codnivel = 4
-	AND pm.coddivipol = pd.coddivipol
-	AND pm.codtransmision = mv.codtransmision $texto2
-	AND pc.idcandidato = mv.idcandidato $texto3
-	AND pc.coddivipol LIKE '$codcordiv'  || '%'
-	AND pc.codnivel = $nivcorpo
-	AND pm.codcorporacion = $codcorporacion
-	GROUP BY pp.codpartido, pp.descripcion
+    require('conexion.php');
+    include_once('FunDivipol.php');
+
+    $urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repConPartidolista.php?";
+
+    $codcorporacion = $_GET['corporacion'];
+    $nivcorpo  = getNivelCorporacion($codcorporacion);
+
+    $urlReportes.="codcorporacion=$codcorporacion";
+
+    $coddivipol = $_GET['departamento'];
+    $codnivel   = 1;
+
+
+    if (isset($_GET['municipio']) && $_GET['municipio'] != "-" ){
+            $coddivipol .= $_GET['municipio'];
+            $codnivel = 2;
+
+            if(isset($_GET['zona']) && $_GET['zona'] != "-" ){
+                    $coddivipol .= $_GET['zona'];
+                    $codnivel = 3;
+            }
+
+            if(isset($_GET['puesto']) && $_GET['puesto'] !="-"){
+                    $coddivipol = $_GET['puesto'];
+                    $codnivel = 4;
+            }
+    }
+
+    $urlReportes.="&nivcorpo=$nivcorpo&coddivipol=$coddivipol&codnivel=$codnivel&opcion=1";
+
+    $codcordiv = substr($coddivipol,0,getNumDigitos($nivcorpo));
+
+    $texto1 = " ";
+    if(isset($_GET['mesa']) && $_GET['mesa'] != "-"){
+            $texto1 = " AND pm.codtransmision = '".$_GET['mesa']."'";
+            $urlReportes.="&codtransmision=".$_GET['mesa'];
+    }
+
+    $texto2 ="";
+    if(isset($_GET['comuna']) && $_GET['comuna'] != "-"){
+            $texto2 = " AND pc.idcomuna = ".$_GET['comuna'];
+            $texto2 .= " AND pd.idcomuna = ".$_GET['comuna'];
+            $urlReportes.="&idcomuna=".$_GET['comuna'];
+    }
+
+    $texto3 = "";
+    $txt4 = "";
+    if(isset($_GET['partido']) && $_GET['partido'] != "-"){
+            $texto3 = " AND pp.codpartido = ".$_GET['partido'];
+            $txt4 = "AND pc.codpartido = ".$_GET['partido'];
+            $urlReportes.="&codpartido=".$_GET['partido'];
+    }
+
+    $query =<<<EOF
+    SELECT pp.codpartido as codigo ,pp.descripcion, SUM(mv.numvotos) as votos
+    FROM PPARTIDOS pp, PMESAS pm, PCANDIDATOS pc, MVOTOS mv, pdivipol pd
+    WHERE pp.codpartido = pc.codpartido $texto1
+    AND pd.coddivipol LIKE '$coddivipol' || '%' AND pd.codnivel = 4
+    AND pm.coddivipol = pd.coddivipol
+    AND pm.codtransmision = mv.codtransmision $texto2
+    AND pc.idcandidato = mv.idcandidato $texto3
+    AND pc.coddivipol LIKE '$codcordiv'  || '%'
+    AND pc.codnivel = $nivcorpo
+    AND pm.codcorporacion = $codcorporacion
+    GROUP BY pp.codpartido, pp.descripcion
 EOF;
-	
-	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
-	$result   = ibase_query($firebird,$query);
-	
-	$result1 = null;
-	$query1 = null;
-	if(isset($_GET['detallado']) && $_GET['detallado'] == 1) {
-		$query1 =<<<EOR
-		SELECT pc.codpartido,pc.codcandidato, pc.nombres ||' '|| CASE WHEN pc.codcandidato = 0 THEN '(LISTA)' ELSE pc.apellidos END as descripcion, SUM(mv.numvotos) as votos
-		FROM PMESAS pm, PCANDIDATOS pc, MVOTOS mv
-		WHERE pm.codtransmision = mv.codtransmision $texto1
-		AND pc.idcandidato = mv.idcandidato $texto2
-		AND pc.coddivipol LIKE '$codcordiv' || '%'
-		AND pm.coddivipol LIKE '$coddivipol'  || '%'
-		AND pm.codcorporacion = $codcorporacion $txt4
-		AND pc.codnivel = $nivcorpo
-		GROUP BY pc.codpartido,pc.codcandidato,descripcion;
+
+
+    $firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
+    $result   = ibase_query($firebird,$query);
+
+    $result1 = null;
+    $query1 = null;
+    if(isset($_GET['detallado']) && $_GET['detallado'] == 1) {
+            $query1 =<<<EOR
+            SELECT pc.codpartido,pc.codcandidato, pc.nombres ||' '|| CASE WHEN pc.codcandidato = 0 
+            THEN '(LISTA)' ELSE pc.apellidos END as descripcion, SUM(mv.numvotos) as votos
+            FROM PMESAS pm, PCANDIDATOS pc, MVOTOS mv
+            WHERE pm.codtransmision = mv.codtransmision $texto1
+            AND pc.idcandidato = mv.idcandidato $texto2
+            AND pc.coddivipol LIKE '$codcordiv' || '%'
+            AND pm.coddivipol LIKE '$coddivipol'  || '%'
+            AND pm.codcorporacion = $codcorporacion $txt4
+            AND pc.codnivel = $nivcorpo
+            GROUP BY pc.codpartido,pc.codcandidato,descripcion;
 EOR;
-		$result1 = ibase_query($firebird,$query1);
-		$urlReportes.="&detallado=".$_GET['detallado'];
-	}
-		
-	$urlReportes.="&formato=";
-	
-	$candidatos = array();
-	if($result1 != null){
-		while($row = ibase_fetch_object($result1)) {
-			array_push($candidatos,$row);
-		}
-	}
+            $result1 = ibase_query($firebird,$query1);
+            $urlReportes.="&detallado=".$_GET['detallado'];
+    }
+
+    $urlReportes.="&formato=";
+
+    $candidatos = array();
+    if($result1 != null){
+        while($row = ibase_fetch_object($result1)) {
+            array_push($candidatos,$row);
+        }
+    }
 ?>
 
 <table>
@@ -120,9 +122,11 @@ EOR;
 		</td>
 	</tr>
 </table>
+
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr><td class="regOscuro" align="left"><STRONG>&nbsp;</STRONG></td></tr>
 </table>
+
 <table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuave">
 	<tr>
 		<th>C&oacute;digo</th>
@@ -140,7 +144,7 @@ EOR;
 			foreach($candidatos as $candidato) { 
 				if($candidato->CODPARTIDO == $row->CODIGO) { ?>
 					<tr>
-					<td><?php echo $row->CODIGO .'-'.$candidato->CODCANDIDATO ?></td>
+					<td><?php echo $row->CODIGO . '-' . $candidato->CODCANDIDATO ?></td>
 					<td><?php echo htmlentities($candidato->DESCRIPCION)?></td>
 					<td><?php echo number_format($candidato->VOTOS)?></td>
 					</tr>
@@ -171,6 +175,8 @@ EOR;
 
 <?php
 	ibase_free_result($result);
-	if($result1 != null){ibase_free_result($result1);}
+	if ($result1 != null) {
+            ibase_free_result($result1);
+        }
 	ibase_close($firebird);
 ?>

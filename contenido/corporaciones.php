@@ -7,7 +7,7 @@
 	}
 	
 	$coneccion = ibase_connect($host, $username, $password)
-					or die ('No se pudo conectar la base de datos');
+			 or die ('No se pudo conectar la base de datos');
 
 	$query = "SELECT codcorporacion,descripcion FROM pcorporaciones $txt ORDER"
            . " BY codcorporacion ";
@@ -18,7 +18,7 @@
 	while ($row = ibase_fetch_object($result)) {
 		$corporacion = array();
 		$corporacion['id'] = $row->CODCORPORACION;
-		$corporacion['nombre'] = $row->DESCRIPCION;
+		$corporacion['nombre'] = utf8_encode($row->DESCRIPCION);
 		array_push($corporaciones, $corporacion);
 	}
 	

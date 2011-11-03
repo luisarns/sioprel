@@ -1,34 +1,32 @@
 <?php 
-	
-	require('conexion.php');
-	include_once('FunDivipol.php');
-	
-	$urlReportes = "http://".$_SERVER['HTTP_HOST']."/reportes/repResVotaPartido.php".$_SERVER['REQUEST_URI'];
-	
-	$coddepto = $_GET['departamento'];
-	$codmunip = ($_GET['municipio'] != "-")?$_GET['municipio']:"";
-	$codcordivi = $coddepto.$codmunip;
-	
-	$urlReportes .="&formato=";
-	
-	$query =<<<EOF
-	SELECT c2.codpartido as codpartido, c2.descripcion as descripcion, sum(c1.votos) as votos
-	FROM
-	   (SELECT mv.idcandidato,sum(mv.numvotos) as votos
-		FROM pmesas pm, mvotos mv
-		WHERE pm.codtransmision = mv.codtransmision
-		AND pm.coddivipol LIKE '$codcordivi' || '%'
-		GROUP BY mv.idcandidato) c1,
-	   (SELECT pp.codpartido,pp.descripcion,pc.idcandidato
-		FROM ppartidos pp, pcandidatos pc
-		WHERE pc.codpartido = pp.codpartido) c2
-	WHERE c1.idcandidato = c2.idcandidato
-	GROUP BY c2.codpartido,c2.descripcion ORDER BY c2.codpartido
+    require('conexion.php');
+    include_once('FunDivipol.php');
+
+    $urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repResVotaPartido.php".$_SERVER['REQUEST_URI'];
+
+    $coddepto = $_GET['departamento'];
+    $codmunip = ($_GET['municipio'] != "-")? $_GET['municipio'] : "" ;
+    $codcordivi = $coddepto . $codmunip;
+
+    $urlReportes .= "&formato=";
+
+    $query =<<<EOF
+    SELECT c2.codpartido as codpartido, c2.descripcion as descripcion, sum(c1.votos) as votos
+    FROM
+       (SELECT mv.idcandidato,sum(mv.numvotos) as votos
+            FROM pmesas pm, mvotos mv
+            WHERE pm.codtransmision = mv.codtransmision
+            AND pm.coddivipol LIKE '$codcordivi' || '%'
+            GROUP BY mv.idcandidato) c1,
+       (SELECT pp.codpartido,pp.descripcion,pc.idcandidato
+            FROM ppartidos pp, pcandidatos pc
+            WHERE pc.codpartido = pp.codpartido) c2
+    WHERE c1.idcandidato = c2.idcandidato
+    GROUP BY c2.codpartido,c2.descripcion ORDER BY c2.codpartido
 EOF;
 
-	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
-	$result   = ibase_query($firebird,$query);
-	
+    $firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
+    $result   = ibase_query($firebird,$query);
 ?>
 
 <table>
@@ -46,7 +44,7 @@ EOF;
 		<img src="../images/ds_comp_izq_bar_gral.jpg" width="25" height="25" />
 		</td>
 		<td width="83%" background="../images/ds_comp_bars_gral.jpg">
-			<font size="2"><strong>Resumen Votaci&oacute;n Partido</strong></font>
+			<strong>Resumen Votaci&oacute;n Partido</strong>
 		</td>
 		<td width="12%" align="right" background="../images/ds_comp_bars_gral.jpg">
 			<img src="../images/ds_comp_der_bar_gral.jpg" width="25" height="25" />
@@ -57,7 +55,7 @@ EOF;
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr>
 		<td class="regOscuro" align="left">
-			<STRONG>&nbsp;</STRONG>
+			<strong>&nbsp;</strong>
 		</td>
 	</tr>
 </table>
@@ -80,7 +78,7 @@ EOF;
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr>
 		<td class="regOscuro" align="left">
-			<STRONG>&nbsp;</STRONG>
+			<strong>&nbsp;</strong>
 		</td>
 	</tr>
 </table>
@@ -91,7 +89,7 @@ EOF;
 			<img src="../images/ds_comp_izq_bari_gral.jpg" width="25" height="25">
 		</td>
 		<td background="../images/ds_comp_bari_gral.jpg">&nbsp;</td>
-		<td align="right" background="../images/ds_comp_bari_gral.jpg">
+		<td align="right" background="../images/ds_comp_bari_gral.jpg" >
 			<img src="../images/ds_comp_der_bari_gral.jpg" width="25" height="25">
 		</td>
 	</tr>

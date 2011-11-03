@@ -21,7 +21,7 @@
 	echo "Puesto : <select id='selpuesto' name='puesto' onChange='cargarMesas(this.value)' >";
 	echo "<option value = '-' >-Ninguna-</option>";
 	while ($row = ibase_fetch_object($result)) {
-		echo "<option value = '$row->CODDIVIPOL' >$row->CODPUESTO-$row->DESCRIPCION</option>";
+		echo "<option value = '$row->CODDIVIPOL' >" . utf8_encode($row->CODPUESTO-$row->DESCRIPCION) . "</option>";
 	}
 	echo "</select>";
 	

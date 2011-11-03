@@ -1,39 +1,38 @@
-<?php 
-	
+<?php
 	require('conexion.php');
 	include_once('FunDivipol.php');
 	
-	$urlReportes = "http://".$_SERVER['HTTP_HOST']."/reportes/repLisElegCorp.php".$_SERVER['REQUEST_URI'];
+	$urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repLisElegCorp.php" . $_SERVER['REQUEST_URI'];
 	
 	$codcorporacion = $_GET['corporacion'];
 	$coddivipol = $_GET['departamento'];
 	$codnivel   = 1;
 	
-	if(isset($_GET['municipio']) && $_GET['municipio'] != "-" ){
+	if (isset($_GET['municipio']) && $_GET['municipio'] != "-" ) {
 		$coddivipol .= $_GET['municipio'];
 		$codnivel = 2;
 	}
 	
 	
 	$tx1 = "";
-	if($_GET['sexo'] != "-") {
-		$tx1 = "AND pc.genero='".$_GET['sexo']."'";
+	if ($_GET['sexo'] != "-") {
+		$tx1 = "AND pc.genero='".$_GET['sexo'] . "'";
 	}
 	
 	$tx2 = "";
-	if($_GET['partido'] != "-") {
-		$tx2 = "AND pc.codpartido=".$_GET['partido'];
+	if ($_GET['partido'] != "-") {
+		$tx2 = "AND pc.codpartido=" . $_GET['partido'];
 	}
 	
 	$tx3 = "";
-	if(isset($_GET['comuna']) && $_GET['comuna'] != "-"){
-		$tx3 = "AND pc.idcomuna = ".$_GET['comuna'];
+	if (isset($_GET['comuna']) && $_GET['comuna'] != "-"){
+		$tx3 = "AND pc.idcomuna = " . $_GET['comuna'];
 	}
 	
-	$urlReportes .="&formato=";
+	$urlReportes .= "&formato=";
 	
 	$nivcorpo = getNivelCorporacion($codcorporacion);
-	$cordivi = substr($coddivipol,0,getNumDigitos($nivcorpo));
+	$cordivi = substr($coddivipol, 0, getNumDigitos($nivcorpo));
 	
 	$query =<<<EOF
 	SELECT pc.nombres,pc.apellidos, pp.descripcion, pe.numvotos
@@ -45,19 +44,18 @@
 	AND pc.codcorporacion = $codcorporacion
 EOF;
 
-	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
-	$result   = ibase_query($firebird,$query);
-	
+	$firebird = ibase_connect($host, $username, $password) 
+                or die("No se pudo conectar a la base de datos: " . ibase_errmsg());
+	$result   = ibase_query($firebird, $query);
 ?>
 
 <table>
-<tr>
-	<td><h4>Descargar</h4></td>
-	<td><a href="<?php echo $urlReportes."pdf"?>" target="_BLANK"><img src="images/logo_pdf.png"  alt="pdf" height="35" width="35" /></a><td>
-	<td><a href="<?php echo $urlReportes."xls"?>" target="_BLANK"><img src="images/logo_xls.jpg"  alt="xls" height="35" width="35" /></a><td>
-	<td><a href="<?php echo $urlReportes."doc"?>" target="_BLANK"><img src="images/logo_doc.jpg"  alt="doc" height="35" width="35" /></a><td>
-	<td><a href="<?php echo $urlReportes."txt"?>" target="_BLANK"><img src="images/logo_text.jpg" alt="txt" height="35" width="35" /></a><td>
-</tr>
+        <tr>
+                <td><a href="<?php echo $urlReportes . "pdf"?>" target="_BLANK"><img src="images/logo_pdf.png"  alt="pdf" height="20" width="20" /></a><td>
+                <td><a href="<?php echo $urlReportes . "xls"?>" target="_BLANK"><img src="images/logo_xls.jpg"  alt="xls" height="20" width="20" /></a><td>
+                <td><a href="<?php echo $urlReportes . "doc"?>" target="_BLANK"><img src="images/logo_doc.jpg"  alt="doc" height="20" width="20" /></a><td>
+                <td><a href="<?php echo $urlReportes . "txt"?>" target="_BLANK"><img src="images/logo_text.jpg" alt="txt" height="20" width="20" /></a><td>
+        </tr>
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">

@@ -2,7 +2,7 @@
 	require('conexion.php');
 	include_once('FunDivipol.php');
 	
-	$urlReportes = "http://".$_SERVER['HTTP_HOST']."/reportes/repLisVotaCandidato.php".$_SERVER['REQUEST_URI'];
+	$urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repLisVotaCandidato.php" . $_SERVER['REQUEST_URI'];
 	
 	$codcorporacion = $_GET['corporacion'];
 	$nivcorpo  = getNivelCorporacion($codcorporacion);
@@ -11,12 +11,12 @@
 	$muncp = ($_GET['municipio']!="-")?$_GET['municipio']:"";
 	
 	$coddivcorto = $depto.$muncp;
-	$codcordiv   = substr($coddivcorto,0,getNumDigitos($nivcorpo));
+	$codcordiv   = substr($coddivcorto, 0, getNumDigitos($nivcorpo));
 	
 	$txt = "";
 	if(isset($_GET['comuna']) && $_GET['comuna'] != "-"){
-		$txt = "AND pc.idcomuna = ".$_GET['comuna'];
-		$txt .= " AND pd.idcomuna = ".$_GET['comuna'];
+		$txt = "AND pc.idcomuna = " . $_GET['comuna'];
+		$txt .= " AND pd.idcomuna = " . $_GET['comuna'];
 	}
 	
 	$urlReportes .="&formato=";
@@ -32,20 +32,17 @@
 	GROUP BY pp.codpartido,pc.codcandidato,pc.nombres, pc.apellidos,pp.descripcion
 EOF;
 	
-	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
-	$result   = ibase_query($firebird,$query);
-	
+	$firebird = ibase_connect($host, $username, $password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
+	$result   = ibase_query($firebird, $query);
 ?>
 
-<!-- Codigo de la tabla que se genera en esta consulta-->
 <table>
-		<tr>
-		<td><h4>Descargar</h4></td>
-		<td><a href="<?php echo $urlReportes."pdf"?>" target="_BLANK"><img src="images/logo_pdf.png"  alt="pdf" height="35" width="35" /></a><td>
-		<td><a href="<?php echo $urlReportes."xls"?>" target="_BLANK"><img src="images/logo_xls.jpg"  alt="xls" height="35" width="35" /></a><td>
-		<td><a href="<?php echo $urlReportes."doc"?>" target="_BLANK"><img src="images/logo_doc.jpg"  alt="doc" height="35" width="35" /></a><td>
-		<td><a href="<?php echo $urlReportes."txt"?>" target="_BLANK"><img src="images/logo_text.jpg" alt="txt" height="35" width="35" /></a><td>
-		</tr>
+        <tr>
+                <td><a href="<?php echo $urlReportes."pdf"?>" target="_BLANK"><img src="images/logo_pdf.png"  alt="pdf" height="20" width="20" /></a><td>
+                <td><a href="<?php echo $urlReportes."xls"?>" target="_BLANK"><img src="images/logo_xls.jpg"  alt="xls" height="20" width="20" /></a><td>
+                <td><a href="<?php echo $urlReportes."doc"?>" target="_BLANK"><img src="images/logo_doc.jpg"  alt="doc" height="20" width="20" /></a><td>
+                <td><a href="<?php echo $urlReportes."txt"?>" target="_BLANK"><img src="images/logo_text.jpg" alt="txt" height="20" width="20" /></a><td>
+        </tr>
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">

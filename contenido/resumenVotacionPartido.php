@@ -22,7 +22,7 @@
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr>
 		<td class="regOscuro" align="left">
-			<STRONG>&nbsp;</STRONG>
+			<strong>&nbsp;</strong>
 		</td>
 	</tr>
 	</table>
@@ -34,7 +34,7 @@
 			<select name="departamento" onChange="cargarMunicipios(this.value)">
 			<option value = "-" > -Ninguna- </option>
 			<?php foreach($departamentos as $departamento) { ?>
-			<option value=<?php echo $departamento['id'] ?> > <?php echo $departamento['nombre'] ?> </option>
+			<option value="<?php echo $departamento['id'] ?>" > <?php echo $departamento['nombre'] ?> </option>
 			<?php } ?>
 			</select>
 		</td>

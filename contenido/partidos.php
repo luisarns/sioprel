@@ -10,7 +10,7 @@
 	while ($row = ibase_fetch_object($result)) {
 		$partido = array();
 		$partido['id'] = $row->CODPARTIDO;
-		$partido['nombre'] = $row->DESCRIPCION;
+		$partido['nombre'] = utf8_encode($row->DESCRIPCION);
 		array_push($partidos, $partido);
 	}
 	

@@ -10,7 +10,7 @@
 	while ($row = ibase_fetch_object($result)) {
 		$departamento = array();
 		$departamento['id'] = $row->CODDEPARTAMENTO;
-		$departamento['nombre'] = $row->DESCRIPCION;
+		$departamento['nombre'] = utf8_encode($row->DESCRIPCION);
 		array_push($departamentos, $departamento);
 	}
 	
