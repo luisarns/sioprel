@@ -8,11 +8,11 @@
 	$departamentos = array();
 	
 	while ($row = ibase_fetch_object($result)) {
-		$departamento = array();
-		$departamento['coddivipol'] = $row->CODDIVIPOL;
-        $departamento['id'] = $row->CODDEPARTAMENTO;
-		$departamento['nombre'] = utf8_encode($row->DESCRIPCION);
-		array_push($departamentos, $departamento);
+            $departamento = array();
+            $departamento['coddivipol'] = $row->CODDIVIPOL;
+            $departamento['id'] = $row->CODDEPARTAMENTO;
+            $departamento['nombre'] = str_pad($row->CODDEPARTAMENTO, 2, '0', STR_PAD_LEFT) . '-' . utf8_encode($row->DESCRIPCION);
+            array_push($departamentos, $departamento);
 	}
 	
 	ibase_free_result($result);

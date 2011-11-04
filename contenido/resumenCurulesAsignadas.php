@@ -8,25 +8,25 @@
 <form name="formPrincipal" method="GET" onSubmit="return validar(this);">
 	
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-	<tr>
-		<td width="5%" background="../images/ds_comp_bars_gral.jpg">
-		<img src="../images/ds_comp_izq_bar_gral.jpg" width="25" height="25" />
-		</td>
-		<td width="83%" background="../images/ds_comp_bars_gral.jpg">
-			<strong>Formulario Curules Asignadas</strong>
-		</td>
-		<td width="12%" align="right" background="../images/ds_comp_bars_gral.jpg">
-			<img src="../images/ds_comp_der_bar_gral.jpg" width="25" height="25" />
-		</td>
-	</tr>
+            <tr>
+                    <td width="5%" background="../images/ds_comp_bars_gral.jpg">
+                    <img src="../images/ds_comp_izq_bar_gral.jpg" width="25" height="25" />
+                    </td>
+                    <td width="83%" background="../images/ds_comp_bars_gral.jpg">
+                            <strong>Formulario Curules Asignadas</strong>
+                    </td>
+                    <td width="12%" align="right" background="../images/ds_comp_bars_gral.jpg">
+                            <img src="../images/ds_comp_der_bar_gral.jpg" width="25" height="25" />
+                    </td>
+            </tr>
 	</table>
 	
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-	<tr>
-		<td class="regOscuro" align="left">
-			<strong>&nbsp;</strong>
-		</td>
-	</tr>
+            <tr>
+                    <td class="regOscuro" align="left">
+                            <strong>&nbsp;</strong>
+                    </td>
+            </tr>
 	</table>
 	
 	<table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuave">

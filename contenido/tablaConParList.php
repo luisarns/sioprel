@@ -135,7 +135,7 @@ EOR;
 	</tr>
 	<?php while($row = ibase_fetch_object($result)) { ?>
 		<tr>
-			<td><?php echo $row->CODIGO?></td>
+			<td><?php echo str_pad($row->CODIGO, 3, '0', STR_PAD_LEFT)?></td>
 			<td><?php echo htmlentities($row->DESCRIPCION)?></td>
 			<td><?php echo number_format($row->VOTOS)?></td>
 			
@@ -144,7 +144,7 @@ EOR;
 			foreach($candidatos as $candidato) { 
 				if($candidato->CODPARTIDO == $row->CODIGO) { ?>
 					<tr>
-					<td><?php echo $row->CODIGO . '-' . $candidato->CODCANDIDATO ?></td>
+					<td><?php echo str_pad($row->CODIGO, 3, '0', STR_PAD_LEFT) . '-' . str_pad($candidato->CODCANDIDATO, 3, '0', STR_PAD_LEFT) ?></td>
 					<td><?php echo htmlentities($candidato->DESCRIPCION)?></td>
 					<td><?php echo number_format($candidato->VOTOS)?></td>
 					</tr>

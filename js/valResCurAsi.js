@@ -1,36 +1,39 @@
 function validar(form) 
 {
-	if (form.corporacion.value == '-') {
-		alert("Seleccione una corporación");
-		return false;
-	} else if (form.departamento.value == '-'){
-		alert("Seleccione un departamento");
-		return false;
-	} else if( form.corporacion.value==5) {
-		if (form.municipio.value=="-") {
-			alert("Seleccione un municipio");
-			return false;
-		} else if (form.comuna.value=="-") {
-			alert("Seleccione una comuna");
-			return false;
-		}
-	}
-	
-	var param = "?corporacion=" + form.corporacion.value;
-	param += "&departamento=" + form.departamento.value;
-	param += "&municipio=" + form.municipio.value;
-	param += "&comuna=" + form.comuna.value;
-	
-	var ajax = nuevoAjax();
-	ajax.open("GET", "contenido/tablaResCurAsig.php" + param, true);
-	ajax.onreadystatechange= function () {
-		if (ajax.readyState == 4) {
-			document.getElementById('tbResCurAsig').innerHTML = ajax.responseText;
-		}
-	}
-	ajax.send(null);
-	
-	return false;
+    if (form.corporacion.value == '-') {
+        alert("Seleccione una corporación");
+        return false;
+    } else if (form.departamento.value == '-'){
+        alert("Seleccione un departamento");
+        return false;
+    } else if (form.municipio.value == '-' && form.corporacion.value == 4 ) {
+        alert("Seleccione un municipio");
+        return false;
+    } else if (form.corporacion.value == 5) {
+        if (form.municipio.value == "-") {
+            alert("Seleccione un municipio");
+            return false;
+        } else if (form.comuna.value == "-") {
+            alert("Seleccione una comuna");
+            return false;
+        }
+    }
+
+    var param = "?corporacion=" + form.corporacion.value;
+    param += "&departamento=" + form.departamento.value;
+    param += "&municipio=" + form.municipio.value;
+    param += "&comuna=" + form.comuna.value;
+
+    var ajax = nuevoAjax();
+    ajax.open("GET", "contenido/tablaResCurAsig.php" + param, true);
+    ajax.onreadystatechange= function () {
+            if (ajax.readyState == 4) {
+                    document.getElementById('tbResCurAsig').innerHTML = ajax.responseText;
+            }
+    }
+    ajax.send(null);
+
+    return false;
 }
 
 function mostrarOcultarDepto(sel) 
@@ -49,16 +52,15 @@ function mostrarOcultarDepto(sel)
 
 function cargarMunicipios(sel) 
 {
-	if(sel != '-') {
+	if (sel != '-') {
 		var corpo = document.formPrincipal.corporacion.value;
 		
-		var ajax = nuevoAjax();
-		
+                ajax = nuevoAjax();
 		ajax.open("GET", "contenido/cargarMunicipios.php?opcion=" + sel + "&corporacion=" + corpo, true);
 		ajax.onreadystatechange= function () {
-			if (ajax.readyState == 4) {
-				document.getElementById('selmunicipio').parentNode.innerHTML = ajax.responseText;
-			}
+                    if (ajax.readyState == 4) {
+                        document.getElementById('selmunicipio').parentNode.innerHTML = ajax.responseText;
+                    }
 		}
 		ajax.send(null);
 		
