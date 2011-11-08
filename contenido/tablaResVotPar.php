@@ -11,7 +11,7 @@
     $urlReportes .= "&formato=";
 
     $query =<<<EOF
-    SELECT c2.codpartido as codpartido, c2.descripcion as descripcion, sum(c1.votos) as votos
+    SELECT lpad(c2.codpartido,3,'0') as codpartido, c2.descripcion as descripcion, sum(c1.votos) as votos
     FROM
        (SELECT mv.idcandidato,sum(mv.numvotos) as votos
             FROM pmesas pm, mvotos mv
@@ -60,7 +60,7 @@ EOF;
 	</tr>
 </table>
 
-<table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuave">
+<table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuaveRultados">
 	<tr>
 		<th>C&oacute;digo</th>
 		<th>Descripci&oacute;n</th>

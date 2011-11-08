@@ -29,23 +29,24 @@
 	
 	<table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuave">
 	<tr>
-		<td class="regSuaveleft" >Departamento :</td>
-		<td class="regSuaveleft">
-			<select name="departamento" onChange="cargarMunicipios(this.value)">
-			<option value = "-" > -Ninguna- </option>
-			<?php foreach($departamentos as $departamento) { ?>
-			<option value="<?php echo $departamento['id'] ?>" > <?php echo $departamento['nombre'] ?> </option>
-			<?php } ?>
-			</select>
-		</td>
-		
-		<td class="regSuaveleft" colspan="2">
-			<div id="divselmunicipio" style="display:none;">
-			Municipio : <select id="selmunicipio" name="municipio" onChange="alert('Cambio el municipio')">
-			<option value = "-" > Seleccione un departamento </option> </select>
-			</div>
-		</td>
+            <td class="regSuaveleft">
+                Departamento&nbsp;
+                <select name="departamento" onChange="cargarMunicipios(this.value)">
+                <option value = "-" > -Ninguna- </option>
+                <?php foreach($departamentos as $departamento) { ?>
+                <option value="<?php echo $departamento['id'] ?>" > <?php echo $departamento['nombre'] ?> </option>
+                <?php } ?>
+                </select>
+            </td>
+        </tr>
+        
+        <tr>	
+            <td id="divselmunicipio" style="display:none;">
+                Municipio : <select id="selmunicipio" name="municipio" onChange="alert('Cambio el municipio')">
+                <option value = "-" > Seleccione un departamento </option> </select>
+            </td>
 	</tr>
+        
 	</table>
 	
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
