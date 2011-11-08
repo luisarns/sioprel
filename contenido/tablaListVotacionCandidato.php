@@ -22,7 +22,7 @@
 	$urlReportes .="&formato=";
 	
 	$query =<<<EOF
-	SELECT pp.codpartido ||'-'|| pc.codcandidato as codigo, pc.nombres, pc.apellidos, pp.descripcion, sum(mv.numvotos) as votos
+	SELECT lpad(pp.codpartido,3,'0') || '-' || lpad(pc.codcandidato,3,'0') as codigo, pc.nombres, pc.apellidos, pp.descripcion, sum(mv.numvotos) as votos
 	FROM ppartidos pp, pcandidatos pc, pmesas pm, mvotos mv, pdivipol pd
 	WHERE pc.coddivipol LIKE '$codcordiv'   || '%' AND pc.codnivel = $nivcorpo AND pc.codcorporacion = $codcorporacion
 	AND pd.coddivipol   LIKE '$coddivcorto' || '%' AND pm.codtransmision = mv.codtransmision
@@ -67,7 +67,7 @@ EOF;
 	</tr>
 </table>
 
-<table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuave">
+<table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuaveRultados">
 	<tr>
 		<th>C&oacute;digo</th>
 		<th>Nombres</th>

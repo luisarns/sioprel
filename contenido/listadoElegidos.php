@@ -37,7 +37,7 @@
 				<select name="corporacion" onChange="mostrarDepto(this.value)" >
 				<option value = "-" >-Ninguna-</option>
 				<?php foreach($corporaciones as $corporacion){ ?>
-				<option value=<?php echo $corporacion['id'] ?> > <?php echo $corporacion['nombre'] ?> </option>
+				<option value="<?php echo $corporacion['id'] ?>" > <?php echo $corporacion['nombre'] ?> </option>
 				<?php } ?>
 				</select>
 			</td>
