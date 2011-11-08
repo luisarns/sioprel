@@ -14,18 +14,18 @@
 
 
     if (isset($_GET['municipio']) && $_GET['municipio'] != "-" ){
-            $coddivipol .= $_GET['municipio'];
-            $codnivel = 2;
+        $coddivipol .= $_GET['municipio'];
+        $codnivel = 2;
 
-            if(isset($_GET['zona']) && $_GET['zona'] != "-" ){
-                    $coddivipol .= $_GET['zona'];
-                    $codnivel = 3;
-            }
+        if(isset($_GET['zona']) && $_GET['zona'] != "-" ){
+                $coddivipol .= $_GET['zona'];
+                $codnivel = 3;
+        }
 
-            if(isset($_GET['puesto']) && $_GET['puesto'] !="-"){
-                    $coddivipol = $_GET['puesto'];
-                    $codnivel = 4;
-            }
+        if(isset($_GET['puesto']) && $_GET['puesto'] !="-"){
+                $coddivipol = $_GET['puesto'];
+                $codnivel = 4;
+        }
     }
 
     $urlReportes.="&nivcorpo=$nivcorpo&coddivipol=$coddivipol&codnivel=$codnivel&opcion=1";
@@ -34,23 +34,23 @@
 
     $texto1 = " ";
     if(isset($_GET['mesa']) && $_GET['mesa'] != "-"){
-            $texto1 = " AND pm.codtransmision = '".$_GET['mesa']."'";
-            $urlReportes.="&codtransmision=".$_GET['mesa'];
+        $texto1 = " AND pm.codtransmision = '".$_GET['mesa']."'";
+        $urlReportes.="&codtransmision=".$_GET['mesa'];
     }
 
     $texto2 ="";
     if(isset($_GET['comuna']) && $_GET['comuna'] != "-"){
-            $texto2 = " AND pc.idcomuna = ".$_GET['comuna'];
-            $texto2 .= " AND pd.idcomuna = ".$_GET['comuna'];
-            $urlReportes.="&idcomuna=".$_GET['comuna'];
+        $texto2 = " AND pc.idcomuna = ".$_GET['comuna'];
+        $texto2 .= " AND pd.idcomuna = ".$_GET['comuna'];
+        $urlReportes.="&idcomuna=".$_GET['comuna'];
     }
 
     $texto3 = "";
     $txt4 = "";
     if(isset($_GET['partido']) && $_GET['partido'] != "-"){
-            $texto3 = " AND pp.codpartido = ".$_GET['partido'];
-            $txt4 = "AND pc.codpartido = ".$_GET['partido'];
-            $urlReportes.="&codpartido=".$_GET['partido'];
+        $texto3 = " AND pp.codpartido = ".$_GET['partido'];
+        $txt4 = "AND pc.codpartido = ".$_GET['partido'];
+        $urlReportes.="&codpartido=".$_GET['partido'];
     }
 
     $query =<<<EOF
@@ -101,33 +101,33 @@ EOR;
 ?>
 
 <table>
-	<tr>
-		<td><a href="<?php echo $urlReportes."pdf"?>" target="_BLANK"><img src="images/logo_pdf.png"  alt="pdf" height="20" width="20" /></a><td>
-		<td><a href="<?php echo $urlReportes."xls"?>" target="_BLANK"><img src="images/logo_xls.jpg"  alt="xls" height="20" width="20" /></a><td>
-		<td><a href="<?php echo $urlReportes."doc"?>" target="_BLANK"><img src="images/logo_doc.jpg"  alt="doc" height="20" width="20" /></a><td>
-		<td><a href="<?php echo $urlReportes."txt"?>" target="_BLANK"><img src="images/logo_text.jpg" alt="txt" height="20" width="20" /></a><td>
-	</tr>
+    <tr>
+        <td><a href="<?php echo $urlReportes."pdf"?>" target="_BLANK"><img src="images/logo_pdf.png"  alt="pdf" height="20" width="20" /></a><td>
+        <td><a href="<?php echo $urlReportes."xls"?>" target="_BLANK"><img src="images/logo_xls.jpg"  alt="xls" height="20" width="20" /></a><td>
+        <td><a href="<?php echo $urlReportes."doc"?>" target="_BLANK"><img src="images/logo_doc.jpg"  alt="doc" height="20" width="20" /></a><td>
+        <td><a href="<?php echo $urlReportes."txt"?>" target="_BLANK"><img src="images/logo_text.jpg" alt="txt" height="20" width="20" /></a><td>
+    </tr>
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-	<tr>
-		<td width="5%" background="../images/ds_comp_bars_gral.jpg">
-			<img src="../images/ds_comp_izq_bar_gral.jpg" width="25" height="25" />
-		</td>
-		<td width="83%" background="../images/ds_comp_bars_gral.jpg">
-			<strong>Consolidado Partido Lista </strong>
-		</td>
-		<td width="12%" align="right" background="../images/ds_comp_bars_gral.jpg">
-			<img src="../images/ds_comp_der_bar_gral.jpg" width="25" height="25" />
-		</td>
-	</tr>
+    <tr>
+        <td width="5%" background="../images/ds_comp_bars_gral.jpg">
+                <img src="../images/ds_comp_izq_bar_gral.jpg" width="25" height="25" />
+        </td>
+        <td width="83%" background="../images/ds_comp_bars_gral.jpg">
+                <strong>Consolidado Partido Lista </strong>
+        </td>
+        <td width="12%" align="right" background="../images/ds_comp_bars_gral.jpg">
+                <img src="../images/ds_comp_der_bar_gral.jpg" width="25" height="25" />
+        </td>
+    </tr>
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr><td class="regOscuro" align="left"><STRONG>&nbsp;</STRONG></td></tr>
 </table>
 
-<table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuave">
+<table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuaveRultados">
 	<tr>
 		<th>C&oacute;digo</th>
 		<th>Nombre</th>

@@ -204,3 +204,15 @@ input.hospital {
 select .partido {
     min-width: 250px;
 }
+
+/*La regla css para las tablas de resultados*/
+.regSuaveRultados {
+    color: black;
+    border-style:none;
+    background-color:#D9E5F3;
+    Border-Right: #003366 0px solid;
+    Border-Top: #577CB5 0px solid;
+    Border-Left: #577CB5 0px solid;
+    Border-Bottom: #003366 0px solid;
+    text-align:center;
+}
