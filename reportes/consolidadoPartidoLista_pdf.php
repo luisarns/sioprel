@@ -81,14 +81,14 @@
 	$pdf->SetFont('','',8);
 	
 	foreach($partidos as $partido ) {
-		$pdf->Cell($w[0], 6, $partido->CODIGO, 'LR', 0, 'L', $fill,'',$stretch);
+		$pdf->Cell($w[0], 6, str_pad($partido->CODIGO, 3, '0', STR_PAD_LEFT), 'LR', 0, 'L', $fill,'',$stretch);
 		$pdf->Cell($w[1], 6, utf8_encode($partido->DESCRIPCION), 'LR', 0, 'L', $fill,'',$stretch);
-		$pdf->Cell($w[2], 6, $partido->VOTOS, 'LR', 0, 'L', $fill,'',$stretch);
+		$pdf->Cell($w[2], 6, number_format($partido->VOTOS), 'LR', 0, 'L', $fill,'',$stretch);
 		$pdf->Ln();
 		$fill=!$fill;
 		foreach($candidatos as $candidato) {
 			if($candidato->CODPARTIDO == $partido->CODIGO) {
-				$pdf->Cell($w[0], 6, $partido->CODIGO.'-'.$candidato->CODCANDIDATO, 'LR', 0, 'L', $fill,'',$stretch);
+				$pdf->Cell($w[0], 6, str_pad($partido->CODIGO, 3, '0', STR_PAD_LEFT) . '-' . str_pad($candidato->CODCANDIDATO, 3, '0', STR_PAD_LEFT), 'LR', 0, 'L', $fill,'',$stretch);
 				$pdf->Cell($w[1], 6, utf8_encode($candidato->DESCRIPCION), 'LR', 0, 'L', $fill,'',$stretch);
 				$pdf->Cell($w[2], 6, number_format($candidato->VOTOS), 'LR', 0, 'L', $fill,'',$stretch);
 				$pdf->Ln();

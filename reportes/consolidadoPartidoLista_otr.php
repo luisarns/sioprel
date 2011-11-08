@@ -37,17 +37,17 @@
 	$cont = 2;
 	foreach($partidos as $partido) {
 		
-		$objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,$partido->CODIGO);
-		$objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,utf8_encode($partido->DESCRIPCION));
-		$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,number_format($partido->VOTOS));
+		$objPHPExcel->getActiveSheet()->setCellValue('A'.$cont, str_pad($partido->CODIGO, 3, '0', STR_PAD_LEFT));
+		$objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, utf8_encode($partido->DESCRIPCION));
+		$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, number_format($partido->VOTOS));
 		//Hacer un cambio de color para las celdas de los partidos
 		$cont++;
 		
 		foreach($candidatos as $candidato) {
 			if($candidato->CODPARTIDO == $partido->CODIGO) {
-				$objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,$partido->CODIGO.'-'.$candidato->CODCANDIDATO);
-				$objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,utf8_encode($candidato->DESCRIPCION));
-				$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,number_format($candidato->VOTOS));
+				$objPHPExcel->getActiveSheet()->setCellValue('A'.$cont, str_pad($partido->CODIGO, 3, '0', STR_PAD_LEFT) . '-' . str_pad($candidato->CODCANDIDATO, 3, '0', STR_PAD_LEFT));
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, utf8_encode($candidato->DESCRIPCION));
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, number_format($candidato->VOTOS));
 				$cont++;
 			}
 		}
