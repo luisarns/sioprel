@@ -73,7 +73,7 @@ EOF;
 
     $result1 = null;
     $query1 = null;
-    if(isset($_GET['detallado']) && $_GET['detallado'] == 1) {
+    if (isset($_GET['detallado']) && $_GET['detallado'] == 1) {
             $query1 =<<<EOR
             SELECT pc.codpartido,pc.codcandidato, pc.nombres ||' '|| CASE WHEN pc.codcandidato = 0 
             THEN '(LISTA)' ELSE pc.apellidos END as descripcion, SUM(mv.numvotos) as votos

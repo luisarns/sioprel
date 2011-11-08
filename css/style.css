@@ -200,3 +200,7 @@ input.hospital {
 	Border-Bottom: #BBD3E1 0px solid;
 	text-align:center;
 }
+
+select .partido {
+    min-width: 250px;
+}

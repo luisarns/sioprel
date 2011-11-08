@@ -11,7 +11,9 @@ function ocultar(id)
 function ocultarIniciar(divId,comboId) {
     if (document.getElementById(divId).style.display == "block") {
         document.getElementById(divId).style.display="none";
-        document.getElementById(comboId).value="-";
+        if (document.getElementById(comboId)) {
+            document.getElementById(comboId).value="-";
+        }
     }
 }
 

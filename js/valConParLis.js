@@ -4,49 +4,64 @@
 */
 function validar(form)
 {
-	if(form.corporacion.value == '-'){
-		alert("Seleccione una corporación");
-		return false;
-		
-	} else if(form.departamento.value == '-'){
-		alert("Seleccione un departamento");
-		return false;
-		
-	} else if(form.corporacion.value == 5) {
-		
-		if(form.municipio.value == "-") {
-			alert("Seleccione un municipio");
-			return false;
-		} else if(form.comuna.value == "-") {
-			alert("Seleccione una comuna");
-			return false;
-		}
-	}
-	
-	var param = "?corporacion=" + form.corporacion.value;
-	param += "&departamento=" + form.departamento.value;
-	param += "&municipio=" + form.municipio.value;
-	param += "&comuna=" + form.comuna.value;
-	param += "&partido=" + form.partido.value;
-	param += "&puesto=" + form.puesto.value;
-	param += "&mesa=" + form.mesa.value;
-	
-	if(form.detallado.checked){
-		param += "&detallado=" + form.detallado.value;
-	}
-	if(document.getElementById('selcomuna').style.display == "block"){
-		param += "&zona=" + form.zona.value;
-	}
-	
-	var ajax = nuevoAjax();
-	ajax.open("GET", "contenido/tablaConParList.php" + param, true);
-	ajax.onreadystatechange= function() {
-		if (ajax.readyState == 4) {
-			document.getElementById('tbConParList').innerHTML = ajax.responseText;
-		}
-	}
-	ajax.send(null);
-	return false;
+    if (form.corporacion.value == '-') {
+        alert("Seleccione una corporación");
+        return false;
+        
+    } else if (form.departamento.value == '-') {
+        alert("Seleccione un departamento");
+        return false;
+        
+    } else if (form.corporacion.value == 5) {
+
+        if (form.municipio.value == "-") {
+                alert("Seleccione un municipio");
+                return false;
+        } else if (form.comuna.value == "-") {
+                alert("Seleccione una comuna");
+                return false;
+        }
+    }
+    
+    var datos = $(form).serialize();
+    var param = "?" + datos;
+
+    var ajax = nuevoAjax();
+    ajax.open("GET", "contenido/tablaConParList.php" + param, true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4) {
+            document.getElementById('tbConParList').innerHTML = ajax.responseText;
+        }
+    }
+    ajax.send(null);
+    return false;
+}
+
+
+
+/**
+* Funcion:
+* Oculta todos los campos que dependen del departamento y 
+* cambia la seleccion de estos campos por ninguna y
+* cambia el departamento seleccionado a -Ninguna-
+*/
+function mostrarOcultarDepto(sel) 
+{  
+    document.formPrincipal.departamento.value = '-';
+
+    if (sel != '-' ) {
+        if (document.getElementById('tdDepto').style.display == 'none') {
+                mostrar('tdDepto');
+        }
+    } else {
+            ocultar('tdDepto');
+    }
+
+    ocultarIniciar('etfMunicipio','selmunicipio');
+    ocultarIniciar('etfZonaComuna', 'selcomuna');
+    ocultarIniciar('etfZonaComuna', 'selzona');
+    ocultarIniciar('etfPuesto', 'selpuesto');
+    ocultarIniciar('etfMesa', 'selmesa');
 }
 
 
@@ -58,34 +73,34 @@ function validar(form)
 */
 function cargarMunicipios(sel) 
 {	
-	if (sel != '-') {
+    if (sel != '-') {
 
-		var corpo = document.formPrincipal.corporacion.value;
-		var ajax = nuevoAjax();
-		var selectDestino = document.getElementById('selmunicipio');
-		
-		ajax.open("GET", "contenido/cargarMunicipios.php?opcion=" + sel + "&corporacion=" + corpo, true);
-		ajax.onreadystatechange = function () {
-			if (ajax.readyState == 4) {
-				selectDestino.parentNode.innerHTML = ajax.responseText;
-			}
-		}
-		ajax.send(null);
-		
-		document.formPrincipal.municipio.value = '-';		
-		if (document.getElementById('divselmunicipio').style.display == "none") {
-			mostrar('divselmunicipio');
-		}
-		
-	} else {
-		ocultarIniciar('divselmunicipio', 'selmunicipio');
-	}
-	
-	ocultarIniciar('divselzona', 'selzona');
-	ocultarIniciar('divselcomuna', 'selcomuna');
-	ocultarIniciar('divselpuesto', 'selpuesto');
-	ocultarIniciar('divselmesa', 'selmesa');
+        var corpo = document.formPrincipal.corporacion.value;
+        var ajax = nuevoAjax();
+        var selectDestino = document.getElementById('etfMunicipio');
+
+        ajax.open("GET", "contenido/cargarMunicipios.php?opcion=" + sel + "&corporacion=" + corpo, true);
+        ajax.onreadystatechange = function () {
+                if (ajax.readyState == 4) {
+                        selectDestino.innerHTML = ajax.responseText;
+                }
+        }
+        ajax.send(null);
+
+        if (document.getElementById('etfMunicipio').style.display == "none") {
+                mostrar('etfMunicipio');
+        }
+
+    } else {
+        ocultarIniciar('etfMunicipio', 'selmunicipio');
+    }
+
+    ocultarIniciar('etfZonaComuna', 'selcomuna');
+    ocultarIniciar('etfZonaComuna', 'selzona');
+    ocultarIniciar('etfPuesto', 'selpuesto');
+    ocultarIniciar('etfMesa', 'selmesa');
 }
+
 
 /**
 * Carga los zonas en funcion del municipio seleccionado
@@ -94,77 +109,77 @@ function cargarMunicipios(sel)
 */
 function cargarZonas(sel) 
 {
-	if (sel != '-') {
-		var divipol = document.formPrincipal.departamento.value + sel;
-		
-		var ajax = nuevoAjax();
-		ajax.open("GET", "contenido/cargarZonas.php?divipol=" + divipol, true);
-		ajax.onreadystatechange= function () {
-			if (ajax.readyState == 4) {
-				document.getElementById('divselzona').innerHTML = ajax.responseText;
-			}
-		}
-		ajax.send(null);
-		
-		if (document.getElementById('divselzona').style.display == "none") {
-			mostrar('divselzona');
-		}
-	} else {
-		ocultarIniciar('divselzona', 'selzona');
-	}
-	ocultarIniciar('divselpuesto', 'selpuesto');
-	ocultarIniciar('divselmesa', 'selmesa');
+    if (sel != '-') {
+        var divipol = document.formPrincipal.departamento.value + sel;
+
+        var ajax = nuevoAjax();
+        ajax.open("GET", "contenido/cargarZonas.php?divipol=" + divipol, true);
+        ajax.onreadystatechange= function () {
+                if (ajax.readyState == 4) {
+                        document.getElementById('etfZonaComuna').innerHTML = ajax.responseText;
+                }
+        }
+        ajax.send(null);
+
+        if (document.getElementById('etfZonaComuna').style.display == "none") {
+                mostrar('etfZonaComuna');
+        }
+    } else {
+        ocultarIniciar('etfZonaComuna', 'selzona');
+    }
+    ocultarIniciar('etfPuesto', 'selpuesto');
+    ocultarIniciar('etfMesa', 'selmesa');
 }
+
 
 function cargarComunas(sel) 
 {
-	if (sel != '-') {
-		var divipol = document.formPrincipal.departamento.value + sel;
-		var ajax = nuevoAjax();
-		
-		ajax.open("GET", "contenido/cargarComunas.php?opcion=" + sel + "&divipol=" + divipol, true);
-		ajax.onreadystatechange= function () {
-			if (ajax.readyState == 4) {
-				document.getElementById('selcomuna').parentNode.innerHTML = ajax.responseText;
-			}
-		}
-		ajax.send(null);
-		
-		document.formPrincipal.comuna.value = '-';
-		if (document.getElementById('divselcomuna').style.display == "none") {
-			mostrar('divselcomuna');
-		}
-	} else {
-		ocultarIniciar('divselcomuna', 'selcomuna');
-	}
-	ocultarIniciar('divselpuesto', 'selpuesto');
-	ocultarIniciar('divselmesa', 'selmesa');
+    if (sel != '-') {
+        var divipol = document.formPrincipal.departamento.value + sel;
+        var ajax = nuevoAjax();
+
+        ajax.open("GET", "contenido/cargarComunas.php?opcion=" + sel + "&divipol=" + divipol, true);
+        ajax.onreadystatechange= function () {
+                if (ajax.readyState == 4) {
+                        document.getElementById('etfZonaComuna').innerHTML = ajax.responseText;
+                }
+        }
+        ajax.send(null);
+
+        if (document.getElementById('etfZonaComuna').style.display == "none") {
+                mostrar('etfZonaComuna');
+        }
+    } else {
+        ocultarIniciar('etfZonaComuna', 'selcomuna');
+    }
+    ocultarIniciar('etfPuesto', 'selpuesto');
+    ocultarIniciar('etfMesa', 'selmesa');
 }
+
 
 function comunaCargaPuesto(idcomuna) 
 {
-	if (idcomuna != '-') {
+    if (idcomuna != '-') {
 
-		var divipol = document.formPrincipal.departamento.value + document.formPrincipal.municipio.value;
-		var ajax = nuevoAjax();
-		
-		ajax.open("GET", "contenido/cargarPuestos.php?idcomuna=" + idcomuna + "&divipol=" + divipol, true);
-		ajax.onreadystatechange= function() {
-			if (ajax.readyState == 4) {
-				document.getElementById('selpuesto').parentNode.innerHTML = ajax.responseText;
-			}
-		}
-		ajax.send(null);
-		
-		document.formPrincipal.puesto.value = '-';
-		if(document.getElementById('divselpuesto').style.display == "none") {
-			mostrar('divselpuesto');
-		}
-		
-	} else {
-		ocultarIniciar('divselpuesto', 'selpuesto');
-	}
-	ocultarIniciar('divselmesa', 'selmesa');
+        var divipol = document.formPrincipal.departamento.value + document.formPrincipal.municipio.value;
+        var ajax = nuevoAjax();
+
+        ajax.open("GET", "contenido/cargarPuestos.php?idcomuna=" + idcomuna + "&divipol=" + divipol, true);
+        ajax.onreadystatechange= function() {
+            if (ajax.readyState == 4) {
+                document.getElementById('etfPuesto').innerHTML = ajax.responseText;
+            }
+        }
+        ajax.send(null);
+
+        if(document.getElementById('etfPuesto').style.display == "none") {
+            mostrar('etfPuesto');
+        }
+
+    } else {
+        ocultarIniciar('etfPuesto', 'selpuesto');
+    }
+    ocultarIniciar('etfMesa', 'selmesa');
 }
 
 function zonaCargaPuesto(zona) 
@@ -176,66 +191,42 @@ function zonaCargaPuesto(zona)
 		ajax.open("GET","contenido/cargarPuestos.php?zona=" + zona + "&divipol=" + divipol, true);
 		ajax.onreadystatechange= function () {
 			if (ajax.readyState == 4) {
-				document.getElementById('selpuesto').parentNode.innerHTML = ajax.responseText;
+				document.getElementById('etfPuesto').innerHTML = ajax.responseText;
 			}
 		}
 		ajax.send(null);
 		
-		document.formPrincipal.puesto.value = '-';
-		if(document.getElementById('divselpuesto').style.display == "none") {
-			mostrar('divselpuesto');
+//		document.formPrincipal.puesto.value = '-';
+		if(document.getElementById('etfPuesto').style.display == "none") {
+			mostrar('etfPuesto');
 		}
 	}else {
-		ocultarIniciar('divselpuesto', 'selpuesto');
+		ocultarIniciar('etfPuesto', 'selpuesto');
 	}
-	ocultarIniciar('divselmesa', 'selmesa');
+	ocultarIniciar('etfMesa', 'selmesa');
 }
 
 function cargarMesas(divipol)
 {
-	if(divipol != '-') {
-		var corpo = document.formPrincipal.corporacion.value;
-		
-		var ajax = nuevoAjax();
-		
-		ajax.open("GET", "contenido/cargarMesas.php?divipol=" + divipol + "&corporacion=" + corpo, true);
-		ajax.onreadystatechange= function () {
-			if (ajax.readyState == 4) {
-				document.getElementById('selmesa').parentNode.innerHTML = ajax.responseText;
-			}
-		}
-		ajax.send(null);
-		
-		if (document.getElementById('divselmesa').style.display == "none") {
-			mostrar('divselmesa');
-		}
-		
-	} else {
-		ocultarIniciar('divselmesa', 'selmesa');
-	}
+    if(divipol != '-') {
+        var corpo = document.formPrincipal.corporacion.value;
+
+        var ajax = nuevoAjax();
+
+        ajax.open("GET", "contenido/cargarMesas.php?divipol=" + divipol + "&corporacion=" + corpo, true);
+        ajax.onreadystatechange= function () {
+            if (ajax.readyState == 4) {
+                    document.getElementById('etfMesa').innerHTML = ajax.responseText;
+            }
+        }
+        ajax.send(null);
+
+        if (document.getElementById('etfMesa').style.display == "none") {
+            mostrar('etfMesa');
+        }
+
+    } else {
+        ocultarIniciar('etfMesa', 'selmesa');
+    }
 }
 
-/**
-* Funcion:
-* Oculta todos los campos que dependen del departamento y 
-* cambia la seleccion de estos campos por ninguna y
-* cambia el departamento seleccionado a -Ninguna-
-*/
-function mostrarOcultarDepto(sel) 
-{
-	document.formPrincipal.departamento.value = '-';
-	
-	if (sel != '-' ) {
-		if (document.getElementById('combDepartamento').style.display == "none") {
-			mostrar('combDepartamento');
-		}
-	} else {
-		ocultar('combDepartamento');
-	}
-
-	ocultarIniciar('divselmunicipio','selmunicipio');
-	ocultarIniciar('divselzona','selzona');
-	ocultarIniciar('divselcomuna','selcomuna');
-	ocultarIniciar('divselpuesto','selpuesto');
-	ocultarIniciar('divselmesa','selmesa');
-}
