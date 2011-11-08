@@ -2,23 +2,23 @@
 		require('conexion.php');
 		include_once('FunDivipol.php');
 		
-		$urlReportes = "http://".$_SERVER['HTTP_HOST']."/reportes/repLisMayorVota.php".$_SERVER['REQUEST_URI'];
-		$urlReportes .="&formato=";
+		$urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repLisMayorVota.php" . $_SERVER['REQUEST_URI'];
+		$urlReportes .= "&formato=";
 		
 		
 		$codcorporacion = $_GET['corporacion'];
 		$nivcorpo  = getNivelCorporacion($codcorporacion);
 		
 		$depto = $_GET['departamento'];
-		$muncp = ($_GET['municipio']!="-")?$_GET['municipio']:"";
+		$muncp = ($_GET['municipio'] != "-")? $_GET['municipio'] : "";
 		
-		$coddivcorto = $depto.$muncp;
-		$codcordiv   = substr($coddivcorto,0,getNumDigitos($nivcorpo));
+		$coddivcorto = $depto . $muncp;
+		$codcordiv   = substr($coddivcorto, 0, getNumDigitos($nivcorpo));
 		
 		$txt = "";
-		if(isset($_GET['comuna']) && $_GET['comuna'] != "-"){
-			$txt = "AND pc.idcomuna = ".$_GET['comuna'];
-			$txt .= " AND pd.idcomuna = ".$_GET['comuna'];
+		if (isset($_GET['comuna']) && $_GET['comuna'] != "-") {
+			$txt = "AND pc.idcomuna = " . $_GET['comuna'];
+			$txt .= " AND pd.idcomuna = " . $_GET['comuna'];
 		}
 		
 		$query =<<<EOF
@@ -33,8 +33,8 @@
 		ORDER BY votos DESC
 EOF;
 		
-		$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
-		$result   = ibase_query($firebird,$query);
+		$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: " . ibase_errmsg());
+		$result   = ibase_query($firebird, $query);
 		
 	?>
 	
@@ -70,17 +70,17 @@ EOF;
 	</tr>
 	</table>
 	
-	<table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuave">
-		<tr>
-			<th>Lista</th>
-			<th>Votos</th>
-		</tr>
-		<?php while($row = ibase_fetch_object($result)) { ?>
-			<tr>
-				<td><?php echo htmlentities($row->DESCRIPCION)?></td>
-				<td><?php echo number_format($row->VOTOS)?></td>
-			</tr>
-		<?php } ?>
+	<table width="100%" border="0" cellspacing="3" cellpadding="0" class="regSuaveRultados">
+            <tr>
+                <th>Lista</th>
+                <th>Votos</th>
+            </tr>
+            <?php while($row = ibase_fetch_object($result)) { ?>
+                <tr>
+                    <td><?php echo htmlentities($row->DESCRIPCION)?></td>
+                    <td><?php echo number_format($row->VOTOS)?></td>
+                </tr>
+            <?php } ?>
 	</table>
 	
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">

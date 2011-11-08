@@ -30,48 +30,43 @@
 	</table>
 	
 	<table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuave">
-		<tr>
-                    <td class="regSuaveRight" >Corporaci&oacute;n :</td>
+            <tr>
+                <td class="regSuaveleft">
+                        Corporaci&oacute;n&nbsp;
+                        <select name="corporacion" onChange="mostrarOcultarDepto(this.value)">
+                        <option value = "-" >-Ninguna-</option>
+                        <?php foreach($corporaciones as $corporacion){ ?>
+                        <option value="<?php echo $corporacion['id'] ?>" > <?php echo $corporacion['nombre'] ?> </option>
+                        <?php } ?>
+                        </select>
+                </td>
+            </tr>
 
-                    <td class="regSuaveleft">
-                            <select name="corporacion" onChange="mostrarOcultarDepto(this.value)">
-                            <option value = "-" >-Ninguna-</option>
-                            <?php foreach($corporaciones as $corporacion){ ?>
-                            <option value="<?php echo $corporacion['id'] ?>" > <?php echo $corporacion['nombre'] ?> </option>
-                            <?php } ?>
-                            </select>
-                    </td>
-
-                    <td class="regSuaveleft" colspan="2">
-                            <div id="divseldepto" style="display:none;">
-                            Departamento : <select name="departamento" onChange="cargarMunicipios(this.value)">
-                            <option value = "-" >-Ninguna-</option>
-                            <?php foreach($departamentos as $departamento) { ?>
-                            <option value="<?php echo $departamento['id'] ?>" > <?php echo $departamento['nombre'] ?> </option>
-                            <?php } ?>
-                            </select>
-                            </div>
-                    </td>
-			
-		</tr>
+            <tr>
+                <td id="divseldepto" style="display:none;">    
+                    Departamento &nbsp; <select name="departamento" onChange="cargarMunicipios(this.value)">
+                    <option value = "-" >-Ninguna-</option>
+                    <?php foreach($departamentos as $departamento) { ?>
+                    <option value="<?php echo $departamento['id'] ?>" > <?php echo $departamento['nombre'] ?> </option>
+                    <?php } ?>
+                    </select>
+                </td>
+            </tr>
 		
-		<tr>
-			
-                    <td class="regSuaveleft" colspan="2">
-                            <div id="divselmunicipio" style="display:none;">
-                            Municipio : <select id="selmunicipio" name="municipio" onChange="alert('Cambio el municipio')">
-                            <option value = "-" > Seleccione un departamento </option> </select>
-                            </div>
-                    </td>
+            <tr>	
+                <td id="divselmunicipio" style="display:none;">
+                    Municipio &nbsp; <select id="selmunicipio" name="municipio" onChange="alert('Cambio el municipio')">
+                    <option value = "-" > Seleccione un departamento </option> </select>
+                </td>
+            </tr>
 
-                    <td class="regSuaveleft" colspan="2">
-                            <div id="divselcomuna" style="display:none;">
-                            Comuna : <select id="selcomuna" name="comuna" onChange="alert('Cambio la comuna')">
-                            <option value = "-" > Seleccione un municipio </option> </select>
-                            </div>
-                    </td>
-                        
-		</tr>
+            <tr>
+                <td id="divselcomuna" style="display:none;">
+                    Comuna &nbsp; <select id="selcomuna" name="comuna" onChange="alert('Cambio la comuna')">
+                    <option value = "-" > Seleccione un municipio </option> </select>
+                </td>
+            </tr>
+            
 	</table>
 	
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
