@@ -2,8 +2,8 @@
 	require('conexion.php');
 	include_once('FunDivipol.php');
 	
-	$urlReportes = "http://".$_SERVER['HTTP_HOST']."/reportes/repResCurAsignadas.php".$_SERVER['REQUEST_URI'];
-	$urlReportes .="&formato=";
+	$urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repResCurAsignadas.php" . $_SERVER['REQUEST_URI'];
+	$urlReportes .= "&formato=";
 	
 	
 	$codcorporacion = $_GET['corporacion'];
@@ -33,8 +33,8 @@
 	ORDER BY votos DESC
 EOF;
 	
-	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
-	$result   = ibase_query($firebird,$query);
+	$firebird = ibase_connect($host, $username, $password) or die("No se pudo conectar a la base de datos: " . ibase_errmsg());
+	$result   = ibase_query($firebird, $query);
 	
 ?>
 

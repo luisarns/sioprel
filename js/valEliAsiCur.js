@@ -1,9 +1,9 @@
 function validar(form)
 {
-	if (form.corporacion.value == '-'){
+	if (form.corporacion.value == '-') {
 		alert("Seleccione una corporación");
 		return false;
-	} else if (form.departamento.value == '-'){
+	} else if (form.departamento.value == '-') {
 		alert("Seleccione un departamento");
 		return false;
 	} else if (form.corporacion.value==5) {
@@ -41,8 +41,9 @@ function mostrarOcultarDepto(sel)
 	document.formPrincipal.departamento.value = '-';
 	
 	if (sel != '-' ) {
-		if(document.getElementById('divseldepto').style.display == "none")
-			mostrar('divseldepto');
+            if(document.getElementById('divseldepto').style.display == "none"){
+                mostrar('divseldepto');
+            }
 	} else {
 		ocultar('divseldepto');
 	}
