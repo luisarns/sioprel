@@ -2,26 +2,26 @@
 	require('conexion.php');
 	include_once('FunDivipol.php');
 	
-	$urlReportes = "http://".$_SERVER['HTTP_HOST']."/reportes/repResVotaCandidato.php".$_SERVER['REQUEST_URI'];
+	$urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repResVotaCandidato.php" . $_SERVER['REQUEST_URI'];
 	
 	$codcorporacion = $_GET['corporacion'];
 	$coddepto = $_GET['departamento'];
 	$codmunip = $_GET['municipio'];
 	
 	$txt = "";
-	if(isset($_GET['comuna']) && $_GET['comuna'] != "-") {
-		$txt = "AND pc.idcomuna = ".$_GET['comuna'];
-		$txt .= " AND pd.idcomuna = ".$_GET['comuna'];
+	if (isset($_GET['comuna']) && $_GET['comuna'] != "-") {
+		$txt = "AND pc.idcomuna = " .$_GET['comuna'];
+		$txt .= " AND pd.idcomuna = " .$_GET['comuna'];
 	}
 	
-	$urlReportes .="&formato=";
+	$urlReportes .= "&formato=";
 	
-	$codcordivi = $coddepto."".$codmunip;
+	$codcordivi = $coddepto . "" . $codmunip;
 	$nivcorpo = getNivelCorporacion($codcorporacion);
-	$cordivi = substr($codcordivi,0,getNumDigitos($nivcorpo));
+	$cordivi = substr($codcordivi, 0, getNumDigitos($nivcorpo));
 	
 	$query =<<<EOF
-	SELECT pc.codpartido || '-' || pc.codcandidato as codigo  ,pc.nombres, 
+	SELECT lpad(pc.codpartido,3,'0') || '-' || lpad(pc.codcandidato,3,'0') as codigo  ,pc.nombres, 
 	pc.apellidos ,sum(mv.numvotos) as votos
 	FROM pmesas pm, mvotos mv, pcandidatos pc, pdivipol pd
 	WHERE pd.coddivipol = pm.coddivipol AND pd.codnivel = 4
@@ -34,8 +34,8 @@
 	ORDER BY pc.codpartido, pc.codcandidato
 EOF;
 
-	$firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
-	$result   = ibase_query($firebird,$query);
+	$firebird = ibase_connect($host, $username, $password) or die("No se pudo conectar a la base de datos: " . ibase_errmsg());
+	$result   = ibase_query($firebird, $query);
 	
 ?>
 <table>
@@ -69,7 +69,7 @@ EOF;
 	</tr>
 </table>
 
-<table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuave">
+<table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuaveRultados">
 	<tr>
 		<th>C&oacute;digo</th>
 		<th>Nombres</th>
@@ -107,6 +107,6 @@ EOF;
 </table>
 
 <?php 
-	ibase_free_result($result);
-	ibase_close($firebird);
+    ibase_free_result($result);
+    ibase_close($firebird);
 ?>
