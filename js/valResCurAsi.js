@@ -27,9 +27,12 @@ function validar(form)
     var ajax = nuevoAjax();
     ajax.open("GET", "contenido/tablaResCurAsig.php" + param, true);
     ajax.onreadystatechange= function () {
-            if (ajax.readyState == 4) {
-                    document.getElementById('tbResCurAsig').innerHTML = ajax.responseText;
-            }
+        if (ajax.readyState == 1) {
+            document.getElementById('tbResCurAsig').innerHTML = "<img src='../images/loading42.gif'></img>";
+        }
+        if (ajax.readyState == 4) {
+            document.getElementById('tbResCurAsig').innerHTML = ajax.responseText;
+        }
     }
     ajax.send(null);
 

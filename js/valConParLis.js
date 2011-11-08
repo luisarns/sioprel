@@ -29,6 +29,9 @@ function validar(form)
     var ajax = nuevoAjax();
     ajax.open("GET", "contenido/tablaConParList.php" + param, true);
     ajax.onreadystatechange = function() {
+        if(ajax.readyState == 1) {
+            document.getElementById('tbConParList').innerHTML = "<img src='../images/loading42.gif'></img>";
+        }
         if (ajax.readyState == 4) {
             document.getElementById('tbConParList').innerHTML = ajax.responseText;
         }

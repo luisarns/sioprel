@@ -27,9 +27,12 @@ function validar(form)
 	var ajax = nuevoAjax();
 	ajax.open("GET", "contenido/tablaResVotCand.php" + param, true);
 	ajax.onreadystatechange = function () {
-		if (ajax.readyState == 4) {
-			document.getElementById('tbResVotCand').innerHTML = ajax.responseText;
-		}
+            if(ajax.readyState == 1) {
+                document.getElementById('tbResVotCand').innerHTML = "<img src='../images/loading42.gif'></img>";
+            }
+            if (ajax.readyState == 4) {
+                    document.getElementById('tbResVotCand').innerHTML = ajax.responseText;
+            }
 	}
 	ajax.send(null);
 	return false;

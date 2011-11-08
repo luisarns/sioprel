@@ -10,26 +10,26 @@
 
 	<!--Tabla imagen titulo superior -->
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" >
-		<tr>
-			<td width="5%" background="../images/ds_comp_bars_gral.jpg" >
-				<img src="../images/ds_comp_izq_bar_gral.jpg" width="25" height="25" />
-			</td>
-			<td width="83%" background="../images/ds_comp_bars_gral.jpg" >
-				<strong>Consolidado Partido Lista </strong>
-			</td>
-			<td width="12%" align="right" background="../images/ds_comp_bars_gral.jpg" >
-				<img src="../images/ds_comp_der_bar_gral.jpg" width="25" height="25" />
-			</td>
-		</tr>
+            <tr>
+                <td width="5%" background="../images/ds_comp_bars_gral.jpg" >
+                        <img src="../images/ds_comp_izq_bar_gral.jpg" width="25" height="25" />
+                </td>
+                <td width="83%" background="../images/ds_comp_bars_gral.jpg" >
+                        <strong>Consolidado Partido Lista </strong>
+                </td>
+                <td width="12%" align="right" background="../images/ds_comp_bars_gral.jpg" >
+                        <img src="../images/ds_comp_der_bar_gral.jpg" width="25" height="25" />
+                </td>
+            </tr>
 	</table>
 	
 	<!--Tabla imagen gris superior -->
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" >
-		<tr>
-			<td class="regOscuro" align="left" >
-				<STRONG>&nbsp;</STRONG>
-			</td>
-		</tr>
+            <tr>
+                <td class="regOscuro" align="left" >
+                        <STRONG>&nbsp;</STRONG>
+                </td>
+            </tr>
 	</table>
 	
 	

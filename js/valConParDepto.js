@@ -14,8 +14,8 @@ function validar(form)
     var ajax = nuevoAjax();
     ajax.open("GET", "contenido/tablaConParDepto.php" + param, true);
     ajax.onreadystatechange = function() {
-        if (ajax.readyState == 2) {
-            document.getElementById('tbConParDepto').innerHTML = 'Cargando...';
+        if (ajax.readyState == 1) {
+            document.getElementById('tbConParDepto').innerHTML = "<img src='../images/loading42.gif'></img>";
         }
         if (ajax.readyState == 4) {
             document.getElementById('tbConParDepto').innerHTML = ajax.responseText;

@@ -26,9 +26,12 @@ function validar(form){
 	var ajax = nuevoAjax();
 	ajax.open("GET", "contenido/tablaListElegidos.php" + param, true);
 	ajax.onreadystatechange= function () {
-		if (ajax.readyState == 4) {
-			document.getElementById('tbLisElegidos').innerHTML=ajax.responseText;
-		}
+            if (ajax.readyState == 1) {
+                document.getElementById('tbLisElegidos').innerHTML = "<img src='../images/loading42.gif'></img>";
+            }
+            if (ajax.readyState == 4) {
+                document.getElementById('tbLisElegidos').innerHTML=ajax.responseText;
+            }
 	}
 	ajax.send(null);
 	return false;
