@@ -7,7 +7,7 @@
     $codcorporacion = $_GET['corporacion'];
     $nivcorpo  = getNivelCorporacion($codcorporacion);
 
-    $urlReportes.="codcorporacion=$codcorporacion";
+    $urlReportes .= "codcorporacion=$codcorporacion";
 
     $coddivipol = $_GET['departamento'];
     $codnivel   = 1;
@@ -23,7 +23,7 @@
         }
         
         $hayPuesto = false;
-        if(isset($_GET['puesto']) && $_GET['puesto'] !="-"){
+        if(isset($_GET['puesto']) && $_GET['puesto'] != "-"){
                 $coddivipol = $_GET['puesto'];
                 $codnivel = 4;
                 $hayPuesto = true;
@@ -32,7 +32,7 @@
 
     $urlReportes.="&nivcorpo=$nivcorpo&coddivipol=$coddivipol&codnivel=$codnivel&opcion=1";
 
-    $codcordiv = substr($coddivipol,0,getNumDigitos($nivcorpo));
+    $codcordiv = substr($coddivipol, 0, getNumDigitos($nivcorpo));
     
     $hayMesa = false;
     $texto1 = " ";
@@ -239,7 +239,6 @@ EOR;
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr><td class="regOscuro" align="left"><STRONG>&nbsp;</STRONG></td></tr>
 </table>
-
 
 
 <table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuaveRultados">
