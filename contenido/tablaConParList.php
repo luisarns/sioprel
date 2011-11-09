@@ -71,6 +71,7 @@
     AND pc.codnivel = $nivcorpo
     AND pm.codcorporacion = $codcorporacion
     GROUP BY pp.codpartido, pp.descripcion
+    ORDER BY votos DESC
 EOF;
     
     /**
@@ -122,6 +123,7 @@ FEO;
     AND pc.codtipovoto = mv.codtipovoto
     AND mv.codcircunscripcion = $circunscripcion
     GROUP BY pc.codtipovoto,pc.descripcion
+    ORDER BY votos DESC
 OEF;
     
 //    echo "<br/>" . $queryVotosEsp . "<br/>";
@@ -154,7 +156,8 @@ OEF;
             AND pm.coddivipol LIKE '$coddivipol'  || '%'
             AND pm.codcorporacion = $codcorporacion $txt4
             AND pc.codnivel = $nivcorpo
-            GROUP BY pc.codpartido,pc.codcandidato,descripcion;
+            GROUP BY pc.codpartido,pc.codcandidato,descripcion
+            ORDER BY votos DESC
 EOR;
             $result1 = ibase_query($firebird,$query1);
             $urlReportes.="&detallado=".$_GET['detallado'];
@@ -268,7 +271,7 @@ EOR;
         <?php foreach ($votacionEspecial as $row ) { ?>
                 <tr>
                     <td>&nbsp;</td>
-                    <td><?php echo htmlentities($row->DESCRIPCION)?></td>
+                    <td><strong><?php echo htmlentities($row->DESCRIPCION)?></strong></td>
                     <td><?php echo number_format($row->VOTOS)?></td>
                     <td><?php echo round($row->VOTOS*100/$potencial,2) . '%' ?></td>
                 </tr>
