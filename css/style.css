@@ -214,5 +214,9 @@ select .partido {
     Border-Top: #577CB5 0px solid;
     Border-Left: #577CB5 0px solid;
     Border-Bottom: #003366 0px solid;
-    text-align:center;
+    text-align:left;
+}
+
+th{
+    text-align:left;
 }
