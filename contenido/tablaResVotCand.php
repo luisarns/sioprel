@@ -22,15 +22,16 @@
 	
 	$query =<<<EOF
 	SELECT lpad(pc.codpartido,3,'0') || '-' || lpad(pc.codcandidato,3,'0') as codigo  ,pc.nombres, 
-	pc.apellidos ,sum(mv.numvotos) as votos
-	FROM pmesas pm, mvotos mv, pcandidatos pc, pdivipol pd
+	pc.apellidos ,pp.descripcion,sum(mv.numvotos) as votos
+	FROM pmesas pm, mvotos mv, ppartidos pp, pcandidatos pc, pdivipol pd
 	WHERE pd.coddivipol = pm.coddivipol AND pd.codnivel = 4
-	AND pd.coddivipol LIKE '$codcordivi' || '%' $txt
+	AND pp.codpartido = pc.codpartido
+        AND pd.coddivipol LIKE '$codcordivi' || '%' $txt
 	AND pc.coddivipol LIKE '$cordivi' || '%' AND pc.codnivel = $nivcorpo
 	AND mv.codtransmision = pm.codtransmision AND pc.codcandidato <> 0
 	AND pc.idcandidato = mv.idcandidato AND pc.codcorporacion = $codcorporacion
 	AND pm.codcorporacion = $codcorporacion
-	GROUP BY pc.codpartido,pc.codcandidato,pc.nombres,pc.apellidos 
+	GROUP BY pc.codpartido,pc.codcandidato,pc.nombres,pc.apellidos,pp.descripcion
 	ORDER BY pc.codpartido, pc.codcandidato
 EOF;
 
@@ -74,6 +75,7 @@ EOF;
 		<th>C&oacute;digo</th>
 		<th>Nombres</th>
 		<th>Apellidos</th>
+                <th>Partido</th>
 		<th>Votos</th>
 	</tr>
 	<?php while($row = ibase_fetch_object($result)) { ?>
@@ -81,6 +83,7 @@ EOF;
 			<td><?php echo $row->CODIGO?></td>
 			<td><?php echo htmlentities($row->NOMBRES)?></td>
 			<td><?php echo htmlentities($row->APELLIDOS)?></td>
+                        <td><?php echo htmlentities($row->DESCRIPCION)?></td>
 			<td><?php echo number_format($row->VOTOS)?></td>
 		</tr>
 	<?php } ?>
