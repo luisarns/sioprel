@@ -2,20 +2,6 @@
 	require_once('configuracionOTR.php');
 	require_once('consolidadoPartidoLista_inc.php');
 	
-	//Configuracion para la generacion del pdf
-//	$partidos = array();
-//	$candidatos = array();
-//	
-//	while($row = ibase_fetch_object($result)) {
-//		array_push($partidos,$row);
-//	}
-//	
-//	if($result1 != null) {
-//		while($row = ibase_fetch_object($result1)) {
-//			array_push($candidatos,$row);
-//		}
-//	}
-	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	$objPHPExcel = new PHPExcel();
@@ -75,11 +61,7 @@
 	$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
 	//Fin del contenido
-	
-	//Cerrando la conexion
-//	ibase_free_result($result);
-//	if($result1 != null){ibase_free_result($result1);}
-//	ibase_close($firebird);
+
 	
 	//Creando el escritor en funcion del formato al que se quiera exportar el documento
 	switch($_GET['formato']) {

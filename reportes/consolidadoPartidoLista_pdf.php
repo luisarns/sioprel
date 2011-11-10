@@ -2,18 +2,6 @@
 	require_once('configuracionTCPDF.php');
 	require_once('consolidadoPartidoLista_inc.php');
 	
-//	//Configuracion para la generacion del pdf
-//	$partidos = array();
-//	$candidatos = array();
-//	
-//	while($row = ibase_fetch_object($result)) {
-//		array_push($partidos,$row);
-//	}
-//	if($result1 != null) {
-//		while($row = ibase_fetch_object($result1)) {
-//			array_push($candidatos,$row);
-//		}
-//	}
 	//////////////////////////////////////////TCPDF////////////////////////////////////////////////////////
 	$pdf = new TCPDF($page_orientacion, $pdf_unit, $pdf_page_format, true, 'UTF-8', false);
 	
@@ -115,10 +103,6 @@
         }
 	$pdf->Cell(array_sum($w), 0, '', 'T');
 	
-	
-//	ibase_free_result($result);
-//	if($result1 != null){ibase_free_result($result1);}
-//	ibase_close($firebird);
 	
 	//Guardo el documento en el servidor
 	$pdf->Output('consolidadoPartidoLista.pdf', 'D');
