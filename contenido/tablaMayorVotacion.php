@@ -104,7 +104,7 @@ EOF;
 	</table>
 	<!-- Fin codigo estilo de tabla-->
 	
-<?php 
-        ibase_free_result($result);
-        ibase_close($firebird);
+<?php
+    ibase_free_result($result);
+    ibase_close($firebird);
 ?>

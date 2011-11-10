@@ -53,27 +53,27 @@ function mostrarOcultarDepto(sel)
 
 function cargarMunicipios(sel) 
 {
-	if (sel != '-') {
-		var corpo = document.formPrincipal.corporacion.value;
-		
-		var ajax = nuevoAjax();
-		
-		ajax.open("GET", "contenido/cargarMunicipios.php?opcion=" + sel + "&corporacion=" + corpo, true);
-		ajax.onreadystatechange = function () {
-			if (ajax.readyState == 4) {
-				document.getElementById('selmunicipio').parentNode.innerHTML = ajax.responseText;
-			}
-		}
-		ajax.send(null);
-		
-		document.formPrincipal.municipio.value = '-';
-		if(document.getElementById('divselmunicipio').style.display == "none") {
-			mostrar('divselmunicipio');
-		}
-	} else {
-		ocultarIniciar('divselmunicipio', 'selmunicipio');
-	}
-	ocultarIniciar('divselcomuna', 'selcomuna');
+    if (sel != '-' && document.formPrincipal.corporacion.value != 2) {
+            var corpo = document.formPrincipal.corporacion.value;
+
+            var ajax = nuevoAjax();
+
+            ajax.open("GET", "contenido/cargarMunicipios.php?opcion=" + sel + "&corporacion=" + corpo, true);
+            ajax.onreadystatechange = function () {
+                    if (ajax.readyState == 4) {
+                            document.getElementById('selmunicipio').parentNode.innerHTML = ajax.responseText;
+                    }
+            }
+            ajax.send(null);
+
+            document.formPrincipal.municipio.value = '-';
+            if(document.getElementById('divselmunicipio').style.display == "none") {
+                    mostrar('divselmunicipio');
+            }
+    } else {
+            ocultarIniciar('divselmunicipio', 'selmunicipio');
+    }
+    ocultarIniciar('divselcomuna', 'selcomuna');
 }
 
 function cargarComunas(sel) 
