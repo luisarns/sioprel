@@ -2,18 +2,18 @@
 	require_once('configuracionTCPDF.php');
 	require_once('consolidadoPartidoLista_inc.php');
 	
-	//Configuracion para la generacion del pdf
-	$partidos = array();
-	$candidatos = array();
-	
-	while($row = ibase_fetch_object($result)) {
-		array_push($partidos,$row);
-	}
-	if($result1 != null) {
-		while($row = ibase_fetch_object($result1)) {
-			array_push($candidatos,$row);
-		}
-	}
+//	//Configuracion para la generacion del pdf
+//	$partidos = array();
+//	$candidatos = array();
+//	
+//	while($row = ibase_fetch_object($result)) {
+//		array_push($partidos,$row);
+//	}
+//	if($result1 != null) {
+//		while($row = ibase_fetch_object($result1)) {
+//			array_push($candidatos,$row);
+//		}
+//	}
 	//////////////////////////////////////////TCPDF////////////////////////////////////////////////////////
 	$pdf = new TCPDF($page_orientacion, $pdf_unit, $pdf_page_format, true, 'UTF-8', false);
 	
@@ -49,14 +49,14 @@
 	$pdf->setLanguageArray($l);
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	// asigno la fuente del documento
-	$pdf->SetFont('helvetica', '', 12);
+	$pdf->SetFont('helvetica', '', 10);
 	
 	//Adiciono una pagina
 	$pdf->AddPage();
 	
 	//Cabeceras de las columnas
-	$header = array('CODIGO', 'NOMBRE', 'VOTOS');
-	$w = array(18,100,18); //Tamanyo de las columnas
+	$header = array(utf8_encode('CÓDIGO'), 'NOMBRE', 'VOTOS',utf8_encode('PARTICIPACIÓN'));
+	$w = array(18,100,18,30); //Tamanyo de las columnas
 	
 	//Inicio Iteracion
 	$pdf->SetFillColor(255, 0, 0);
@@ -67,7 +67,14 @@
 	
 	//Ajusto el texto a la celda con la opcion stretch o redusco el tamanyo
 	$stretch = 0;
-	
+        $suma = array_sum($w)/2;
+	$pdf->Cell($suma, 6, utf8_encode('Participación'), 1, 0, 'C', 1,'',$stretch);
+	$pdf->Cell($suma, 6, $participacion . '%', 1, 0, 'C', 1,'',$stretch);
+        $pdf->Ln();
+	$pdf->Cell($suma, 6, utf8_encode('Abstención'), 1, 0, 'C', 1,'',$stretch);
+	$pdf->Cell($suma, 6, $asbtencion . '%', 1, 0, 'C', 1,'',$stretch);
+        $pdf->Ln(); 
+        
 	// Header
 	$num_headers = count($header);
 	for($i = 0; $i < $num_headers; ++$i) {
@@ -79,11 +86,12 @@
 	$pdf->SetFillColor(224, 235, 255);
 	$pdf->SetTextColor(0);
 	$pdf->SetFont('','',8);
-	
+	$fill = true; //Para rellenar el fondo de la fila
 	foreach($partidos as $partido ) {
 		$pdf->Cell($w[0], 6, str_pad($partido->CODIGO, 3, '0', STR_PAD_LEFT), 'LR', 0, 'L', $fill,'',$stretch);
 		$pdf->Cell($w[1], 6, utf8_encode($partido->DESCRIPCION), 'LR', 0, 'L', $fill,'',$stretch);
 		$pdf->Cell($w[2], 6, number_format($partido->VOTOS), 'LR', 0, 'L', $fill,'',$stretch);
+                $pdf->Cell($w[3], 6, round(($partido->VOTOS*100)/$potencial,2) . '%', 'LR', 0, 'L', $fill,'',$stretch);
 		$pdf->Ln();
 		$fill=!$fill;
 		foreach($candidatos as $candidato) {
@@ -96,12 +104,21 @@
 		}
 		$fill=!$fill;
 	}
+        //Incluye la votacion especial en el pdf
+        $fill = !$fill;
+        foreach($votacionEspecial as $votoEsp){
+            $pdf->Cell($w[0], 6, '', 'LR', 0, 'L', $fill,'',$stretch);
+            $pdf->Cell($w[1], 6, utf8_encode($votoEsp->DESCRIPCION), 'LR', 0, 'L', $fill,'',$stretch);
+            $pdf->Cell($w[2], 6, number_format($votoEsp->VOTOS), 'LR', 0, 'L', $fill,'',$stretch);
+            $pdf->Cell($w[3], 6, round(($votoEsp->VOTOS*100)/$potencial,2) . '%', 'LR', 0, 'L', $fill,'',$stretch);
+            $pdf->Ln();
+        }
 	$pdf->Cell(array_sum($w), 0, '', 'T');
 	
 	
-	ibase_free_result($result);
-	if($result1 != null){ibase_free_result($result1);}
-	ibase_close($firebird);
+//	ibase_free_result($result);
+//	if($result1 != null){ibase_free_result($result1);}
+//	ibase_close($firebird);
 	
 	//Guardo el documento en el servidor
 	$pdf->Output('consolidadoPartidoLista.pdf', 'D');
