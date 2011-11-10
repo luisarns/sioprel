@@ -30,15 +30,16 @@
 	</table>
 	
 	<table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuave">
+            
             <tr>
                 <td class="regSuaveleft">
-                        Corporaci&oacute;n&nbsp;
-                        <select name="corporacion" onChange="mostrarOcultarDepto(this.value)">
-                        <option value = "-" >-Ninguna-</option>
-                        <?php foreach($corporaciones as $corporacion){ ?>
-                        <option value="<?php echo $corporacion['id'] ?>" > <?php echo $corporacion['nombre'] ?> </option>
-                        <?php } ?>
-                        </select>
+                    Corporaci&oacute;n&nbsp;
+                    <select name="corporacion" onChange="mostrarOcultarDepto(this.value)">
+                    <option value = "-" >-Ninguna-</option>
+                    <?php foreach ($corporaciones as $corporacion) { ?>
+                    <option value="<?php echo $corporacion['id'] ?>" > <?php echo $corporacion['nombre'] ?> </option>
+                    <?php } ?>
+                    </select>
                 </td>
             </tr>
 
@@ -46,7 +47,7 @@
                 <td id="divseldepto" style="display:none;">    
                     Departamento &nbsp; <select name="departamento" onChange="cargarMunicipios(this.value)">
                     <option value = "-" >-Ninguna-</option>
-                    <?php foreach($departamentos as $departamento) { ?>
+                    <?php foreach ($departamentos as $departamento) { ?>
                     <option value="<?php echo $departamento['id'] ?>" > <?php echo $departamento['nombre'] ?> </option>
                     <?php } ?>
                     </select>
