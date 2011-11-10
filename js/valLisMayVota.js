@@ -52,7 +52,7 @@ function mostrarOcultarDepto(sel)
 
 function cargarMunicipios(sel) 
 {
-	if (sel != '-') {
+	if (sel != '-' && document.formPrincipal.corporacion.value != 2) {
 		var corpo = document.formPrincipal.corporacion.value;
 		
 		var ajax = nuevoAjax();
