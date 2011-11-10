@@ -66,14 +66,14 @@
                     <td class="regSuaveLeft">
                         Departamento&nbsp;
                         <select name="departamento">
-                                <option value = "-" >-Ninguna-</option>
-                                <?php foreach($departamentos as $departamento) { ?>
-                                <option value="<?php echo $departamento['coddivipol'] ?>" > <?php echo $departamento['nombre'] ?> </option>
-                                <?php } ?>
+                            <option value = "-" >-Ninguna-</option>
+                            <?php foreach($departamentos as $departamento) { ?>
+                            <option value="<?php echo $departamento['coddivipol'] ?>" > <?php echo $departamento['nombre'] ?> </option>
+                            <?php } ?>
                         </select>
                     </td>
-		</tr>
-		
+		</tr>                
+                
 		<tr>
 		   <td class="regSuaveRight">&nbsp;</td>
 		</tr>
