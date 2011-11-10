@@ -4,12 +4,16 @@
 */
 function validar(form)
 {
-    if (form.departamento.value == '-') {
+    if (form.corporacion.value == '-'){
+        alert("Seleccione una corporacion");
+        return false;
+    } else if (form.departamento.value == '-') {
         alert("Seleccione un departamento");
         return false;
     }
     
     var param = "?coddivipol=" + form.departamento.value;
+    param += "&corporacion=" + form.corporacion.value;
 
     var ajax = nuevoAjax();
     ajax.open("GET", "contenido/tablaConParDepto.php" + param, true);
@@ -25,3 +29,5 @@ function validar(form)
 
     return false;
 }
+
+function mostrarOcultarDepto(sel){}
