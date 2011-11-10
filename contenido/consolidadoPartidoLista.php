@@ -45,7 +45,7 @@
                         <option value="<?php echo $corporacion['id'] ?>" > <?php echo $corporacion['nombre'] ?> </option>
                         <?php } ?>
                     </select>&nbsp;
-                    Detallado&nbsp;<input type="checkbox" value="1" name="detallado"/>
+<!--                    Detallado&nbsp;<input type="checkbox" value="1" name="detallado"/>-->
                 </td>
             </tr>
 		

@@ -17,7 +17,7 @@
         $coddivipol .= $_GET['municipio'];
         $codnivel = 2;
 
-        if(isset($_GET['zona']) && $_GET['zona'] != "-" ){
+        if (isset($_GET['zona']) && $_GET['zona'] != "-") {
                 $coddivipol .= $_GET['zona'];
                 $codnivel = 3;
         }
@@ -37,8 +37,8 @@
     $hayMesa = false;
     $texto1 = " ";
     if(isset($_GET['mesa']) && $_GET['mesa'] != "-"){
-        $texto1 = " AND pm.codtransmision = '".$_GET['mesa']."'";
-        $urlReportes.="&codtransmision=".$_GET['mesa'];
+        $texto1 = " AND pm.codtransmision = '" . $_GET['mesa'] . "'";
+        $urlReportes .= "&codtransmision=" . $_GET['mesa'];
         $hayMesa = true;
     }
 
@@ -109,7 +109,7 @@ FEO;
     $circunscripcion = ($codcorporacion != 5)? $nivcorpo : 3;
     $txt1 = ($hayComuna)? " AND pd.idcomuna = " . $_GET['comuna'] : "";
     $txt1 = ($hayPuesto)? "" : "";
-    $txt1 = ($hayMesa)? " AND pm.codtransmision = :codtransmision " : "";
+    $txt1 = ($hayMesa)? " AND pm.codtransmision = " . $_GET['mesa'] : "";
     
     $queryVotosEsp =<<<OEF
     SELECT pc.codtipovoto,pc.descripcion, SUM(mv.numvotos) as votos

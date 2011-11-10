@@ -8,37 +8,37 @@
 
     $texto1 = " ";
     $hayMesa = false;
-    if(isset($_GET['codtransmision'])){
-            $texto1 = " AND pm.codtransmision = '".$_GET['codtransmision']."'";
-            $hayMesa = true;
+    if (isset($_GET['codtransmision'])) {
+        $texto1 = " AND pm.codtransmision = '".$_GET['codtransmision']."'";
+        $hayMesa = true;
     }
 
     $texto2 ="";
     $hayComuna = false;
-    if(isset($_GET['idcomuna'])){
+    if (isset($_GET['idcomuna'])) {
         $texto2 = " AND pc.idcomuna = ".$_GET['idcomuna'];
         $hayComuna = true;
     }
 
     $texto3 = "";
     $txt4 = "";
-    if(isset($_GET['codpartido'])){
-            $texto3 = " AND pp.codpartido = ".$_GET['codpartido'];
-            $txt4 = "AND pc.codpartido = ".$_GET['codpartido'];
+    if (isset($_GET['codpartido'])) {
+        $texto3 = " AND pp.codpartido = ".$_GET['codpartido'];
+        $txt4 = "AND pc.codpartido = ".$_GET['codpartido'];
     }
 
     $query =<<<EOF
-            SELECT pp.codpartido as codigo ,pp.descripcion, SUM(mv.numvotos) as votos
-            FROM PPARTIDOS pp, PMESAS pm, PCANDIDATOS pc, MVOTOS mv, pdivipol pd
-            WHERE pp.codpartido = pc.codpartido $texto1
-            AND pd.coddivipol LIKE '$coddivipol' || '%' AND pd.codnivel = 4
-            AND pm.coddivipol = pd.coddivipol
-            AND pm.codtransmision = mv.codtransmision $texto2
-            AND pc.idcandidato = mv.idcandidato $texto3
-            AND pc.coddivipol LIKE '$codcordiv'  || '%'
-            AND pc.codnivel = $nivcorpo
-            AND pm.codcorporacion = $codcorporacion
-            GROUP BY pp.codpartido, pp.descripcion
+        SELECT pp.codpartido as codigo ,pp.descripcion, SUM(mv.numvotos) as votos
+        FROM PPARTIDOS pp, PMESAS pm, PCANDIDATOS pc, MVOTOS mv, pdivipol pd
+        WHERE pp.codpartido = pc.codpartido $texto1
+        AND pd.coddivipol LIKE '$coddivipol' || '%' AND pd.codnivel = 4
+        AND pm.coddivipol = pd.coddivipol
+        AND pm.codtransmision = mv.codtransmision $texto2
+        AND pc.idcandidato = mv.idcandidato $texto3
+        AND pc.coddivipol LIKE '$codcordiv'  || '%'
+        AND pc.codnivel = $nivcorpo
+        AND pm.codcorporacion = $codcorporacion
+        GROUP BY pp.codpartido, pp.descripcion
 EOF;
 
     ///Inicio query potencial
@@ -71,13 +71,13 @@ FEO;
     $circunscripcion = ($codcorporacion != 5)? $nivcorpo : 3;
     $txt1 = ($hayComuna)? " AND pd.idcomuna = " . $_GET['idcomuna'] : "";
     $txt1 = ($codnivel == 4)? "" : "";
-    $txt1 = ($hayMesa)? " AND pm.codtransmision = :codtransmision " : "";
+    $txt1 = ($hayMesa)? " AND pm.codtransmision = '" . $_GET['codtransmision'] . "'" : "";
     
     $queryVotosEsp =<<<OEF
     SELECT pc.codtipovoto,pc.descripcion, SUM(mv.numvotos) as votos
     FROM PMESAS pm, PTIPOSVOTOS pc, MVOTOSESPECIALES mv, pdivipol pd
     WHERE pd.coddivipol LIKE '$coddivipol' || '%' 
-    AND pd.codnivel = 4
+    AND pd.codnivel = 4 
     $txt1
     AND pm.coddivipol = pd.coddivipol
     AND pm.codcorporacion = $codcorporacion
