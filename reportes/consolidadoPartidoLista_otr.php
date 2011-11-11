@@ -7,12 +7,12 @@
 	$objPHPExcel = new PHPExcel();
 	
 	$objPHPExcel->getProperties()->setCreator("Ing. Luis A. Sanchez")
-							 ->setLastModifiedBy("Ing. Luis A. Sanchez")
-							 ->setTitle("Office 2007 XLSX Test Document")
-							 ->setSubject("Office 2007 XLSX Test Document")
-							 ->setDescription("Consolidado Partido Lista")
-							 ->setKeywords("office 2007 openxml")
-							 ->setCategory("");
+                             ->setLastModifiedBy("Ing. Luis A. Sanchez")
+                             ->setTitle("Office 2007 XLSX Test Document")
+                             ->setSubject("Office 2007 XLSX Test Document")
+                             ->setDescription("Consolidado Partido Lista")
+                             ->setKeywords("office 2007 openxml")
+                             ->setCategory("");
         
         
 	

@@ -149,8 +149,33 @@ EOR;
     //Cuando es comuna y cuando es mesa
     
     
+    
+    $queryDivipol = "SELECT descripcion FROM pdivipol WHERE coddivipol = '" . str_pad($coddivipol, 9,'0') . "'" 
+                  . " AND codnivel = $codnivel ";
+    $resultDivipol = ibase_query($firebird, $queryDivipol);
+    $row = ibase_fetch_object($resultDivipol);
+    $nomDivipol = $row->DESCRIPCION;
+    
+    if ($hayComuna) {
+        $queryDivipol = "SELECT descripcion FROM pcomuna WHERE coddivipol = '" . str_pad($coddivipol, 9,'0') . "'" 
+                  . " AND codnivel = $codnivel AND idcomuna = " . $_GET['idcomuna'];
+        $resultDivipol = ibase_query($firebird, $queryDivipol);
+        $row = ibase_fetch_object($resultDivipol);
+        $nomDivipol = $nomDivipol . ' ' . $row->DESCRIPCION;
+    }
+    if ($hayMesa) {
+        $queryDivipol = "SELECT codmesa FROM pmesas WHERE coddivipol = '" . str_pad($coddivipol, 9,'0') . "'" 
+                  . " AND codnivel = $codnivel AND codtransmision = " . $_GET['codtransmision'];
+        $resultDivipol = ibase_query($firebird, $queryDivipol);
+        $row = ibase_fetch_object($resultDivipol);
+        $nomDivipol = $nomDivipol . ' Mesa ' . str_pad($row->CODMESA,3,'0',STR_PAD_LEFT);
+    }
+    
+    
     //Libero los recursos de la base de datos
     ibase_free_result($result);
+    ibase_free_result($resultDivipol);
+    ibase_free_result($resulCorporacion);
     ibase_free_result($resultVotosEsp);
     ibase_free_result($resultPotencial);
     if($result1 != null){ibase_free_result($result1);}
