@@ -129,7 +129,7 @@ EOR;
     //Configuracion para la generacion del pdf
     $partidos = array();
     $candidatos = array();
-
+    
     while ($row = ibase_fetch_object($result)) {
             array_push($partidos,$row);
             $totalVotos += $row->VOTOS;
@@ -149,12 +149,34 @@ EOR;
     //Cuando es comuna y cuando es mesa
     
     
+
+    //Codigo para obtener la descripcion completa de la divipol
+    include_once('../contenido/FunDivipol.php');
+    $codniveltmp = 1;
+    $inArrDivipol = array();
+    $inArrNivel = array();
+    while ($codniveltmp <= $codnivel) {
+        array_push($inArrDivipol,str_pad(substr($coddivipol, 0, getNumDigitos($codniveltmp)), 9, '0'));
+        array_push($inArrNivel,$codniveltmp);
+        $codniveltmp = $codniveltmp + 1;
+    }
+    $inDivipol = '(' . implode(',',$inArrDivipol) . ')';
+    $inNivel = '(' . implode(',',$inArrNivel) . ')';
     
-    $queryDivipol = "SELECT descripcion FROM pdivipol WHERE coddivipol = '" . str_pad($coddivipol, 9,'0') . "'" 
-                  . " AND codnivel = $codnivel ";
-    $resultDivipol = ibase_query($firebird, $queryDivipol);
-    $row = ibase_fetch_object($resultDivipol);
-    $nomDivipol = $row->DESCRIPCION;
+    $queryDivipoles = "SELECT descripcion "
+                    . "FROM pdivipol "
+                    . "WHERE coddivipol in $inDivipol "
+                    . "AND codnivel in $inNivel "
+                    . "ORDER BY codnivel";
+    
+    $resultDivipol = ibase_query($firebird, $queryDivipoles);
+    $nomDivipol = "";
+    while($row = ibase_fetch_object($resultDivipol)){
+        $nomDivipol = $nomDivipol . ' ' . $row->DESCRIPCION;
+    }
+    //echo $nomDivipol;
+    //implode para obtener un string partiendo de un array
+    //Fin del codigo
     
     if ($hayComuna) {
         $queryDivipol = "SELECT descripcion FROM pcomuna WHERE coddivipol = '" . str_pad($coddivipol, 9,'0') . "'" 
@@ -170,6 +192,7 @@ EOR;
         $row = ibase_fetch_object($resultDivipol);
         $nomDivipol = $nomDivipol . ' Mesa ' . str_pad($row->CODMESA,3,'0',STR_PAD_LEFT);
     }
+    
     
     
     //Libero los recursos de la base de datos

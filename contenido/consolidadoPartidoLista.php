@@ -32,19 +32,18 @@
             </tr>
 	</table>
 	
-	
 	<!--Tabla con los campos de filtrado -->
 	<table width="100%" cellspacing="3" cellpadding="0" class="regSuaveLeft">
             
             <tr>
                 <td>
                     Corporaci&oacute;n&nbsp;
-                    <select name="corporacion" onChange="mostrarOcultarDepto(this.value)" >
+                    <select name="corporacion" onChange="mostrarOcultarDepto(this.value)">
                         <option value = "-" >-Ninguna-</option>
                         <?php foreach($corporaciones as $corporacion) { ?>
                         <option value="<?php echo $corporacion['id'] ?>" > <?php echo $corporacion['nombre'] ?> </option>
                         <?php } ?>
-                    </select>&nbsp;
+                    </select>
 <!--                Detallado&nbsp;<input type="checkbox" value="1" name="detallado"/>-->
                 </td>
             </tr>
