@@ -87,30 +87,30 @@ EOF;
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-	<tr>
-		<td class="regOscuro" align="left">
-			<STRONG>&nbsp;</STRONG>
-		</td>
-	</tr>
+    <tr>
+        <td class="regOscuro" align="left">
+                <STRONG>&nbsp;</STRONG>
+        </td>
+    </tr>
 </table>
 
 <table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuave">
-	<tr>
-            <th>C&oacute;digo</th>	
-            <th>Nombres</th>
-            <th>Apellidos</th>
-            <th>Partido</th>
-            <th>Votos</th>
-	</tr>
-	<?php while($row = ibase_fetch_object($result)) { ?>
-		<tr>
-                    <td><?php echo $row->CODIGO ?></td>
-                    <td><?php echo htmlentities($row->NOMBRES)?></td>
-                    <td><?php echo htmlentities($row->APELLIDOS)?></td>
-                    <td><?php echo htmlentities($row->DESCRIPCION)?></td>
-                    <td><?php echo number_format($row->VOTOS)?></td>
-		</tr>
-	<?php } ?>
+    <tr>
+        <th>C&oacute;digo</th>	
+        <th>Nombres</th>
+        <th>Apellidos</th>
+        <th>Partido</th>
+        <th>Votos</th>
+    </tr>
+    <?php while($row = ibase_fetch_object($result)) { ?>
+            <tr>
+                <td><?php echo $row->CODIGO ?></td>
+                <td><?php echo htmlentities($row->NOMBRES)?></td>
+                <td><?php echo htmlentities($row->APELLIDOS)?></td>
+                <td><?php echo htmlentities($row->DESCRIPCION)?></td>
+                <td><?php echo number_format($row->VOTOS)?></td>
+            </tr>
+    <?php } ?>
 </table>
 
 
@@ -123,15 +123,15 @@ EOF;
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-	<tr>
-		<td background="../images/ds_comp_bari_gral.jpg">
-			<img src="../images/ds_comp_izq_bari_gral.jpg" width="25" height="25">
-		</td>
-		<td background="../images/ds_comp_bari_gral.jpg">&nbsp;</td>
-		<td align="right" background="../images/ds_comp_bari_gral.jpg">
-			<img src="../images/ds_comp_der_bari_gral.jpg" width="25" height="25">
-		</td>
-	</tr>
+    <tr>
+        <td background="../images/ds_comp_bari_gral.jpg">
+                <img src="../images/ds_comp_izq_bari_gral.jpg" width="25" height="25">
+        </td>
+        <td background="../images/ds_comp_bari_gral.jpg">&nbsp;</td>
+        <td align="right" background="../images/ds_comp_bari_gral.jpg">
+                <img src="../images/ds_comp_der_bari_gral.jpg" width="25" height="25">
+        </td>
+    </tr>
 </table>
 
 <?php 
