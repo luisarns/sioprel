@@ -14,26 +14,28 @@
                              ->setKeywords("office 2007 openxml")
                              ->setCategory("");
         
-        
-	
-	$objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A3', utf8_encode('CÓDIGO'))
-            ->setCellValue('B3', 'NOMBRE')
-            ->setCellValue('C3', 'VOTOS')
-            ->setCellValue('D3', utf8_encode('PARTICIPACIÓN'));
+        $objPHPExcel->setActiveSheetIndex(0)
+            ->setCellValue('A2', utf8_encode('Participación'))
+            ->setCellValue('B2', $participacion . '%')
+            ->setCellValue('A3', utf8_encode('Abstención'))
+            ->setCellValue('B3', $asbtencion . '%')
+            ->setCellValue('C2', utf8_encode('Potencial'))
+            ->setCellValue('D2', number_format($potencial))
+            ->setCellValue('C3', utf8_encode('Corporación'))
+            ->setCellValue('D3', $nomCorporacion);
+
+        $objPHPExcel->setActiveSheetIndex(0)
+                ->setCellValue('A1', utf8_encode($nomDivipol));
+        $objPHPExcel->getActiveSheet()->mergeCells('A1:D1');
         
         $objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A1', utf8_encode('Participación'))
-            ->setCellValue('B1', $participacion . '%')
-            ->setCellValue('A2', utf8_encode('Abstención'))
-            ->setCellValue('B2', $asbtencion . '%')
-            ->setCellValue('C1', utf8_encode('Potencial'))
-            ->setCellValue('D1', number_format($potencial))
-            ->setCellValue('C2', utf8_encode('Corporación'))
-            ->setCellValue('D2', $nomCorporacion);
-
+            ->setCellValue('A4', utf8_encode('CÓDIGO'))
+            ->setCellValue('B4', 'NOMBRE')
+            ->setCellValue('C4', 'VOTOS')
+            ->setCellValue('D4', utf8_encode('PARTICIPACIÓN'));
+        
 	//Configurado del contenido
-	$cont = 4;
+	$cont = 5;
 	foreach($partidos as $partido) {
 		
 		$objPHPExcel->getActiveSheet()->setCellValue('A'.$cont, str_pad($partido->CODIGO, 3, '0', STR_PAD_LEFT));
