@@ -212,14 +212,18 @@ EOR;
 
 <!-- Para mostra la astencion y la participacion -->
 <table width="100%" align="center" border="1" cellspacing="3" cellpadding="0" class="regSuaveLeft">
-	<tr>
-            <td><STRONG>Participaci&oacute;n</STRONG></td>
-            <td><?php echo $participacion . '%'?></td>
-        </tr>
-        <tr>
-            <td><STRONG>Abstenci&oacute;n</STRONG></td>
-            <td><?php echo $asbtencion . '%'?></td>
-        </tr>
+     <tr>
+        <td><strong>Potencial</strong></td>
+        <td><?php echo number_format($potencial)?></td>
+    </tr>
+    <tr>
+        <td><strong>Participaci&oacute;n</strong></td>
+        <td><?php echo $participacion . '%'?></td>
+    </tr>
+    <tr>
+        <td><strong>Abstenci&oacute;n</strong></td>
+        <td><?php echo $asbtencion . '%'?></td>
+    </tr>
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">

@@ -140,6 +140,15 @@ EOR;
         }
     }
     
+    //Obtener la corporacion y el potencial
+    $queryCorporacion = "SELECT descripcion FROM pcorporaciones"
+                      . " WHERE codcorporacion = $codcorporacion";
+    $resulCorporacion = ibase_query($firebird, $queryCorporacion);
+    $row = ibase_fetch_object($resulCorporacion);
+    $nomCorporacion = $row->DESCRIPCION;
+    //Cuando es comuna y cuando es mesa
+    
+    
     //Libero los recursos de la base de datos
     ibase_free_result($result);
     ibase_free_result($resultVotosEsp);

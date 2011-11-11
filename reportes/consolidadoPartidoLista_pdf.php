@@ -12,7 +12,9 @@
 	$pdf->SetSubject('Consolidado Partido Listas');
 	$pdf->SetKeywords('Votacion, Partido, Consolidado, Elecciones, Colombia');
 	
-	$headerstring = utf8_encode("Consolidado Partido y Listas");
+	$headerstring = str_pad(utf8_encode("Consolidado Partido y Listas"), 120);
+        $headerstring .= utf8_encode($nomCorporacion);
+        
 	$pdf->SetHeaderData($pathLogo, $logowidth, $headertitle, $headerstring);
 	
 	//La fuente para la cabecera y pie de pagina
@@ -56,7 +58,10 @@
 	//Ajusto el texto a la celda con la opcion stretch o redusco el tamanyo
 	$stretch = 0;
         $suma = array_sum($w)/2;
-	$pdf->Cell($suma, 6, utf8_encode('Participación'), 1, 0, 'C', 1,'',$stretch);
+	$pdf->Cell($suma, 6, utf8_encode('Potencial'), 1, 0, 'C', 1,'',$stretch);
+	$pdf->Cell($suma, 6, number_format($potencial), 1, 0, 'C', 1,'',$stretch);
+        $pdf->Ln();
+        $pdf->Cell($suma, 6, utf8_encode('Participación'), 1, 0, 'C', 1,'',$stretch);
 	$pdf->Cell($suma, 6, $participacion . '%', 1, 0, 'C', 1,'',$stretch);
         $pdf->Ln();
 	$pdf->Cell($suma, 6, utf8_encode('Abstención'), 1, 0, 'C', 1,'',$stretch);
