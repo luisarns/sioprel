@@ -19,12 +19,12 @@
 <div id="headerbg">
   <div id="headerblank">
     <div id="header">
-	  <div class="sio"><img src="/images/logosio.jpg" width="200" height="100" alt="Soluciones Integrales De Oficinas" /></div>
-      <h1 style="color:#DFDFDF;">
+        <div class="sio"><img src="/images/logosio.jpg" width="200" height="100" alt="Soluciones Integrales De Oficinas" /></div>
+        <h1 style="color:#DFDFDF;">
 		Estad&iacute;sticas Electorales<br/>
 		Escrutinio 2011
-	  </h1>
-	</div>
+        </h1>
+    </div>
   </div>
 </div>
 
