@@ -26,8 +26,11 @@
             ->setCellValue('A1', utf8_encode('Participación'))
             ->setCellValue('B1', $participacion . '%')
             ->setCellValue('A2', utf8_encode('Abstención'))
-            ->setCellValue('B2', $asbtencion . '%');
-
+            ->setCellValue('B2', $asbtencion . '%')
+            ->setCellValue('C1', utf8_encode('Potencial'))
+            ->setCellValue('D1', number_format($potencial))
+            ->setCellValue('C2', utf8_encode('Corporación'))
+            ->setCellValue('D2', $nomCorporacion);
 
 	//Configurado del contenido
 	$cont = 4;

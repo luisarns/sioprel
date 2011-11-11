@@ -145,10 +145,9 @@ EOR;
                       . " WHERE codcorporacion = $codcorporacion";
     $resulCorporacion = ibase_query($firebird, $queryCorporacion);
     $row = ibase_fetch_object($resulCorporacion);
-    $nomCorporacion = $row->DESCRIPCION;
+    $nomCorporacion = utf8_encode($row->DESCRIPCION);
     //Cuando es comuna y cuando es mesa
-    
-    
+
 
     //Codigo para obtener la descripcion completa de la divipol
     include_once('../contenido/FunDivipol.php');
@@ -174,8 +173,6 @@ EOR;
     while($row = ibase_fetch_object($resultDivipol)){
         $nomDivipol = $nomDivipol . ' ' . $row->DESCRIPCION;
     }
-    //echo $nomDivipol;
-    //implode para obtener un string partiendo de un array
     //Fin del codigo
     
     if ($hayComuna) {
