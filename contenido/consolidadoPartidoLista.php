@@ -4,7 +4,7 @@
     include_once('departamentos.php');
 ?>
 
-<script type="text/javascript" src="js/valConParLis.js"> </script>
+<script type="text/javascript" src="js/consolidadoPartidoLista.js"> </script>
 
 <form name="formPrincipal" method="GET" onSubmit="return validar(this);">
 
@@ -26,18 +26,18 @@
 	<!--Tabla imagen gris superior -->
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" >
             <tr>
-                <td class="regOscuro" align="left" >
-                        <STRONG>&nbsp;</STRONG>
+                <td class="regOscuro">
+                        <strong>&nbsp;</strong>
                 </td>
             </tr>
 	</table>
 	
 	
 	<!--Tabla con los campos de filtrado -->
-	<table width="100%" align="left" border="0" cellspacing="3" cellpadding="0" class="regSuave" >
+	<table width="100%" cellspacing="3" cellpadding="0" class="regSuaveLeft">
             
             <tr>
-                <td class="regSuaveLeft">
+                <td>
                     Corporaci&oacute;n&nbsp;
                     <select name="corporacion" onChange="mostrarOcultarDepto(this.value)" >
                         <option value = "-" >-Ninguna-</option>
@@ -45,13 +45,13 @@
                         <option value="<?php echo $corporacion['id'] ?>" > <?php echo $corporacion['nombre'] ?> </option>
                         <?php } ?>
                     </select>&nbsp;
-<!--                    Detallado&nbsp;<input type="checkbox" value="1" name="detallado"/>-->
+<!--                Detallado&nbsp;<input type="checkbox" value="1" name="detallado"/>-->
                 </td>
             </tr>
 		
             <!--Fila 2 -->
             <tr>
-                <td class="regSuaveLeft">
+                <td>
                     Partido&nbsp;
                     <select name="partido">
                         <option value = "-" >-Ninguna-</option>
@@ -63,10 +63,9 @@
             </tr>
             <!--Fila 2 END-->
 		
-		
             <!--Fila 3-->
             <tr>
-                <td class="regSuaveLeft" id="tdDepto" style="display:none">
+                <td id="tdDepto" style="display:none">
                     Departamento&nbsp;
                     <select name="departamento" onChange="cargarMunicipios(this.value)">
                         <option value = "-" >-Ninguna-</option>
@@ -79,21 +78,20 @@
             <!--Fila 3 END-->
 
             <tr>
-                <td id="etfMunicipio" class="regSuaveLeft" style="display:none">&nbsp;</td>
+                <td id="etfMunicipio" style="display:none">&nbsp;</td>
             </tr>
                 
             <tr>
-                <td id="etfZonaComuna" class="regSuaveLeft" style="display:none">&nbsp;</td>
+                <td id="etfZonaComuna" style="display:none">&nbsp;</td>
             </tr>
             
             <tr>
-                <td id="etfPuesto" class="regSuaveLeft" style="display:none">&nbsp;</td>    
+                <td id="etfPuesto" style="display:none">&nbsp;</td>    
             </tr>
             
             <tr>
-                <td id="etfMesa" class="regSuaveLeft" style="display:none">&nbsp;</td>
+                <td id="etfMesa" style="display:none">&nbsp;</td>
             </tr>
-
             	
 	</table>
 	
