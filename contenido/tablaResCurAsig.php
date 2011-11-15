@@ -1,49 +1,47 @@
 <?php
-	require('conexion.php');
-	include_once('FunDivipol.php');
+    require('conexion.php');
+
+    $urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repResCurAsignadas.php" . $_SERVER['REQUEST_URI'];
+    $urlReportes .= "&formato=";
+
+    $codcorporacion = $_GET['corporacion'];
+    $coddivcorto = $_GET['departamento'];
+    $codnivel = 1;
+
+    if (isset($_GET['municipio'])&& $_GET['municipio'] != '-') {
+        $coddivcorto .= $_GET['municipio'];
+        $codnivel = $codnivel + 1;
+    }
+
+    $coddivipol = str_pad($coddivcorto,9,'0');
+
+    $txt = "";
+    if (isset($_GET['comuna']) && $_GET['comuna'] != "-") {
+            $txt = "AND pcp.idcomuna = ".$_GET['comuna'];
+    }
 	
-	$urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repResCurAsignadas.php" . $_SERVER['REQUEST_URI'];
-	$urlReportes .= "&formato=";
-	
-	
-	$codcorporacion = $_GET['corporacion'];
-	$nivcorpo  = getNivelCorporacion($codcorporacion);
-	
-	$depto = $_GET['departamento'];
-	$muncp = ($_GET['municipio']!="-")?$_GET['municipio']:"";
-	
-	$coddivcorto = $depto.$muncp;
-	$codcordiv   = substr($coddivcorto,0,getNumDigitos($nivcorpo));
-	
-	$txt = "";
-	if(isset($_GET['comuna']) && $_GET['comuna'] != "-"){
-		$txt = "AND pc.idcomuna = ".$_GET['comuna'];
-		$txt .= " AND pd.idcomuna = ".$_GET['comuna'];
-	}
-	
-	$query =<<<EOF
-	SELECT pc.nombres as descripcion, SUM(mv.numvotos) as votos
-	FROM pcandidatos pc, pmesas pm, mvotos mv, pdivipol pd
-	WHERE pc.coddivipol LIKE '$codcordiv'   || '%' AND pc.codnivel = $nivcorpo AND pc.codcorporacion = $codcorporacion
-	AND pd.coddivipol   LIKE '$coddivcorto' || '%' AND pm.codtransmision = mv.codtransmision
-	AND pc.idcandidato = mv.idcandidato AND pc.codcandidato = 0
-	AND pm.codcorporacion = $codcorporacion
-	AND pd.coddivipol = pm.coddivipol AND pd.codnivel = 4 $txt
-	GROUP BY pc.nombres
-	ORDER BY votos DESC
+    $query =<<<EOF
+        SELECT lpad(pp.codpartido,3,'0') as codigo, pp.descripcion, pcp.numcurules, pcp.totalvotos
+        FROM ppartidos pp, pcurulespartidos pcp
+        WHERE pp.codpartido = pcp.codpartido 
+        AND pcp.coddivipol = '$coddivipol'
+        AND pcp.codnivel = $codnivel
+        AND pcp.codcorporacion = $codcorporacion
+        $txt
+        ORDER BY pcp.numcurules
 EOF;
-	
-	$firebird = ibase_connect($host, $username, $password) or die("No se pudo conectar a la base de datos: " . ibase_errmsg());
-	$result   = ibase_query($firebird, $query);
+        
+    $firebird = ibase_connect($host, $username, $password) or die("No se pudo conectar a la base de datos: " . ibase_errmsg());
+    $result   = ibase_query($firebird, $query);
 	
 ?>
 
 <table>
 	<tr>
-		<td><a href="<?php echo $urlReportes."pdf"?>" target="_BLANK"><img src="images/logo_pdf.png"  alt="pdf" height="20" width="20" /></a><td>
-		<td><a href="<?php echo $urlReportes."xls"?>" target="_BLANK"><img src="images/logo_xls.jpg"  alt="xls" height="20" width="20" /></a><td>
-		<td><a href="<?php echo $urlReportes."doc"?>" target="_BLANK"><img src="images/logo_doc.jpg"  alt="doc" height="20" width="20" /></a><td>
-		<td><a href="<?php echo $urlReportes."txt"?>" target="_BLANK"><img src="images/logo_text.jpg" alt="txt" height="20" width="20" /></a><td>
+            <td><a href="<?php echo $urlReportes."pdf"?>" target="_BLANK"><img src="images/logo_pdf.png"  alt="pdf" height="20" width="20" /></a><td>
+            <td><a href="<?php echo $urlReportes."xls"?>" target="_BLANK"><img src="images/logo_xls.jpg"  alt="xls" height="20" width="20" /></a><td>
+            <td><a href="<?php echo $urlReportes."doc"?>" target="_BLANK"><img src="images/logo_doc.jpg"  alt="doc" height="20" width="20" /></a><td>
+            <td><a href="<?php echo $urlReportes."txt"?>" target="_BLANK"><img src="images/logo_text.jpg" alt="txt" height="20" width="20" /></a><td>
 	</tr>
 </table>
 
@@ -71,13 +69,17 @@ EOF;
 
 <table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuave">
 	<tr>
-		<th>Lista</th>
-		<th>Votos</th>
+            <th>C&oacute;digo</th>
+            <th>Partido</th>
+            <th>No. Curules</th>
+            <th>Votos</th>
 	</tr>
 	<?php while($row = ibase_fetch_object($result)) { ?>
 		<tr>
-			<td><?php echo htmlentities($row->DESCRIPCION)?></td>
-			<td><?php echo number_format($row->VOTOS)?></td>
+                    <td><?php echo $row->CODIGO?></td>
+                    <td><?php echo htmlentities($row->DESCRIPCION)?></td>
+                    <td><?php echo $row->NUMCURULES?></td>
+                    <td><?php echo number_format($row->VOTOS)?></td>
 		</tr>
 	<?php } ?>
 </table>
