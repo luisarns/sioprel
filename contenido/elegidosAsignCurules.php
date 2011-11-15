@@ -4,7 +4,7 @@
 	include_once('departamentos.php');
 ?>
 
-<script type="text/javascript" src="js/valEliAsiCur.js"> </script>
+<script type="text/javascript" src="js/elegidosAsignacionCurules.js"> </script>
 
 <form name="formPrincipal" method="GET" onSubmit="return validar(this);">
 	

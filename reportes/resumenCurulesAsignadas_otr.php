@@ -43,7 +43,7 @@
     ibase_close($firebird);
 
 
-    switch($_GET['formato']){
+    switch($_GET['formato']) {
         case 'xls':
                 header("Content-type: application/vnd.ms-excel");
                 header("Content-Disposition: attachment; filename=ResumenCurulesAsignadas.xls");

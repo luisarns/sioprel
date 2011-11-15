@@ -51,7 +51,7 @@
 	  
       <div id="contentmid">
 		<?php
-                    switch($_GET['opcion']){
+                    switch ($_GET['opcion']) {
 
                         case 1:
                                 require("contenido/consolidadoPartidoLista.php");

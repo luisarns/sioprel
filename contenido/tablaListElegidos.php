@@ -41,7 +41,7 @@
 	AND pc.idcandidato = mv.idcandidato AND pp.codpartido = pc.codpartido AND pc.codcandidato <> 0 $tx1
 	AND pd.coddivipol = pm.coddivipol AND pd.codnivel = 4 $tx2
 	AND pm.codcorporacion = $codcorporacion $tx3
-        AND pc.elegido != '0'
+        AND pc.elegido <> '0'
 	GROUP BY pp.codpartido,pc.codcandidato,pc.nombres, pc.apellidos,pp.descripcion
 EOF;
     
