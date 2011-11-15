@@ -2,7 +2,7 @@
 	include_once('departamentos.php');
 ?>
 
-<script type="text/javascript" src="js/resVotPart.js"></script>
+<script type="text/javascript" src="js/resumenVotacionPartido.js"></script>
 
 <form name="formPrincipal" method="GET" onSubmit="return validar(this);">
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
