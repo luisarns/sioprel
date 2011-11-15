@@ -81,67 +81,83 @@ FEO;
         </tr>
     </table>
 	
-	<!-- Inicio codigo estilo de tabla-->
-	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-	<tr>
-		<td width="5%" background="../images/ds_comp_bars_gral.jpg">
-		<img src="../images/ds_comp_izq_bar_gral.jpg" width="25" height="25" />
-		</td>
-		<td width="83%" background="../images/ds_comp_bars_gral.jpg">
-			<strong>Listas Mayor Votaci&oacute;n</strong>
-		</td>
-		<td width="12%" align="right" background="../images/ds_comp_bars_gral.jpg">
-			<img src="../images/ds_comp_der_bar_gral.jpg" width="25" height="25" />
-		</td>
-	</tr>
-	</table>
-	
-	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-	<tr>
-		<td class="regOscuro" align="left">
-			<strong>&nbsp;</strong>
-		</td>
-	</tr>
-	</table>
-	
-	<table width="100%" border="0" cellspacing="3" cellpadding="0" class="regSuaveRultados">
+
+    <table width="100%" align="center" border="1" cellspacing="3" cellpadding="0" class="regSuaveLeft">
+         <tr>
+            <td><strong>No. Curules</strong></td>
+            <td><?php echo number_format($nocurules)?></td>
+        </tr>
+        <tr>
+            <td><strong>Cociente</strong></td>
+            <td><?php echo number_format($cuociente) ?></td>
+        </tr>
+        <tr>
+            <td><strong>Cifra Repartidora</strong></td>
+            <td><?php echo number_format($cifrarepartidora) ?></td>
+        </tr>
+    </table>
+
+    <!-- Inicio codigo estilo de tabla-->
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+        <tr>
+                <td width="5%" background="../images/ds_comp_bars_gral.jpg">
+                <img src="../images/ds_comp_izq_bar_gral.jpg" width="25" height="25" />
+                </td>
+                <td width="83%" background="../images/ds_comp_bars_gral.jpg">
+                    <strong>Elegidos Asignaci&oacute;n Curules</strong>
+                </td>
+                <td width="12%" align="right" background="../images/ds_comp_bars_gral.jpg">
+                        <img src="../images/ds_comp_der_bar_gral.jpg" width="25" height="25" />
+                </td>
+        </tr>
+    </table>
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+    <tr>
+            <td class="regOscuro" align="left">
+                    <strong>&nbsp;</strong>
+            </td>
+    </tr>
+    </table>
+
+    <table width="100%" border="0" cellspacing="3" cellpadding="0" class="regSuaveRultados">
+        <tr>
+            <th>C&oacute;digo</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Partido</th>
+            <th>Votos</th>
+        </tr>
+        <?php while($row = ibase_fetch_object($result)) { ?>
             <tr>
-                <th>C&oacute;digo</th>
-                <th>Nombres</th>
-                <th>Apellidos</th>
-                <th>Partido</th>
-                <th>Votos</th>
+                <td><?php echo $row->CODIGO?></td>
+                <td><?php echo htmlentities($row->NOMBRES)?></td>
+                <td><?php echo htmlentities($row->APELLIDOS)?></td>
+                <td><?php echo htmlentities($row->DESCRIPCION)?></td>
+                <td><?php echo number_format($row->VOTOS)?></td>
             </tr>
-            <?php while($row = ibase_fetch_object($result)) { ?>
-                <tr>
-                    <td><?php echo $row->CODIGO?></td>
-                    <td><?php echo htmlentities($row->NOMBRES)?></td>
-                    <td><?php echo htmlentities($row->APELLIDOS)?></td>
-                    <td><?php echo htmlentities($row->DESCRIPCION)?></td>
-                    <td><?php echo number_format($row->VOTOS)?></td>
-                </tr>
-            <?php } ?>
-	</table>
-	
-	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-	<tr>
-		<td class="regOscuro" align="left">
-			<STRONG>&nbsp;</STRONG>
-		</td>
-	</tr>
-	</table>
-	
-	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-		<tr>
-                    <td background="../images/ds_comp_bari_gral.jpg">
-                            <img src="../images/ds_comp_izq_bari_gral.jpg" width="25" height="25">
-                    </td>
-                    <td background="../images/ds_comp_bari_gral.jpg">&nbsp;</td>
-                    <td align="right" background="../images/ds_comp_bari_gral.jpg">
-                            <img src="../images/ds_comp_der_bari_gral.jpg" width="25" height="25">
-                    </td>		
-		</tr>
-	</table>
+        <?php } ?>
+    </table>
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+    <tr>
+            <td class="regOscuro" align="left">
+                    <STRONG>&nbsp;</STRONG>
+            </td>
+    </tr>
+    </table>
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+            <tr>
+                <td background="../images/ds_comp_bari_gral.jpg">
+                        <img src="../images/ds_comp_izq_bari_gral.jpg" width="25" height="25">
+                </td>
+                <td background="../images/ds_comp_bari_gral.jpg">&nbsp;</td>
+                <td align="right" background="../images/ds_comp_bari_gral.jpg">
+                        <img src="../images/ds_comp_der_bari_gral.jpg" width="25" height="25">
+                </td>		
+            </tr>
+    </table>
 	
 <?php
     
