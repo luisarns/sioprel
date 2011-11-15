@@ -38,11 +38,6 @@
             $objPHPExcel->getActiveSheet()->setCellValue('E'.$cont,number_format($row->VOTOS));
             $cont++;
 	}
-//	
-//	$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(25);
-//	$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(25);
-//	$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(50);
-//	$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(8);
 	
         $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
 	$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);

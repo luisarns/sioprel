@@ -3,7 +3,7 @@
 	include_once('departamentos.php');
 ?>
 
-<script type="text/javascript" src="js/valLisVotCand.js"> </script>
+<script type="text/javascript" src="js/listadoVotacionCandidato.js"> </script>
 
 <form name="formPrincipal" method="GET" onSubmit="return validar(this);">
     
