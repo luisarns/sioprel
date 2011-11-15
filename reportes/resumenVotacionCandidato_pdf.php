@@ -47,7 +47,7 @@
 	
 	//Cabeceras de las columnas
 	$header = array('CODIGO', 'NOMBRES', 'APELLIDOS', 'PARTIDO', 'VOTOS');
-	$w = array(18, 38, 38,60,18); //Tamanyo de las columnas
+	$w = array(18, 38, 38,70,18); //Tamanyo de las columnas
 	
 	//Inicio Iteracion
 	$pdf->SetFillColor(255, 0, 0);

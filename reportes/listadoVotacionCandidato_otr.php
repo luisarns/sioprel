@@ -13,15 +13,21 @@
 						 ->setKeywords("office 2005 openxml")
 						 ->setCategory("");
 	
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', utf8_encode($nomCorporacion));
+        $objPHPExcel->getActiveSheet()->mergeCells('A1:E1');
+        
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', utf8_encode($nomDivipol));
+        $objPHPExcel->getActiveSheet()->mergeCells('A2:E2');
+        
 	$objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A1', 'CODIGO')
-            ->setCellValue('B1', 'NOMBRES')
-			->setCellValue('C1', 'APELLIDOS')
-			->setCellValue('D1', 'PARTIDO')
-            ->setCellValue('E1', 'VOTOS');
+            ->setCellValue('A3', 'CODIGO')
+            ->setCellValue('B3', 'NOMBRES')
+            ->setCellValue('C3', 'APELLIDOS')
+            ->setCellValue('D3', 'PARTIDO')
+            ->setCellValue('E3', 'VOTOS');
 						 
 	
-	$cont = 2;
+	$cont = 4;
 	while($row = ibase_fetch_object($result)){
 		$objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,$row->CODIGO);
 		$objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,utf8_encode($row->NOMBRES));
