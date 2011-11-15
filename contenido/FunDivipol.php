@@ -34,4 +34,27 @@
                 return 2;
         }
     }
+    
+   function getQueryDivipolCompleta($coddivipol, $codnivel)
+   {
+        $codniveltmp = 1;
+        $inArrDivipol = array();
+        $inArrNivel = array();
+        while ($codniveltmp <= $codnivel) {
+            array_push($inArrDivipol,str_pad(substr($coddivipol, 0, getNumDigitos($codniveltmp)), 9, '0'));
+            array_push($inArrNivel,$codniveltmp);
+            $codniveltmp = $codniveltmp + 1;
+        }
+        $inDivipol = '(' . implode(',',$inArrDivipol) . ')';
+        $inNivel = '(' . implode(',',$inArrNivel) . ')';
+
+        $queryDivipoles = "SELECT descripcion "
+                        . "FROM pdivipol "
+                        . "WHERE coddivipol in $inDivipol "
+                        . "AND codnivel in $inNivel "
+                        . "ORDER BY codnivel";
+        
+        return $queryDivipoles;
+   }
+   
 ?>

@@ -2,7 +2,7 @@
 	include_once('corporaciones.php');
 	include_once('departamentos.php');
 ?>
-<script type="text/javascript" src="js/resVotCand.js"></script>
+<script type="text/javascript" src="js/resumenVotacionCandidato.js"></script>
 
 <form name="formPrincipal" method="GET" onSubmit="return validar(this);">
 	

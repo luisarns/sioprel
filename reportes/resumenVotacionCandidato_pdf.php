@@ -11,7 +11,10 @@
 	$pdf->SetSubject('Resumen Votacion Candidato');
 	$pdf->SetKeywords('Votacion, Candidatos, Resumen, Elecciones, Colombia');
 	
-	$headerstring = utf8_encode("Resumen Votación Candidato");
+	$headerstring  = str_pad(utf8_encode("Resumen Votación Candidato"), 130);
+        $headerstring .= str_pad(utf8_encode($nomCorporacion), 144);
+        $headerstring .= utf8_encode($nomDivipol);
+        
 	$pdf->SetHeaderData($pathLogo, $logowidth, $headertitle, $headerstring);
 	
 	//La fuente para la cabecera y pie de pagina
@@ -43,8 +46,8 @@
 	$pdf->AddPage();
 	
 	//Cabeceras de las columnas
-	$header = array('CODIGO', 'NOMBRES', 'APELLIDOS','VOTOS');
-	$w = array(18, 38, 38,18); //Tamanyo de las columnas
+	$header = array('CODIGO', 'NOMBRES', 'APELLIDOS', 'PARTIDO', 'VOTOS');
+	$w = array(18, 38, 38,60,18); //Tamanyo de las columnas
 	
 	//Inicio Iteracion
 	$pdf->SetFillColor(255, 0, 0);
@@ -73,7 +76,8 @@
 		$pdf->Cell($w[0], 6, utf8_encode($row->CODIGO), 'LR', 0, 'L', $fill,'',$stretch);
 		$pdf->Cell($w[1], 6, utf8_encode($row->NOMBRES), 'LR', 0, 'L', $fill,'',$stretch);
 		$pdf->Cell($w[2], 6, utf8_encode($row->APELLIDOS), 'LR', 0, 'L', $fill,'',$stretch);
-		$pdf->Cell($w[3], 6, number_format($row->VOTOS), 'LR', 0, 'L', $fill,'',$stretch);
+                $pdf->Cell($w[3], 6, utf8_encode($row->DESCRIPCION), 'LR', 0, 'L', $fill,'',$stretch);
+		$pdf->Cell($w[4], 6, number_format($row->VOTOS), 'LR', 0, 'L', $fill,'',$stretch);
 		$pdf->Ln();
 		$fill=!$fill;
 	}
