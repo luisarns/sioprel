@@ -12,7 +12,10 @@
 	$pdf->SetSubject('Listado Elegidos Corporacion');
 	$pdf->SetKeywords('Votacion, Elegidos, Corporacion, Elecciones, Colombia');
 	
-	$headerstring = utf8_encode("Listado Elegidos Corporacion");
+        $headerstring  = str_pad(utf8_encode("Listado Elegidos Corporacion"), 130);
+        $headerstring .= str_pad(utf8_encode($nomCorporacion), 138);
+        $headerstring .= utf8_encode($nomDivipol);
+        
 	$pdf->SetHeaderData($pathLogo, $logowidth, $headertitle, $headerstring);
 	
 	//La fuente para la cabecera y pie de pagina
@@ -44,8 +47,8 @@
 	$pdf->AddPage();
 	
 	//Cabeceras de las columnas
-	$header = array('NOMBRES','APELLIDOS','PARTIDO','VOTOS');
-	$w = array(38, 38, 90,18); //Tamanyo de las columnas
+	$header = array('CODIGO','NOMBRES','APELLIDOS','PARTIDO','VOTOS');
+	$w = array(20,38, 38, 60,18); //Tamanyo de las columnas
 	
 	//Inicio Iteracion
 	$pdf->SetFillColor(255, 0, 0);
@@ -71,10 +74,11 @@
 	
 	$fill = 0;
 	while($row = ibase_fetch_object($result)) {
-		$pdf->Cell($w[0], 6, utf8_encode($row->NOMBRES), 'LR', 0, 'L', $fill,'',$stretch);
-		$pdf->Cell($w[1], 6, utf8_encode($row->APELLIDOS), 'LR', 0, 'L', $fill,'',$stretch);
-		$pdf->Cell($w[2], 6, utf8_encode($row->DESCRIPCION), 'LR', 0, 'L', $fill,'',$stretch);
-		$pdf->Cell($w[3], 6, number_format($row->VOTOS), 'LR', 0, 'L', $fill,'',$stretch);
+		$pdf->Cell($w[0], 6, utf8_encode($row->CODIGO), 'LR', 0, 'L', $fill,'',$stretch);
+                $pdf->Cell($w[1], 6, utf8_encode($row->NOMBRES), 'LR', 0, 'L', $fill,'',$stretch);
+		$pdf->Cell($w[2], 6, utf8_encode($row->APELLIDOS), 'LR', 0, 'L', $fill,'',$stretch);
+		$pdf->Cell($w[3], 6, utf8_encode($row->DESCRIPCION), 'LR', 0, 'L', $fill,'',$stretch);
+		$pdf->Cell($w[4], 6, number_format($row->VOTOS), 'LR', 0, 'L', $fill,'',$stretch);
 		$pdf->Ln();
 		$fill=!$fill;
 	}

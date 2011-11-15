@@ -33,16 +33,6 @@
     $nivcorpo = getNivelCorporacion($codcorporacion);
     $cordivi = substr($coddivipol, 0, getNumDigitos($nivcorpo));
 
-//    $query =<<<EOF
-//    SELECT pc.nombres,pc.apellidos, pp.descripcion, 0 numvotos
-//    FROM PCANDIDATOS pc, PPARTIDOS pp
-//    WHERE pc.coddivipol LIKE '$cordivi' || '%' $tx2
-//    AND pc.codnivel = $nivcorpo $tx3
-//    AND pp.codpartido = pc.codpartido $tx1
-//    AND pc.elegido = '1'
-//    AND pc.codcorporacion = $codcorporacion
-//EOF;
-
     $query =<<<EOF
 	SELECT lpad(pp.codpartido,3,'0') || '-' || lpad(pc.codcandidato,3,'0') as codigo, pc.nombres, pc.apellidos, pp.descripcion, sum(mv.numvotos) as votos
 	FROM ppartidos pp, pcandidatos pc, pmesas pm, mvotos mv, pdivipol pd
@@ -51,15 +41,13 @@
 	AND pc.idcandidato = mv.idcandidato AND pp.codpartido = pc.codpartido AND pc.codcandidato <> 0 $tx1
 	AND pd.coddivipol = pm.coddivipol AND pd.codnivel = 4 $tx2
 	AND pm.codcorporacion = $codcorporacion $tx3
-        AND pc.elegido = '1'
+        AND pc.elegido != '0'
 	GROUP BY pp.codpartido,pc.codcandidato,pc.nombres, pc.apellidos,pp.descripcion
 EOF;
     
     $firebird = ibase_connect($host, $username, $password) 
             or die("No se pudo conectar a la base de datos: " . ibase_errmsg());
     $result = ibase_query($firebird, $query);
-    
-//    echo "<br/>" . $query . "<br/>";
     
 ?>
 

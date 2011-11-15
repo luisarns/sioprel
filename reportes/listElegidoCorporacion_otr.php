@@ -14,27 +14,41 @@
 						 ->setCategory("");
 	
 	
+        
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', utf8_encode($nomCorporacion));
+        $objPHPExcel->getActiveSheet()->mergeCells('A1:E1');
+        
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', utf8_encode($nomDivipol));
+        $objPHPExcel->getActiveSheet()->mergeCells('A2:E2');
+        
 	$objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A1', 'NOMBRES')
-			->setCellValue('B1', 'APELLIDOS')
-			->setCellValue('C1', 'PARTIDO')
-            ->setCellValue('D1', 'VOTOS');
+            ->setCellValue('A3', 'CODIGO')
+            ->setCellValue('B3', 'NOMBRES')
+            ->setCellValue('C3', 'APELLIDOS')
+            ->setCellValue('D3', 'PARTIDO')
+            ->setCellValue('E3', 'VOTOS');
 						 
 	
-	$cont = 2;
+	$cont = 4;
 	while($row = ibase_fetch_object($result)){
-		$objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,utf8_encode($row->NOMBRES));
-		$objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,utf8_encode($row->APELLIDOS));
-		$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,utf8_encode($row->DESCRIPCION));
-		$objPHPExcel->getActiveSheet()->setCellValue('D'.$cont,number_format($row->VOTOS));
-		$cont++;
+            $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,utf8_encode($row->CODIGO));	
+            $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,utf8_encode($row->NOMBRES));
+            $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,utf8_encode($row->APELLIDOS));
+            $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont,utf8_encode($row->DESCRIPCION));
+            $objPHPExcel->getActiveSheet()->setCellValue('E'.$cont,number_format($row->VOTOS));
+            $cont++;
 	}
+//	
+//	$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(25);
+//	$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(25);
+//	$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(50);
+//	$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(8);
 	
-	$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(25);
-	$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(25);
-	$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(50);
-	$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(8);
-	
+        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+	$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+	$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+	$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
 	
 	ibase_free_result($result);
 	ibase_close($firebird);

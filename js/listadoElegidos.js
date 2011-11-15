@@ -58,7 +58,6 @@ function cargarMunicipios(sel){
 	var corpo = document.formPrincipal.corporacion.value;
 
         if (sel != '-' && corpo != 1 && corpo != 2) {
-//		var corpo = document.formPrincipal.corporacion.value;
 		
 		var ajax = nuevoAjax();
 		ajax.open("GET", "contenido/cargarMunicipios.php?opcion=" + sel + "&corporacion=" + corpo, true);
