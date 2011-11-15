@@ -4,7 +4,7 @@
 	include_once('departamentos.php');
 ?>
 
-<script type="text/javascript" src="js/valLisMayVota.js"> </script>
+<script type="text/javascript" src="js/listaMayorVotacion.js"> </script>
 
 <form name="formPrincipal" method="GET" onSubmit="return validar(this);">
 	
