@@ -1,7 +1,7 @@
 <?php 
 	
 	require_once('configuracionTCPDF.php');
-	require_once('resumenVotacionPartido_inc.php');
+	require_once('elegidosAsignacionCurules_inc.php');
 	
 	//////////////////////////////////////////INICIO CONFIGURACION PDF//////////////////////////////////////////
 	$pdf = new TCPDF($page_orientacion, $pdf_unit, $pdf_page_format, true, 'UTF-8', false);
@@ -10,11 +10,12 @@
 	$pdf->SetCreator('TCPDF');
 	$pdf->SetAuthor('Luis A. Nunez');
 	$pdf->SetTitle('Estadisticas Electorales');
-	$pdf->SetSubject('Resumen Votación Pardito');
-	$pdf->SetKeywords('Votacion, Candidatos, Partidos, Resumen, Elecciones');
+	$pdf->SetSubject('Elegidos Asignacion Curules');
+	$pdf->SetKeywords('Votacion, Asignacion, Curules, Resumen, Elecciones');
 	
-	$headerstring = str_pad(utf8_encode("Resumen Votación Partido"),130);
-        $headerstring .= utf8_encode($nomDivipol);        
+	$headerstring  = str_pad(utf8_encode("Elegidos Asignacion Curules"),129);
+        $headerstring .= str_pad(utf8_encode($nomCorporacion), 137);
+        $headerstring .= utf8_encode($nomDivipol);
         
 	$pdf->SetHeaderData($pathLogo, $logowidth, $headertitle, $headerstring);
 	
@@ -42,8 +43,8 @@
 	
 	$pdf->SetFont('helvetica', '', 12);
 	$pdf->AddPage();
-	$header = array('CODPARTIDO', utf8_encode('DESCRIPCIÓN'),'VOTOS');
-	$w = array(35,90,18);
+	$header = array('CODIGO','NOMBRES','APELLIDOS','PARTIDO','VOTOS');
+	$w = array(20, 38, 38, 60, 18);
 	
 	$pdf->SetFillColor(255, 0, 0);
 	$pdf->SetTextColor(255);
@@ -52,7 +53,19 @@
 	$pdf->SetFont('', 'B');
 	
 	$stretch = 0;
-	
+        $suma = array_sum($w)/2;
+	$pdf->Cell($suma, 6, utf8_encode('No.Curules'), 1, 0, 'C', 1,'',$stretch);
+	$pdf->Cell($suma, 6, number_format($nocurules), 1, 0, 'C', 1,'',$stretch);
+        $pdf->Ln();
+        $pdf->Cell($suma, 6, utf8_encode('Cociente'), 1, 0, 'C', 1,'',$stretch);
+	$pdf->Cell($suma, 6, $cuociente, 1, 0, 'C', 1,'',$stretch);
+        $pdf->Ln();
+	$pdf->Cell($suma, 6, utf8_encode('Cifra Repartidora'), 1, 0, 'C', 1,'',$stretch);
+	$pdf->Cell($suma, 6, $cifrarepartidora, 1, 0, 'C', 1,'',$stretch);
+        $pdf->Ln();
+        //Datos sobre la asignacion de las curules y el cociente
+        
+        
 	// Header
 	$num_headers = count($header);
 	for($i = 0; $i < $num_headers; ++$i) {
@@ -67,9 +80,11 @@
 	// Datos
 	$fill = 0;
 	while($row = ibase_fetch_object($result)) {
-		$pdf->Cell($w[0], 6, $row->CODPARTIDO, 'LR', 0, 'L', $fill,'',$stretch);
-		$pdf->Cell($w[1], 6, utf8_encode($row->DESCRIPCION), 'LR', 0, 'L', $fill,'',$stretch);
-		$pdf->Cell($w[2], 6, number_format($row->VOTOS), 'LR', 0, 'L', $fill,'',$stretch);
+		$pdf->Cell($w[0], 6, utf8_encode($row->CODIGO), 'LR', 0, 'L', $fill,'',$stretch);
+                $pdf->Cell($w[1], 6, utf8_encode($row->NOMBRES), 'LR', 0, 'L', $fill,'',$stretch);
+		$pdf->Cell($w[2], 6, utf8_encode($row->APELLIDOS), 'LR', 0, 'L', $fill,'',$stretch);
+		$pdf->Cell($w[3], 6, utf8_encode($row->DESCRIPCION), 'LR', 0, 'L', $fill,'',$stretch);
+		$pdf->Cell($w[4], 6, number_format($row->VOTOS), 'LR', 0, 'L', $fill,'',$stretch);
 		$pdf->Ln();
 		$fill=!$fill;
 	}
@@ -79,7 +94,7 @@
 	ibase_close($firebird);
 	
 	//Envio el documento al cliente
-	$pdf->Output('resumenVotacionPartido.pdf', 'D');
+	$pdf->Output('elegidosAsignacionCurules.pdf', 'D');
 	unset($pdf);
 	
 ?>

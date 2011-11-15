@@ -2,7 +2,7 @@
     require('conexion.php');
     include_once('FunDivipol.php');
 
-    $urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repLisMayorVota.php" . $_SERVER['REQUEST_URI'];
+    $urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repElegidosAsigCurules.php" . $_SERVER['REQUEST_URI'];
     $urlReportes .= "&formato=";
 
     $codcorporacion = $_GET['corporacion'];
