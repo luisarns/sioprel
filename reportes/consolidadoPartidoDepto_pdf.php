@@ -12,8 +12,8 @@
     $pdf->SetSubject('Consolidado Partido Nacional');
     $pdf->SetKeywords('Votacion, Partido, Consolidado, Elecciones, Colombia');
 
-    $headerstring  = str_pad(utf8_encode("Consolidado Partido Nacional"), 130);
-    $headerstring .= str_pad(utf8_encode($nomCorporacion), 133);
+    $headerstring = str_pad(utf8_encode("Consolidado Partido Nacional"), 130);
+    $headerstring .= str_pad(utf8_encode($nomCorporacion), 144);
     $headerstring .= utf8_encode($nomDivipol);
 
     $pdf->SetHeaderData($pathLogo, $logowidth, $headertitle, $headerstring);
@@ -62,8 +62,6 @@
             $pdf->Cell($w[$i], 6, $header[$i], 1, 0, 'C', 1,'',$stretch);
     }
     $pdf->Ln();
-    
-    
 
     //Datos
     $pdf->SetFillColor(224, 235, 255);
@@ -81,7 +79,6 @@
         $pdf->Ln();
         $fill=!$fill;   
     }
-    
     
     $pdf->Cell(array_sum($w), 0, '', 'T');
 

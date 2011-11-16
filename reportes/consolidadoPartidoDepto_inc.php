@@ -66,9 +66,6 @@ PAV;
         GROUP BY pp.codpartido, pp.descripcion
 PEL;
     
-    
-    
-    
     //Ejecutar las consultas contra la base de datos
     $firebird = ibase_connect($host, $username, $password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
     
@@ -136,7 +133,7 @@ PEL;
     }
     //Fin del codigo
     
-    
+
     //Cierro la coneccion a la base de datos
     ibase_free_result($resultDivipol);
     ibase_free_result($resulCorporacion);
@@ -144,5 +141,4 @@ PEL;
     ibase_free_result($resultPartidoAvalados);
     ibase_free_result($resultVotacionPartido);
     ibase_close($firebird);
-    
 ?>
