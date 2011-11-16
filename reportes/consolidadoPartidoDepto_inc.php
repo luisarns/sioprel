@@ -1,10 +1,4 @@
 <?php
-    require('conexion.php');
-    include_once('FunDivipol.php');
-    
-    $urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repConParDepto.php" . $_SERVER['REQUEST_URI'];
-    $urlReportes .= "&formato=";
-    
     $corporacion  = $_GET['corporacion'];
     $departamento = $_GET['departamento'];
     
@@ -18,10 +12,12 @@
     
     $txt = "";
     $txt1 = "";
+    $hayComuna = false;
     if ($_GET['comuna'] !='-') {
         $txt = " AND pd.idcomuna = " . $_GET['comuna'];
         $txt .= " AND pc.idcomuna = " . $_GET['comuna'];
         $txt1 = " AND pc.idcomuna = " . $_GET['comuna'];
+        $hayComuna = true;
     }
     
     $nivcorpo = getNivelCorporacion($corporacion);
@@ -71,6 +67,8 @@ PAV;
 PEL;
     
     
+    
+    
     //Ejecutar las consultas contra la base de datos
     $firebird = ibase_connect($host, $username, $password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
     
@@ -110,81 +108,41 @@ PEL;
         }
     }
     
+    
+    $queryCorporacion = "SELECT descripcion FROM pcorporaciones"
+                      . " WHERE codcorporacion = $corporacion";
+    $resulCorporacion = ibase_query($firebird, $queryCorporacion);
+    $row = ibase_fetch_object($resulCorporacion);
+    $nomCorporacion = utf8_encode($row->DESCRIPCION);
+    
+    
+    //Codigo para obtener la descripcion completa de la divipol
+    include_once('../contenido/FunDivipol.php');
+    
+    $queryDivipoles = getQueryDivipolCompleta($coddivipol,$codnivel);
+    
+    $resultDivipol = ibase_query($firebird, $queryDivipoles);
+    $nomDivipol = "";
+    while ($row = ibase_fetch_object($resultDivipol)) {
+        $nomDivipol = $nomDivipol . ' ' . $row->DESCRIPCION;
+    }
+    
+    if ($hayComuna) {
+        $queryDivipol = "SELECT descripcion FROM pcomuna WHERE coddivipol = '" . str_pad($coddivipol, 9,'0') . "'" 
+                  . " AND codnivel = $codnivel AND idcomuna = " . $_GET['comuna'];
+        $resultDivipol = ibase_query($firebird, $queryDivipol);
+        $row = ibase_fetch_object($resultDivipol);
+        $nomDivipol = $nomDivipol . ' ' . $row->DESCRIPCION;
+    }
+    //Fin del codigo
+    
+    
+    //Cierro la coneccion a la base de datos
+    ibase_free_result($resultDivipol);
+    ibase_free_result($resulCorporacion);
     ibase_free_result($resultPartidoElegidos);
     ibase_free_result($resultPartidoAvalados);
     ibase_free_result($resultVotacionPartido);
     ibase_close($firebird);
+    
 ?>
-
-<table>
-    <tr>
-        <td><a href="<?php echo $urlReportes."pdf"?>" target="_BLANK"><img src="images/logo_pdf.png"  alt="pdf" height="20" width="20" /></a><td>
-        <td><a href="<?php echo $urlReportes."xls"?>" target="_BLANK"><img src="images/logo_xls.jpg"  alt="xls" height="20" width="20" /></a><td>
-        <td><a href="<?php echo $urlReportes."doc"?>" target="_BLANK"><img src="images/logo_doc.jpg"  alt="doc" height="20" width="20" /></a><td>
-        <td><a href="<?php echo $urlReportes."txt"?>" target="_BLANK"><img src="images/logo_text.jpg" alt="txt" height="20" width="20" /></a><td>
-    </tr>
-</table>
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-    <tr>
-        <td width="5%" background="../images/ds_comp_bars_gral.jpg">
-            <img src="../images/ds_comp_izq_bar_gral.jpg" width="25" height="25" />
-        </td>
-        <td width="83%" background="../images/ds_comp_bars_gral.jpg">
-            <strong>Listado Votaci&oacute;n Candidato</strong>
-        </td>
-        <td width="12%" align="right" background="../images/ds_comp_bars_gral.jpg">
-            <img src="../images/ds_comp_der_bar_gral.jpg" width="25" height="25" />
-        </td>
-    </tr>
-</table>
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-    <tr>
-        <td class="regOscuro" align="left">
-            <STRONG>&nbsp;</STRONG>
-        </td>
-    </tr>
-</table>
-
-<table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuaveRultados">
-    <tr>
-        <th>C&oacute;digo</th>
-        <th>Partido</th>
-        <th>No.Avalados</th>
-        <th>No.Elegidos</th>
-        <th>Votos</th>
-    </tr>
-    <?php foreach($votosPartido as $votoPartido) { ?>
-            <tr>
-                <td><?php echo str_pad($votoPartido['codpartido'], 3, '0', STR_PAD_LEFT)?></td>
-                <td><?php echo htmlentities($votoPartido['descripcion'])?></td>
-                <td><?php echo number_format($votoPartido['avalados'])?></td>
-                <td><?php echo number_format($votoPartido['elegidos'])?></td>
-                <td><?php echo number_format($votoPartido['votos'])?></td>
-                <!--El enlace para mostrar el detalle va en la descripcion del partido -->
-            </tr>
-    <?php } ?>
-</table>
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-    <tr>
-        <td class="regOscuro" align="left">
-            <STRONG>&nbsp;</STRONG>
-        </td>
-    </tr>
-</table>
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-    <tr>
-        <td background="../images/ds_comp_bari_gral.jpg">
-            <img src="../images/ds_comp_izq_bari_gral.jpg" width="25" height="25">
-        </td>
-        <td background="../images/ds_comp_bari_gral.jpg">&nbsp;</td>
-        <td align="right" background="../images/ds_comp_bari_gral.jpg">
-            <img src="../images/ds_comp_der_bari_gral.jpg" width="25" height="25">
-        </td>		
-    </tr>
-</table>
-
-
