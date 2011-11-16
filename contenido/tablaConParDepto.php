@@ -3,7 +3,11 @@
     include_once('FunDivipol.php');
     
     $urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repConParDepto.php" . $_SERVER['REQUEST_URI'];
+    $urlDetalles = "http://" . $_SERVER['HTTP_HOST'] . "/contenido/tablaConParCanDepto.php" . $_SERVER['REQUEST_URI'];
+    
     $urlReportes .= "&formato=";
+    $urlDetalles .= "&codpartido="; //la url para mostrar la informacion detallada de los candidatos por partidos
+    
     
     $corporacion  = $_GET['corporacion'];
     $departamento = $_GET['departamento'];
@@ -131,7 +135,7 @@ PEL;
             <img src="../images/ds_comp_izq_bar_gral.jpg" width="25" height="25" />
         </td>
         <td width="83%" background="../images/ds_comp_bars_gral.jpg">
-            <strong>Listado Votaci&oacute;n Candidato</strong>
+            <strong>Consolidado Partido Departamental</strong>
         </td>
         <td width="12%" align="right" background="../images/ds_comp_bars_gral.jpg">
             <img src="../images/ds_comp_der_bar_gral.jpg" width="25" height="25" />
@@ -156,13 +160,12 @@ PEL;
         <th>Votos</th>
     </tr>
     <?php foreach($votosPartido as $votoPartido) { ?>
-            <tr>
+            <tr ondblclick="cargarDetalle('<?php echo $urlDetalles.$votoPartido['codpartido']; ?>')">
                 <td><?php echo str_pad($votoPartido['codpartido'], 3, '0', STR_PAD_LEFT)?></td>
                 <td><?php echo htmlentities($votoPartido['descripcion'])?></td>
                 <td><?php echo number_format($votoPartido['avalados'])?></td>
                 <td><?php echo number_format($votoPartido['elegidos'])?></td>
                 <td><?php echo number_format($votoPartido['votos'])?></td>
-                <!--El enlace para mostrar el detalle va en la descripcion del partido -->
             </tr>
     <?php } ?>
 </table>
@@ -187,4 +190,7 @@ PEL;
     </tr>
 </table>
 
+<div id="tablaConParCanDepto">
+    <!-- Aqui se renderiza la tabla con el detalle de los candidatos por partidos-->
+</div>
 

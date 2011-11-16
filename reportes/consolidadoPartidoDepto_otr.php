@@ -38,6 +38,8 @@
         $cont++;
     }
     
+    
+    
     switch($_GET['formato']) {
         case 'xls':
                 header("Content-type: application/vnd.ms-excel");

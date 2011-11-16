@@ -45,6 +45,26 @@ function mostrarOcultarDepto(sel)
     ocultarIniciar('divselcomuna', 'selcomuna');
 }
 
+
+/**
+ * Muestra los candidatos inscritos y elegidos de un partido
+ * a hacer dobre click solo la fila de un partido
+ */
+function cargarDetalle(url){
+    var ajax = nuevoAjax();
+    ajax.open("GET", url, true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 1) {
+            document.getElementById('tablaConParCanDepto').innerHTML = "<img src='../images/loading42.gif'></img>";
+        }
+        if (ajax.readyState == 4) {
+            document.getElementById('tablaConParCanDepto').innerHTML = ajax.responseText;
+        }
+    }
+    ajax.send(null);
+}
+
+
 function cargarMunicipios(sel)
 {
     var corpo = document.formPrincipal.corporacion.value;
