@@ -1,25 +1,25 @@
 <?php
-    /*
-      * Seleccionar el departamento ya que hay mas de uno, si fuera a nivel 
-      * nacional no tendriamos que dar la opccion de seleccionar nada de la 
-      * divipol ya que solo hay una nacion
-      */
+    /**
+    * Seleccionar el departamento ya que hay mas de uno, si fuera a nivel 
+    * nacional no tendriamos que dar la opccion de seleccionar nada de la 
+    * divipol ya que solo hay una nacion
+    */
 
     /**
-     * Consolidado por partido político a nivel departamental. Se debe presentar al frente
-     * de cada partido, un comparativo en donde se aprecien el número de
-     * candidatos avalados, número de candidatos elegidos y la respectiva votación
-     * alcanzada por el partido político. De igual manera, acceder a los respectivos
-     * nombres de ciudadanos inscritos y elegidos por el partido político
-     * 
-     * @author Luis A. Nuñez
-     * @since 2011-Nov-03
-     */
+    * Consolidado por partido político a nivel departamental. Se debe presentar al frente
+    * de cada partido, un comparativo en donde se aprecien el número de
+    * candidatos avalados, número de candidatos elegidos y la respectiva votación
+    * alcanzada por el partido político. De igual manera, acceder a los respectivos
+    * nombres de ciudadanos inscritos y elegidos por el partido político
+    * 
+    * @author Luis A. Nuñez
+    * @since 2011-Nov-03
+    */
     include_once('departamentos.php');
     include_once('corporaciones.php');
 ?>
 
-<script type="text/javascript" src="js/valConParDepto.js"> </script>
+<script type="text/javascript" src="js/consolidadoPartidoDepto.js"> </script>
 
 <form name="formPrincipal" method="GET" onSubmit="return validar(this);" >
 
@@ -65,17 +65,29 @@
 		<tr>
                     <td class="regSuaveLeft">
                         Departamento&nbsp;
-                        <select name="departamento">
+                        <select name="departamento" onChange="cargarMunicipios(this.value)">
                             <option value = "-" >-Ninguna-</option>
                             <?php foreach($departamentos as $departamento) { ?>
-                            <option value="<?php echo $departamento['coddivipol'] ?>" > <?php echo $departamento['nombre'] ?> </option>
+                            <option value="<?php echo $departamento['id'] ?>" > <?php echo $departamento['nombre'] ?> </option>
                             <?php } ?>
                         </select>
                     </td>
 		</tr>                
                 
-		<tr>
-		   <td class="regSuaveRight">&nbsp;</td>
+                <!--Para cuando la corporacion seleccionada es de un nivel inferior al departamento -->
+                <tr>
+                    <td id="divselmunicipio" style="display:none;">
+                        Municipio : <select id="selmunicipio" name="municipio" onChange="alert('Cambio el municipio')">
+                        <option value = "-" > Seleccione un departamento </option> </select>
+                    </td>
+                </tr>
+                
+                
+                <tr>
+                    <td id="divselcomuna" style="display:none">
+                        Comuna : <select id="selcomuna" name="comuna" onChange="alert('Cambio la comuna')">
+                        <option value = "-" > Seleccione un municipio </option> </select>
+                    </td>
 		</tr>
 		
 	</table>
