@@ -16,7 +16,7 @@
         $codnivel += 1; 
     }
     
-    $txt = ""; //Filtro para la comuna
+    $txt = "";
     $txt1 = "";
     if ($_GET['comuna'] !='-') {
         $txt = " AND pd.idcomuna = " . $_GET['comuna'];
@@ -70,12 +70,119 @@ PAV;
         GROUP BY pp.codpartido, pp.descripcion
 PEL;
     
-    echo $queryVotacionPartido;
-    echo "<br/><br/>";
-    echo $queryPartidoAvalados;
-    echo "<br/><br/>";
-    echo $queryPartidoElegidos;
     
+    //Ejecutar las consultas contra la base de datos
+    $firebird = ibase_connect($host, $username, $password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
     
+    $resultVotacionPartido  = ibase_query($firebird,$queryVotacionPartido);
+    $votosPartido = array();
+    while ($row = ibase_fetch_object($resultVotacionPartido)) {
+        $record = array();
+        $record['codpartido'] = $row->CODPARTIDO;
+        $record['descripcion'] = $row->DESCRIPCION;
+        $record['avalados'] = 0;
+        $record['elegidos'] = 0;
+        $record['votos'] = $row->VOTOS;
+        array_push($votosPartido,$record);
+    }
     
+    //Asigno el numero de candidatos avalados al partido
+    $resultPartidoAvalados  = ibase_query($firebird,$queryPartidoAvalados);
+    $arrAvalados = array();
+    while ($row = ibase_fetch_object($resultPartidoAvalados)) {
+        for ($i = 0; $i < count($votosPartido); $i++) {
+            if($row->CODPARTIDO == $votosPartido[$i]['codpartido'] ){
+                $votosPartido[$i]['avalados'] =  $row->AVALADOS;
+                break;
+            }
+        }
+    }
+    
+    //Asigno el numero de candidatos elegidos al partido
+    $resultPartidoElegidos  = ibase_query($firebird,$queryPartidoElegidos);
+    $arrElegidos = array();
+    while ($row = ibase_fetch_object($resultPartidoElegidos)) {
+        for ($i = 0; $i < count($votosPartido); $i++) {
+            if ($row->CODPARTIDO == $votosPartido[$i]['codpartido'] ) {
+                $votosPartido[$i]['elegidos'] =  $row->ELEGIDOS;
+                break;
+            }
+        }
+    }
+    
+    ibase_free_result($resultVotacionPartido);
+    ibase_close($firebird);
 ?>
+
+<table>
+    <tr>
+        <td><a href="<?php echo $urlReportes."pdf"?>" target="_BLANK"><img src="images/logo_pdf.png"  alt="pdf" height="20" width="20" /></a><td>
+        <td><a href="<?php echo $urlReportes."xls"?>" target="_BLANK"><img src="images/logo_xls.jpg"  alt="xls" height="20" width="20" /></a><td>
+        <td><a href="<?php echo $urlReportes."doc"?>" target="_BLANK"><img src="images/logo_doc.jpg"  alt="doc" height="20" width="20" /></a><td>
+        <td><a href="<?php echo $urlReportes."txt"?>" target="_BLANK"><img src="images/logo_text.jpg" alt="txt" height="20" width="20" /></a><td>
+    </tr>
+</table>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+    <tr>
+        <td width="5%" background="../images/ds_comp_bars_gral.jpg">
+            <img src="../images/ds_comp_izq_bar_gral.jpg" width="25" height="25" />
+        </td>
+        <td width="83%" background="../images/ds_comp_bars_gral.jpg">
+            <strong>Listado Votaci&oacute;n Candidato</strong>
+        </td>
+        <td width="12%" align="right" background="../images/ds_comp_bars_gral.jpg">
+            <img src="../images/ds_comp_der_bar_gral.jpg" width="25" height="25" />
+        </td>
+    </tr>
+</table>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+    <tr>
+        <td class="regOscuro" align="left">
+            <STRONG>&nbsp;</STRONG>
+        </td>
+    </tr>
+</table>
+
+<table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuaveRultados">
+    <tr>
+        <th>C&oacute;digo</th>
+        <th>Partido</th>
+        <th>No.Avalados</th>
+        <th>No.Elegidos</th>
+        <th>Votos</th>
+    </tr>
+    <?php foreach($votosPartido as $votoPartido) { ?>
+            <tr>
+                <td><?php echo str_pad($votoPartido['codpartido'], 3, '0', STR_PAD_LEFT)?></td>
+                <td><?php echo htmlentities($votoPartido['descripcion'])?></td>
+                <td><?php echo number_format($votoPartido['avalados'])?></td>
+                <td><?php echo number_format($votoPartido['elegidos'])?></td>
+                <td><?php echo number_format($votoPartido['votos'])?></td>
+                <!--El enlace para mostrar el detalle va en la descripcion del partido -->
+            </tr>
+    <?php } ?>
+</table>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+    <tr>
+        <td class="regOscuro" align="left">
+            <STRONG>&nbsp;</STRONG>
+        </td>
+    </tr>
+</table>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+    <tr>
+        <td background="../images/ds_comp_bari_gral.jpg">
+            <img src="../images/ds_comp_izq_bari_gral.jpg" width="25" height="25">
+        </td>
+        <td background="../images/ds_comp_bari_gral.jpg">&nbsp;</td>
+        <td align="right" background="../images/ds_comp_bari_gral.jpg">
+            <img src="../images/ds_comp_der_bari_gral.jpg" width="25" height="25">
+        </td>		
+    </tr>
+</table>
+
+
