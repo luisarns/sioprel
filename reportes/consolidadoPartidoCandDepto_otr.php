@@ -2,7 +2,7 @@
     require_once('configuracionOTR.php');
     require_once('consolidadoPartidoCandDepto_inc.php');
     
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
     $objPHPExcel = new PHPExcel();
     $objPHPExcel->getProperties()->setCreator("Ing. Luis A. Sanchez")
                  ->setLastModifiedBy("Ing. Luis A. Sanchez")
@@ -36,35 +36,41 @@
         $cont++;
     }    
     
-    switch($_GET['formato']) {
-        case 'xls':
-                header("Content-type: application/vnd.ms-excel");
-                header("Content-Disposition: attachment; filename=consolidadoPartidoCandNacional.xls");
-                header('Cache-Control: max-age=0');
+    $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+    $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+    $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+    $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
 
-                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-                $objWriter->save('php://output');
+    
+    switch ($_GET['formato']) {
+        case 'xls':
+            header("Content-type: application/vnd.ms-excel");
+            header("Content-Disposition: attachment; filename=consolidadoPartidoCandNacional.xls");
+            header('Cache-Control: max-age=0');
+
+            $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+            $objWriter->save('php://output');
         break;
         case 'doc':
-                header("Content-type: application/msword");
-                header("Content-Disposition: attachment; filename=consolidadoPartidoCandNacional.doc");
-                header('Cache-Control: max-age=0');
+            header("Content-type: application/msword");
+            header("Content-Disposition: attachment; filename=consolidadoPartidoCandNacional.doc");
+            header('Cache-Control: max-age=0');
 
-                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'HTML');
-                $objWriter->setSheetIndex(0);
-                $objWriter->save('php://output');
+            $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'HTML');
+            $objWriter->setSheetIndex(0);
+            $objWriter->save('php://output');
         break;
         case 'txt':
-                header("Content-type: text/plain");
-                header("Content-Disposition: attachment; filename=consolidadoPartidoCandNacional.txt");
-                header('Cache-Control: max-age=0');
+            header("Content-type: text/plain");
+            header("Content-Disposition: attachment; filename=consolidadoPartidoCandNacional.txt");
+            header('Cache-Control: max-age=0');
 
-                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
-                $objWriter->setDelimiter(',');
-                $objWriter->setEnclosure('');
-                $objWriter->setLineEnding("\r\n");
-                $objWriter->setSheetIndex(0);
-                $objWriter->save('php://output');
+            $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV');
+            $objWriter->setDelimiter(',');
+            $objWriter->setEnclosure('');
+            $objWriter->setLineEnding("\r\n");
+            $objWriter->setSheetIndex(0);
+            $objWriter->save('php://output');
         break;
     }
     
