@@ -12,8 +12,10 @@
     }
     
     $txt = "";
+    $hayComuna = false;
     if ($_GET['comuna'] !='-') {
         $txt = " AND pc.idcomuna = " . $_GET['comuna'];
+        $hayComuna = true;
     }
     
     $nivcorpo = getNivelCorporacion($corporacion);
@@ -72,7 +74,7 @@ PAV;
 PAR;
     $resulPartido = ibase_query($firebird, $queryPartido);
     $row = ibase_fetch_object($resulPartido);
-    $nomPartido = utf8_encode($row->DESCRIPCION);
+    $nomPartido = $row->DESCRIPCION;
     
     
     ibase_free_result($resultDivipol);
