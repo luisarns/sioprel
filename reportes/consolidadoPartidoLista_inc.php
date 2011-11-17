@@ -151,22 +151,8 @@ EOR;
 
     //Codigo para obtener la descripcion completa de la divipol
     include_once('../contenido/FunDivipol.php');
-    $codniveltmp = 1;
-    $inArrDivipol = array();
-    $inArrNivel = array();
-    while ($codniveltmp <= $codnivel) {
-        array_push($inArrDivipol,str_pad(substr($coddivipol, 0, getNumDigitos($codniveltmp)), 9, '0'));
-        array_push($inArrNivel,$codniveltmp);
-        $codniveltmp = $codniveltmp + 1;
-    }
-    $inDivipol = '(' . implode(',',$inArrDivipol) . ')';
-    $inNivel = '(' . implode(',',$inArrNivel) . ')';
     
-    $queryDivipoles = "SELECT descripcion "
-                    . "FROM pdivipol "
-                    . "WHERE coddivipol in $inDivipol "
-                    . "AND codnivel in $inNivel "
-                    . "ORDER BY codnivel";
+    $queryDivipoles = getQueryDivipolCompleta($coddivipol,$codnivel);
     
     $resultDivipol = ibase_query($firebird, $queryDivipoles);
     $nomDivipol = "";
