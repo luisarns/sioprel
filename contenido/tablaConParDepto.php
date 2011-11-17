@@ -160,9 +160,9 @@ PEL;
         <th>Votos</th>
     </tr>
     <?php foreach($votosPartido as $votoPartido) { ?>
-            <tr ondblclick="cargarDetalle('<?php echo $urlDetalles.$votoPartido['codpartido']; ?>')">
+            <tr onclick="cargarDetalle('<?php echo $urlDetalles.$votoPartido['codpartido']; ?>')">
                 <td><?php echo str_pad($votoPartido['codpartido'], 3, '0', STR_PAD_LEFT)?></td>
-                <td><?php echo htmlentities($votoPartido['descripcion'])?></td>
+                <td><a href="#"><?php echo htmlentities($votoPartido['descripcion'])?></a></td>
                 <td><?php echo number_format($votoPartido['avalados'])?></td>
                 <td><?php echo number_format($votoPartido['elegidos'])?></td>
                 <td><?php echo number_format($votoPartido['votos'])?></td>
