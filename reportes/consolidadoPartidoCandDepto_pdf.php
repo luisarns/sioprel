@@ -12,9 +12,15 @@
     $pdf->SetSubject('Consolidado Partido Candidatos Nacional');
     $pdf->SetKeywords('Votacion, Partido, Consolidado, Elecciones, Colombia');
 
-    $headerstring = str_pad(utf8_encode("Consolidado Partido Candidatos Nacional"), 130);
-    $headerstring .= str_pad(utf8_encode($nomCorporacion), 144);
-    $headerstring .= utf8_encode($nomDivipol);
+    $nomCorporacion = trim(utf8_encode($nomCorporacion));
+    $nomDivipol = trim(utf8_encode($nomDivipol));
+    
+    $headerstring =<<<CBC
+    Consolidado Partido Candidatos Nacional
+    $nomCorporacion
+    $nomDivipol
+CBC;
+    
 
     $pdf->SetHeaderData($pathLogo, $logowidth, $headertitle, $headerstring);
 
@@ -45,6 +51,9 @@
     //Adiciono una pagina
     $pdf->AddPage();
 
+    
+    
+    
     //Cabeceras de las columnas
     $header = array(utf8_encode('CÓDIGO'), 'NOMBRES', 'APELLIDOS','ELEGIDO');
     $w = array(18, 60, 60, 20); //Tamanyo de las columnas
@@ -55,6 +64,14 @@
     $pdf->SetDrawColor(128, 0, 0);
     $pdf->SetLineWidth(0.3);
     $pdf->SetFont('', 'B');
+    
+    
+    $stretch = 0;
+    $suma = array_sum($w)/2;
+    $pdf->Cell($suma, 6, 'Partido', 1, 0, 'C', 1,'',$stretch);
+    $pdf->Cell($suma, 6, utf8_encode($nomPartido), 1, 0, 'C', 1,'',$stretch);
+    $pdf->Ln();
+    
     
     // Header
     $num_headers = count($header);

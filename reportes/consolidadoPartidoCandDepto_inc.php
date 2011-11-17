@@ -63,6 +63,18 @@ PAV;
     }
     //Fin del codigo
     
+    
+    //Para obtener el nombre del partido
+    $queryPartido = <<<PAR
+        SELECT descripcion
+        FROM ppartidos
+        WHERE codpartido = $codpartido
+PAR;
+    $resulPartido = ibase_query($firebird, $queryPartido);
+    $row = ibase_fetch_object($resulPartido);
+    $nomPartido = utf8_encode($row->DESCRIPCION);
+    
+    
     ibase_free_result($resultDivipol);
     ibase_free_result($resulCorporacion);
     

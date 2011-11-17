@@ -22,12 +22,16 @@
     $objPHPExcel->getActiveSheet()->mergeCells('A2:D2');
     
     $objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A3', utf8_encode('CÓDIGO'))
-            ->setCellValue('B3', 'NOMBRES')
-            ->setCellValue('C3', 'APELLIDOS')
-            ->setCellValue('D3', 'ELEGIDO');
+            ->setCellValue('A3', utf8_encode($nomPartido));
+    $objPHPExcel->getActiveSheet()->mergeCells('A3:D3');
     
-    $cont = 4;
+    $objPHPExcel->setActiveSheetIndex(0)
+            ->setCellValue('A4', utf8_encode('CÓDIGO'))
+            ->setCellValue('B4', 'NOMBRES')
+            ->setCellValue('C4', 'APELLIDOS')
+            ->setCellValue('D4', 'ELEGIDO');
+    
+    $cont = 5;
     while ($row = ibase_fetch_object($resultInscritos)) {
         $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont, str_pad($row->CODCANDIDATO, 3, '0', STR_PAD_LEFT));
         $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, utf8_encode($row->NOMBRES));

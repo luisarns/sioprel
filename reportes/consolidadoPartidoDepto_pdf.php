@@ -11,10 +11,15 @@
     $pdf->SetTitle('Estadisticas Electorales');
     $pdf->SetSubject('Consolidado Partido Nacional');
     $pdf->SetKeywords('Votacion, Partido, Consolidado, Elecciones, Colombia');
-
-    $headerstring = str_pad(utf8_encode("Consolidado Partido Nacional"), 130);
-    $headerstring .= str_pad(utf8_encode($nomCorporacion), 144);
-    $headerstring .= utf8_encode($nomDivipol);
+    
+    $nomCorporacion = trim(utf8_encode($nomCorporacion));
+    $nomDivipol = trim(utf8_encode($nomDivipol));
+    
+    $headerstring =<<<CBC
+    Consolidado Partido Nacional
+    $nomCorporacion
+    $nomDivipol
+CBC;
 
     $pdf->SetHeaderData($pathLogo, $logowidth, $headertitle, $headerstring);
 
