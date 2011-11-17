@@ -12,11 +12,16 @@
 	$pdf->SetSubject(utf8_encode('Listas Mayor Votación'));
 	$pdf->SetKeywords('Votacion, Listas, Consolidado, Elecciones, Colombia');
 	
-        $headerstring  = str_pad(utf8_encode('Listas Mayor Votación'), 135);
-        $headerstring .= str_pad(utf8_encode($nomCorporacion), 144);
-//        $headerstring .= 'M';
-        $headerstring .= utf8_encode($nomDivipol);
-        
+	$header  = utf8_encode('Listas Mayor Votación');
+	$nomCorporacion = trim(utf8_encode($nomCorporacion));
+	$nomDivipol = trim(utf8_encode($nomDivipol));
+	
+	$headerstring =<<<CBC
+    $header
+    $nomCorporacion
+    $nomDivipol
+CBC;
+	
 	$pdf->SetHeaderData($pathLogo, $logowidth, $headertitle, $headerstring);
 	
 	//La fuente para la cabecera y pie de pagina

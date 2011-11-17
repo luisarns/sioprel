@@ -10,13 +10,19 @@
 	$pdf->SetCreator('TCPDF');
 	$pdf->SetAuthor('Luis A. Nunez');
 	$pdf->SetTitle('Estadisticas Electorales');
-	$pdf->SetSubject('Elegidos Asignacion Curules');
-	$pdf->SetKeywords('Votacion, Asignacion, Curules, Resumen, Elecciones');
+	$pdf->SetSubject('Elegidos Asignación Curules');
+	$pdf->SetKeywords('Votacion, Asignación, Curules, Resumen, Elecciones');
 	
-	$headerstring  = str_pad(utf8_encode("Elegidos Asignacion Curules"),129);
-        $headerstring .= str_pad(utf8_encode($nomCorporacion), 137);
-        $headerstring .= utf8_encode($nomDivipol);
-        
+	$header  = utf8_encode("Elegidos Asignación Curules");
+	$nomCorporacion = trim(utf8_encode($nomCorporacion));
+    $nomDivipol = trim(utf8_encode($nomDivipol));
+	
+	$headerstring =<<<CBC
+    $header
+    $nomCorporacion
+    $nomDivipol
+CBC;
+    
 	$pdf->SetHeaderData($pathLogo, $logowidth, $headertitle, $headerstring);
 	
 	//La fuente para la cabecera y pie de pagina

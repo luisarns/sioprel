@@ -12,9 +12,15 @@
 	$pdf->SetSubject('Consolidado Partido Listas');
 	$pdf->SetKeywords('Votacion, Partido, Consolidado, Elecciones, Colombia');
 	
-	$headerstring  = str_pad(utf8_encode("Consolidado Partido y Listas"), 130);
-        $headerstring .= str_pad(utf8_encode($nomCorporacion), 133);
-        $headerstring .= utf8_encode($nomDivipol);
+	$header  = utf8_encode("Consolidado Partido y Listas");
+	$nomCorporacion = trim(utf8_encode($nomCorporacion));
+	$nomDivipol = trim(utf8_encode($nomDivipol));
+	
+	$headerstring =<<<CBC
+    $header
+    $nomCorporacion
+    $nomDivipol
+CBC;
         
 	$pdf->SetHeaderData($pathLogo, $logowidth, $headertitle, $headerstring);
 	

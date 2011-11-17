@@ -13,10 +13,16 @@
 	$pdf->SetSubject('Listado Votacion Candidato');
 	$pdf->SetKeywords('Votacion, Candidatos, Listado, Elecciones, Colombia');
 	
-        $headerstring  = str_pad(utf8_encode("Listado Votación Candidato"), 130);
-        $headerstring .= str_pad(utf8_encode($nomCorporacion), 137);
-        $headerstring .= utf8_encode($nomDivipol);
-        
+	$header  = utf8_encode("Listado Votación Candidato");
+	$nomCorporacion = trim(utf8_encode($nomCorporacion));
+	$nomDivipol = trim(utf8_encode($nomDivipol));
+    
+	$headerstring =<<<CBC
+    $header
+    $nomCorporacion
+    $nomDivipol
+CBC;
+	
 	$pdf->SetHeaderData($pathLogo, $logowidth, $headertitle, $headerstring);
 	
 	//La fuente para la cabecera y pie de pagina

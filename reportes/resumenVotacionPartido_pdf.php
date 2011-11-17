@@ -13,9 +13,14 @@
 	$pdf->SetSubject('Resumen Votación Pardito');
 	$pdf->SetKeywords('Votacion, Candidatos, Partidos, Resumen, Elecciones');
 	
-	$headerstring = str_pad(utf8_encode("Resumen Votación Partido"),130);
-        $headerstring .= utf8_encode($nomDivipol);        
-        
+	$header = utf8_encode("Resumen Votación Partido");
+	$nomDivipol = trim(utf8_encode($nomDivipol));    
+    
+	$headerstring =<<<CBC
+    $header
+    $nomDivipol
+CBC;
+	
 	$pdf->SetHeaderData($pathLogo, $logowidth, $headertitle, $headerstring);
 	
 	//La fuente para la cabecera y pie de pagina

@@ -11,10 +11,16 @@
     $pdf->SetSubject('Resumen Curules Asignadas');
     $pdf->SetKeywords('Votacion, Curules, Resumen, Elecciones, Colombia');
 
-    $headerstring  = str_pad(utf8_encode("Resumen Curules Asignadas"), 126);
-    $headerstring .= str_pad(utf8_encode($nomCorporacion), 137);
-    $headerstring .= utf8_encode($nomDivipol);
-
+    $header  = utf8_encode("Resumen Curules Asignadas");
+    $nomCorporacion = trim(utf8_encode($nomCorporacion));
+    $nomDivipol = trim(utf8_encode($nomDivipol));
+	
+	$headerstring =<<<CBC
+    $header
+    $nomCorporacion
+    $nomDivipol
+CBC;
+	
     $pdf->SetHeaderData($pathLogo, $logowidth, $headertitle, $headerstring);
 
     //La fuente para la cabecera y pie de pagina

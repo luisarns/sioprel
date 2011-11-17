@@ -9,13 +9,19 @@
 	$pdf->SetCreator('TCPDF');
 	$pdf->SetAuthor('Luis A. Nunez');
 	$pdf->SetTitle('Estadisticas Electorales');
-	$pdf->SetSubject('Listado Elegidos Corporacion');
-	$pdf->SetKeywords('Votacion, Elegidos, Corporacion, Elecciones, Colombia');
+	$pdf->SetSubject('Listado Elegidos Corporación');
+	$pdf->SetKeywords('Votacion, Elegidos, Corporación, Elecciones, Colombia');
 	
-        $headerstring  = str_pad(utf8_encode("Listado Elegidos Corporacion"), 130);
-        $headerstring .= str_pad(utf8_encode($nomCorporacion), 138);
-        $headerstring .= utf8_encode($nomDivipol);
-        
+	$header  = utf8_encode("Listado Elegidos Corporación");
+	$nomCorporacion = trim(utf8_encode($nomCorporacion));
+    $nomDivipol = trim(utf8_encode($nomDivipol));
+	
+	$headerstring =<<<CBC
+    $header
+    $nomCorporacion
+    $nomDivipol
+CBC;
+
 	$pdf->SetHeaderData($pathLogo, $logowidth, $headertitle, $headerstring);
 	
 	//La fuente para la cabecera y pie de pagina
