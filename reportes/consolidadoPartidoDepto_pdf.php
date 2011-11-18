@@ -51,7 +51,7 @@ CBC;
     $pdf->AddPage();
 
     //Cabeceras de las columnas
-    $header = array(utf8_encode('CÓDIGO'), 'PARTIDO', 'No.AVALADOS','No.ELEGIDOS','VOTOS');
+    $header = array(utf8_encode('CÓDIGO'), 'PARTIDO', 'Cand.AVALADOS','Cand.ELEGIDOS','VOTOS');
     $w = array(18,80,30,30,18); //Tamanyo de las columnas
 
     //Inicio Iteracion

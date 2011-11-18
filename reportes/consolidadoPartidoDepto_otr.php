@@ -24,8 +24,8 @@
     $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A3', utf8_encode('CÓDIGO'))
             ->setCellValue('B3', 'PARTIDO')
-            ->setCellValue('C3', 'No.AVALADOS')
-            ->setCellValue('D3', 'No.ELEGIDOS')
+            ->setCellValue('C3', 'Cand.AVALADOS')
+            ->setCellValue('D3', 'Cand.ELEGIDOS')
             ->setCellValue('E3', 'VOTOS');
     
     $cont = 4;
