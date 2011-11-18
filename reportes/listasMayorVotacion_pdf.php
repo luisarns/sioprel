@@ -53,8 +53,8 @@ CBC;
 	$pdf->AddPage();
 	
 	//Cabeceras de las columnas
-	$header = array('LISTA','VOTOS');
-	$w = array(100,18); //Tamanyo de las columnas
+	$header = array('CODIGO','LISTA','VOTOS');
+	$w = array(18, 100, 18); //Tamanyo de las columnas
 	
 	//Inicio Iteracion
 	$pdf->SetFillColor(255, 0, 0);
@@ -80,10 +80,11 @@ CBC;
 	
 	$fill = 0;
 	while($row = ibase_fetch_object($result)) {
-		$pdf->Cell($w[0], 6, utf8_encode($row->DESCRIPCION), 'LR', 0, 'L', $fill,'',$stretch);
-		$pdf->Cell($w[1], 6, number_format($row->VOTOS), 'LR', 0, 'L', $fill,'',$stretch);
-		$pdf->Ln();
-		$fill=!$fill;
+            $pdf->Cell($w[0], 6, str_pad($row->CODPARTIDO, 3, '0', STR_PAD_LEFT), 'LR', 0, 'L', $fill,'',$stretch);
+            $pdf->Cell($w[1], 6, utf8_encode($row->DESCRIPCION), 'LR', 0, 'L', $fill,'',$stretch);
+            $pdf->Cell($w[2], 6, number_format($row->VOTOS), 'LR', 0, 'L', $fill,'',$stretch);
+            $pdf->Ln();
+            $fill=!$fill;
 	}
 	$pdf->Cell(array_sum($w), 0, '', 'T');
 	

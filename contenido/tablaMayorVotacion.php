@@ -22,14 +22,18 @@
     }
 
     $query =<<<EOF
-    SELECT pc.nombres as descripcion, SUM(mv.numvotos) as votos
-    FROM pcandidatos pc, pmesas pm, mvotos mv, pdivipol pd
-    WHERE pc.coddivipol LIKE '$codcordiv'   || '%' AND pc.codnivel = $nivcorpo AND pc.codcorporacion = $codcorporacion
-    AND pd.coddivipol   LIKE '$coddivcorto' || '%' AND pm.codtransmision = mv.codtransmision
-    AND pc.idcandidato = mv.idcandidato AND pc.codcandidato = 0
+    SELECT pp.codpartido, pp.descripcion, SUM(mv.numvotos) as votos
+    FROM ppartidos pp,pcandidatos pc, pmesas pm, mvotos mv, pdivipol pd
+    WHERE pc.coddivipol LIKE '$codcordiv'   || '%' 
+    AND pc.codpartido = pp.codpartido
+    AND pc.codnivel = $nivcorpo 
+    AND pc.codcorporacion = $codcorporacion
+    AND pd.coddivipol   LIKE '$coddivcorto' || '%' 
+    AND pm.codtransmision = mv.codtransmision
+    AND pc.idcandidato = mv.idcandidato
     AND pm.codcorporacion = $codcorporacion
-    AND pd.coddivipol = pm.coddivipol AND pd.codnivel = 4 $txt
-    GROUP BY pc.nombres
+    AND pd.coddivipol = pm.coddivipol AND pd.codnivel = 4 $txt 
+    GROUP BY pp.codpartido,pp.descripcion
     ORDER BY votos DESC
 EOF;
 
@@ -72,11 +76,13 @@ EOF;
 	
 	<table width="100%" border="0" cellspacing="3" cellpadding="0" class="regSuaveRultados">
             <tr>
+                <th>C&oacute;digo</th>
                 <th>Lista</th>
                 <th>Votos</th>
             </tr>
             <?php while($row = ibase_fetch_object($result)) { ?>
                 <tr>
+                    <td><?php echo str_pad($row->CODPARTIDO,3,'0',STR_PAD_LEFT)?></td>
                     <td><?php echo htmlentities($row->DESCRIPCION)?></td>
                     <td><?php echo number_format($row->VOTOS)?></td>
                 </tr>

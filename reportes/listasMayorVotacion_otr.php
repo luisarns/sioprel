@@ -14,23 +14,26 @@
 						 ->setCategory("");
 	
 	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', utf8_encode($nomCorporacion));
-        $objPHPExcel->getActiveSheet()->mergeCells('A1:B1');
+        $objPHPExcel->getActiveSheet()->mergeCells('A1:C1');
         
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', utf8_encode($nomDivipol));
-        $objPHPExcel->getActiveSheet()->mergeCells('A2:B2');
+        $objPHPExcel->getActiveSheet()->mergeCells('A2:C2');
         
 	$objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A3', 'LISTA')
-            ->setCellValue('B3', 'VOTOS');
+            ->setCellValue('A3', 'CODIGO')
+            ->setCellValue('B3', 'LISTA')
+            ->setCellValue('C3', 'VOTOS');
 				
 	$cont = 4;
 	while($row = ibase_fetch_object($result)) {
-		$objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,utf8_encode($row->DESCRIPCION));
-		$objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,number_format($row->VOTOS));
-		$cont++;
+            $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,str_pad($row->DESCRIPCION, 3, '0',STR_PAD_LEFT));
+            $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,utf8_encode($row->DESCRIPCION));
+            $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,number_format($row->VOTOS));
+            $cont++;
 	}
 	$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
 	$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
 	
 	ibase_free_result($result);
 	ibase_close($firebird);
