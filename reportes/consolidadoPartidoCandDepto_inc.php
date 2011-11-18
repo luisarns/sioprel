@@ -20,7 +20,7 @@
     
     $nivcorpo = getNivelCorporacion($corporacion);
     $coddivcorpo = str_pad(substr($coddivipol, 0, getNumDigitos($nivcorpo)),9,'0');
-    
+
     
     $queryInscritos = <<<PAV
         SELECT pc.codcandidato, pc.nombres, pc.apellidos , pc.elegido
@@ -32,8 +32,9 @@
         AND pc.codcandidato <> 0
         AND pc.codnivel = $nivcorpo
         $txt
-        ORDER BY pc.elegido
+        ORDER BY pc.elegido,pc.codcandidato
 PAV;
+    
     
     $firebird = ibase_connect($host, $username, $password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
     $resultInscritos  = ibase_query($firebird,$queryInscritos);
