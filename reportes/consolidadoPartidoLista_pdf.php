@@ -90,15 +90,15 @@ CBC;
 	foreach($partidos as $partido ) {
 		$pdf->Cell($w[0], 6, str_pad($partido->CODIGO, 3, '0', STR_PAD_LEFT), 'LR', 0, 'L', $fill,'',$stretch);
 		$pdf->Cell($w[1], 6, utf8_encode($partido->DESCRIPCION), 'LR', 0, 'L', $fill,'',$stretch);
-		$pdf->Cell($w[2], 6, number_format($partido->VOTOS), 'LR', 0, 'L', $fill,'',$stretch);
-                $pdf->Cell($w[3], 6, round(($partido->VOTOS*100)/$potencial,2) . '%', 'LR', 0, 'L', $fill,'',$stretch);
+		$pdf->Cell($w[2], 6, number_format($partido->VOTOS), 'LR', 0, 'R', $fill,'',$stretch);
+                $pdf->Cell($w[3], 6, round(($partido->VOTOS*100)/$potencial,2) . '%', 'LR', 0, 'R', $fill,'',$stretch);
 		$pdf->Ln();
 		$fill=!$fill;
 		foreach($candidatos as $candidato) {
 			if($candidato->CODPARTIDO == $partido->CODIGO) {
 				$pdf->Cell($w[0], 6, str_pad($partido->CODIGO, 3, '0', STR_PAD_LEFT) . '-' . str_pad($candidato->CODCANDIDATO, 3, '0', STR_PAD_LEFT), 'LR', 0, 'L', $fill,'',$stretch);
 				$pdf->Cell($w[1], 6, utf8_encode($candidato->DESCRIPCION), 'LR', 0, 'L', $fill,'',$stretch);
-				$pdf->Cell($w[2], 6, number_format($candidato->VOTOS), 'LR', 0, 'L', $fill,'',$stretch);
+				$pdf->Cell($w[2], 6, number_format($candidato->VOTOS), 'LR', 0, 'R', $fill,'',$stretch);
 				$pdf->Ln();
 			}
 		}
@@ -109,8 +109,8 @@ CBC;
         foreach($votacionEspecial as $votoEsp){
             $pdf->Cell($w[0], 6, '', 'LR', 0, 'L', $fill,'',$stretch);
             $pdf->Cell($w[1], 6, utf8_encode($votoEsp->DESCRIPCION), 'LR', 0, 'L', $fill,'',$stretch);
-            $pdf->Cell($w[2], 6, number_format($votoEsp->VOTOS), 'LR', 0, 'L', $fill,'',$stretch);
-            $pdf->Cell($w[3], 6, round(($votoEsp->VOTOS*100)/$potencial,2) . '%', 'LR', 0, 'L', $fill,'',$stretch);
+            $pdf->Cell($w[2], 6, number_format($votoEsp->VOTOS), 'LR', 0, 'R', $fill,'',$stretch);
+            $pdf->Cell($w[3], 6, round(($votoEsp->VOTOS*100)/$potencial,2) . '%', 'LR', 0, 'R', $fill,'',$stretch);
             $pdf->Ln();
         }
 	$pdf->Cell(array_sum($w), 0, '', 'T');

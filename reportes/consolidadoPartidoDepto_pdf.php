@@ -78,9 +78,9 @@ CBC;
     foreach ($votosPartido as $votoPartido) {
         $pdf->Cell($w[0], 6, str_pad($votoPartido['codpartido'], 3, '0', STR_PAD_LEFT), 'LR', 0, 'L', $fill, '', $stretch);
         $pdf->Cell($w[1], 6, utf8_encode($votoPartido['descripcion']), 'LR', 0, 'L', $fill, '', $stretch);
-        $pdf->Cell($w[2], 6, number_format($votoPartido['avalados']), 'LR', 0, 'L', $fill, '', $stretch);
-        $pdf->Cell($w[3], 6, number_format($votoPartido['elegidos']), 'LR', 0, 'L', $fill, '', $stretch);
-        $pdf->Cell($w[4], 6, number_format($votoPartido['votos']), 'LR', 0, 'L', $fill, '', $stretch);
+        $pdf->Cell($w[2], 6, number_format($votoPartido['avalados']), 'LR', 0, 'R', $fill, '', $stretch);
+        $pdf->Cell($w[3], 6, number_format($votoPartido['elegidos']), 'LR', 0, 'R', $fill, '', $stretch);
+        $pdf->Cell($w[4], 6, number_format($votoPartido['votos']), 'LR', 0, 'R', $fill, '', $stretch);
         $pdf->Ln();
         $fill=!$fill;   
     }

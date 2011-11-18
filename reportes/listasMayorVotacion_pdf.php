@@ -47,7 +47,7 @@ CBC;
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	// asigno la fuente del documento
-	$pdf->SetFont('helvetica', '', 12);
+	$pdf->SetFont('helvetica', '', 10);
 	
 	//Adiciono una pagina
 	$pdf->AddPage();
@@ -82,7 +82,7 @@ CBC;
 	while($row = ibase_fetch_object($result)) {
             $pdf->Cell($w[0], 6, str_pad($row->CODPARTIDO, 3, '0', STR_PAD_LEFT), 'LR', 0, 'L', $fill,'',$stretch);
             $pdf->Cell($w[1], 6, utf8_encode($row->DESCRIPCION), 'LR', 0, 'L', $fill,'',$stretch);
-            $pdf->Cell($w[2], 6, number_format($row->VOTOS), 'LR', 0, 'L', $fill,'',$stretch);
+            $pdf->Cell($w[2], 6, number_format($row->VOTOS), 'LR', 0, 'R', $fill,'',$stretch);
             $pdf->Ln();
             $fill=!$fill;
 	}

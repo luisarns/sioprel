@@ -47,7 +47,7 @@ CBC;
 	$pdf->setLanguageArray($l);
 	//////////////////////////////////////////FIN CONFIGURACION PDF//////////////////////////////////////////
 	
-	$pdf->SetFont('helvetica', '', 12);
+	$pdf->SetFont('helvetica', '', 10);
 	$pdf->AddPage();
 	$header = array('CODIGO','NOMBRES','APELLIDOS','PARTIDO','VOTOS');
 	$w = array(20, 38, 38, 60, 18);
@@ -90,7 +90,7 @@ CBC;
                 $pdf->Cell($w[1], 6, utf8_encode($row->NOMBRES), 'LR', 0, 'L', $fill,'',$stretch);
 		$pdf->Cell($w[2], 6, utf8_encode($row->APELLIDOS), 'LR', 0, 'L', $fill,'',$stretch);
 		$pdf->Cell($w[3], 6, utf8_encode($row->DESCRIPCION), 'LR', 0, 'L', $fill,'',$stretch);
-		$pdf->Cell($w[4], 6, number_format($row->VOTOS), 'LR', 0, 'L', $fill,'',$stretch);
+		$pdf->Cell($w[4], 6, number_format($row->VOTOS), 'LR', 0, 'R', $fill,'',$stretch);
 		$pdf->Ln();
 		$fill=!$fill;
 	}
