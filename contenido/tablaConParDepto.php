@@ -155,8 +155,8 @@ PEL;
     <tr>
         <th>C&oacute;digo</th>
         <th>Partido</th>
-        <th>No.Avalados</th>
-        <th>No.Elegidos</th>
+        <th>Cand.Avalados</th>
+        <th>Cand.Elegidos</th>
         <th>Votos</th>
     </tr>
     <?php foreach($votosPartido as $votoPartido) { ?>

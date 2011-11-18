@@ -45,6 +45,7 @@
             <li><a href="/?opcion=7">Resumen Curules Asignadas</a></li>
             <li><a href="/?opcion=8">Listas Mayor Votaci&oacute;n</a></li>
             <li><a href="/?opcion=9">Elegidos Asignaci&oacute;n Curules</a></li>
+            <li><a href="ManualEstadisticas/index.html" target="_blank">Manual</a></li>
           </ul>
 	  </div>
      </div>
