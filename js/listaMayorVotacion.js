@@ -6,6 +6,9 @@ function validar(form)
     } else if (form.departamento.value == '-'){
             alert("Seleccione un departamento");
             return false;
+    }else if(form.corporacion.value != 1 && form.corporacion.value != 2 && form.municipio.value == '-'){
+        alert('Seleccione un municipio');
+        return false;
     } else if (form.corporacion.value==5) {
             if (form.municipio.value=="-") {
                     alert("Seleccione un municipio");
