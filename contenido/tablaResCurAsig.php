@@ -71,15 +71,15 @@ EOF;
 	<tr>
             <th>C&oacute;digo</th>
             <th>Partido</th>
-            <th>No. Curules</th>
-            <th>Votos</th>
+            <th class="numero">No. Curules</th>
+            <th class="numero">Votos</th>
 	</tr>
 	<?php while($row = ibase_fetch_object($result)) { ?>
 		<tr>
                     <td><?php echo $row->CODIGO?></td>
                     <td><?php echo htmlentities($row->DESCRIPCION)?></td>
-                    <td><?php echo $row->NUMCURULES?></td>
-                    <td><?php echo number_format($row->VOTOS)?></td>
+                    <td class="numero"><?php echo $row->NUMCURULES?></td>
+                    <td class="numero"><?php echo number_format($row->VOTOS)?></td>
 		</tr>
 	<?php } ?>
 </table>

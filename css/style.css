@@ -220,3 +220,7 @@ select .partido {
 th{
     text-align:left;
 }
+
+.numero {
+    text-align:right;
+}

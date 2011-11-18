@@ -123,7 +123,7 @@ FEO;
             <th>Nombres</th>
             <th>Apellidos</th>
             <th>Partido</th>
-            <th>Votos</th>
+            <th class="numero">Votos</th>
         </tr>
         <?php while($row = ibase_fetch_object($result)) { ?>
             <tr>
@@ -131,7 +131,7 @@ FEO;
                 <td><?php echo htmlentities($row->NOMBRES)?></td>
                 <td><?php echo htmlentities($row->APELLIDOS)?></td>
                 <td><?php echo htmlentities($row->DESCRIPCION)?></td>
-                <td><?php echo number_format($row->VOTOS)?></td>
+                <td class="numero"><?php echo number_format($row->VOTOS)?></td>
             </tr>
         <?php } ?>
     </table>

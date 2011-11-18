@@ -249,15 +249,15 @@ EOR;
 	<tr>
 		<th>C&oacute;digo</th>
 		<th>Nombre</th>
-		<th>Votos</th>
-                <th>Participaci&oacute;n(%)</th>
+		<th class="numero">Votos</th>
+                <th class="numero">Participaci&oacute;n(%)</th>
 	</tr>
 	<?php foreach($partidos as $row) { ?>
 		<tr>
 			<td><?php echo str_pad($row->CODIGO, 3, '0', STR_PAD_LEFT)?></td>
 			<td><?php echo htmlentities($row->DESCRIPCION)?></td>
-			<td><?php echo number_format($row->VOTOS)?></td>
-                        <td><?php echo round($row->VOTOS*100/$potencial,2) . '%' ?></td>
+			<td class="numero"><?php echo number_format($row->VOTOS)?></td>
+                        <td class="numero"><?php echo round($row->VOTOS*100/$potencial,2) . '%' ?></td>
 			
 		</tr>
 		<?php 
@@ -275,8 +275,8 @@ EOR;
                 <tr>
                     <td>&nbsp;</td>
                     <td><strong><?php echo htmlentities($row->DESCRIPCION)?></strong></td>
-                    <td><?php echo number_format($row->VOTOS)?></td>
-                    <td><?php echo round($row->VOTOS*100/$potencial,2) . '%' ?></td>
+                    <td class="numero"><?php echo number_format($row->VOTOS)?></td>
+                    <td class="numero"><?php echo round($row->VOTOS*100/$potencial,2) . '%' ?></td>
                 </tr>
         <?php }?>
 </table>

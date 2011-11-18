@@ -155,17 +155,17 @@ PEL;
     <tr>
         <th>C&oacute;digo</th>
         <th>Partido</th>
-        <th>Cand.Avalados</th>
-        <th>Cand.Elegidos</th>
-        <th>Votos</th>
+        <th class="numero">Cand.Avalados</th>
+        <th class="numero">Cand.Elegidos</th>
+        <th class="numero">Votos</th>
     </tr>
     <?php foreach($votosPartido as $votoPartido) { ?>
             <tr onclick="cargarDetalle('<?php echo $urlDetalles.$votoPartido['codpartido']; ?>')">
                 <td><?php echo str_pad($votoPartido['codpartido'], 3, '0', STR_PAD_LEFT)?></td>
                 <td><a href="#"><?php echo htmlentities($votoPartido['descripcion'])?></a></td>
-                <td><?php echo number_format($votoPartido['avalados'])?></td>
-                <td><?php echo number_format($votoPartido['elegidos'])?></td>
-                <td><?php echo number_format($votoPartido['votos'])?></td>
+                <td class="numero"><?php echo number_format($votoPartido['avalados'])?></td>
+                <td class="numero"><?php echo number_format($votoPartido['elegidos'])?></td>
+                <td class="numero"><?php echo number_format($votoPartido['votos'])?></td>
             </tr>
     <?php } ?>
 </table>
