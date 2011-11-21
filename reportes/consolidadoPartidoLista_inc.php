@@ -154,26 +154,46 @@ EOR;
     
     $queryDivipoles = getQueryDivipolCompleta($coddivipol,$codnivel);
     
+    $nmDepartamento = "";
+    $nmMunicipio = "";
+    $nmZona = "";
+    $nmPueto = "";
+    $nmComuna = "";
+    $nmMesa = "";
+    
     $resultDivipol = ibase_query($firebird, $queryDivipoles);
-    $nomDivipol = "";
     while($row = ibase_fetch_object($resultDivipol)){
         $nomDivipol = $nomDivipol . ' ' . $row->DESCRIPCION;
+        switch($row->CODNIVEL){
+            case 1:
+                $nmDepartamento = utf8_encode($row->DESCRIPCION);
+                break;
+            case 2:
+                $nmMunicipio = utf8_encode($row->DESCRIPCION);
+                break;
+            case 3:
+                $nmZona = utf8_encode($row->DESCRIPCION);
+                break;
+            case 4:
+                $nmPueto = utf8_encode($row->DESCRIPCION);
+                break;
+        }
     }
-    //Fin del codigo
     
     if ($hayComuna) {
         $queryDivipol = "SELECT descripcion FROM pcomuna WHERE coddivipol = '" . str_pad($coddivipol, 9,'0') . "'" 
                   . " AND codnivel = $codnivel AND idcomuna = " . $_GET['idcomuna'];
         $resultDivipol = ibase_query($firebird, $queryDivipol);
         $row = ibase_fetch_object($resultDivipol);
-        $nomDivipol = $nomDivipol . ' ' . $row->DESCRIPCION;
+        $nmComuna = utf8_encode($row->DESCRIPCION);
+        $nmZona = ""; 
     }
     if ($hayMesa) {
         $queryDivipol = "SELECT codmesa FROM pmesas WHERE coddivipol = '" . str_pad($coddivipol, 9,'0') . "'" 
                   . " AND codnivel = $codnivel AND codtransmision = " . $_GET['codtransmision'];
         $resultDivipol = ibase_query($firebird, $queryDivipol);
         $row = ibase_fetch_object($resultDivipol);
-        $nomDivipol = $nomDivipol . ' Mesa ' . str_pad($row->CODMESA,3,'0',STR_PAD_LEFT);
+        $nmMesa = 'Mesa ' . str_pad($row->CODMESA,3,'0',STR_PAD_LEFT);
     }
     
     
