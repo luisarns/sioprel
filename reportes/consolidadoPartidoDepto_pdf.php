@@ -18,7 +18,8 @@
     $headerstring =<<<CBC
     Consolidado Partido Nacional
     $nomCorporacion
-    $nomDivipol
+    $nmDepartamento $nmMunicipio $nmZona$nmComuna
+    $nmPueto
 CBC;
 
     $pdf->SetHeaderData($pathLogo, $logowidth, $headertitle, $headerstring);

@@ -18,20 +18,24 @@
     $objPHPExcel->getActiveSheet()->mergeCells('A1:D1');
     
     $objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A2', utf8_encode($nomDivipol));
+            ->setCellValue('A2', $nmDepartamento.' '.$nmMunicipio .' '. $nmZona.''.$nmComuna);
     $objPHPExcel->getActiveSheet()->mergeCells('A2:D2');
     
     $objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A3', utf8_encode($nomPartido));
+            ->setCellValue('A3', $nmPueto);
     $objPHPExcel->getActiveSheet()->mergeCells('A3:D3');
     
     $objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A4', utf8_encode('CÓDIGO'))
-            ->setCellValue('B4', 'NOMBRES')
-            ->setCellValue('C4', 'APELLIDOS')
-            ->setCellValue('D4', 'ELEGIDO');
+            ->setCellValue('A4', $nomPartido);
+    $objPHPExcel->getActiveSheet()->mergeCells('A4:D4');
     
-    $cont = 5;
+    $objPHPExcel->setActiveSheetIndex(0)
+            ->setCellValue('A5', utf8_encode('CÓDIGO'))
+            ->setCellValue('B5', 'NOMBRES')
+            ->setCellValue('C5', 'APELLIDOS')
+            ->setCellValue('D5', 'ELEGIDO');
+    
+    $cont = 6;
     while ($row = ibase_fetch_object($resultInscritos)) {
         $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont, str_pad($row->CODCANDIDATO, 3, '0', STR_PAD_LEFT));
         $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, utf8_encode($row->NOMBRES));
@@ -59,7 +63,7 @@
             header("Content-type: application/msword");
             header("Content-Disposition: attachment; filename=consolidadoPartidoCandNacional.doc");
             header('Cache-Control: max-age=0');
-
+            
             $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'HTML');
             $objWriter->setSheetIndex(0);
             $objWriter->save('php://output');

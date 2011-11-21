@@ -15,20 +15,24 @@
     
     $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A1', utf8_encode($nomCorporacion));
-    $objPHPExcel->getActiveSheet()->mergeCells('A1:D1');
+    $objPHPExcel->getActiveSheet()->mergeCells('A1:E1');
     
     $objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A2', utf8_encode($nomDivipol));
-    $objPHPExcel->getActiveSheet()->mergeCells('A2:D2');
+            ->setCellValue('A2', $nmDepartamento.' '.$nmMunicipio .' '. $nmZona.''.$nmComuna);
+    $objPHPExcel->getActiveSheet()->mergeCells('A2:E2');
     
     $objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A3', utf8_encode('CÓDIGO'))
-            ->setCellValue('B3', 'PARTIDO')
-            ->setCellValue('C3', 'Cand.AVALADOS')
-            ->setCellValue('D3', 'Cand.ELEGIDOS')
-            ->setCellValue('E3', 'VOTOS');
+            ->setCellValue('A3', $nmPueto);
+    $objPHPExcel->getActiveSheet()->mergeCells('A3:E3');
+        
+    $objPHPExcel->setActiveSheetIndex(0)
+            ->setCellValue('A4', utf8_encode('CÓDIGO'))
+            ->setCellValue('B4', 'PARTIDO')
+            ->setCellValue('C4', 'Cand.AVALADOS')
+            ->setCellValue('D4', 'Cand.ELEGIDOS')
+            ->setCellValue('E4', 'VOTOS');
     
-    $cont = 4;
+    $cont = 5;
     foreach ($votosPartido as $votoPartido) {
         $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont, str_pad($votoPartido['codpartido'], 3, '0', STR_PAD_LEFT));
         $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, utf8_encode($votoPartido['descripcion']));
@@ -37,7 +41,6 @@
         $objPHPExcel->getActiveSheet()->setCellValue('E'.$cont, number_format($votoPartido['votos']));
         $cont++;
     }
-    
     
     
     switch($_GET['formato']) {

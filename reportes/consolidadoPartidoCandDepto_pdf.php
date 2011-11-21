@@ -13,14 +13,14 @@
     $pdf->SetKeywords('Votacion, Partido, Consolidado, Elecciones, Colombia');
 
     $nomCorporacion = trim(utf8_encode($nomCorporacion));
-    $nomDivipol = trim(utf8_encode($nomDivipol));
+//    $nomDivipol = trim(utf8_encode($nomDivipol));
     
     $headerstring =<<<CBC
     Consolidado Partido Candidatos Nacional
     $nomCorporacion
-    $nomDivipol
+    $nmDepartamento $nmMunicipio $nmZona$nmComuna
+    $nmPueto
 CBC;
-    
 
     $pdf->SetHeaderData($pathLogo, $logowidth, $headertitle, $headerstring);
 
@@ -51,9 +51,7 @@ CBC;
     //Adiciono una pagina
     $pdf->AddPage();
 
-    
-    
-    
+
     //Cabeceras de las columnas
     $header = array(utf8_encode('CÓDIGO'), 'NOMBRES', 'APELLIDOS','ELEGIDO');
     $w = array(18, 60, 60, 20); //Tamanyo de las columnas
@@ -69,7 +67,7 @@ CBC;
     $stretch = 0;
     $suma = array_sum($w)/2;
     $pdf->Cell($suma, 6, 'Partido', 1, 0, 'C', 1,'',$stretch);
-    $pdf->Cell($suma, 6, utf8_encode($nomPartido), 1, 0, 'C', 1,'',$stretch);
+    $pdf->Cell($suma, 6, $nomPartido, 1, 0, 'C', 1,'',$stretch);
     $pdf->Ln();
     
     
@@ -97,12 +95,10 @@ CBC;
     }
     
     $pdf->Cell(array_sum($w), 0, '', 'T');
-
     
     //Guardo el documento en el servidor
     $pdf->Output('consolidadoPartidoCandNacional.pdf', 'D');
     unset($pdf);
-  
     
     //cerrar la coneccion
     ibase_free_result($resulCorporacion);

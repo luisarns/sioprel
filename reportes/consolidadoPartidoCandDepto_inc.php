@@ -51,10 +51,30 @@ PAV;
     
     $queryDivipoles = getQueryDivipolCompleta($coddivipol,$codnivel);
     
+    //Toda la organizacion de la divipol
+    $nmDepartamento = "";
+    $nmMunicipio = "";
+    $nmZona = "";
+    $nmPueto = "";
+    $nmComuna = "";
+//    $nmMesa = "";
+    
     $resultDivipol = ibase_query($firebird, $queryDivipoles);
-    $nomDivipol = "";
     while ($row = ibase_fetch_object($resultDivipol)) {
-        $nomDivipol = $nomDivipol . ' ' . $row->DESCRIPCION;
+        switch($row->CODNIVEL){
+            case 1:
+                $nmDepartamento = utf8_encode($row->DESCRIPCION);
+                break;
+            case 2:
+                $nmMunicipio = utf8_encode($row->DESCRIPCION);
+                break;
+            case 3:
+                $nmZona = utf8_encode($row->DESCRIPCION);
+                break;
+            case 4:
+                $nmPueto = utf8_encode($row->DESCRIPCION);
+                break;
+        }
     }
     
     if ($hayComuna) {
@@ -62,21 +82,19 @@ PAV;
                   . " AND codnivel = $codnivel AND idcomuna = " . $_GET['comuna'];
         $resultDivipol = ibase_query($firebird, $queryDivipol);
         $row = ibase_fetch_object($resultDivipol);
-        $nomDivipol = $nomDivipol . ' ' . $row->DESCRIPCION;
+        $nmComuna = utf8_encode($row->DESCRIPCION);
+        $nmZona = ""; //Dejo la zona basia
     }
-    //Fin del codigo
     
-    
-    //Para obtener el nombre del partido
     $queryPartido = <<<PAR
         SELECT descripcion
         FROM ppartidos
         WHERE codpartido = $codpartido
 PAR;
+    
     $resulPartido = ibase_query($firebird, $queryPartido);
     $row = ibase_fetch_object($resulPartido);
-    $nomPartido = $row->DESCRIPCION;
-    
+    $nomPartido = utf8_encode($row->DESCRIPCION);
     
     ibase_free_result($resultDivipol);
     ibase_free_result($resulCorporacion);
