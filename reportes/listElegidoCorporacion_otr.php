@@ -18,18 +18,21 @@
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', utf8_encode($nomCorporacion));
         $objPHPExcel->getActiveSheet()->mergeCells('A1:E1');
         
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', utf8_encode($nomDivipol));
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', $nmDepartamento.' '.$nmMunicipio .' '. $nmZona.''.$nmComuna);
         $objPHPExcel->getActiveSheet()->mergeCells('A2:E2');
         
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A3', $nmPueto);
+        $objPHPExcel->getActiveSheet()->mergeCells('A3:E3');
+        
 	$objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A3', 'CODIGO')
-            ->setCellValue('B3', 'NOMBRES')
-            ->setCellValue('C3', 'APELLIDOS')
-            ->setCellValue('D3', 'PARTIDO')
-            ->setCellValue('E3', 'VOTOS');
+            ->setCellValue('A4', 'CODIGO')
+            ->setCellValue('B4', 'NOMBRES')
+            ->setCellValue('C4', 'APELLIDOS')
+            ->setCellValue('D4', 'PARTIDO')
+            ->setCellValue('E4', 'VOTOS');
 						 
 	
-	$cont = 4;
+	$cont = 5;
 	while($row = ibase_fetch_object($result)){
             $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,utf8_encode($row->CODIGO));	
             $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,utf8_encode($row->NOMBRES));

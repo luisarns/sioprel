@@ -55,10 +55,29 @@ EOF;
      include_once('../contenido/FunDivipol.php');
     $queryDivipol = getQueryDivipolCompleta($coddivipol,$codnivel);
 
+    $nmDepartamento = "";
+    $nmMunicipio = "";
+    $nmZona = "";
+    $nmPueto = "";
+    $nmComuna = "";
+    
     $resultDivipol = ibase_query($firebird, $queryDivipol);
-    $nomDivipol = "";
     while($row = ibase_fetch_object($resultDivipol)){
         $nomDivipol = $nomDivipol . ' ' . $row->DESCRIPCION;
+        switch($row->CODNIVEL){
+            case 1:
+                $nmDepartamento = utf8_encode($row->DESCRIPCION);
+                break;
+            case 2:
+                $nmMunicipio = utf8_encode($row->DESCRIPCION);
+                break;
+            case 3:
+                $nmZona = utf8_encode($row->DESCRIPCION);
+                break;
+            case 4:
+                $nmPueto = utf8_encode($row->DESCRIPCION);
+                break;
+        }
     }
     
     if ($hayComuna) {
@@ -66,7 +85,8 @@ EOF;
                   . " AND codnivel = 2 AND idcomuna = " . $_GET['comuna'];
         $resultDivipol = ibase_query($firebird, $queryDivipol);
         $row = ibase_fetch_object($resultDivipol);
-        $nomDivipol = $nomDivipol . ' ' . $row->DESCRIPCION;
+        $nmComuna = utf8_encode($row->DESCRIPCION);
+        $nmZona = ""; 
     }
     
     ibase_free_result($resultDivipol);

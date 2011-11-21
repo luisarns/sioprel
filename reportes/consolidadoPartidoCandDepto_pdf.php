@@ -13,7 +13,6 @@
     $pdf->SetKeywords('Votacion, Partido, Consolidado, Elecciones, Colombia');
 
     $nomCorporacion = trim(utf8_encode($nomCorporacion));
-//    $nomDivipol = trim(utf8_encode($nomDivipol));
     
     $headerstring =<<<CBC
     Consolidado Partido Candidatos Nacional
