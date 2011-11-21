@@ -1,24 +1,32 @@
 <?php
-    include_once('conexion.php');
-
-    $coneccion = ibase_connect($host, $username, $password) 
-            or die ('No se pudo conectar: ' . ibase_errmsg());
-
+    include_once 'conexionSQlite.php';
+    
+    $sqlite = new SPSQLite($pathDB);
     $query = 'SELECT coddivipol,coddepartamento,descripcion FROM pdivipol ' 
            . 'WHERE codnivel = 1 ORDER BY descripcion';
-
-    $result = ibase_query($coneccion, $query);
-
+    
+    $sqlite->query($query);
+    
+    $rs = $sqlite->returnRows();
     $departamentos = array();
-
-    while ($row = ibase_fetch_object($result)) {
+    
+    if (count($rs) > 1) {
+        foreach($rs as $row) {
+            $departamento = array();
+            $departamento['coddivipol'] = $row['coddivipol'];
+            $departamento['id'] = $row['coddepartamento'];
+            $departamento['nombre'] =  str_pad($row['coddepartamento'], 2, '0', STR_PAD_LEFT). '-' . utf8_encode($row['descripcion']);
+            array_push($departamentos, $departamento);
+        }
+    } else if (count($rs) == 1) {
         $departamento = array();
-        $departamento['coddivipol'] = $row->CODDIVIPOL;
-        $departamento['id'] = $row->CODDEPARTAMENTO;
-        $departamento['nombre'] = str_pad($row->CODDEPARTAMENTO, 2, '0', STR_PAD_LEFT) . '-' . utf8_encode($row->DESCRIPCION);
+        $departamento['coddivipol'] = $rs['coddivipol'];
+        $departamento['id'] = $rs['coddepartamento'];
+        $departamento['nombre'] = str_pad($rs['coddepartamento'], 2, '0', STR_PAD_LEFT). '-' . utf8_encode($rs['descripcion']);
         array_push($departamentos, $departamento);
     }
-
-    ibase_free_result($result);
-    ibase_close($coneccion);
+    
+    $sqlite->close(); 
+    unset($sqlite);
+    
 ?>

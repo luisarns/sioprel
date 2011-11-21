@@ -1,27 +1,35 @@
 <?php
-    include_once('conexion.php');
+    include_once 'conexionSQlite.php';
 
     $txt = "";
     if (isset($tipoEleccion)) {
         $txt = " WHERE tipoeleccion = $tipoEleccion ";
     }
 
-    $coneccion = ibase_connect($host, $username, $password)
-                     or die ('No se pudo conectar: ' . ibase_errmsg());
-
+    $sqlite = new SPSQLite($pathDB);
     $query = "SELECT codcorporacion,descripcion FROM pcorporaciones $txt ORDER"
            . " BY codcorporacion ";
 
-    $result = ibase_query($coneccion, $query);
+    $sqlite->query($query);
+    $rs = $sqlite->returnRows(); 
+    
     $corporaciones = array();
 
-    while ($row = ibase_fetch_object($result)) {
+    if (count($rs) > 1) {
+        foreach($rs as $row) {
+            $corporacion = array();
+            $corporacion['id'] = $row['codcorporacion'];
+            $corporacion['nombre'] = utf8_encode($row['descripcion']);
+            array_push($corporaciones, $corporacion);
+        }
+    } else if (count($rs) == 1) {
         $corporacion = array();
-        $corporacion['id'] = $row->CODCORPORACION;
-        $corporacion['nombre'] = utf8_encode($row->DESCRIPCION);
+        $corporacion['id'] = $rs['codcorporacion'];
+        $corporacion['nombre'] = utf8_encode($rs['descripcion']);
         array_push($corporaciones, $corporacion);
     }
-
-    ibase_free_result($result);
-    ibase_close($coneccion);
+    
+    $sqlite->close(); 
+    unset($sqlite);
+    
 ?>
