@@ -4,7 +4,7 @@
     $codcordivi = $coddepto.$codmunip;
 
     $query =<<<EOF
-        SELECT lpad(c2.codpartido,3,'0') as codpartido, c2.descripcion as descripcion, sum(c1.votos) as votos
+        SELECT c2.codpartido, c2.descripcion as descripcion, sum(c1.votos) as votos
         FROM
         (SELECT mv.idcandidato,sum(mv.numvotos) as votos
             FROM pmesas pm, mvotos mv
@@ -18,18 +18,21 @@
         GROUP BY c2.codpartido,c2.descripcion ORDER BY c2.codpartido
 EOF;
     
-    $firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
-    $result   = ibase_query($firebird,$query);
+    $sqlite = new SPSQLite($pathDB);
+    $sqlite->query($query);
+    $result = $sqlite->returnRows();
     
     include_once('../contenido/FunDivipol.php');
     $queryDivipol = getQueryDivipolCompleta($codcordivi,2);
 
-    $resultDivipol = ibase_query($firebird, $queryDivipol);
+    $sqlite->query($queryDivipol);
+    $resultDivipol = $sqlite->returnRows();
     $nomDivipol = "";
-    while($row = ibase_fetch_object($resultDivipol)){
-        $nomDivipol = $nomDivipol . ' ' . $row->DESCRIPCION;
+    foreach($resultDivipol as $row){
+        $nomDivipol = $nomDivipol . ' ' . $row['descripcion'];
     }
     
-    ibase_free_result($resultDivipol);
+    $sqlite->close(); 
+    unset($sqlite);
     
 ?>

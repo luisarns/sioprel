@@ -1,5 +1,5 @@
 <?php
-	include_once('departamentos.php');
+    include_once('departamentos.php');
 ?>
 
 <script type="text/javascript" src="js/resumenVotacionPartido.js"></script>

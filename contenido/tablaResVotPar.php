@@ -1,5 +1,5 @@
 <?php 
-    require('conexion.php');
+    require('conexionSQlite.php');
     include_once('FunDivipol.php');
 
     $urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repResVotaPartido.php".$_SERVER['REQUEST_URI'];
@@ -11,7 +11,7 @@
     $urlReportes .= "&formato=";
 
     $query =<<<EOF
-    SELECT lpad(c2.codpartido,3,'0') as codpartido, c2.descripcion as descripcion, sum(c1.votos) as votos
+    SELECT c2.codpartido, c2.descripcion as descripcion, sum(c1.votos) as votos
     FROM
        (SELECT mv.idcandidato,sum(mv.numvotos) as votos
             FROM pmesas pm, mvotos mv
@@ -24,18 +24,20 @@
     WHERE c1.idcandidato = c2.idcandidato
     GROUP BY c2.codpartido,c2.descripcion ORDER BY c2.codpartido
 EOF;
-
-    $firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
-    $result   = ibase_query($firebird,$query);
+    
+    $sqlite = new SPSQLite($pathDB);
+    $sqlite->query($query);
+    $result = $sqlite->returnRows();  
+    
 ?>
 
 <table>
-	<tr>
-		<td><a href="<?php echo $urlReportes."pdf"?>" target="_BLANK"><img src="images/logo_pdf.png"  alt="pdf" height="20" width="20" /></a><td>
-		<td><a href="<?php echo $urlReportes."xls"?>" target="_BLANK"><img src="images/logo_xls.jpg"  alt="xls" height="20" width="20" /></a><td>
-		<td><a href="<?php echo $urlReportes."doc"?>" target="_BLANK"><img src="images/logo_doc.jpg"  alt="doc" height="20" width="20" /></a><td>
-		<td><a href="<?php echo $urlReportes."txt"?>" target="_BLANK"><img src="images/logo_text.jpg" alt="txt" height="20" width="20" /></a><td>
-	</tr>
+    <tr>
+        <td><a href="<?php echo $urlReportes."pdf"?>" target="_BLANK"><img src="images/logo_pdf.png"  alt="pdf" height="20" width="20" /></a><td>
+        <td><a href="<?php echo $urlReportes."xls"?>" target="_BLANK"><img src="images/logo_xls.jpg"  alt="xls" height="20" width="20" /></a><td>
+        <td><a href="<?php echo $urlReportes."doc"?>" target="_BLANK"><img src="images/logo_doc.jpg"  alt="doc" height="20" width="20" /></a><td>
+        <td><a href="<?php echo $urlReportes."txt"?>" target="_BLANK"><img src="images/logo_text.jpg" alt="txt" height="20" width="20" /></a><td>
+    </tr>
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
@@ -61,26 +63,28 @@ EOF;
 </table>
 
 <table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuaveRultados">
-	<tr>
-		<th>C&oacute;digo</th>
-		<th>Descripci&oacute;n</th>
-		<th class="numero">Votos</th>
-	</tr>
-	<?php while($row = ibase_fetch_object($result)) { ?>
-		<tr>
-			<td><?php echo $row->CODPARTIDO?></td>
-			<td><?php echo htmlentities($row->DESCRIPCION)?></td>
-			<td class="numero"><?php echo number_format($row->VOTOS)?></td>
-		</tr>
-	<?php } ?>
+    <tr>
+        <th>C&oacute;digo</th>
+        <th>Descripci&oacute;n</th>
+        <th class="numero">Votos</th>
+    </tr>
+    <?php if (isset($result)) { ?>
+        <?php foreach($result as $row) { ?>
+            <tr>
+                <td><?php echo str_pad($row['codpartido'], 3, '0', STR_PAD_LEFT)?></td>
+                <td><?php echo htmlentities($row['descripcion'])?></td>
+                <td class="numero"><?php echo number_format($row['votos'])?></td>
+            </tr>
+        <?php } ?>
+    <?php } ?>  
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-	<tr>
-		<td class="regOscuro" align="left">
-			<strong>&nbsp;</strong>
-		</td>
-	</tr>
+    <tr>
+        <td class="regOscuro" align="left">
+            <strong>&nbsp;</strong>
+        </td>
+    </tr>
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
@@ -96,6 +100,6 @@ EOF;
 </table>
 
 <?php 
-	ibase_free_result($result);
-	ibase_close($firebird);
+    $sqlite->close(); 
+    unset($sqlite);
 ?>
