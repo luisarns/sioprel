@@ -45,26 +45,27 @@
     //Configurado del contenido
     $cont = 7;
     foreach($partidos as $partido) {
-        $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont, str_pad($partido->CODIGO, 3, '0', STR_PAD_LEFT));
-        $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, utf8_encode($partido->DESCRIPCION));
-        $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, number_format($partido->VOTOS));
-        $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont, round($partido->VOTOS*100/$potencial,2) . '%');
+        $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont, str_pad($partido['codigo'], 3, '0', STR_PAD_LEFT));
+        $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, utf8_encode($partido['descripcion']));
+        $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, number_format($partido['votos']));
+        $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont, round($partido['votos']*100/$potencial,2) . '%');
         $cont++;
 
         foreach($candidatos as $candidato) {
-            if($candidato->CODPARTIDO == $partido->CODIGO) {
-                $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont, str_pad($partido->CODIGO, 3, '0', STR_PAD_LEFT) . '-' . str_pad($candidato->CODCANDIDATO, 3, '0', STR_PAD_LEFT));
-                $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, utf8_encode($candidato->DESCRIPCION));
-                $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, number_format($candidato->VOTOS));
+            if($candidato['codpartido'] == $partido['codigo']) {
+                $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont, str_pad($partido['codigo'], 3, '0', STR_PAD_LEFT) . '-' . str_pad($candidato['codcandidato'], 3, '0', STR_PAD_LEFT));
+                $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, utf8_encode($candidato['descripcion']));
+                $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, number_format($candidato['votos']));
                 $cont++;
             }
         }
     }
+    
     foreach ($votacionEspecial as $votoEsp) {
         $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,'');
-        $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, utf8_encode($votoEsp->DESCRIPCION));
-        $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, number_format($votoEsp->VOTOS));
-        $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont, round($votoEsp->VOTOS*100/$potencial,2) . '%');
+        $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, utf8_encode($votoEsp['descripcion']));
+        $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, number_format($votoEsp['votos']));
+        $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont, round($votoEsp['votos']*100/$potencial,2) . '%');
         $cont++;
     }
 
@@ -76,7 +77,7 @@
 
 
     //Creando el escritor en funcion del formato al que se quiera exportar el documento
-    switch($_GET['formato']) {
+    switch ($_GET['formato']) {
         case 'xls':
                 header("Content-type: application/vnd.ms-excel");
                 header("Content-Disposition: attachment; filename=consolidadoPartidoLista.xls");

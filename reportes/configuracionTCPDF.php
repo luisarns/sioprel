@@ -1,13 +1,16 @@
 <?php
-    $host     = $_SERVER["DOCUMENT_ROOT"].'/../dbdir/siprel.gdb';
-    $username = 'SYSDBA';
-    $password = 'masterkey';
+//    $host     = $_SERVER["DOCUMENT_ROOT"].'/../dbdir/siprel.gdb';
+//    $username = 'SYSDBA';
+//    $password = 'masterkey';
+    include_once('conexionSQlite.php');
 
+    
     //Incluir las clases para trabajar con las librerias de tcpdf
     require_once('../tcpdf/config/lang/eng.php');
     require_once('../tcpdf/tcpdf.php');
     require_once('../contenido/FunDivipol.php');
 
+    
     //creando la cabecera para el pdf
     $page_orientacion = 'P';
     $pdf_unit = 'mm';

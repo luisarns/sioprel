@@ -87,10 +87,12 @@ FEO;
     GROUP BY pc.codtipovoto,pc.descripcion
     ORDER BY votos DESC
 OEF;
-    //Fin query votacion especial
-
-    $firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
-    $result   = ibase_query($firebird,$query);
+    
+    //Desde aqui cambia el codigo para la coneccion
+    $sqlite = new SPSQLite($pathDB);
+    
+    $sqlite->query($query);
+    $result = $sqlite->returnRows();
 
     $result1 = null;
     $query1 = null;
@@ -107,47 +109,51 @@ OEF;
         AND pc.codnivel = $nivcorpo
         GROUP BY pc.codpartido,pc.codcandidato,descripcion;
 EOR;
-        $result1 = ibase_query($firebird,$query1);
+        $sqlite->query($query1);
+        $result1 = $sqlite->returnRows();
     }
     
     //Ejecuto la query en la base, para obtener el potencial
-    $resultPotencial  = ibase_query($firebird,$queryPotencial);
-    $row = ibase_fetch_object($resultPotencial);
-    $potencial = $row->POTENCIALF + $row->POTENCIALM;
-    
+    $sqlite->query($queryPotencial);
+    $resultPotencial = $sqlite->returnRows();
+    $potencial = $resultPotencial[0]['potencialf'] + $resultPotencial[0]['potencialm'];
     
     //Ejecuto la query en la base, para obtener lo votacion especial
-    $resultVotosEsp  = ibase_query($firebird,$queryVotosEsp);
+    $sqlite->query($queryVotosEsp);
+    $resultVotosEsp  = $sqlite->returnRows();
     
     $totalVotos = 0;
     $votacionEspecial = array();
-    while($row = ibase_fetch_object($resultVotosEsp)) {
-        array_push($votacionEspecial,$row);
-        $totalVotos += $row->VOTOS;
+    if (isset($resultVotosEsp)) {
+        foreach($resultVotosEsp as $row) {
+            array_push($votacionEspecial,$row);
+            $totalVotos += $row['votos'];
+        }
     }
     
-    //Configuracion para la generacion del pdf
     $partidos = array();
     $candidatos = array();
     
-    while ($row = ibase_fetch_object($result)) {
+    if (isset($result)) {
+        foreach($result as $row) {
             array_push($partidos,$row);
-            $totalVotos += $row->VOTOS;
+            $totalVotos += $row['votos'];
+        }
     }
-    if ($result1 != null) {
-        while($row = ibase_fetch_object($result1)) {
-                array_push($candidatos,$row);
+    
+    if (isset($result1)) {
+        foreach($result1 as $row) {
+            array_push($candidatos,$row);
         }
     }
     
     //Obtener la corporacion y el potencial
     $queryCorporacion = "SELECT descripcion FROM pcorporaciones"
                       . " WHERE codcorporacion = $codcorporacion";
-    $resulCorporacion = ibase_query($firebird, $queryCorporacion);
-    $row = ibase_fetch_object($resulCorporacion);
-    $nomCorporacion = utf8_encode($row->DESCRIPCION);
+    $sqlite->query($queryCorporacion);
+    $resulCorporacion  = $sqlite->returnRows();
+    $nomCorporacion = utf8_encode($resulCorporacion[0]['descripcion']);
     //Cuando es comuna y cuando es mesa
-
 
     //Codigo para obtener la descripcion completa de la divipol
     include_once('../contenido/FunDivipol.php');
@@ -161,51 +167,47 @@ EOR;
     $nmComuna = "";
     $nmMesa = "";
     
-    $resultDivipol = ibase_query($firebird, $queryDivipoles);
-    while($row = ibase_fetch_object($resultDivipol)){
-        $nomDivipol = $nomDivipol . ' ' . $row->DESCRIPCION;
-        switch($row->CODNIVEL){
-            case 1:
-                $nmDepartamento = utf8_encode($row->DESCRIPCION);
-                break;
-            case 2:
-                $nmMunicipio = utf8_encode($row->DESCRIPCION);
-                break;
-            case 3:
-                $nmZona = utf8_encode($row->DESCRIPCION);
-                break;
-            case 4:
-                $nmPueto = utf8_encode($row->DESCRIPCION);
-                break;
+    $sqlite->query($queryDivipoles);
+    $resultDivipol = $sqlite->returnRows();
+    
+    if (isset($resultDivipol)) {
+        foreach ($resultDivipol as $row) {
+            $nomDivipol = $nomDivipol . ' ' . $row['descripcion'];
+            switch($row['codnivel']) {
+                case 1:
+                    $nmDepartamento = utf8_encode($row['descripcion']);
+                    break;
+                case 2:
+                    $nmMunicipio = utf8_encode($row['descripcion']);
+                    break;
+                case 3:
+                    $nmZona = utf8_encode($row['descripcion']);
+                    break;
+                case 4:
+                    $nmPueto = utf8_encode($row['descripcion']);
+                    break;
+            }
         }
     }
     
     if ($hayComuna) {
         $queryDivipol = "SELECT descripcion FROM pcomuna WHERE coddivipol = '" . str_pad($coddivipol, 9,'0') . "'" 
                   . " AND codnivel = $codnivel AND idcomuna = " . $_GET['idcomuna'];
-        $resultDivipol = ibase_query($firebird, $queryDivipol);
-        $row = ibase_fetch_object($resultDivipol);
-        $nmComuna = utf8_encode($row->DESCRIPCION);
+        $sqlite->query($queryDivipol);
+        $resultDivipol = $sqlite->returnRows();
+        $nmComuna = utf8_encode($resultDivipol[0]['descripcion']);
         $nmZona = ""; 
     }
     if ($hayMesa) {
         $queryDivipol = "SELECT codmesa FROM pmesas WHERE coddivipol = '" . str_pad($coddivipol, 9,'0') . "'" 
                   . " AND codnivel = $codnivel AND codtransmision = " . $_GET['codtransmision'];
-        $resultDivipol = ibase_query($firebird, $queryDivipol);
-        $row = ibase_fetch_object($resultDivipol);
-        $nmMesa = 'Mesa ' . str_pad($row->CODMESA,3,'0',STR_PAD_LEFT);
+        $sqlite->query($queryDivipol);
+        $resultDivipol = $sqlite->returnRows();
+        $nmMesa = 'Mesa ' . str_pad($resultDivipol[0]['codmesa'],3,'0',STR_PAD_LEFT);
     }
     
-    
-    
-    //Libero los recursos de la base de datos
-    ibase_free_result($result);
-    ibase_free_result($resultDivipol);
-    ibase_free_result($resulCorporacion);
-    ibase_free_result($resultVotosEsp);
-    ibase_free_result($resultPotencial);
-    if($result1 != null){ibase_free_result($result1);}
-    ibase_close($firebird);
+    $sqlite->close(); 
+    unset($sqlite);
     
     $participacion = round((($totalVotos*100)/$potencial),2);
     $asbtencion  = round(100 - $participacion,2);
