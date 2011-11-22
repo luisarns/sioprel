@@ -67,50 +67,63 @@ PAV;
 PEL;
     
     //Ejecutar las consultas contra la base de datos
-    $firebird = ibase_connect($host, $username, $password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
+    $sqlite = new SPSQLite($pathDB);
     
-    $resultVotacionPartido  = ibase_query($firebird,$queryVotacionPartido);
+    $sqlite->query($queryVotacionPartido);
+    $resultVotacionPartido = $sqlite->returnRows();
     $votosPartido = array();
-    while ($row = ibase_fetch_object($resultVotacionPartido)) {
-        $record = array();
-        $record['codpartido'] = $row->CODPARTIDO;
-        $record['descripcion'] = $row->DESCRIPCION;
-        $record['avalados'] = 0;
-        $record['elegidos'] = 0;
-        $record['votos'] = $row->VOTOS;
-        array_push($votosPartido,$record);
+    
+    if (isset($resultVotacionPartido)) {
+        foreach($resultVotacionPartido as $row) {
+            $record = array();
+            $record['codpartido'] = $row['codpartido'];
+            $record['descripcion'] = $row['descripcion'];
+            $record['avalados'] = 0;
+            $record['elegidos'] = 0;
+            $record['votos'] = $row['votos'];
+            array_push($votosPartido,$record);
+        }
     }
     
     //Asigno el numero de candidatos avalados al partido
-    $resultPartidoAvalados  = ibase_query($firebird,$queryPartidoAvalados);
+    $sqlite->query($queryPartidoAvalados);
+    $resultPartidoAvalados = $sqlite->returnRows();
     $arrAvalados = array();
-    while ($row = ibase_fetch_object($resultPartidoAvalados)) {
-        for ($i = 0; $i < count($votosPartido); $i++) {
-            if($row->CODPARTIDO == $votosPartido[$i]['codpartido'] ){
-                $votosPartido[$i]['avalados'] =  $row->AVALADOS;
-                break;
+    
+    if(isset($resultPartidoAvalados)) {
+        foreach ($resultPartidoAvalados as $row) {
+            for ($i = 0; $i < count($votosPartido); $i++) {
+                if($row['codpartido'] == $votosPartido[$i]['codpartido'] ){
+                    $votosPartido[$i]['avalados'] =  $row['avalados'];
+                    break;
+                }
             }
         }
     }
     
     //Asigno el numero de candidatos elegidos al partido
-    $resultPartidoElegidos  = ibase_query($firebird,$queryPartidoElegidos);
+    $sqlite->query($queryPartidoElegidos);
+    $resultPartidoElegidos = $sqlite->returnRows();
     $arrElegidos = array();
-    while ($row = ibase_fetch_object($resultPartidoElegidos)) {
-        for ($i = 0; $i < count($votosPartido); $i++) {
-            if ($row->CODPARTIDO == $votosPartido[$i]['codpartido'] ) {
-                $votosPartido[$i]['elegidos'] =  $row->ELEGIDOS;
-                break;
+    
+    if(isset($resultPartidoElegidos)) {
+        foreach($resultPartidoElegidos as $row) {
+            for ($i = 0; $i < count($votosPartido); $i++) {
+                if ($row['codpartido'] == $votosPartido[$i]['codpartido'] ) {
+                    $votosPartido[$i]['elegidos'] =  $row['elegidos'];
+                    break;
+                }
             }
         }
     }
     
-    
+    //Obtener la corporacion y el potencial
     $queryCorporacion = "SELECT descripcion FROM pcorporaciones"
                       . " WHERE codcorporacion = $corporacion";
-    $resulCorporacion = ibase_query($firebird, $queryCorporacion);
-    $row = ibase_fetch_object($resulCorporacion);
-    $nomCorporacion = utf8_encode($row->DESCRIPCION);
+    $sqlite->query($queryCorporacion);
+    $resulCorporacion  = $sqlite->returnRows();
+    $nomCorporacion = utf8_encode($resulCorporacion[0]['descripcion']);
+    //Cuando es comuna y cuando es mesa
     
     
     //Codigo para obtener la descripcion completa de la divipol
@@ -124,39 +137,40 @@ PEL;
     $nmPueto = "";
     $nmComuna = "";
     
-    $resultDivipol = ibase_query($firebird, $queryDivipoles);
-    while ($row = ibase_fetch_object($resultDivipol)) {
-        switch($row->CODNIVEL){
-            case 1:
-                $nmDepartamento = utf8_encode($row->DESCRIPCION);
-                break;
-            case 2:
-                $nmMunicipio = utf8_encode($row->DESCRIPCION);
-                break;
-            case 3:
-                $nmZona = utf8_encode($row->DESCRIPCION);
-                break;
-            case 4:
-                $nmPueto = utf8_encode($row->DESCRIPCION);
-                break;
+    $sqlite->query($queryDivipoles);
+    $resultDivipol = $sqlite->returnRows();
+    
+    if (isset($resultDivipol)) {
+        foreach ($resultDivipol as $row) {
+            $nomDivipol = $nomDivipol . ' ' . $row['descripcion'];
+            switch($row['codnivel']) {
+                case 1:
+                    $nmDepartamento = utf8_encode($row['descripcion']);
+                    break;
+                case 2:
+                    $nmMunicipio = utf8_encode($row['descripcion']);
+                    break;
+                case 3:
+                    $nmZona = utf8_encode($row['descripcion']);
+                    break;
+                case 4:
+                    $nmPueto = utf8_encode($row['descripcion']);
+                    break;
+            }
         }
     }
     
     if ($hayComuna) {
         $queryDivipol = "SELECT descripcion FROM pcomuna WHERE coddivipol = '" . str_pad($coddivipol, 9,'0') . "'" 
-                  . " AND codnivel = $codnivel AND idcomuna = " . $_GET['comuna'];
-        $resultDivipol = ibase_query($firebird, $queryDivipol);
-        $row = ibase_fetch_object($resultDivipol);
-        $nmComuna = utf8_encode($row->DESCRIPCION);
-        $nmZona = ""; //Dejo la zona basia
+                  . " AND codnivel = $codnivel AND idcomuna = " . $_GET['idcomuna'];
+        $sqlite->query($queryDivipol);
+        $resultDivipol = $sqlite->returnRows();
+        $nmComuna = utf8_encode($resultDivipol[0]['descripcion']);
+        $nmZona = ""; 
     }
     
-
     //Cierro la coneccion a la base de datos
-    ibase_free_result($resultDivipol);
-    ibase_free_result($resulCorporacion);
-    ibase_free_result($resultPartidoElegidos);
-    ibase_free_result($resultPartidoAvalados);
-    ibase_free_result($resultVotacionPartido);
-    ibase_close($firebird);
+    $sqlite->close(); 
+    unset($sqlite)
+    
 ?>
