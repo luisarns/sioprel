@@ -20,7 +20,7 @@
     $urlReportes .="&formato=";
     
     $query =<<<EOF
-    SELECT lpad(pp.codpartido,3,'0') || '-' || lpad(pc.codcandidato,3,'0') as codigo, pc.nombres, pc.apellidos, pp.descripcion, sum(mv.numvotos) as votos
+    SELECT pp.codpartido, pc.codcandidato, pc.nombres, pc.apellidos, pp.descripcion, sum(mv.numvotos) as votos
     FROM ppartidos pp, pcandidatos pc, pmesas pm, mvotos mv, pdivipol pd
     WHERE pc.coddivipol LIKE '$codcordiv'   || '%' AND pc.codnivel = $nivcorpo AND pc.codcorporacion = $codcorporacion
     AND pd.coddivipol   LIKE '$coddivcorto' || '%' AND pm.codtransmision = mv.codtransmision
@@ -29,37 +29,39 @@
     AND pm.codcorporacion = $codcorporacion
     GROUP BY pp.codpartido,pc.codcandidato,pc.nombres, pc.apellidos,pp.descripcion
 EOF;
-
-    $firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
-    $result   = ibase_query($firebird,$query);
-	
+    
+    $sqlite = new SPSQLite($pathDB);
+    $sqlite->query($query);
+    $result = $sqlite->returnRows();
 
     $queryCorporacion = "SELECT descripcion FROM pcorporaciones"
                   . " WHERE codcorporacion = $codcorporacion";
-    $resulCorporacion = ibase_query($firebird, $queryCorporacion);
-    $row = ibase_fetch_object($resulCorporacion);
-    $nomCorporacion = utf8_encode($row->DESCRIPCION);
+    $sqlite->query($queryCorporacion);
+    $resulCorporacion  = $sqlite->returnRows();
+    $nomCorporacion = utf8_encode($resulCorporacion[0]['descripcion']);
 
+    
     include_once('../contenido/FunDivipol.php');
     $queryDivipol = getQueryDivipolCompleta($coddivcorto,2);
 
-        
-    $resultDivipol = ibase_query($firebird, $queryDivipol);
+    $sqlite->query($queryDivipol);
+    $resultDivipol = $sqlite->returnRows();
+    
     $nomDivipol = "";
-    while($row = ibase_fetch_object($resultDivipol)){
-        $nomDivipol = $nomDivipol . ' ' . $row->DESCRIPCION;
+    foreach($resultDivipol as $row){
+        $nomDivipol = $nomDivipol . ' ' . $row['descripcion'];
     }
     
     if ($hayComuna) {
         $queryDivipol = "SELECT descripcion FROM pcomuna WHERE coddivipol = '" . str_pad($coddivcorto, 9,'0') . "'" 
                   . " AND codnivel = 2 AND idcomuna = " . $_GET['comuna'];
-        
-        $resultDivipol = ibase_query($firebird, $queryDivipol);
-        $row = ibase_fetch_object($resultDivipol);
-        $nomDivipol = $nomDivipol . ' ' . $row->DESCRIPCION;
+        $sqlite->query($queryDivipol);
+        $resultDivipol = $sqlite->returnRows();
+        $nmComuna = utf8_encode($resultDivipol[0]['descripcion']);
+        $nmZona = "";
     }
 
-    ibase_free_result($resultDivipol);
-    ibase_free_result($resulCorporacion);
+    $sqlite->close(); 
+    unset($sqlite)
         
 ?>

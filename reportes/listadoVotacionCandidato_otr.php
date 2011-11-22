@@ -28,23 +28,21 @@
 						 
 	
 	$cont = 4;
-	while($row = ibase_fetch_object($result)){
-		$objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,$row->CODIGO);
-		$objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,utf8_encode($row->NOMBRES));
-		$objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,utf8_encode($row->APELLIDOS));
-		$objPHPExcel->getActiveSheet()->setCellValue('D'.$cont,utf8_encode($row->DESCRIPCION));
-		$objPHPExcel->getActiveSheet()->setCellValue('E'.$cont,number_format($row->VOTOS));
-		$cont++;
-	}
-	
+        if (isset($result)) {
+            foreach ($result as $row) {
+                    $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,str_pad($row['codpartido'], 3, '0', STR_PAD_LEFT) . '-' . str_pad($row['codcandidato'], 3, '0', STR_PAD_LEFT));
+                    $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,utf8_encode($row['nombres']));
+                    $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,utf8_encode($row['apellidos']));
+                    $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont,utf8_encode($row['descripcion']));
+                    $objPHPExcel->getActiveSheet()->setCellValue('E'.$cont,number_format($row['votos']));
+                    $cont++;
+            }
+        }
 	$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(8);
 	$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(25);
 	$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(25);
 	$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(50);
 	$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(8);
-	
-	ibase_free_result($result);
-	ibase_close($firebird);
 	
 	switch($_GET['formato']){
 		case 'xls':
