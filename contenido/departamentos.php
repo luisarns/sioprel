@@ -10,7 +10,7 @@
     $rs = $sqlite->returnRows();
     $departamentos = array();
     
-    if (count($rs) > 1) {
+    if ($sqlite->numRows() > 1) {
         foreach($rs as $row) {
             $departamento = array();
             $departamento['coddivipol'] = $row['coddivipol'];
@@ -18,7 +18,7 @@
             $departamento['nombre'] =  str_pad($row['coddepartamento'], 2, '0', STR_PAD_LEFT). '-' . utf8_encode($row['descripcion']);
             array_push($departamentos, $departamento);
         }
-    } else if (count($rs) == 1) {
+    } else if ($sqlite->numRows() == 1) {
         $departamento = array();
         $departamento['coddivipol'] = $rs['coddivipol'];
         $departamento['id'] = $rs['coddepartamento'];

@@ -1,5 +1,5 @@
 <?php
-    require('conexion.php');
+    require('conexionSQlite.php');
     include_once('FunDivipol.php');
 
     $urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repConPartidolista.php?";
@@ -74,10 +74,10 @@
     ORDER BY votos DESC
 EOF;
     
-    /**
-     * Consultar la votacion especial, para sumar al total de votos. Obtener 
-     * el potencial en funcion de la divipol y la mesa seleccionada
-     */
+/**
+ * Consultar la votacion especial, para sumar al total de votos. Obtener 
+ * el potencial en funcion de la divipol y la mesa seleccionada
+ */
     
     $queryPotencial = <<<FEO
         SELECT potencialf,potencialm 
@@ -104,8 +104,6 @@ FEO;
             GROUP BY codnivel";
     }
 
-//    echo "<br/>" . $queryPotencial . "<br/>";
-    
     $circunscripcion = ($codcorporacion != 5)? $nivcorpo : 3;
     $txt1 = ($hayComuna)? " AND pd.idcomuna = " . $_GET['comuna'] : "";
     $txt1 = ($hayPuesto)? "" : "";
@@ -126,27 +124,28 @@ FEO;
     ORDER BY votos DESC
 OEF;
     
-//    echo "<br/>" . $queryVotosEsp . "<br/>";
+    //Desde aqui cambia el codigo para la coneccion
+    $sqlite = new SPSQLite($pathDB);
     
-
-    $firebird = ibase_connect($host,$username,$password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
-    $result   = ibase_query($firebird,$query);
-    
+    $sqlite->query($query);
+    $result = $sqlite->returnRows();
+   
     //Consultas para obtener el potencial
-    $resultPotencial  = ibase_query($firebird,$queryPotencial);
-    $row = ibase_fetch_object($resultPotencial);
-    $potencial = $row->POTENCIALF + $row->POTENCIALM;
+    $sqlite->query($queryPotencial);
+    $row  = $sqlite->returnRows();
+    $potencial = $row[0]['potencialf'] + $row[0]['potencialm'];
+    //End Potencial
     
-//    echo "<br/>Potencial : $potencial<br/>";
     
     //Votos especiales
-    $resultVotosEsp  = ibase_query($firebird,$queryVotosEsp);
+    $sqlite->query($queryVotosEsp);
+    $resultVotosEsp  = $sqlite->returnRows();
     
 
     $result1 = null;
     $query1 = null;
     if (isset($_GET['detallado']) && $_GET['detallado'] == 1) {
-            $query1 =<<<EOR
+        $query1 =<<<EOR
             SELECT pc.codpartido,pc.codcandidato, pc.nombres ||' '|| CASE WHEN pc.codcandidato = 0 
             THEN '(LISTA)' ELSE pc.apellidos END as descripcion, SUM(mv.numvotos) as votos
             FROM PMESAS pm, PCANDIDATOS pc, MVOTOS mv
@@ -159,29 +158,37 @@ OEF;
             GROUP BY pc.codpartido,pc.codcandidato,descripcion
             ORDER BY votos DESC
 EOR;
-            $result1 = ibase_query($firebird,$query1);
-            $urlReportes.="&detallado=".$_GET['detallado'];
+
+        $sqlite->query($query1);
+        $result1 = $sqlite->returnRows();
+        $urlReportes.="&detallado=".$_GET['detallado'];
     }
 
     $totalVotos = 0;
     $partidos = array();
-    while($row = ibase_fetch_object($result)) {
-        array_push($partidos,$row);
-        $totalVotos += $row->VOTOS;
-    }
     
+    if(isset($result)){
+        foreach($result as $row) {
+            array_push($partidos,$row);
+            $totalVotos += $row['votos'];
+        }
+    }
+
     
     $votacionEspecial = array();
-    while($row = ibase_fetch_object($resultVotosEsp)) {
-        array_push($votacionEspecial,$row);
-        $totalVotos += $row->VOTOS;
+    
+    if(isset($resultVotosEsp)){
+        foreach($resultVotosEsp as $row) {
+            array_push($votacionEspecial,$row);
+            $totalVotos += $row['votos'];
+        }
     }
     
     $urlReportes.="&formato=";
 
     $candidatos = array();
-    if($result1 != null){
-        while($row = ibase_fetch_object($result1)) {
+    if(isset($result1)) {
+        foreach($result1 as $row) {
             array_push($candidatos,$row);
         }
     }
@@ -191,14 +198,8 @@ EOR;
 ?>
 
 <?php
-//   Cierro la coneccion a la base de datos
-    ibase_free_result($result);
-    ibase_free_result($resultPotencial);
-    ibase_free_result($resultVotosEsp);
-    if ($result1 != null) {
-        ibase_free_result($result1);
-    }
-    ibase_close($firebird);
+    $sqlite->close(); 
+    unset($sqlite);
 ?>
 
 <table>
@@ -254,19 +255,19 @@ EOR;
 	</tr>
 	<?php foreach($partidos as $row) { ?>
 		<tr>
-			<td><?php echo str_pad($row->CODIGO, 3, '0', STR_PAD_LEFT)?></td>
-			<td><?php echo htmlentities($row->DESCRIPCION)?></td>
-			<td class="numero"><?php echo number_format($row->VOTOS)?></td>
-                        <td class="numero"><?php echo round($row->VOTOS*100/$potencial,2) . '%' ?></td>
+			<td><?php echo str_pad($row['codigo'], 3, '0', STR_PAD_LEFT)?></td>
+			<td><?php echo htmlentities($row['descripcion'])?></td>
+			<td class="numero"><?php echo number_format($row['votos'])?></td>
+                        <td class="numero"><?php echo round($row['votos']*100/$potencial,2) . '%' ?></td>
 			
 		</tr>
 		<?php 
 			foreach($candidatos as $candidato) { 
-				if($candidato->CODPARTIDO == $row->CODIGO) { ?>
+				if($candidato['codpartido'] == $row['codigo']) { ?>
 					<tr>
-					<td><?php echo str_pad($row->CODIGO, 3, '0', STR_PAD_LEFT) . '-' . str_pad($candidato->CODCANDIDATO, 3, '0', STR_PAD_LEFT) ?></td>
-					<td><?php echo htmlentities($candidato->DESCRIPCION)?></td>
-					<td><?php echo number_format($candidato->VOTOS)?></td>
+					<td><?php echo str_pad($row['codigo'], 3, '0', STR_PAD_LEFT) . '-' . str_pad($candidato['codcandidato'], 3, '0', STR_PAD_LEFT) ?></td>
+					<td><?php echo htmlentities($candidato['descripcion'])?></td>
+					<td><?php echo number_format($candidato['votos'])?></td>
                                         <td>&nbsp;</td>
 					</tr>
 		<?php }} ?>
@@ -274,9 +275,9 @@ EOR;
         <?php foreach ($votacionEspecial as $row ) { ?>
                 <tr>
                     <td>&nbsp;</td>
-                    <td><strong><?php echo htmlentities($row->DESCRIPCION)?></strong></td>
-                    <td class="numero"><?php echo number_format($row->VOTOS)?></td>
-                    <td class="numero"><?php echo round($row->VOTOS*100/$potencial,2) . '%' ?></td>
+                    <td><strong><?php echo htmlentities($row['descripcion'])?></strong></td>
+                    <td class="numero"><?php echo number_format($row['votos'])?></td>
+                    <td class="numero"><?php echo round($row['votos']*100/$potencial,2) . '%' ?></td>
                 </tr>
         <?php }?>
 </table>
@@ -301,5 +302,3 @@ EOR;
 		</td>		
 	</tr>
 </table>
-
-

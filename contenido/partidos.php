@@ -9,14 +9,14 @@
     $rs = $sqlite->returnRows(); 
     $partidos = array();
     
-    if (count($rs) > 1) {
+    if ($sqlite->numRows() > 1) {
         foreach($rs as $row) {
             $partido = array();
             $partido['id'] = $row['codpartido'];
             $partido['nombre'] = str_pad($row['codpartido'], 3, '0', STR_PAD_LEFT) . '-' . utf8_encode($row['descripcion']);
             array_push($partidos, $partido);
         }
-    } else if (count($rs) == 1) {
+    } else if ($sqlite->numRows() == 1) {
         $partido = array();
         $partido['id'] = $rs['codpartido'];
         $partido['nombre'] = str_pad($rs['codpartido'], 3, '0', STR_PAD_LEFT) . '-' . utf8_encode($rs['descripcion']);

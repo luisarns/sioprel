@@ -2,7 +2,6 @@
     include_once('corporaciones.php');
     include_once('partidos.php');
     include_once('departamentos.php');
-//    echo $query;
 ?>
 
 <script type="text/javascript" src="js/consolidadoPartidoLista.js"> </script>

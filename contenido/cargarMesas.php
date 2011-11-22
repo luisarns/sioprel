@@ -1,26 +1,30 @@
 <?php
     if (isset ($_GET['divipol']) && isset ($_GET['corporacion'])) {
-        require('conexion.php');
+        require_once 'conexionSQlite.php';
 
         $coddivipol  = $_GET['divipol'];
         $codcorpo    = $_GET['corporacion'];
 
-        $coneccion = ibase_connect($host, $username, $password) 
-                or die ('No se pudo conectar: ' . ibase_errmsg());
+        $sqlite = new SPSQLite($pathDB);
 
         $query = "SELECT codtransmision,codmesa FROM pmesas WHERE coddivipol "
                . "= '$coddivipol' AND codnivel = 4 AND codcorporacion = $codcorpo ORDER BY codmesa";
 
-        $result = ibase_query($coneccion, $query);
+        $sqlite->query($query);
+        $rs = $sqlite->returnRows();
 
         echo "Mesa : <select id='selmesa' name='mesa'>";
         echo "<option value = '-' >-Ninguna-</option>";
-        while($row = ibase_fetch_object($result)) {
-            echo "<option value = '$row->CODTRANSMISION' >$row->CODMESA</option>";
-        }	
+        if($sqlite->numRows() > 1) {
+            foreach ($rs as $row) {
+                echo "<option value = '" . $row['codtransmision'] . "' >" . $row['codmesa'] . "</option>";
+            }
+        } else if($sqlite->numRows() == 1) {
+           echo "<option value = '" . $rs['codtransmision'] . "' >" . $rs['codmesa'] . "</option>";
+        }           
         echo "</select>";
 
-        ibase_free_result($result);
-        ibase_close($coneccion);
+        $sqlite->close(); 
+        unset($sqlite);
     }
 ?>
