@@ -14,13 +14,11 @@
 
         echo "Zona : <select id='selzona' name='zona' onChange='zonaCargaPuesto(this.value)' >";
         echo "<option value = '-' >-Ninguna-</option>";
-        if($sqlite->numRows() > 1) {
-            foreach ($rs as $row) {
-                echo "<option value = '" . $row['codzona'] . "' >" . str_pad($row['codzona'], 2, '0', STR_PAD_LEFT) . '-' . utf8_encode($row['descripcion']) . "</option>";
-            }
-        } else if($sqlite->numRows() == 1) {
-           echo "<option value = '" . $rs['codzona'] . "' >" . str_pad($rs['codzona'], 2, '0', STR_PAD_LEFT) . '-' . utf8_encode($rs['descripcion']) . "</option>";
-        }
+        
+		foreach ($rs as $row) {
+			echo "<option value = '" . $row['codzona'] . "' >" . str_pad($row['codzona'], 2, '0', STR_PAD_LEFT) . '-' . utf8_encode($row['descripcion']) . "</option>";
+		}
+        
         echo "</select>";
 
         $sqlite->close(); 
