@@ -89,7 +89,7 @@ EOF;
                         <td class="numero"><?php echo number_format($row['votos'])?></td>
                     </tr>
             <?php } ?>
-        <?php } ?>    
+        <?php } ?>
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">

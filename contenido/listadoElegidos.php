@@ -1,7 +1,7 @@
 <?php
-	include_once('corporaciones.php');
-	include_once('partidos.php');
-	include_once('departamentos.php');
+    include_once('corporaciones.php');
+    include_once('partidos.php');
+    include_once('departamentos.php');
 ?>
 
 <script type="text/javascript" src="js/listadoElegidos.js"></script>
