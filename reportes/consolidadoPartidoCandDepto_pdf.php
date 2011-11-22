@@ -84,13 +84,15 @@ CBC;
     $fill = true; //Para rellenar el fondo de la fila
     
     //Bucle para mostrar los datos en el documento
-    while ($row = ibase_fetch_object($resultInscritos)) {
-        $pdf->Cell($w[0], 6, str_pad($row->CODCANDIDATO, 3, '0', STR_PAD_LEFT), 'LR', 0, 'L', $fill, '', $stretch);
-        $pdf->Cell($w[1], 6, utf8_encode($row->NOMBRES), 'LR', 0, 'L', $fill, '', $stretch);
-        $pdf->Cell($w[2], 6, utf8_encode($row->APELLIDOS), 'LR', 0, 'L', $fill, '', $stretch);
-        $pdf->Cell($w[3], 6, ($row->ELEGIDO != '0')? 'SI' : 'NO', 'LR', 0, 'L', $fill, '', $stretch);
-        $pdf->Ln();
-        $fill=!$fill;   
+    if(isset($resultInscritos)) {
+        foreach ($resultInscritos as $row ) {
+            $pdf->Cell($w[0], 6, str_pad($row['codcandidato'], 3, '0', STR_PAD_LEFT), 'LR', 0, 'L', $fill, '', $stretch);
+            $pdf->Cell($w[1], 6, utf8_encode($row['nombres']), 'LR', 0, 'L', $fill, '', $stretch);
+            $pdf->Cell($w[2], 6, utf8_encode($row['apellidos']), 'LR', 0, 'L', $fill, '', $stretch);
+            $pdf->Cell($w[3], 6, ($row['elegido'] != '0')? 'SI' : 'NO', 'LR', 0, 'L', $fill, '', $stretch);
+            $pdf->Ln();
+            $fill=!$fill;   
+        }
     }
     
     $pdf->Cell(array_sum($w), 0, '', 'T');
@@ -98,9 +100,5 @@ CBC;
     //Guardo el documento en el servidor
     $pdf->Output('consolidadoPartidoCandNacional.pdf', 'D');
     unset($pdf);
-    
-    //cerrar la coneccion
-    ibase_free_result($resulCorporacion);
-    ibase_close($firebird);
     
 ?>

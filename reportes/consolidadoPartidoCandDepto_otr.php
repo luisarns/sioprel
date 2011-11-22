@@ -36,13 +36,15 @@
             ->setCellValue('D5', 'ELEGIDO');
     
     $cont = 6;
-    while ($row = ibase_fetch_object($resultInscritos)) {
-        $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont, str_pad($row->CODCANDIDATO, 3, '0', STR_PAD_LEFT));
-        $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, utf8_encode($row->NOMBRES));
-        $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, utf8_encode($row->APELLIDOS));
-        $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont, ($row->ELEGIDO != '0')? 'SI' : 'NO');
-        $cont++;
-    }    
+    if(isset($resultInscritos)) {
+        foreach ($resultInscritos as $row ) {
+            $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont, str_pad($row['codcandidato'], 3, '0', STR_PAD_LEFT));
+            $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, utf8_encode($row['nombres']));
+            $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, utf8_encode($row['apellidos']));
+            $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont, ($row['elegido'] != '0')? 'SI' : 'NO');
+            $cont++;
+        }    
+    }
     
     $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
     $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
@@ -81,9 +83,5 @@
             $objWriter->save('php://output');
         break;
     }
-    
-    //cerrar la coneccion
-    ibase_free_result($resulCorporacion);
-    ibase_close($firebird);
     
 ?>

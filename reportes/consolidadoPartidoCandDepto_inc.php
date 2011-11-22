@@ -35,15 +35,16 @@
         ORDER BY pc.elegido,pc.codcandidato
 PAV;
     
+    $sqlite = new SPSQLite($pathDB);
+    $sqlite->query($queryInscritos);
+    $resultInscritos = $sqlite->returnRows();
     
-    $firebird = ibase_connect($host, $username, $password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
-    $resultInscritos  = ibase_query($firebird,$queryInscritos);
     
-     $queryCorporacion = "SELECT descripcion FROM pcorporaciones"
+    $queryCorporacion = "SELECT descripcion FROM pcorporaciones"
                       . " WHERE codcorporacion = $corporacion";
-    $resulCorporacion = ibase_query($firebird, $queryCorporacion);
-    $row = ibase_fetch_object($resulCorporacion);
-    $nomCorporacion = utf8_encode($row->DESCRIPCION);
+    $sqlite->query($queryCorporacion);
+    $resulCorporacion  = $sqlite->returnRows();
+    $nomCorporacion = utf8_encode($resulCorporacion[0]['descripcion']);
     
     
     //Codigo para obtener la descripcion completa de la divipol
@@ -51,39 +52,42 @@ PAV;
     
     $queryDivipoles = getQueryDivipolCompleta($coddivipol,$codnivel);
     
-    //Toda la organizacion de la divipol
     $nmDepartamento = "";
     $nmMunicipio = "";
     $nmZona = "";
     $nmPueto = "";
     $nmComuna = "";
-//    $nmMesa = "";
     
-    $resultDivipol = ibase_query($firebird, $queryDivipoles);
-    while ($row = ibase_fetch_object($resultDivipol)) {
-        switch($row->CODNIVEL){
-            case 1:
-                $nmDepartamento = utf8_encode($row->DESCRIPCION);
-                break;
-            case 2:
-                $nmMunicipio = utf8_encode($row->DESCRIPCION);
-                break;
-            case 3:
-                $nmZona = utf8_encode($row->DESCRIPCION);
-                break;
-            case 4:
-                $nmPueto = utf8_encode($row->DESCRIPCION);
-                break;
+    $sqlite->query($queryDivipoles);
+    $resultDivipol = $sqlite->returnRows();
+    
+    if (isset($resultDivipol)) {
+        foreach ($resultDivipol as $row) {
+            $nomDivipol = $nomDivipol . ' ' . $row['descripcion'];
+            switch($row['codnivel']) {
+                case 1:
+                    $nmDepartamento = utf8_encode($row['descripcion']);
+                    break;
+                case 2:
+                    $nmMunicipio = utf8_encode($row['descripcion']);
+                    break;
+                case 3:
+                    $nmZona = utf8_encode($row['descripcion']);
+                    break;
+                case 4:
+                    $nmPueto = utf8_encode($row['descripcion']);
+                    break;
+            }
         }
     }
     
     if ($hayComuna) {
         $queryDivipol = "SELECT descripcion FROM pcomuna WHERE coddivipol = '" . str_pad($coddivipol, 9,'0') . "'" 
-                  . " AND codnivel = $codnivel AND idcomuna = " . $_GET['comuna'];
-        $resultDivipol = ibase_query($firebird, $queryDivipol);
-        $row = ibase_fetch_object($resultDivipol);
-        $nmComuna = utf8_encode($row->DESCRIPCION);
-        $nmZona = ""; //Dejo la zona basia
+                  . " AND codnivel = $codnivel AND idcomuna = " . $_GET['idcomuna'];
+        $sqlite->query($queryDivipol);
+        $resultDivipol = $sqlite->returnRows();
+        $nmComuna = utf8_encode($resultDivipol[0]['descripcion']);
+        $nmZona = ""; 
     }
     
     $queryPartido = <<<PAR
@@ -92,11 +96,13 @@ PAV;
         WHERE codpartido = $codpartido
 PAR;
     
-    $resulPartido = ibase_query($firebird, $queryPartido);
-    $row = ibase_fetch_object($resulPartido);
-    $nomPartido = utf8_encode($row->DESCRIPCION);
+    $sqlite->query($queryPartido);
+    $resulPartido = $sqlite->returnRows();
+    $nomPartido = utf8_encode($resulPartido[0]['descripcion']);
     
-    ibase_free_result($resultDivipol);
-    ibase_free_result($resulCorporacion);
+    
+    //Cierro la coneccion a la base de datos
+    $sqlite->close(); 
+    unset($sqlite)
     
 ?>
