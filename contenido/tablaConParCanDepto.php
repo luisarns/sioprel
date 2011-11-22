@@ -1,5 +1,5 @@
 <?php
-    require('conexion.php');
+    require('conexionSQlite.php');
     include_once('FunDivipol.php');
     
     $urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repConParCanDepto.php" . $_SERVER['REQUEST_URI'];
@@ -39,9 +39,10 @@
         ORDER BY pc.elegido,pc.codcandidato
 PAV;
     
-    $firebird = ibase_connect($host, $username, $password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
-    $resultInscritos  = ibase_query($firebird,$queryInscritos);
-   
+    $sqlite = new SPSQLite($pathDB);
+    $sqlite->query($queryInscritos);
+    $resultInscritos = $sqlite->returnRows();
+    
 ?>
 
 <table>
@@ -82,12 +83,12 @@ PAV;
         <th>Apellidos</th>
         <th>Elegido</th>
     </tr>
-    <?php while ($row = ibase_fetch_object($resultInscritos)) { ?>
+    <?php foreach ($resultInscritos as $row) { ?>
             <tr>
-                <td><?php echo str_pad($row->CODCANDIDATO, 3, '0', STR_PAD_LEFT)?></td>
-                <td><?php echo htmlentities($row->NOMBRES)?></td>
-                <td><?php echo htmlentities($row->APELLIDOS)?></td>
-                <td><?php echo ($row->ELEGIDO != '0')? 'SI' : 'NO' ; ?></td>
+                <td><?php echo str_pad($row['codcandidato'], 3, '0', STR_PAD_LEFT)?></td>
+                <td><?php echo htmlentities($row['nombres'])?></td>
+                <td><?php echo htmlentities($row['apellidos'])?></td>
+                <td><?php echo ($row['elegido'] != '0')? 'SI' : 'NO' ; ?></td>
             </tr>
     <?php } ?>
 </table>
@@ -113,6 +114,6 @@ PAV;
 </table>
 
 <?php
-    ibase_free_result($resultInscritos);
-    ibase_close($firebird);
+    $sqlite->close(); 
+    unset($sqlite);
 ?>

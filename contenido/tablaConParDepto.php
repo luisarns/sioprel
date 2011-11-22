@@ -1,5 +1,5 @@
 <?php
-    require('conexion.php');
+    require('conexionSQlite.php');
     include_once('FunDivipol.php');
     
     $urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repConParDepto.php" . $_SERVER['REQUEST_URI'];
@@ -76,48 +76,61 @@ PEL;
     
     
     //Ejecutar las consultas contra la base de datos
-    $firebird = ibase_connect($host, $username, $password) or die("No se pudo conectar a la base de datos: ".ibase_errmsg());
+    $sqlite = new SPSQLite($pathDB);
     
-    $resultVotacionPartido  = ibase_query($firebird,$queryVotacionPartido);
+    $sqlite->query($queryVotacionPartido);
+    $resultVotacionPartido = $sqlite->returnRows();
     $votosPartido = array();
-    while ($row = ibase_fetch_object($resultVotacionPartido)) {
-        $record = array();
-        $record['codpartido'] = $row->CODPARTIDO;
-        $record['descripcion'] = $row->DESCRIPCION;
-        $record['avalados'] = 0;
-        $record['elegidos'] = 0;
-        $record['votos'] = $row->VOTOS;
-        array_push($votosPartido,$record);
+    
+    if (isset($resultVotacionPartido)) {
+        foreach($resultVotacionPartido as $row) {
+            $record = array();
+            $record['codpartido'] = $row['codpartido'];
+            $record['descripcion'] = $row['descripcion'];
+            $record['avalados'] = 0;
+            $record['elegidos'] = 0;
+            $record['votos'] = $row['votos'];
+            array_push($votosPartido,$record);
+        }
     }
     
+
+    
     //Asigno el numero de candidatos avalados al partido
-    $resultPartidoAvalados  = ibase_query($firebird,$queryPartidoAvalados);
+    $sqlite->query($queryPartidoAvalados);
+    $resultPartidoAvalados = $sqlite->returnRows();
     $arrAvalados = array();
-    while ($row = ibase_fetch_object($resultPartidoAvalados)) {
-        for ($i = 0; $i < count($votosPartido); $i++) {
-            if($row->CODPARTIDO == $votosPartido[$i]['codpartido'] ){
-                $votosPartido[$i]['avalados'] =  $row->AVALADOS;
-                break;
+    
+    if(isset($resultPartidoAvalados)) {
+        foreach ($resultPartidoAvalados as $row) {
+            for ($i = 0; $i < count($votosPartido); $i++) {
+                if($row['codpartido'] == $votosPartido[$i]['codpartido'] ){
+                    $votosPartido[$i]['avalados'] =  $row['avalados'];
+                    break;
+                }
             }
         }
     }
     
     //Asigno el numero de candidatos elegidos al partido
-    $resultPartidoElegidos  = ibase_query($firebird,$queryPartidoElegidos);
+    $sqlite->query($queryPartidoElegidos);
+    $resultPartidoElegidos = $sqlite->returnRows();
     $arrElegidos = array();
-    while ($row = ibase_fetch_object($resultPartidoElegidos)) {
-        for ($i = 0; $i < count($votosPartido); $i++) {
-            if ($row->CODPARTIDO == $votosPartido[$i]['codpartido'] ) {
-                $votosPartido[$i]['elegidos'] =  $row->ELEGIDOS;
-                break;
+    
+    if(isset($resultPartidoElegidos)) {
+        foreach($resultPartidoElegidos as $row) {
+            for ($i = 0; $i < count($votosPartido); $i++) {
+                if ($row['codpartido'] == $votosPartido[$i]['codpartido'] ) {
+                    $votosPartido[$i]['elegidos'] =  $row['elegidos'];
+                    break;
+                }
             }
         }
     }
+        
+    $sqlite->close(); 
+    unset($sqlite);
     
-    ibase_free_result($resultPartidoElegidos);
-    ibase_free_result($resultPartidoAvalados);
-    ibase_free_result($resultVotacionPartido);
-    ibase_close($firebird);
 ?>
 
 <table>
