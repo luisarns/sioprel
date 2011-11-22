@@ -100,7 +100,6 @@ PAR;
     $resulPartido = $sqlite->returnRows();
     $nomPartido = utf8_encode($resulPartido[0]['descripcion']);
     
-    
     //Cierro la coneccion a la base de datos
     $sqlite->close(); 
     unset($sqlite)

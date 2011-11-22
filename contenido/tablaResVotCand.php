@@ -1,5 +1,5 @@
 <?php
-	require('conexion.php');
+	require('conexionSQlite.php');
 	include_once('FunDivipol.php');
 	
 	$urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repResVotaCandidato.php" . $_SERVER['REQUEST_URI'];
@@ -21,7 +21,7 @@
 	$cordivi = substr($codcordivi, 0, getNumDigitos($nivcorpo));
 	
 	$query =<<<EOF
-	SELECT lpad(pc.codpartido,3,'0') || '-' || lpad(pc.codcandidato,3,'0') as codigo  ,pc.nombres, 
+	SELECT pc.codpartido, pc.codcandidato, pc.nombres, 
 	pc.apellidos ,pp.descripcion,sum(mv.numvotos) as votos
 	FROM pmesas pm, mvotos mv, ppartidos pp, pcandidatos pc, pdivipol pd
 	WHERE pd.coddivipol = pm.coddivipol AND pd.codnivel = 4
@@ -35,8 +35,9 @@
 	ORDER BY pc.codpartido, pc.codcandidato
 EOF;
 
-	$firebird = ibase_connect($host, $username, $password) or die("No se pudo conectar a la base de datos: " . ibase_errmsg());
-	$result   = ibase_query($firebird, $query);
+        $sqlite = new SPSQLite($pathDB);
+        $sqlite->query($query);
+        $result = $sqlite->returnRows();   
 	
 ?>
 <table>
@@ -78,15 +79,17 @@ EOF;
                 <th>Partido</th>
 		<th class="numero">Votos</th>
 	</tr>
-	<?php while($row = ibase_fetch_object($result)) { ?>
-		<tr>
-			<td><?php echo $row->CODIGO?></td>
-			<td><?php echo htmlentities($row->NOMBRES)?></td>
-			<td><?php echo htmlentities($row->APELLIDOS)?></td>
-                        <td><?php echo htmlentities($row->DESCRIPCION)?></td>
-			<td class="numero"><?php echo number_format($row->VOTOS)?></td>
-		</tr>
-	<?php } ?>
+	<?php if (isset($result)) { ?>
+            <?php foreach ($result as $row) { ?>
+                    <tr>
+                        <td><?php echo str_pad($row['codpartido'], 3, '0', STR_PAD_LEFT) . '-' . str_pad($row['codcandidato'], 3, '0', STR_PAD_LEFT) ?></td>
+                        <td><?php echo htmlentities($row['nombres'])?></td>
+                        <td><?php echo htmlentities($row['apellidos'])?></td>
+                        <td><?php echo htmlentities($row['descripcion'])?></td>
+                        <td class="numero"><?php echo number_format($row['votos'])?></td>
+                    </tr>
+            <?php } ?>
+        <?php } ?>    
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
@@ -110,6 +113,6 @@ EOF;
 </table>
 
 <?php 
-    ibase_free_result($result);
-    ibase_close($firebird);
+    $sqlite->close(); 
+    unset($sqlite);
 ?>
