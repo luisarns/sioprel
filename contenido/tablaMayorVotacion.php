@@ -1,5 +1,5 @@
 <?php
-    require('conexion.php');
+    require('conexionSQlite.php');
     include_once('FunDivipol.php');
 
     $urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repLisMayorVota.php" . $_SERVER['REQUEST_URI'];
@@ -36,10 +36,11 @@
     GROUP BY pp.codpartido,pp.descripcion
     ORDER BY votos DESC
 EOF;
-
-    $firebird = ibase_connect($host, $username, $password) or die("No se pudo conectar a la base de datos: " . ibase_errmsg());
-    $result   = ibase_query($firebird, $query);
-		
+    
+    $sqlite = new SPSQLite($pathDB);
+    $sqlite->query($query);
+    $result = $sqlite->returnRows();
+    
 ?>
 	
     <table>
@@ -80,12 +81,14 @@ EOF;
                 <th>Lista</th>
                 <th class="numero">Votos</th>
             </tr>
-            <?php while($row = ibase_fetch_object($result)) { ?>
-                <tr>
-                    <td><?php echo str_pad($row->CODPARTIDO,3,'0',STR_PAD_LEFT)?></td>
-                    <td><?php echo htmlentities($row->DESCRIPCION)?></td>
-                    <td class="numero"><?php echo number_format($row->VOTOS)?></td>
-                </tr>
+            <?php if (isset ($result)) { ?>
+                <?php foreach($result as $row) { ?>
+                    <tr>
+                        <td><?php echo str_pad($row['codpartido'], 3, '0', STR_PAD_LEFT) ?></td>
+                        <td><?php echo htmlentities($row['descripcion'])?></td>
+                        <td class="numero"><?php echo number_format($row['votos'])?></td>
+                    </tr>
+                <?php } ?>
             <?php } ?>
 	</table>
 	
@@ -111,6 +114,6 @@ EOF;
 	<!-- Fin codigo estilo de tabla-->
 	
 <?php
-    ibase_free_result($result);
-    ibase_close($firebird);
+    $sqlite->close(); 
+    unset($sqlite);
 ?>
