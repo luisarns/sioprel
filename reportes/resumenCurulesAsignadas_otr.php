@@ -6,12 +6,12 @@
     $objPHPExcel = new PHPExcel();
 
     $objPHPExcel->getProperties()->setCreator("Ing. Luis A. Sanchez")
-                                             ->setLastModifiedBy("Ing. Luis A. Sanchez")
-                                             ->setTitle("Office 2007 XLSX Test Document")
-                                             ->setSubject("Office 2007 XLSX Test Document")
-                                             ->setDescription("Resumen Curules Asignadas.")
-                                             ->setKeywords("office 2005 openxml")
-                                             ->setCategory("");
+                                 ->setLastModifiedBy("Ing. Luis A. Sanchez")
+                                 ->setTitle("Office 2007 XLSX Test Document")
+                                 ->setSubject("Office 2007 XLSX Test Document")
+                                 ->setDescription("Resumen Curules Asignadas.")
+                                 ->setKeywords("office 2005 openxml")
+                                 ->setCategory("");
 
     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', utf8_encode($nomCorporacion));
     $objPHPExcel->getActiveSheet()->mergeCells('A1:E1');
@@ -26,22 +26,20 @@
         ->setCellValue('D3', 'VOTOS');
 
     $cont = 4;
-    while($row = ibase_fetch_object($result)) {
-            $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,$row->CODIGO);
-            $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,utf8_encode($row->DESCRIPCION));
-            $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,utf8_encode($row->NUMCURULES));
-            $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont,number_format($row->VOTOS));
-            $cont++;
+    if(isset ($result)) {
+        foreach($result as $row) {
+                $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,str_pad($row['codpartido'], 3, '0', STR_PAD_LEFT));
+                $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,utf8_encode($row['descripcion']));
+                $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,number_format($row['numcurules']));
+                $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont,number_format($row['votos']));
+                $cont++;
+        }
     }
     $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
     $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
     $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
     $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
-
-
-    ibase_free_result($result);
-    ibase_close($firebird);
-
+    
 
     switch($_GET['formato']) {
         case 'xls':

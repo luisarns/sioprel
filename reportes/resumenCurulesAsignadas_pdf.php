@@ -15,7 +15,7 @@
     $nomCorporacion = trim(utf8_encode($nomCorporacion));
     $nomDivipol = trim(utf8_encode($nomDivipol));
 	
-	$headerstring =<<<CBC
+    $headerstring =<<<CBC
     $header
     $nomCorporacion
     $nomDivipol
@@ -78,18 +78,17 @@ CBC;
     $pdf->SetFont('','',8);
 
     $fill = 0;
-    while($row = ibase_fetch_object($result)) {
-            $pdf->Cell($w[0], 6, utf8_encode($row->CODIGO), 'LR', 0, 'L', $fill,'',$stretch);
-            $pdf->Cell($w[1], 6, utf8_encode($row->DESCRIPCION), 'LR', 0, 'L', $fill,'',$stretch);
-            $pdf->Cell($w[2], 6, utf8_encode($row->NUMCURULES), 'LR', 0, 'R', $fill,'',$stretch);
-            $pdf->Cell($w[3], 6, utf8_encode($row->VOTOS), 'LR', 0, 'R', $fill,'',$stretch);
+    if(isset ($result)) {
+        foreach($result as $row) {
+            $pdf->Cell($w[0], 6, str_pad($row['codpartido'], 3, '0', STR_PAD_LEFT), 'LR', 0, 'L', $fill,'',$stretch);
+            $pdf->Cell($w[1], 6, utf8_encode($row['descripcion']), 'LR', 0, 'L', $fill,'',$stretch);
+            $pdf->Cell($w[2], 6, number_format($row['numcurules']), 'LR', 0, 'R', $fill,'',$stretch);
+            $pdf->Cell($w[3], 6, number_format($row['votos']), 'LR', 0, 'R', $fill,'',$stretch);
             $pdf->Ln();
             $fill=!$fill;
+        }
     }
     $pdf->Cell(array_sum($w), 0, '', 'T');
-
-    ibase_free_result($result);
-    ibase_close($firebird);
 
     //Guardo el documento en el servidor
     $pdf->Output('ResumenCurulesAsignadas.pdf', 'D');
