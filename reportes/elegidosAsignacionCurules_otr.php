@@ -41,14 +41,16 @@
         
 	//Configurado del contenido
 	$cont = 6;
-	foreach ($result as $row) {
-            $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont, str_pad($row['codpartido'],3,'0',STR_PAD_LEFT) . '-' . str_pad($row['codcandidato'],3,'0',STR_PAD_LEFT));
-            $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, utf8_encode($row['nombres']));
-            $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, number_format($row['apellidos']));
-            $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont, utf8_encode($row['descripcion']));
-            $objPHPExcel->getActiveSheet()->setCellValue('E'.$cont, number_format($row['votos']));
-            $cont++;
-	}
+        if(isset ($result)){
+            foreach ($result as $row) {
+                $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont, str_pad($row['codpartido'],3,'0',STR_PAD_LEFT) . '-' . str_pad($row['codcandidato'],3,'0',STR_PAD_LEFT));
+                $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, utf8_encode($row['nombres']));
+                $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, number_format($row['apellidos']));
+                $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont, utf8_encode($row['descripcion']));
+                $objPHPExcel->getActiveSheet()->setCellValue('E'.$cont, number_format($row['votos']));
+                $cont++;
+            }
+        }
 	
 	$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
 	$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
