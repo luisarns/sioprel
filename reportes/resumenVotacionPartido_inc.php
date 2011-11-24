@@ -4,7 +4,7 @@
     $codcordivi = $coddepto.$codmunip;
 
     $query =<<<EOF
-        SELECT c2.codpartido, c2.descripcion as descripcion, sum(c1.votos) as votos
+        SELECT c2.codpartido as codpartido, c2.descripcion as descripcion, sum(c1.votos) as votos
         FROM
         (SELECT mv.idcandidato,sum(mv.numvotos) as votos
             FROM pmesas pm, mvotos mv

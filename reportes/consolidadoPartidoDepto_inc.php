@@ -25,7 +25,7 @@
     
     
     $queryVotacionPartido =<<<VTP
-        SELECT pp.codpartido, pp.descripcion, sum(mv.numvotos) as votos
+        SELECT pp.codpartido as codpartido, pp.descripcion as descripcion, sum(mv.numvotos) as votos
         FROM ppartidos pp, pcandidatos pc, pdivipol pd, pmesas pm, mvotos mv
         WHERE pp.codpartido = pc.codpartido
         AND pc.coddivipol = '$coddivcorpo'

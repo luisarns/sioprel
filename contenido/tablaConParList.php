@@ -60,7 +60,7 @@
     }
 
     $query =<<<EOF
-    SELECT pp.codpartido as codigo ,pp.descripcion, SUM(mv.numvotos) as votos
+    SELECT pp.codpartido as codigo ,pp.descripcion as descripcion, SUM(mv.numvotos) as votos
     FROM PPARTIDOS pp, PMESAS pm, PCANDIDATOS pc, MVOTOS mv, pdivipol pd
     WHERE pp.codpartido = pc.codpartido $texto1
     AND pd.coddivipol LIKE '$coddivipol' || '%' AND pd.codnivel = 4
@@ -110,7 +110,7 @@ FEO;
     $txt1 = ($hayMesa)? " AND pm.codtransmision = " . $_GET['mesa'] : "";
     
     $queryVotosEsp =<<<OEF
-    SELECT pc.codtipovoto,pc.descripcion, SUM(mv.numvotos) as votos
+    SELECT pc.codtipovoto as codtipovoto ,pc.descripcion as descripcion, SUM(mv.numvotos) as votos
     FROM PMESAS pm, PTIPOSVOTOS pc, MVOTOSESPECIALES mv, pdivipol pd
     WHERE pd.coddivipol LIKE '$coddivipol' || '%' 
     AND pd.codnivel = 4
@@ -146,7 +146,7 @@ OEF;
     $query1 = null;
     if (isset($_GET['detallado']) && $_GET['detallado'] == 1) {
         $query1 =<<<EOR
-            SELECT pc.codpartido,pc.codcandidato, pc.nombres ||' '|| CASE WHEN pc.codcandidato = 0 
+            SELECT pc.codpartido as codpartido,pc.codcandidato as codcandidato, pc.nombres ||' '|| CASE WHEN pc.codcandidato = 0 
             THEN '(LISTA)' ELSE pc.apellidos END as descripcion, SUM(mv.numvotos) as votos
             FROM PMESAS pm, PCANDIDATOS pc, MVOTOS mv
             WHERE pm.codtransmision = mv.codtransmision $texto1

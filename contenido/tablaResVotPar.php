@@ -11,7 +11,7 @@
     $urlReportes .= "&formato=";
 
     $query =<<<EOF
-    SELECT c2.codpartido, c2.descripcion as descripcion, sum(c1.votos) as votos
+    SELECT c2.codpartido, c2.descripcion, sum(c1.votos) as votos
     FROM
        (SELECT mv.idcandidato,sum(mv.numvotos) as votos
             FROM pmesas pm, mvotos mv
@@ -71,8 +71,8 @@ EOF;
     <?php if (isset($result)) { ?>
         <?php foreach($result as $row) { ?>
             <tr>
-                <td><?php echo str_pad($row['codpartido'], 3, '0', STR_PAD_LEFT)?></td>
-                <td><?php echo htmlentities($row['descripcion'])?></td>
+                <td><?php echo str_pad($row['c2.codpartido'], 3, '0', STR_PAD_LEFT)?></td>
+                <td><?php echo htmlentities($row['c2.descripcion'])?></td>
                 <td class="numero"><?php echo number_format($row['votos'])?></td>
             </tr>
         <?php } ?>

@@ -20,7 +20,7 @@
     $urlReportes .="&formato=";
     
     $query =<<<EOF
-    SELECT pp.codpartido, pc.codcandidato, pc.nombres, pc.apellidos, pp.descripcion, sum(mv.numvotos) as votos
+    SELECT pp.codpartido as codpartido, pc.codcandidato as codcandidato, pc.nombres as nombres, pc.apellidos as apellidos, pp.descripcion as descripcion, sum(mv.numvotos) as votos
     FROM ppartidos pp, pcandidatos pc, pmesas pm, mvotos mv, pdivipol pd
     WHERE pc.coddivipol LIKE '$codcordiv'   || '%' AND pc.codnivel = $nivcorpo AND pc.codcorporacion = $codcorporacion
     AND pd.coddivipol   LIKE '$coddivcorto' || '%' AND pm.codtransmision = mv.codtransmision

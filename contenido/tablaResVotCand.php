@@ -82,10 +82,10 @@ EOF;
 	<?php if (isset($result)) { ?>
             <?php foreach ($result as $row) { ?>
                     <tr>
-                        <td><?php echo str_pad($row['codpartido'], 3, '0', STR_PAD_LEFT) . '-' . str_pad($row['codcandidato'], 3, '0', STR_PAD_LEFT) ?></td>
-                        <td><?php echo htmlentities($row['nombres'])?></td>
-                        <td><?php echo htmlentities($row['apellidos'])?></td>
-                        <td><?php echo htmlentities($row['descripcion'])?></td>
+                        <td><?php echo str_pad($row['pc.codpartido'], 3, '0', STR_PAD_LEFT) . '-' . str_pad($row['pc.codcandidato'], 3, '0', STR_PAD_LEFT) ?></td>
+                        <td><?php echo htmlentities($row['pc.nombres'])?></td>
+                        <td><?php echo htmlentities($row['pc.apellidos'])?></td>
+                        <td><?php echo htmlentities($row['pp.descripcion'])?></td>
                         <td class="numero"><?php echo number_format($row['votos'])?></td>
                     </tr>
             <?php } ?>

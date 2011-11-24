@@ -28,7 +28,7 @@
     }
 
     $query =<<<EOF
-        SELECT pp.codpartido as codigo ,pp.descripcion, SUM(mv.numvotos) as votos
+        SELECT pp.codpartido as codigo ,pp.descripcion as descripcion, SUM(mv.numvotos) as votos
         FROM PPARTIDOS pp, PMESAS pm, PCANDIDATOS pc, MVOTOS mv, pdivipol pd
         WHERE pp.codpartido = pc.codpartido $texto1
         AND pd.coddivipol LIKE '$coddivipol' || '%' AND pd.codnivel = 4

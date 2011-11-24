@@ -27,7 +27,7 @@
     
     
     $queryInscritos = <<<PAV
-        SELECT pc.codcandidato, pc.nombres, pc.apellidos , pc.elegido
+        SELECT pc.codcandidato as codcandidato, pc.nombres as nombres, pc.apellidos as apellidos , pc.elegido as elegido
         FROM ppartidos pp, pcandidatos pc
         WHERE pp.codpartido = pc.codpartido
         AND pp.codpartido = $codpartido

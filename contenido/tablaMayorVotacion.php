@@ -84,8 +84,8 @@ EOF;
             <?php if (isset ($result)) { ?>
                 <?php foreach($result as $row) { ?>
                     <tr>
-                        <td><?php echo str_pad($row['codpartido'], 3, '0', STR_PAD_LEFT) ?></td>
-                        <td><?php echo htmlentities($row['descripcion'])?></td>
+                        <td><?php echo str_pad($row['pp.codpartido'], 3, '0', STR_PAD_LEFT) ?></td>
+                        <td><?php echo htmlentities($row['pp.descripcion'])?></td>
                         <td class="numero"><?php echo number_format($row['votos'])?></td>
                     </tr>
                 <?php } ?>

@@ -19,7 +19,7 @@
     }
     
     $query =<<<EOF
-        SELECT pp.codpartido, pp.descripcion, pcp.numcurules, pcp.totalvotos
+        SELECT pp.codpartido as codpartido , pp.descripcion as descripcion, pcp.numcurules as numcurules, pcp.totalvotos as totalvotos
         FROM ppartidos pp, pcurulespartidos pcp
         WHERE pp.codpartido = pcp.codpartido 
         AND pcp.coddivipol = '$coddivipol'

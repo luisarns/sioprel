@@ -24,8 +24,8 @@
     }
 
     $query=<<<EOF
-        SELECT pc.codpartido, pc.codcandidato  ,pc.nombres, 
-        pc.apellidos ,pp.descripcion,sum(mv.numvotos) as votos
+        SELECT pc.codpartido as codpartido, pc.codcandidato as codcandidato ,pc.nombres as nombres, 
+        pc.apellidos as apellidos ,pp.descripcion as descripcion ,sum(mv.numvotos) as votos
         FROM pmesas pm, mvotos mv, ppartidos pp, pcandidatos pc, pdivipol pd
         WHERE pd.coddivipol = pm.coddivipol AND pd.codnivel = 4
         AND pp.codpartido = pc.codpartido
