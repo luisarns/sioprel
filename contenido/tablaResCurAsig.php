@@ -34,6 +34,7 @@ EOF;
     $sqlite = new SPSQLite($pathDB);
     $sqlite->query($query);
     $result = $sqlite->returnRows();
+    
 ?>
 
 <table>
@@ -74,13 +75,13 @@ EOF;
             <th class="numero">No. Curules</th>
             <th class="numero">Votos</th>
 	</tr>
-        <?php if (isset ($result)) { ?>
+        <?php if (isset($result)) { ?>
             <?php foreach($result as $row) { ?>
                     <tr>
-                        <td><?php echo str_pad($row['codpartido'], 3, '0', STR_PAD_LEFT) ?></td>
-                        <td><?php echo htmlentities($row['descripcion'])?></td>
-                        <td class="numero"><?php echo $row['numcurules']?></td>
-                        <td class="numero"><?php echo number_format($row['votos'])?></td>
+                        <td><?php echo str_pad($row['pp.codpartido'], 3, '0', STR_PAD_LEFT) ?></td>
+                        <td><?php echo htmlentities($row['pp.descripcion'])?></td>
+                        <td class="numero"><?php echo number_format($row['pcp.numcurules'])?></td>
+                        <td class="numero"><?php echo number_format($row['pcp.totalvotos'])?></td>
                     </tr>
             <?php } ?>
         <?php } ?>
