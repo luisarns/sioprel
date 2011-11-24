@@ -12,7 +12,6 @@
     $coddivipol = $_GET['departamento'];
     $codnivel   = 1;
 
-
     if (isset($_GET['municipio']) && $_GET['municipio'] != "-" ){
         $coddivipol .= $_GET['municipio'];
         $codnivel = 2;
@@ -31,7 +30,6 @@
     }
 
     $urlReportes.="&nivcorpo=$nivcorpo&coddivipol=$coddivipol&codnivel=$codnivel&opcion=1";
-
     $codcordiv = substr($coddivipol, 0, getNumDigitos($nivcorpo));
     
     $hayMesa = false;
@@ -74,6 +72,9 @@
     ORDER BY votos DESC
 EOF;
     
+    echo 'INICIO Consolidado Partido Lista <br/>';
+    echo $query;
+    echo '<br/>FIN<br/>';
 /**
  * Consultar la votacion especial, para sumar al total de votos. Obtener 
  * el potencial en funcion de la divipol y la mesa seleccionada

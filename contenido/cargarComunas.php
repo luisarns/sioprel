@@ -13,11 +13,11 @@
         
         echo "Comuna : <select id='selcomuna' name='comuna' onChange='comunaCargaPuesto(this.value)' >";
         echo "<option value = '-' >-Ninguna-</option>";
-        
-		foreach ($rs as $row) {
-			echo "<option value = '" . $row['idcomuna'] . "'>" . $row['codcomuna'] . "-" . utf8_encode($row['descripcion']) . "</option>";
-		}
-        
+        if(isset ($rs)){
+            foreach ($rs as $row) {
+                    echo "<option value = '" . $row['idcomuna'] . "'>" . $row['codcomuna'] . "-" . utf8_encode($row['descripcion']) . "</option>";
+            }
+        }
         echo '</select>';
 
         $sqlite->close(); 
