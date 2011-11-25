@@ -28,6 +28,7 @@
   </div>
 </div>
 
+<?php define('FILE_SQLITE_CONECCION','conexionSQlite3.php') ?>
 
 <div id="contentbg">
   <div id="contentblank">

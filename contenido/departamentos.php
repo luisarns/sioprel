@@ -1,5 +1,5 @@
 <?php
-    include_once 'conexionSQlite.php';
+    include_once FILE_SQLITE_CONECCION;
     
     $sqlite = new SPSQLite($pathDB);
     $query = 'SELECT coddivipol,coddepartamento,descripcion FROM pdivipol ' 

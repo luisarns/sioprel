@@ -1,5 +1,5 @@
 <?php
-    include_once 'conexionSQlite.php';
+    include_once FILE_SQLITE_CONECCION;
 
     $txt = "";
     if (isset($tipoEleccion)) {
@@ -15,13 +15,13 @@
     
     $corporaciones = array();
 
-	foreach($rs as $row) {
-		$corporacion = array();
-		$corporacion['id'] = $row['codcorporacion'];
-		$corporacion['nombre'] = utf8_encode($row['descripcion']);
-		array_push($corporaciones, $corporacion);
-	}
-        
+    foreach($rs as $row) {
+            $corporacion = array();
+            $corporacion['id'] = $row['CODCORPORACION'];
+            $corporacion['nombre'] = utf8_encode($row['DESCRIPCION']);
+            array_push($corporaciones, $corporacion);
+    }
+
     $sqlite->close(); 
     unset($sqlite);
     
