@@ -1,13 +1,12 @@
 <?php
-    require('conexionSQlite.php');
+    require('conexionSQlite3.php');
     include_once('FunDivipol.php');
     
     $urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repConParDepto.php" . $_SERVER['REQUEST_URI'];
     $urlDetalles = "http://" . $_SERVER['HTTP_HOST'] . "/contenido/tablaConParCanDepto.php" . $_SERVER['REQUEST_URI'];
     
     $urlReportes .= "&formato=";
-    $urlDetalles .= "&codpartido="; //la url para mostrar la informacion detallada de los candidatos por partidos
-    
+    $urlDetalles .= "&codpartido=";
     
     $corporacion  = $_GET['corporacion'];
     $departamento = $_GET['departamento'];
@@ -30,7 +29,6 @@
     
     $nivcorpo = getNivelCorporacion($corporacion);
     $coddivcorpo = str_pad(substr($coddivipol, 0, getNumDigitos($nivcorpo)),9,'0');
-    
     
     $queryVotacionPartido =<<<VTP
         SELECT pp.codpartido as codpartido, pp.descripcion as descripcion, sum(mv.numvotos) as votos
@@ -74,8 +72,6 @@ PAV;
         GROUP BY pp.codpartido, pp.descripcion
 PEL;
     
-    
-    //Ejecutar las consultas contra la base de datos
     $sqlite = new SPSQLite($pathDB);
     
     $sqlite->query($queryVotacionPartido);
@@ -94,9 +90,6 @@ PEL;
         }
     }
     
-
-    
-    //Asigno el numero de candidatos avalados al partido
     $sqlite->query($queryPartidoAvalados);
     $resultPartidoAvalados = $sqlite->returnRows();
     $arrAvalados = array();
@@ -112,7 +105,6 @@ PEL;
         }
     }
     
-    //Asigno el numero de candidatos elegidos al partido
     $sqlite->query($queryPartidoElegidos);
     $resultPartidoElegidos = $sqlite->returnRows();
     $arrElegidos = array();

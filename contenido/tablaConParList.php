@@ -1,5 +1,5 @@
 <?php
-    require('conexionSQlite.php');
+    require('conexionSQlite3.php');
     include_once('FunDivipol.php');
 
     $urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repConPartidolista.php?";
@@ -11,6 +11,8 @@
 
     $coddivipol = $_GET['departamento'];
     $codnivel   = 1;
+    
+    
 
     if (isset($_GET['municipio']) && $_GET['municipio'] != "-" ){
         $coddivipol .= $_GET['municipio'];
@@ -61,7 +63,7 @@
     SELECT pp.codpartido as codigo ,pp.descripcion as descripcion, SUM(mv.numvotos) as votos
     FROM PPARTIDOS pp, PMESAS pm, PCANDIDATOS pc, MVOTOS mv, pdivipol pd
     WHERE pp.codpartido = pc.codpartido $texto1
-    AND pd.coddivipol LIKE '$coddivipol' || '%' AND pd.codnivel = 4
+    AND pd.coddivipol LIKE '$codcordiv' || '%' AND pd.codnivel = 4
     AND pm.coddivipol = pd.coddivipol
     AND pm.codtransmision = mv.codtransmision $texto2
     AND pc.idcandidato = mv.idcandidato $texto3
@@ -71,14 +73,7 @@
     GROUP BY pp.codpartido, pp.descripcion
     ORDER BY votos DESC
 EOF;
-    
-    echo 'INICIO Consolidado Partido Lista <br/>';
-    echo $query;
-    echo '<br/>FIN<br/>';
-/**
- * Consultar la votacion especial, para sumar al total de votos. Obtener 
- * el potencial en funcion de la divipol y la mesa seleccionada
- */
+   
     
     $queryPotencial = <<<FEO
         SELECT potencialf,potencialm 
@@ -141,29 +136,6 @@ OEF;
     //Votos especiales
     $sqlite->query($queryVotosEsp);
     $resultVotosEsp  = $sqlite->returnRows();
-    
-
-    $result1 = null;
-    $query1 = null;
-    if (isset($_GET['detallado']) && $_GET['detallado'] == 1) {
-        $query1 =<<<EOR
-            SELECT pc.codpartido as codpartido,pc.codcandidato as codcandidato, pc.nombres ||' '|| CASE WHEN pc.codcandidato = 0 
-            THEN '(LISTA)' ELSE pc.apellidos END as descripcion, SUM(mv.numvotos) as votos
-            FROM PMESAS pm, PCANDIDATOS pc, MVOTOS mv
-            WHERE pm.codtransmision = mv.codtransmision $texto1
-            AND pc.idcandidato = mv.idcandidato $texto2
-            AND pc.coddivipol LIKE '$codcordiv' || '%'
-            AND pm.coddivipol LIKE '$coddivipol'  || '%'
-            AND pm.codcorporacion = $codcorporacion $txt4
-            AND pc.codnivel = $nivcorpo
-            GROUP BY pc.codpartido,pc.codcandidato,descripcion
-            ORDER BY votos DESC
-EOR;
-
-        $sqlite->query($query1);
-        $result1 = $sqlite->returnRows();
-        $urlReportes.="&detallado=".$_GET['detallado'];
-    }
 
     $totalVotos = 0;
     $partidos = array();
@@ -175,7 +147,6 @@ EOR;
         }
     }
 
-    
     $votacionEspecial = array();
     
     if(isset($resultVotosEsp)){
@@ -188,19 +159,13 @@ EOR;
     $urlReportes.="&formato=";
 
     $candidatos = array();
-    if(isset($result1)) {
-        foreach($result1 as $row) {
-            array_push($candidatos,$row);
-        }
-    }
-    
+        
     $participacion = round((($totalVotos*100)/$potencial),2);
     $asbtencion  = round(100 - $participacion,2);
-?>
-
-<?php
+    
     $sqlite->close(); 
     unset($sqlite);
+    
 ?>
 
 <table>
@@ -212,7 +177,6 @@ EOR;
     </tr>
 </table>
 
-<!-- Para mostra la astencion y la participacion -->
 <table width="100%" align="center" border="1" cellspacing="3" cellpadding="0" class="regSuaveLeft">
      <tr>
         <td><strong>Potencial</strong></td>
@@ -246,7 +210,6 @@ EOR;
 	<tr><td class="regOscuro" align="left"><STRONG>&nbsp;</STRONG></td></tr>
 </table>
 
-
 <table width="100%" align="center" border="0" cellspacing="3" cellpadding="0" class="regSuaveRultados">
 	<tr>
 		<th>C&oacute;digo</th>
@@ -254,44 +217,35 @@ EOR;
 		<th class="numero">Votos</th>
                 <th class="numero">Participaci&oacute;n(%)</th>
 	</tr>
+        
 	<?php foreach($partidos as $row) { ?>
-		<tr>
-			<td><?php echo str_pad($row['codigo'], 3, '0', STR_PAD_LEFT)?></td>
-			<td><?php echo htmlentities($row['descripcion'])?></td>
-			<td class="numero"><?php echo number_format($row['votos'])?></td>
-                        <td class="numero"><?php echo round($row['votos']*100/$potencial,2) . '%' ?></td>
-			
-		</tr>
-		<?php 
-			foreach($candidatos as $candidato) { 
-				if($candidato['codpartido'] == $row['codigo']) { ?>
-					<tr>
-					<td><?php echo str_pad($row['codigo'], 3, '0', STR_PAD_LEFT) . '-' . str_pad($candidato['codcandidato'], 3, '0', STR_PAD_LEFT) ?></td>
-					<td><?php echo htmlentities($candidato['descripcion'])?></td>
-					<td><?php echo number_format($candidato['votos'])?></td>
-                                        <td>&nbsp;</td>
-					</tr>
-		<?php }} ?>
+                <tr>
+                    <td><?php echo str_pad($row['CODIGO'], 3, '0', STR_PAD_LEFT)?></td>
+                    <td><?php echo htmlentities($row['DESCRIPCION'])?></td>
+                    <td class="numero"><?php echo number_format($row['VOTOS'])?></td>
+                    <td class="numero"><?php echo round($row['VOTOS']*100/$potencial,2) . '%' ?></td>
+                </tr>
 	<?php } ?>
+                
         <?php foreach ($votacionEspecial as $row ) { ?>
                 <tr>
                     <td>&nbsp;</td>
-                    <td><strong><?php echo htmlentities($row['descripcion'])?></strong></td>
-                    <td class="numero"><?php echo number_format($row['votos'])?></td>
-                    <td class="numero"><?php echo round($row['votos']*100/$potencial,2) . '%' ?></td>
+                    <td><strong><?php echo htmlentities($row['DESCRIPCION'])?></strong></td>
+                    <td class="numero"><?php echo number_format($row['VOTOS'])?></td>
+                    <td class="numero"><?php echo round($row['VOTOS']*100/$potencial,2) . '%' ?></td>
                 </tr>
         <?php }?>
+                
 </table>
-
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-	<tr>
-		<td class="regOscuro" align="left">
-			<STRONG>&nbsp;</STRONG>
-		</td>
-	</tr>
+    <tr>
+        <td class="regOscuro" align="left">
+            <STRONG>&nbsp;</STRONG>
+        </td>
+    </tr>
 </table>
-	
+
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr>
 		<td background="../images/ds_comp_bari_gral.jpg">

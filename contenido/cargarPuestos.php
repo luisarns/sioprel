@@ -12,7 +12,7 @@
                 $divipol .= $_GET['zona'];
         }
 
-        require_once 'conexionSQlite.php';
+        require_once 'conexionSQlite3.php';
         
         $sqlite = new SPSQLite($pathDB);
         
@@ -25,7 +25,7 @@
         echo "Puesto : <select id='selpuesto' name='puesto' onChange='cargarMesas(this.value)' >";
         echo "<option value = '-' >-Ninguna-</option>";
         foreach ($rs as $row) {
-            echo "<option value = '" . $row['coddivipol'] . "' >" . str_pad($row['codpuesto'], 2, '0', STR_PAD_LEFT) . '-' . utf8_encode($row['descripcion']) . "</option>";
+            echo "<option value = '" . $row['CODDIVIPOL'] . "' >" . str_pad($row['CODPUESTO'], 2, '0', STR_PAD_LEFT) . '-' . utf8_encode($row['DESCRIPCION']) . "</option>";
         }
         echo "</select>";
 

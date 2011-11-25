@@ -1,5 +1,5 @@
 <?php
-    require('conexionSQlite.php');
+    require('conexionSQlite3.php');
     include_once('FunDivipol.php');
 
     $urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repLisVotaCandidato.php" . $_SERVER['REQUEST_URI'];

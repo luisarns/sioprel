@@ -1,7 +1,7 @@
 <?php
     if (isset($_GET['divipol'])) {
         $codcortodivipol  = $_GET['divipol'];
-        require_once 'conexionSQlite.php';
+        require_once 'conexionSQlite3.php';
 
         $sqlite = new SPSQLite($pathDB);
         
@@ -15,7 +15,7 @@
         echo "<option value = '-' >-Ninguna-</option>";
         if(isset ($rs)){
             foreach ($rs as $row) {
-                    echo "<option value = '" . $row['idcomuna'] . "'>" . $row['codcomuna'] . "-" . utf8_encode($row['descripcion']) . "</option>";
+                echo "<option value = '" . $row['IDCOMUNA'] . "'>" . $row['CODCOMUNA'] . "-" . utf8_encode($row['DESCRIPCION']) . "</option>";
             }
         }
         echo '</select>';

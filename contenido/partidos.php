@@ -1,5 +1,5 @@
 <?php
-    include_once FILE_SQLITE_CONECCION;
+    include_once 'conexionSQlite3.php';
 
     $sqlite = new SPSQLite($pathDB);
     $query = "SELECT CODPARTIDO, DESCRIPCION FROM ppartidos ORDER BY codpartido";

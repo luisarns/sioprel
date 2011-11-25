@@ -1,20 +1,4 @@
 <?php
-    /**
-    * Seleccionar el departamento ya que hay mas de uno, si fuera a nivel 
-    * nacional no tendriamos que dar la opccion de seleccionar nada de la 
-    * divipol ya que solo hay una nacion
-    */
-
-    /**
-    * Consolidado por partido político a nivel departamental. Se debe presentar al frente
-    * de cada partido, un comparativo en donde se aprecien el número de
-    * candidatos avalados, número de candidatos elegidos y la respectiva votación
-    * alcanzada por el partido político. De igual manera, acceder a los respectivos
-    * nombres de ciudadanos inscritos y elegidos por el partido político
-    * 
-    * @author Luis A. Nuñez
-    * @since 2011-Nov-03
-    */
     include_once('departamentos.php');
     include_once('corporaciones.php');
 ?>

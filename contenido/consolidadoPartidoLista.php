@@ -8,7 +8,6 @@
 
 <form name="formPrincipal" method="GET" onSubmit="return validar(this);">
 
-	<!--Tabla imagen titulo superior -->
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" >
             <tr>
                 <td width="5%" background="../images/ds_comp_bars_gral.jpg" >
@@ -23,7 +22,6 @@
             </tr>
 	</table>
 	
-	<!--Tabla imagen gris superior -->
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" >
             <tr>
                 <td class="regOscuro">
@@ -32,7 +30,6 @@
             </tr>
 	</table>
 	
-	<!--Tabla con los campos de filtrado -->
 	<table width="100%" cellspacing="3" cellpadding="0" class="regSuaveLeft">
             
             <tr>
@@ -44,11 +41,9 @@
                         <option value="<?php echo $corporacion['id'] ?>" > <?php echo $corporacion['nombre'] ?> </option>
                         <?php } ?>
                     </select>
-<!--                Detallado&nbsp;<input type="checkbox" value="1" name="detallado"/>-->
                 </td>
             </tr>
 		
-            <!--Fila 2 -->
             <tr>
                 <td>
                     Partido&nbsp;
@@ -60,9 +55,7 @@
                     </select>
                 </td>
             </tr>
-            <!--Fila 2 END-->
-		
-            <!--Fila 3-->
+        
             <tr>
                 <td id="tdDepto" style="display:none">
                     Departamento&nbsp;
@@ -74,7 +67,6 @@
                     </select>
                 </td>
             </tr>
-            <!--Fila 3 END-->
 
             <tr>
                 <td id="etfMunicipio" style="display:none">&nbsp;</td>
@@ -103,17 +95,17 @@
 	</table>
 
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-		<tr>
+            <tr>
 
-			<td background="../images/ds_comp_bari_gral.jpg">
-				<img src="../images/ds_comp_izq_bari_gral.jpg" width="25" height="25">
-			</td>
-			<td background="../images/ds_comp_bari_gral.jpg">&nbsp;</td>
-			<td align="right" background="../images/ds_comp_bari_gral.jpg">
-				<img src="../images/ds_comp_der_bari_gral.jpg" width="25" height="25">
-			</td>
-				
-		</tr>
+                <td background="../images/ds_comp_bari_gral.jpg">
+                    <img src="../images/ds_comp_izq_bari_gral.jpg" width="25" height="25">
+                </td>
+                <td background="../images/ds_comp_bari_gral.jpg">&nbsp;</td>
+                <td align="right" background="../images/ds_comp_bari_gral.jpg">
+                    <img src="../images/ds_comp_der_bari_gral.jpg" width="25" height="25">
+                </td>
+
+            </tr>
 	</table>
 	
 	<input type="hidden" name="opcion"  value="1"/>

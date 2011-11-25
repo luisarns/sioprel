@@ -1,5 +1,5 @@
 <?php
-    require('conexionSQlite.php');
+    require('conexionSQlite3.php');
 
     $urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repResCurAsignadas.php" . $_SERVER['REQUEST_URI'];
     $urlReportes .= "&formato=";

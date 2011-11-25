@@ -4,7 +4,7 @@
     
     if (isset($coddepto) && is_numeric($coddepto) ) {
         
-        require_once 'conexionSQlite.php';
+        require_once 'conexionSQlite3.php';
         
         $sqlite = new SPSQLite($pathDB);
         
@@ -20,8 +20,8 @@
         echo "Municipio&nbsp;<select name='municipio' id='selmunicipio' onChange='$fun(this.value)'>";
         echo "<option value = '-' >-Ninguna-</option>";
         foreach ($rs as $row) {
-            echo "<option value = '" . $row['codmunicipio'] . "' >" . str_pad($row['codmunicipio'], 3, '0', STR_PAD_LEFT) . '-' 
-             . utf8_encode($row['descripcion']) . "</option>";
+            echo "<option value = '" . $row['CODMUNICIPIO'] . "' >" . str_pad($row['CODMUNICIPIO'], 3, '0', STR_PAD_LEFT) . '-' 
+             . utf8_encode($row['DESCRIPCION']) . "</option>";
         }
         echo "</select>";
 
