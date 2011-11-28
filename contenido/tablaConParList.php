@@ -1,5 +1,5 @@
 <?php
-    require('conexionSQlite3.php');
+    require_once('conexionSQlite3.php');
     include_once('FunDivipol.php');
 
     $urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repConPartidolista.php?";
@@ -12,9 +12,7 @@
     $coddivipol = $_GET['departamento'];
     $codnivel   = 1;
     
-    
-
-    if (isset($_GET['municipio']) && $_GET['municipio'] != "-" ){
+    if (isset($_GET['municipio']) && $_GET['municipio'] != "-" ) {
         $coddivipol .= $_GET['municipio'];
         $codnivel = 2;
 
@@ -36,15 +34,19 @@
     
     $hayMesa = false;
     $texto1 = " ";
+    $filtroMesa = "";
     if(isset($_GET['mesa']) && $_GET['mesa'] != "-"){
+        $filtroMesa = " AND codtransmision = '" . $_GET['mesa'] . "'";
         $texto1 = " AND pm.codtransmision = '" . $_GET['mesa'] . "'";
         $urlReportes .= "&codtransmision=" . $_GET['mesa'];
         $hayMesa = true;
     }
 
     $texto2 ="";
+    $filtroComuna = "";
     $hayComuna = false;
     if(isset($_GET['comuna']) && $_GET['comuna'] != "-"){
+        $filtroComuna = " AND idcomuna = ".$_GET['comuna'];
         $texto2 = " AND pc.idcomuna = ".$_GET['comuna'];
         $texto2 .= " AND pd.idcomuna = ".$_GET['comuna'];
         $urlReportes.="&idcomuna=".$_GET['comuna'];
@@ -52,28 +54,35 @@
     }
 
     $texto3 = "";
-    $txt4 = "";
+    $txt3 = "";
+    $filtroPartido = "";
     if(isset($_GET['partido']) && $_GET['partido'] != "-"){
         $texto3 = " AND pp.codpartido = ".$_GET['partido'];
-        $txt4 = "AND pc.codpartido = ".$_GET['partido'];
+        $filtroPartido = "AND pc.codpartido = ".$_GET['partido'];
         $urlReportes.="&codpartido=".$_GET['partido'];   
     }
-
+   
+    //Continuar modificando la consulta en este punto
     $query =<<<EOF
     SELECT pp.codpartido as codigo ,pp.descripcion as descripcion, SUM(mv.numvotos) as votos
-    FROM PPARTIDOS pp, PMESAS pm, PCANDIDATOS pc, MVOTOS mv, pdivipol pd
-    WHERE pp.codpartido = pc.codpartido $texto1
-    AND pd.coddivipol LIKE '$codcordiv' || '%' AND pd.codnivel = 4
-    AND pm.coddivipol = pd.coddivipol
-    AND pm.codtransmision = mv.codtransmision $texto2
-    AND pc.idcandidato = mv.idcandidato $texto3
-    AND pc.coddivipol LIKE '$codcordiv'  || '%'
-    AND pc.codnivel = $nivcorpo
-    AND pm.codcorporacion = $codcorporacion
+    FROM PPARTIDOS pp,
+     ( SELECT coddivipol, codnivel 
+       FROM PDIVIPOL 
+       WHERE coddivipol LIKE '$coddivipol' || '%' AND codnivel = 4 $filtroComuna ) pd,
+     ( SELECT codpartido,idcandidato
+       FROM PCANDIDATOS 
+       WHERE coddivipol LIKE '$codcordiv' || '%' AND codnivel = $nivcorpo $filtroComuna ) pc,
+     ( SELECT codtransmision,coddivipol
+       FROM PMESAS 
+       WHERE codcorporacion = $codcorporacion $filtroMesa ) pm,
+    MVOTOS mv
+    WHERE pp.codpartido = pc.codpartido AND pd.coddivipol = pm.coddivipol $filtroPartido
+    AND pm.codtransmision = mv.codtransmision AND mv.idcandidato = pc.idcandidato
     GROUP BY pp.codpartido, pp.descripcion
-    ORDER BY votos DESC
+    ORDER BY pp.codpartido
 EOF;
-   
+    
+//    echo "Consolidado Partido<br/>" . $query;
     
     $queryPotencial = <<<FEO
         SELECT potencialf,potencialm 
@@ -99,26 +108,31 @@ FEO;
             AND idcomuna = $idcomuna
             GROUP BY codnivel";
     }
-
+    
+//    echo "<br/>Potencial<br/>" . $queryPotencial;
+    
     $circunscripcion = ($codcorporacion != 5)? $nivcorpo : 3;
     $txt1 = ($hayComuna)? " AND pd.idcomuna = " . $_GET['comuna'] : "";
     $txt1 = ($hayPuesto)? "" : "";
     $txt1 = ($hayMesa)? " AND pm.codtransmision = " . $_GET['mesa'] : "";
     
-    $queryVotosEsp =<<<OEF
+    $queryVotosEsp = <<<EOF
     SELECT pc.codtipovoto as codtipovoto ,pc.descripcion as descripcion, SUM(mv.numvotos) as votos
-    FROM PMESAS pm, PTIPOSVOTOS pc, MVOTOSESPECIALES mv, pdivipol pd
-    WHERE pd.coddivipol LIKE '$coddivipol' || '%' 
-    AND pd.codnivel = 4
-    $txt1
-    AND pm.coddivipol = pd.coddivipol
-    AND pm.codcorporacion = $codcorporacion
-    AND pm.codtransmision = mv.codtransmision
-    AND pc.codtipovoto = mv.codtipovoto
-    AND mv.codcircunscripcion = $circunscripcion
-    GROUP BY pc.codtipovoto,pc.descripcion
+    FROM PTIPOSVOTOS pc,
+     ( SELECT codtransmision,coddivipol
+       FROM PMESAS 
+       WHERE codcorporacion = $codcorporacion $filtroMesa ) pm,
+     ( SELECT coddivipol, codnivel 
+       FROM PDIVIPOL 
+       WHERE coddivipol LIKE '$coddivipol' || '%' AND codnivel = 4 $filtroComuna ) pd,
+    MVOTOSESPECIALES mv
+    WHERE pm.coddivipol = pd.coddivipol AND pm.codtransmision = mv.codtransmision
+    AND pc.codtipovoto = mv.codtipovoto AND mv.codcircunscripcion = '$circunscripcion'
+    GROUP BY pc.codtipovoto,pc.descripcion 
     ORDER BY votos DESC
-OEF;
+EOF;
+    
+//    echo "<br/>Votos Especiales<br/>" .  $queryVotosEsp;
     
     //Desde aqui cambia el codigo para la coneccion
     $sqlite = new SPSQLite($pathDB);
@@ -126,33 +140,46 @@ OEF;
     $sqlite->query($query);
     $result = $sqlite->returnRows();
    
+    $sqlite->close();
+    //Fin de la primera consulta
+    
     //Consultas para obtener el potencial
+    $sqlite = new SPSQLite($pathDB);
+    
     $sqlite->query($queryPotencial);
     $row  = $sqlite->returnRows();
-    $potencial = $row[0]['potencialf'] + $row[0]['potencialm'];
+    $potencial = $row[0]['POTENCIALF'] + $row[0]['POTENCIALM'];
+    
+    $sqlite->close();
     //End Potencial
     
-    
     //Votos especiales
+    $sqlite = new SPSQLite($pathDB);
+    
     $sqlite->query($queryVotosEsp);
     $resultVotosEsp  = $sqlite->returnRows();
 
+    ///----------------///
+    $sqlite->close();  ///
+    unset($sqlite);    ///
+    ///----------------///
+    
     $totalVotos = 0;
     $partidos = array();
     
-    if(isset($result)){
+    if (isset($result)) {
         foreach($result as $row) {
             array_push($partidos,$row);
-            $totalVotos += $row['votos'];
+            $totalVotos += $row['VOTOS'];
         }
     }
 
     $votacionEspecial = array();
     
-    if(isset($resultVotosEsp)){
+    if (isset($resultVotosEsp)) {
         foreach($resultVotosEsp as $row) {
             array_push($votacionEspecial,$row);
-            $totalVotos += $row['votos'];
+            $totalVotos += $row['VOTOS'];
         }
     }
     
@@ -162,9 +189,6 @@ OEF;
         
     $participacion = round((($totalVotos*100)/$potencial),2);
     $asbtencion  = round(100 - $participacion,2);
-    
-    $sqlite->close(); 
-    unset($sqlite);
     
 ?>
 
