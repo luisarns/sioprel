@@ -1,10 +1,6 @@
 <?php
-//    $host     = $_SERVER["DOCUMENT_ROOT"].'/../dbdir/siprel.gdb';
-//    $username = 'SYSDBA';
-//    $password = 'masterkey';
-    include_once('conexionSQlite.php');
+    include_once('conexionSQlite3.php');
 
-    
     //Incluir las clases para trabajar con las librerias de tcpdf
     require_once('../tcpdf/config/lang/eng.php');
     require_once('../tcpdf/tcpdf.php');

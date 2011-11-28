@@ -95,28 +95,18 @@ CBC;
             $pdf->Cell($w[3], 6, round(($partido['votos']*100)/$potencial,2) . '%', 'LR', 0, 'R', $fill,'',$stretch);
             $pdf->Ln();
             $fill=!$fill;
-            foreach($candidatos as $candidato) {
-                if($candidato['codpartido'] == $partido['codigo']) {
-                    $pdf->Cell($w[0], 6, str_pad($partido['codigo'], 3, '0', STR_PAD_LEFT) . '-' . str_pad($candidato['codcandidato'], 3, '0', STR_PAD_LEFT), 'LR', 0, 'L', $fill,'',$stretch);
-                    $pdf->Cell($w[1], 6, utf8_encode($candidato['descripcion']), 'LR', 0, 'L', $fill,'',$stretch);
-                    $pdf->Cell($w[2], 6, number_format($candidato['votos']), 'LR', 0, 'R', $fill,'',$stretch);
-                    $pdf->Ln();
-                }
-            }
-            $fill=!$fill;
     }
     
     //Incluye la votacion especial en el pdf
-    $fill = !$fill;
     foreach($votacionEspecial as $votoEsp){
         $pdf->Cell($w[0], 6, '', 'LR', 0, 'L', $fill,'',$stretch);
         $pdf->Cell($w[1], 6, utf8_encode($votoEsp['descripcion']), 'LR', 0, 'L', $fill,'',$stretch);
         $pdf->Cell($w[2], 6, number_format($votoEsp['votos']), 'LR', 0, 'R', $fill,'',$stretch);
         $pdf->Cell($w[3], 6, round(($votoEsp['votos']*100)/$potencial,2) . '%', 'LR', 0, 'R', $fill,'',$stretch);
         $pdf->Ln();
+        $fill = !$fill;
     }
     $pdf->Cell(array_sum($w), 0, '', 'T');
-
 
     //Guardo el documento en el servidor
     $pdf->Output('consolidadoPartidoLista.pdf', 'D');

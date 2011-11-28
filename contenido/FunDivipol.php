@@ -48,7 +48,7 @@
         $inDivipol = '(' . implode(',',$inArrDivipol) . ')';
         $inNivel = '(' . implode(',',$inArrNivel) . ')';
 
-        $queryDivipoles = "SELECT descripcion, codnivel "
+        $queryDivipoles = "SELECT descripcion as descripcion , codnivel as codnivel "
                         . "FROM pdivipol "
                         . "WHERE coddivipol in $inDivipol "
                         . "AND codnivel in $inNivel "

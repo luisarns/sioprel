@@ -1,7 +1,6 @@
 <?php
     require_once('configuracionOTR.php');
     require_once('consolidadoPartidoLista_inc.php');
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     $objPHPExcel = new PHPExcel();
@@ -74,7 +73,6 @@
     $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
     $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
     //Fin del contenido
-
 
     //Creando el escritor en funcion del formato al que se quiera exportar el documento
     switch ($_GET['formato']) {
