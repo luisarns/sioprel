@@ -79,13 +79,13 @@
     WHERE pp.codpartido = pc.codpartido AND pd.coddivipol = pm.coddivipol $filtroPartido
     AND pm.codtransmision = mv.codtransmision AND mv.idcandidato = pc.idcandidato
     GROUP BY pp.codpartido, pp.descripcion
-    ORDER BY pp.codpartido
+    ORDER BY votos DESC
 EOF;
     
 //    echo "Consolidado Partido<br/>" . $query;
     
     $queryPotencial = <<<FEO
-        SELECT potencialf,potencialm 
+        SELECT potencialf ,potencialm 
         FROM pdivipol
         WHERE coddivipol LIKE '$coddivipol' || '%'
         AND codnivel = $codnivel 
@@ -94,14 +94,14 @@ FEO;
     if ($hayMesa) {
         $codtransmision = $_GET['mesa'];
         $queryPotencial = "
-            SELECT numvotos as potencialf, 0 potencialm
+            SELECT numvotos as POTENCIALF, 0 POTENCIALM
             FROM ptiposmesas pt,pmesas pm
             WHERE pm.codtransmision = '$codtransmision'
             AND pm.codtipo = pt.codtipo";
     } else if ($hayComuna && !$hayPuesto) {
         $idcomuna = $_GET['comuna'];
         $queryPotencial = "
-            SELECT sum(potencialf) as potencialf,sum(potencialm) as potencialm
+            SELECT sum(potencialf) as POTENCIALF,sum(potencialm) as POTENCIALM
             FROM pdivipol
             WHERE coddivipol LIKE '$coddivipol' || '%'
             AND codnivel = 4 
@@ -170,7 +170,7 @@ EOF;
     if (isset($result)) {
         foreach($result as $row) {
             array_push($partidos,$row);
-            $totalVotos += $row['VOTOS'];
+            $totalVotos += $row['votos'];
         }
     }
 
@@ -179,17 +179,18 @@ EOF;
     if (isset($resultVotosEsp)) {
         foreach($resultVotosEsp as $row) {
             array_push($votacionEspecial,$row);
-            $totalVotos += $row['VOTOS'];
+            $totalVotos += $row['votos'];
         }
     }
     
     $urlReportes.="&formato=";
 
     $candidatos = array();
-        
+    
     $participacion = round((($totalVotos*100)/$potencial),2);
     $asbtencion  = round(100 - $participacion,2);
     
+
 ?>
 
 <table>
@@ -244,19 +245,19 @@ EOF;
         
 	<?php foreach($partidos as $row) { ?>
                 <tr>
-                    <td><?php echo str_pad($row['CODIGO'], 3, '0', STR_PAD_LEFT)?></td>
-                    <td><?php echo htmlentities($row['DESCRIPCION'])?></td>
-                    <td class="numero"><?php echo number_format($row['VOTOS'])?></td>
-                    <td class="numero"><?php echo round($row['VOTOS']*100/$potencial,2) . '%' ?></td>
+                    <td><?php echo str_pad($row['codigo'], 3, '0', STR_PAD_LEFT)?></td>
+                    <td><?php echo htmlentities($row['descripcion'])?></td>
+                    <td class="numero"><?php echo number_format($row['votos'])?></td>
+                    <td class="numero"><?php echo round($row['votos']*100/$potencial,2) . '%' ?></td>
                 </tr>
 	<?php } ?>
                 
         <?php foreach ($votacionEspecial as $row ) { ?>
                 <tr>
                     <td>&nbsp;</td>
-                    <td><strong><?php echo htmlentities($row['DESCRIPCION'])?></strong></td>
-                    <td class="numero"><?php echo number_format($row['VOTOS'])?></td>
-                    <td class="numero"><?php echo round($row['VOTOS']*100/$potencial,2) . '%' ?></td>
+                    <td><strong><?php echo htmlentities($row['descripcion'])?></strong></td>
+                    <td class="numero"><?php echo number_format($row['votos'])?></td>
+                    <td class="numero"><?php echo round($row['votos']*100/$potencial,2) . '%' ?></td>
                 </tr>
         <?php }?>
                 

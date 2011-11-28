@@ -17,7 +17,7 @@
         echo "<option value = '-' >-Ninguna-</option>";
         if(isset ($rs)) {
             foreach ($rs as $row) {
-                echo "<option value = '" . $row['CODTRANSMICION'] . "' >" . $row['CODMESA'] . "</option>";
+                echo "<option value = '" . $row['CODTRANSMISION'] . "' >" . $row['CODMESA'] . "</option>";
             }
         }         
         echo "</select>";
