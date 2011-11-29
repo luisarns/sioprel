@@ -11,24 +11,24 @@
     $urlReportes .= "&formato=";
 
     $query =<<<EOF
-    SELECT c2.codpartido, c2.descripcion, sum(c1.votos) as votos
-    FROM
-       (SELECT mv.idcandidato,sum(mv.numvotos) as votos
-            FROM pmesas pm, mvotos mv
-            WHERE pm.codtransmision = mv.codtransmision
-            AND pm.coddivipol LIKE '$codcordivi' || '%'
-            GROUP BY mv.idcandidato) c1,
-       (SELECT pp.codpartido,pp.descripcion,pc.idcandidato
-            FROM ppartidos pp, pcandidatos pc
-            WHERE pc.codpartido = pp.codpartido) c2
-    WHERE c1.idcandidato = c2.idcandidato
-    GROUP BY c2.codpartido,c2.descripcion ORDER BY c2.codpartido
+    SELECT pp.codpartido as codpartido, pp.descripcion as descripcion, sum(dd.numvotos) as votos
+    FROM PPARTIDOS pp, PCANDIDATOS  pc,       
+     ( SELECT idcandidato,numvotos
+       FROM DDETALLEBOLETIN
+    WHERE coddivipol LIKE '$codcordivi' || '%' ) dd 
+    WHERE pp.codpartido = pc.codpartido AND pc.idcandidato = dd.idcandidato
+    GROUP BY pp.codpartido, pp.descripcion
+    ORDER BY pp.codpartido
 EOF;
-    
+	
+	// echo "<br/>" . $query . "<br/>";
+	
     $sqlite = new SPSQLite($pathDB);
     $sqlite->query($query);
     $result = $sqlite->returnRows();  
-    
+    $sqlite->close(); 
+    unset($sqlite);
+	
 ?>
 
 <table>
@@ -71,8 +71,8 @@ EOF;
     <?php if (isset($result)) { ?>
         <?php foreach($result as $row) { ?>
             <tr>
-                <td><?php echo str_pad($row['c2.codpartido'], 3, '0', STR_PAD_LEFT)?></td>
-                <td><?php echo htmlentities($row['c2.descripcion'])?></td>
+                <td><?php echo str_pad($row['codpartido'], 3, '0', STR_PAD_LEFT)?></td>
+                <td><?php echo htmlentities($row['descripcion'], ENT_QUOTES | ENT_IGNORE, "UTF-8")?></td>
                 <td class="numero"><?php echo number_format($row['votos'])?></td>
             </tr>
         <?php } ?>
@@ -99,7 +99,3 @@ EOF;
 	</tr>
 </table>
 
-<?php 
-    $sqlite->close(); 
-    unset($sqlite);
-?>
