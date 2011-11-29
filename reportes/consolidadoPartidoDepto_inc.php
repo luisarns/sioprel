@@ -10,39 +10,57 @@
         $codnivel += 1; 
     }
     
-    $txt = "";
     $txt1 = "";
+    $filtroComuna = "";
     $hayComuna = false;
     if ($_GET['comuna'] !='-') {
-        $txt = " AND pd.idcomuna = " . $_GET['comuna'];
-        $txt .= " AND pc.idcomuna = " . $_GET['comuna'];
+        $filtroComuna = " AND idcomuna = " . $_GET['comuna'];
         $txt1 = " AND pc.idcomuna = " . $_GET['comuna'];
         $hayComuna = true;
     }
     
     $nivcorpo = getNivelCorporacion($corporacion);
+    $codcorpordivipol = substr($coddivipol, 0, getNumDigitos($nivcorpo));
     $coddivcorpo = str_pad(substr($coddivipol, 0, getNumDigitos($nivcorpo)),9,'0');
     
     
+//    $queryVotacionPartido =<<<VTP
+//        SELECT pp.codpartido as codpartido, pp.descripcion as descripcion, sum(mv.numvotos) as votos
+//        FROM ppartidos pp, pcandidatos pc, pdivipol pd, pmesas pm, mvotos mv
+//        WHERE pp.codpartido = pc.codpartido
+//        AND pc.coddivipol = '$coddivcorpo'
+//        AND pd.coddivipol LIKE '$coddivipol' || '%'
+//        AND pd.codnivel = 4
+//        AND pd.coddivipol = pm.coddivipol
+//        AND pc.codnivel = $nivcorpo
+//        AND pc.codcorporacion = $corporacion
+//        AND pm.codcorporacion = $corporacion
+//        AND pm.codtransmision = mv.codtransmision
+//        AND pc.idcandidato = mv.idcandidato
+//        $txt
+//        GROUP BY pp.codpartido, pp.descripcion
+//VTP;
+    
     $queryVotacionPartido =<<<VTP
-        SELECT pp.codpartido as codpartido, pp.descripcion as descripcion, sum(mv.numvotos) as votos
-        FROM ppartidos pp, pcandidatos pc, pdivipol pd, pmesas pm, mvotos mv
-        WHERE pp.codpartido = pc.codpartido
-        AND pc.coddivipol = '$coddivcorpo'
-        AND pd.coddivipol LIKE '$coddivipol' || '%'
-        AND pd.codnivel = 4
-        AND pd.coddivipol = pm.coddivipol
-        AND pc.codnivel = $nivcorpo
-        AND pc.codcorporacion = $corporacion
-        AND pm.codcorporacion = $corporacion
-        AND pm.codtransmision = mv.codtransmision
-        AND pc.idcandidato = mv.idcandidato
-        $txt
-        GROUP BY pp.codpartido, pp.descripcion
+    SELECT pp.codpartido as codpartido, pp.descripcion as descripcion, sum(dd.numvotos) as votos
+    FROM PPARTIDOS pp, 
+         ( SELECT codpartido,idcandidato 
+           FROM PCANDIDATOS 
+           WHERE codcorporacion = $corporacion
+           AND coddivipol LIKE '$codcorpordivipol' || '%'
+           AND codnivel = $nivcorpo $filtroComuna ) pc,
+         ( SELECT * 
+           FROM DDETALLEBOLETIN 
+           WHERE coddivipol LIKE $coddivipol || '%' 
+           AND codnivel = $codnivel AND codcorporacion = $corporacion $filtroComuna ) dd
+    WHERE pp.codpartido = pc.codpartido AND pc.idcandidato = dd.idcandidato
+    GROUP BY pp.codpartido, pp.descripcion
+    ORDER BY votos DESC
 VTP;
     
+    
     $queryPartidoAvalados = <<<PAV
-        SELECT pp.codpartido, pp.descripcion, count(pc.idcandidato) as avalados
+        SELECT pp.codpartido as codpartido, pp.descripcion as descripcion, count(pc.idcandidato) as avalados
         FROM ppartidos pp, pcandidatos pc
         WHERE pp.codpartido = pc.codpartido
         AND pc.coddivipol = '$coddivcorpo'
@@ -54,7 +72,7 @@ VTP;
 PAV;
     
     $queryPartidoElegidos = <<<PEL
-        SELECT pp.codpartido, pp.descripcion, count(pc.idcandidato) as elegidos
+        SELECT pp.codpartido as codpartido, pp.descripcion as descripcion, count(pc.idcandidato) as elegidos
         FROM ppartidos pp, pcandidatos pc
         WHERE pp.codpartido = pc.codpartido
         AND pc.coddivipol = '$coddivcorpo'
@@ -122,7 +140,7 @@ PEL;
                       . " WHERE codcorporacion = $corporacion";
     $sqlite->query($queryCorporacion);
     $resulCorporacion  = $sqlite->returnRows();
-    $nomCorporacion = utf8_encode($resulCorporacion[0]['descripcion']);
+    $nomCorporacion = utf8_encode($resulCorporacion[0]['DESCRIPCION']);
     //Cuando es comuna y cuando es mesa
     
     
@@ -165,8 +183,8 @@ PEL;
                   . " AND codnivel = $codnivel AND idcomuna = " . $_GET['idcomuna'];
         $sqlite->query($queryDivipol);
         $resultDivipol = $sqlite->returnRows();
-        $nmComuna = utf8_encode($resultDivipol[0]['descripcion']);
-        $nmZona = ""; 
+        $nmComuna = utf8_encode($resultDivipol[0]['DESCRIPCION']);
+        $nmZona = "";
     }
     
     //Cierro la coneccion a la base de datos

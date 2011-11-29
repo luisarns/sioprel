@@ -44,7 +44,7 @@ PAV;
                       . " WHERE codcorporacion = $corporacion";
     $sqlite->query($queryCorporacion);
     $resulCorporacion  = $sqlite->returnRows();
-    $nomCorporacion = utf8_encode($resulCorporacion[0]['descripcion']);
+    $nomCorporacion = $resulCorporacion[0]['DESCRIPCION'];
     
     
     //Codigo para obtener la descripcion completa de la divipol
@@ -66,16 +66,16 @@ PAV;
             $nomDivipol = $nomDivipol . ' ' . $row['descripcion'];
             switch($row['codnivel']) {
                 case 1:
-                    $nmDepartamento = utf8_encode($row['descripcion']);
+                    $nmDepartamento = $row['descripcion'];
                     break;
                 case 2:
-                    $nmMunicipio = utf8_encode($row['descripcion']);
+                    $nmMunicipio = $row['descripcion'];
                     break;
                 case 3:
-                    $nmZona = utf8_encode($row['descripcion']);
+                    $nmZona = $row['descripcion'];
                     break;
                 case 4:
-                    $nmPueto = utf8_encode($row['descripcion']);
+                    $nmPueto = $row['descripcion'];
                     break;
             }
         }
@@ -86,7 +86,7 @@ PAV;
                   . " AND codnivel = $codnivel AND idcomuna = " . $_GET['idcomuna'];
         $sqlite->query($queryDivipol);
         $resultDivipol = $sqlite->returnRows();
-        $nmComuna = utf8_encode($resultDivipol[0]['descripcion']);
+        $nmComuna = $resultDivipol[0]['DESCRIPCION'];
         $nmZona = ""; 
     }
     
@@ -98,7 +98,7 @@ PAR;
     
     $sqlite->query($queryPartido);
     $resulPartido = $sqlite->returnRows();
-    $nomPartido = utf8_encode($resulPartido[0]['descripcion']);
+    $nomPartido = $resulPartido[0]['DESCRIPCION'];
     
     //Cierro la coneccion a la base de datos
     $sqlite->close(); 

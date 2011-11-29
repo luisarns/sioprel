@@ -35,7 +35,7 @@
     $cont = 5;
     foreach ($votosPartido as $votoPartido) {
         $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont, str_pad($votoPartido['codpartido'], 3, '0', STR_PAD_LEFT));
-        $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, utf8_encode($votoPartido['descripcion']));
+        $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, $votoPartido['descripcion']);
         $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, number_format($votoPartido['avalados']));
         $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont, number_format($votoPartido['elegidos']));
         $objPHPExcel->getActiveSheet()->setCellValue('E'.$cont, number_format($votoPartido['votos']));
