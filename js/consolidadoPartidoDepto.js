@@ -38,13 +38,13 @@ function validar(form)
     return false;
 }
 
+
 function mostrarOcultarDepto(sel)
 {
     document.formPrincipal.departamento.value = '-';
     ocultarIniciar('divselmunicipio', 'selmunicipio');
     ocultarIniciar('divselcomuna', 'selcomuna');
 }
-
 
 /**
  * Muestra los candidatos inscritos y elegidos de un partido

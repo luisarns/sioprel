@@ -43,6 +43,8 @@ PAV;
     $sqlite->query($queryInscritos);
     $resultInscritos = $sqlite->returnRows();
     
+    $sqlite->close(); 
+    unset($sqlite);
 ?>
 
 <table>
@@ -86,8 +88,8 @@ PAV;
     <?php foreach ($resultInscritos as $row) { ?>
             <tr>
                 <td><?php echo str_pad($row['codcandidato'], 3, '0', STR_PAD_LEFT)?></td>
-                <td><?php echo htmlentities($row['nombres'])?></td>
-                <td><?php echo htmlentities($row['apellidos'])?></td>
+                <td><?php echo htmlentities($row['nombres'], ENT_QUOTES | ENT_IGNORE, "UTF-8")?></td>
+                <td><?php echo htmlentities($row['apellidos'], ENT_QUOTES | ENT_IGNORE, "UTF-8")?></td>
                 <td><?php echo ($row['elegido'] != '0')? 'SI' : 'NO' ; ?></td>
             </tr>
     <?php } ?>
@@ -112,8 +114,3 @@ PAV;
         </td>		
     </tr>
 </table>
-
-<?php
-    $sqlite->close(); 
-    unset($sqlite);
-?>

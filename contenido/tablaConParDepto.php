@@ -19,33 +19,35 @@
         $codnivel += 1; 
     }
     
-    $txt = "";
     $txt1 = "";
+    $filtroComuna = "";
     if ($_GET['comuna'] !='-') {
-        $txt = " AND pd.idcomuna = " . $_GET['comuna'];
-        $txt .= " AND pc.idcomuna = " . $_GET['comuna'];
+        $filtroComuna = " AND idcomuna = " . $_GET['comuna'];
         $txt1 = " AND pc.idcomuna = " . $_GET['comuna'];
     }
     
     $nivcorpo = getNivelCorporacion($corporacion);
+    $codcorpordivipol = substr($coddivipol, 0, getNumDigitos($nivcorpo));
     $coddivcorpo = str_pad(substr($coddivipol, 0, getNumDigitos($nivcorpo)),9,'0');
     
     $queryVotacionPartido =<<<VTP
-        SELECT pp.codpartido as codpartido, pp.descripcion as descripcion, sum(mv.numvotos) as votos
-        FROM ppartidos pp, pcandidatos pc, pdivipol pd, pmesas pm, mvotos mv
-        WHERE pp.codpartido = pc.codpartido
-        AND pc.coddivipol = '$coddivcorpo'
-        AND pd.coddivipol LIKE '$coddivipol' || '%'
-        AND pd.codnivel = 4
-        AND pd.coddivipol = pm.coddivipol
-        AND pc.codnivel = $nivcorpo
-        AND pc.codcorporacion = $corporacion
-        AND pm.codcorporacion = $corporacion
-        AND pm.codtransmision = mv.codtransmision
-        AND pc.idcandidato = mv.idcandidato
-        $txt
-        GROUP BY pp.codpartido, pp.descripcion
+    SELECT pp.codpartido as codpartido, pp.descripcion as descripcion, sum(dd.numvotos) as votos
+    FROM PPARTIDOS pp, 
+         ( SELECT codpartido,idcandidato 
+           FROM PCANDIDATOS 
+           WHERE codcorporacion = $corporacion
+           AND coddivipol LIKE '$codcorpordivipol' || '%'
+           AND codnivel = $nivcorpo $filtroComuna ) pc,
+         ( SELECT * 
+           FROM DDETALLEBOLETIN 
+           WHERE coddivipol LIKE $coddivipol || '%' 
+           AND codnivel = $codnivel AND codcorporacion = $corporacion $filtroComuna ) dd
+    WHERE pp.codpartido = pc.codpartido AND pc.idcandidato = dd.idcandidato
+    GROUP BY pp.codpartido, pp.descripcion
+    ORDER BY votos DESC
 VTP;
+    
+//    echo "<br/>" . $queryVotacionPartido . "<br/>";
     
     $queryPartidoAvalados = <<<PAV
         SELECT pp.codpartido as codpartido, pp.descripcion as descripcion, count(pc.idcandidato) as avalados
@@ -58,6 +60,8 @@ VTP;
         $txt1
         GROUP BY pp.codpartido, pp.descripcion
 PAV;
+    
+//    echo "<br/>" . $queryPartidoAvalados . "<br/>";
     
     $queryPartidoElegidos = <<<PEL
         SELECT pp.codpartido as codpartido, pp.descripcion as descripcion, count(pc.idcandidato) as elegidos
@@ -72,10 +76,13 @@ PAV;
         GROUP BY pp.codpartido, pp.descripcion
 PEL;
     
-    $sqlite = new SPSQLite($pathDB);
+//    echo "<br/>" . $queryPartidoElegidos . "<br/>";
     
+    $sqlite = new SPSQLite($pathDB);
     $sqlite->query($queryVotacionPartido);
     $resultVotacionPartido = $sqlite->returnRows();
+//    $sqlite->close();
+    
     $votosPartido = array();
     
     if (isset($resultVotacionPartido)) {
@@ -92,6 +99,7 @@ PEL;
     
     $sqlite->query($queryPartidoAvalados);
     $resultPartidoAvalados = $sqlite->returnRows();
+    
     $arrAvalados = array();
     
     if(isset($resultPartidoAvalados)) {
@@ -167,7 +175,7 @@ PEL;
     <?php foreach($votosPartido as $votoPartido) { ?>
             <tr onclick="cargarDetalle('<?php echo $urlDetalles.$votoPartido['codpartido']; ?>')">
                 <td><?php echo str_pad($votoPartido['codpartido'], 3, '0', STR_PAD_LEFT)?></td>
-                <td><a href="#"><?php echo htmlentities($votoPartido['descripcion'])?></a></td>
+                <td><a href="#"><?php echo htmlentities($votoPartido['descripcion'], ENT_QUOTES | ENT_IGNORE, "UTF-8")?></a></td>
                 <td class="numero"><?php echo number_format($votoPartido['avalados'])?></td>
                 <td class="numero"><?php echo number_format($votoPartido['elegidos'])?></td>
                 <td class="numero"><?php echo number_format($votoPartido['votos'])?></td>
