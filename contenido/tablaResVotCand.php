@@ -7,6 +7,7 @@
 	$codcorporacion = $_GET['corporacion'];
 	$coddepto = $_GET['departamento'];
 	$codmunip = $_GET['municipio'];
+	$codnivel = 2;
 	
 	$txt = "";
 	if (isset($_GET['comuna']) && $_GET['comuna'] != "-") {
@@ -18,26 +19,33 @@
 	
 	$codcordivi = $coddepto . "" . $codmunip;
 	$nivcorpo = getNivelCorporacion($codcorporacion);
-	$cordivi = substr($codcordivi, 0, getNumDigitos($nivcorpo));
+	$codcorpodivipol = substr($codcordivi, 0, getNumDigitos($nivcorpo));
 	
 	$query =<<<EOF
-	SELECT pc.codpartido, pc.codcandidato, pc.nombres, 
-	pc.apellidos ,pp.descripcion,sum(mv.numvotos) as votos
-	FROM pmesas pm, mvotos mv, ppartidos pp, pcandidatos pc, pdivipol pd
-	WHERE pd.coddivipol = pm.coddivipol AND pd.codnivel = 4
-	AND pp.codpartido = pc.codpartido
-        AND pd.coddivipol LIKE '$codcordivi' || '%' $txt
-	AND pc.coddivipol LIKE '$cordivi' || '%' AND pc.codnivel = $nivcorpo
-	AND mv.codtransmision = pm.codtransmision AND pc.codcandidato <> 0
-	AND pc.idcandidato = mv.idcandidato AND pc.codcorporacion = $codcorporacion
-	AND pm.codcorporacion = $codcorporacion
-	GROUP BY pc.codpartido,pc.codcandidato,pc.nombres,pc.apellidos,pp.descripcion
-	ORDER BY pc.codpartido, pc.codcandidato
+	SELECT pc.codpartido as codpartido, pc.codcandidato as codcandidato, pc.nombres as nombres, pc.apellidos as apellidos,
+	pp.descripcion as descripcion,sum(dd.numvotos) as votos
+	FROM PPARTIDOS pp, 
+     ( SELECT codpartido,codcandidato,idcandidato,nombres,apellidos
+       FROM PCANDIDATOS 
+       WHERE codcorporacion = $codcorporacion
+       AND coddivipol LIKE '$codcorpodivipol' || '%'
+       AND codnivel = '$nivcorpo' AND codcandidato <> 0 ) pc,
+     ( SELECT * 
+       FROM DDETALLEBOLETIN 
+       WHERE coddivipol LIKE $codcordivi || '%' 
+       AND codnivel = $codnivel AND codcorporacion = $codcorporacion ) dd
+	WHERE pc.codpartido = pp.codpartido AND pc.idcandidato = dd.idcandidato
+	GROUP BY pc.codpartido, pc.codcandidato
+	ORDER BY votos DESC
 EOF;
-
-        $sqlite = new SPSQLite($pathDB);
-        $sqlite->query($query);
-        $result = $sqlite->returnRows();   
+	
+        // echo "<br/>" . $query . "<br/>";
+        
+       $sqlite = new SPSQLite($pathDB);
+       $sqlite->query($query);
+       $result = $sqlite->returnRows();
+        $sqlite->close(); 
+        unset($sqlite);
 	
 ?>
 <table>
@@ -76,16 +84,16 @@ EOF;
 		<th>C&oacute;digo</th>
 		<th>Nombres</th>
 		<th>Apellidos</th>
-                <th>Partido</th>
+        <th>Partido</th>
 		<th class="numero">Votos</th>
 	</tr>
 	<?php if (isset($result)) { ?>
             <?php foreach ($result as $row) { ?>
                     <tr>
-                        <td><?php echo str_pad($row['pc.codpartido'], 3, '0', STR_PAD_LEFT) . '-' . str_pad($row['pc.codcandidato'], 3, '0', STR_PAD_LEFT) ?></td>
-                        <td><?php echo htmlentities($row['pc.nombres'])?></td>
-                        <td><?php echo htmlentities($row['pc.apellidos'])?></td>
-                        <td><?php echo htmlentities($row['pp.descripcion'])?></td>
+                        <td><?php echo str_pad($row['codpartido'], 3, '0', STR_PAD_LEFT) . '-' . str_pad($row['codcandidato'], 3, '0', STR_PAD_LEFT) ?></td>
+                        <td><?php echo htmlentities($row['nombres'], ENT_QUOTES | ENT_IGNORE, "UTF-8")?></td>
+                        <td><?php echo htmlentities($row['apellidos'], ENT_QUOTES | ENT_IGNORE, "UTF-8")?></td>
+                        <td><?php echo htmlentities($row['descripcion'], ENT_QUOTES | ENT_IGNORE, "UTF-8")?></td>
                         <td class="numero"><?php echo number_format($row['votos'])?></td>
                     </tr>
             <?php } ?>
@@ -112,7 +120,3 @@ EOF;
 	</tr>
 </table>
 
-<?php 
-    $sqlite->close(); 
-    unset($sqlite);
-?>
