@@ -19,7 +19,7 @@
     }
     
     $query =<<<EOF
-        SELECT pp.codpartido as codpartido , pp.descripcion as descripcion, pcp.numcurules as numcurules, pcp.totalvotos as totalvotos
+        SELECT pp.codpartido as codpartido, pp.descripcion as descripcion, pcp.numcurules as numcurules, pcp.totalvotos as votos
         FROM ppartidos pp, pcurulespartidos pcp
         WHERE pp.codpartido = pcp.codpartido 
         AND pcp.coddivipol = '$coddivipol'
@@ -40,7 +40,7 @@ EOF;
                   . " WHERE codcorporacion = $codcorporacion";
     $sqlite->query($queryCorporacion);
     $resulCorporacion  = $sqlite->returnRows();
-    $nomCorporacion = $resulCorporacion[0]['descripcion'];
+    $nomCorporacion = $resulCorporacion[0]['DESCRIPCION'];
     //Fin de la consulta
     
     
@@ -61,7 +61,7 @@ EOF;
                   . " AND codnivel = 2 AND idcomuna = " . $_GET['comuna'];
         $sqlite->query($queryDivipol);
         $resultDivipol = $sqlite->returnRows();
-        $nomDivipol = $nomDivipol . ' ' . $resultDivipol[0]['descripcion'];
+        $nomDivipol = $nomDivipol . ' ' . $resultDivipol[0]['DESCRIPCION'];
     }
 
     $sqlite->close(); 

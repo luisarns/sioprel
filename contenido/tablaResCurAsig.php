@@ -21,7 +21,7 @@
     }
 	
     $query =<<<EOF
-        SELECT pp.codpartido, pp.descripcion, pcp.numcurules, pcp.totalvotos
+        SELECT pp.codpartido as codpartido, pp.descripcion as descripcion, pcp.numcurules as numcurules, pcp.totalvotos as totalvotos
         FROM ppartidos pp, pcurulespartidos pcp
         WHERE pp.codpartido = pcp.codpartido 
         AND pcp.coddivipol = '$coddivipol'
@@ -31,9 +31,14 @@
         ORDER BY pcp.numcurules
 EOF;
     
+    echo "<br/>" . $query . "<br/>";
+    
+
     $sqlite = new SPSQLite($pathDB);
     $sqlite->query($query);
     $result = $sqlite->returnRows();
+    $sqlite->close(); 
+    unset($sqlite);
     
 ?>
 
@@ -78,10 +83,10 @@ EOF;
         <?php if (isset($result)) { ?>
             <?php foreach($result as $row) { ?>
                     <tr>
-                        <td><?php echo str_pad($row['pp.codpartido'], 3, '0', STR_PAD_LEFT) ?></td>
-                        <td><?php echo htmlentities($row['pp.descripcion'])?></td>
-                        <td class="numero"><?php echo number_format($row['pcp.numcurules'])?></td>
-                        <td class="numero"><?php echo number_format($row['pcp.totalvotos'])?></td>
+                        <td><?php echo str_pad($row['codpartido'], 3, '0', STR_PAD_LEFT) ?></td>
+                        <td><?php echo htmlentities($row['descripcion'], ENT_QUOTES | ENT_IGNORE, "UTF-8")?></td>
+                        <td class="numero"><?php echo number_format($row['numcurules'])?></td>
+                        <td class="numero"><?php echo number_format($row['totalvotos'])?></td>
                     </tr>
             <?php } ?>
         <?php } ?>
@@ -108,8 +113,3 @@ EOF;
 			
 	</tr>
 </table>
-
-<?php
-    $sqlite->close(); 
-    unset($sqlite);
-?>
