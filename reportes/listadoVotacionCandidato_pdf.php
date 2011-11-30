@@ -14,8 +14,8 @@
     $pdf->SetKeywords('Votacion, Candidatos, Listado, Elecciones, Colombia');
 
     $header  = utf8_encode("Listado Votación Candidato");
-    $nomCorporacion = trim(utf8_encode($nomCorporacion));
-    $nomDivipol = trim(utf8_encode($nomDivipol));
+    $nomCorporacion = $nomCorporacion;
+    $nomDivipol = $nomDivipol;
 
     $headerstring =<<<CBC
     $header
@@ -83,9 +83,9 @@ CBC;
     if (isset($result)) {
         foreach ($result as $row) {
             $pdf->Cell($w[0], 6, utf8_encode(str_pad($row['codpartido'], 3, '0', STR_PAD_LEFT) . '-' . str_pad($row['codcandidato'], 3, '0', STR_PAD_LEFT)), 'LR', 0, 'L', $fill,'',$stretch);
-            $pdf->Cell($w[1], 6, utf8_encode($row['nombres']), 'LR', 0, 'L', $fill,'',$stretch);
-            $pdf->Cell($w[2], 6, utf8_encode($row['apellidos']), 'LR', 0, 'L', $fill,'',$stretch);
-            $pdf->Cell($w[3], 6, utf8_encode($row['descripcion']), 'LR', 0, 'L', $fill,'',$stretch);
+            $pdf->Cell($w[1], 6, $row['nombres'], 'LR', 0, 'L', $fill,'',$stretch);
+            $pdf->Cell($w[2], 6, $row['apellidos'], 'LR', 0, 'L', $fill,'',$stretch);
+            $pdf->Cell($w[3], 6, $row['descripcion'], 'LR', 0, 'L', $fill,'',$stretch);
             $pdf->Cell($w[4], 6, number_format($row['votos']), 'LR', 0, 'R', $fill,'',$stretch);
             $pdf->Ln();
             $fill=!$fill;
