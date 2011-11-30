@@ -15,21 +15,21 @@
                              ->setCategory("");
         
         
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', utf8_encode($nomCorporacion));
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', $nomCorporacion);
         $objPHPExcel->getActiveSheet()->mergeCells('A1:E1');
         
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', utf8_encode($nomDivipol));
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', $nomDivipol);
         $objPHPExcel->getActiveSheet()->mergeCells('A2:E2');
         
         
         
         $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A3', utf8_encode('No.Curules'))
-            ->setCellValue('B3', $nocurules)
+            ->setCellValue('B3', number_format($nocurules))
             ->setCellValue('A4', 'Cociente')
-            ->setCellValue('B4', $cuociente)
+            ->setCellValue('B4', number_format($cuociente))
             ->setCellValue('C3', 'Cifra Repartidora')
-            ->setCellValue('D3', $cifrarepartidora);
+            ->setCellValue('D3', number_format($cifrarepartidora));
         
         
         $objPHPExcel->setActiveSheetIndex(0)
@@ -44,9 +44,9 @@
         if(isset ($result)){
             foreach ($result as $row) {
                 $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont, str_pad($row['codpartido'],3,'0',STR_PAD_LEFT) . '-' . str_pad($row['codcandidato'],3,'0',STR_PAD_LEFT));
-                $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, utf8_encode($row['nombres']));
-                $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, number_format($row['apellidos']));
-                $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont, utf8_encode($row['descripcion']));
+                $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, $row['nombres']);
+                $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, $row['apellidos']);
+                $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont, $row['descripcion']);
                 $objPHPExcel->getActiveSheet()->setCellValue('E'.$cont, number_format($row['votos']));
                 $cont++;
             }

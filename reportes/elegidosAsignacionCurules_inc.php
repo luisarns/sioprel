@@ -13,33 +13,32 @@
 
     $codcordiv   = substr($coddivcorto, 0, getNumDigitos($nivcorpo));
 
-    $txt  = "";
-    $txt1 = "";
+    $filtroComuna = "";
     $hayComuna = false;
     if (isset($_GET['comuna']) && $_GET['comuna'] != "-") {
-        $txt = "AND pc.idcomuna = " . $_GET['comuna'];
-        $txt .= " AND pd.idcomuna = " . $_GET['comuna'];
-        $txt1 = "AND idcomuna = ". $_GET['comuna'];
+        $filtroComuna = "AND idcomuna = " . $_GET['comuna'];
         $hayComuna = true;
     }
 
     $query=<<<EOF
-        SELECT pc.codpartido as codpartido, pc.codcandidato as codcandidato ,pc.nombres as nombres, 
-        pc.apellidos as apellidos ,pp.descripcion as descripcion ,sum(mv.numvotos) as votos
-        FROM pmesas pm, mvotos mv, ppartidos pp, pcandidatos pc, pdivipol pd
-        WHERE pd.coddivipol = pm.coddivipol AND pd.codnivel = 4
-        AND pp.codpartido = pc.codpartido
-        AND pd.coddivipol LIKE '$coddivcorto' || '%'
-        AND pc.coddivipol LIKE '$codcordiv' || '%' 
-        AND pc.codnivel = $nivcorpo
-        AND mv.codtransmision = pm.codtransmision 
-        AND pc.codcandidato <> 0
-        AND pc.idcandidato = mv.idcandidato 
-        AND pc.codcorporacion = $codcorporacion
-        AND pm.codcorporacion = $codcorporacion
-        $txt
-        AND pc.elegido <> '0'
-        GROUP BY pc.codpartido,pc.codcandidato,pc.nombres, pc.apellidos,pp.descripcion
+    SELECT pc.codpartido as codpartido, pc.codcandidato as codcandidato, pc.nombres as nombres, pc.apellidos as apellidos,
+    pp.descripcion as descripcion,sum(dd.numvotos) as votos
+    FROM 
+        ( SELECT codpartido, descripcion
+          FROM PPARTIDOS ) pp,
+        ( SELECT codpartido,codcandidato,idcandidato,nombres,apellidos
+          FROM PCANDIDATOS
+          WHERE codcorporacion = $codcorporacion 
+          AND coddivipol LIKE '$codcordiv' || '%'
+          AND codnivel = $nivcorpo AND codcandidato <> 0 
+          AND elegido <> 0 $filtroComuna ) pc,
+        ( SELECT * 
+          FROM DDETALLEBOLETIN 
+          WHERE coddivipol LIKE '$coddivcorto' || '%' 
+          AND codnivel = $nivcorpo AND codcorporacion = $codcorporacion $filtroComuna ) dd
+    WHERE pc.codpartido = pp.codpartido AND pc.idcandidato = dd.idcandidato
+    GROUP BY pc.codpartido, pc.codcandidato
+    ORDER BY votos DESC
 EOF;
 
     $coddivipol = str_pad($coddivcorto,9,'0');
@@ -50,7 +49,7 @@ EOF;
         WHERE coddivipol = '$coddivipol'
         AND codnivel = $codnivel
         AND codcorporacion = $codcorporacion
-        $txt1
+        $filtroComuna
 FEO;
     
     $sqlite = new SPSQLite($pathDB);
@@ -61,9 +60,9 @@ FEO;
     $sqlite->query($queryCurules);
     $resultCurules = $sqlite->returnRows();
     
-    $nocurules = $resultCurules[0]['numcurules'];
-    $cuociente = $resultCurules[0]['cuociente'];
-    $cifrarepartidora = $resultCurules[0]['cifrarepartidora'];
+    $nocurules = $resultCurules[0]['NUMCURULES'];
+    $cuociente = $resultCurules[0]['CUOCIENTE'];
+    $cifrarepartidora = $resultCurules[0]['CIFRAREPARTIDORA'];
     
     
     //Para obtener el nombre de la corporacion
@@ -71,7 +70,7 @@ FEO;
                   . " WHERE codcorporacion = $codcorporacion";
     $sqlite->query($queryCorporacion);
     $resulCorporacion  = $sqlite->returnRows();
-    $nomCorporacion = $resulCorporacion[0]['descripcion'];
+    $nomCorporacion = $resulCorporacion[0]['DESCRIPCION'];
     //Fin de la consulta
 
     include_once('../contenido/FunDivipol.php');
@@ -90,7 +89,7 @@ FEO;
                   . " AND codnivel = 2 AND idcomuna = " . $_GET['comuna'];
         $sqlite->query($queryDivipol);
         $resultDivipol = $sqlite->returnRows();
-        $nomDivipol = $nomDivipol . ' ' . $resultDivipol[0]['descripcion'];
+        $nomDivipol = $nomDivipol . ' ' . $resultDivipol[0]['DESCRIPCION'];
     }
 
     $sqlite->close(); 
