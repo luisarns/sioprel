@@ -26,7 +26,7 @@
         AND pcp.codnivel = $codnivel
         AND pcp.codcorporacion = $codcorporacion
         $txt
-        ORDER BY pcp.numcurules
+        ORDER BY pcp.numcurules DESC
 EOF;
         
     $sqlite = new SPSQLite($pathDB);

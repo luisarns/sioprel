@@ -28,7 +28,7 @@
         AND pcp.codnivel = $codnivel
         AND pcp.codcorporacion = $codcorporacion
         $txt
-        ORDER BY pcp.numcurules
+        ORDER BY pcp.numcurules DESC
 EOF;
     
     echo "<br/>" . $query . "<br/>";
