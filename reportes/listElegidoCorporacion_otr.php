@@ -12,10 +12,8 @@
 						 ->setDescription("Listado Elegidos Corporacion.")
 						 ->setKeywords("office 2005 openxml")
 						 ->setCategory("");
-	
-	
         
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', utf8_encode($nomCorporacion));
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1', $nomCorporacion);
         $objPHPExcel->getActiveSheet()->mergeCells('A1:E1');
         
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', $nmDepartamento.' '.$nmMunicipio .' '. $nmZona.''.$nmComuna);
@@ -36,9 +34,9 @@
         if (isset($result)) {
             foreach ($result as $row) {
                 $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,utf8_encode(str_pad($row['codpartido'], 3, '0', STR_PAD_LEFT) . '-' . str_pad($row['codcandidato'], 3, '0', STR_PAD_LEFT)));	
-                $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,utf8_encode($row['nombres']));
-                $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,utf8_encode($row['apellidos']));
-                $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont,utf8_encode($row['descripcion']));
+                $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,$row['nombres']);
+                $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,$row['apellidos']);
+                $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont,$row['descripcion']);
                 $objPHPExcel->getActiveSheet()->setCellValue('E'.$cont,number_format($row['votos']));
                 $cont++;
             }

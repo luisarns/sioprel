@@ -18,7 +18,7 @@
         foreach($rs as $row) {
                 $corporacion = array();
                 $corporacion['id'] = $row['CODCORPORACION'];
-                $corporacion['nombre'] = utf8_encode($row['DESCRIPCION']);
+                $corporacion['nombre'] = $row['DESCRIPCION'];
                 array_push($corporaciones, $corporacion);
         }
     }

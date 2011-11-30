@@ -9,46 +9,58 @@
     $codnivel   = 1;
 
     if (isset($_GET['municipio']) && $_GET['municipio'] != "-" ) {
-            $coddivipol .= $_GET['municipio'];
-            $codnivel = 2;
+        $coddivipol .= $_GET['municipio'];
+        $codnivel = 2;
     }
 
-    $tx1 = "";
+    $filtroSexo = "";
     if ($_GET['sexo'] != "-") {
-            $tx1 = "AND pc.genero='" . $_GET['sexo'] . "'";
+        $filtroSexo = " AND pc.genero='" . $_GET['sexo'] . "'";
     }
 
-    $tx2 = "";
+    $filtroPartido = "";
     if ($_GET['partido'] != "-") {
-            $tx2 = "AND pc.codpartido=" . $_GET['partido'];
+        $filtroPartido = " WHERE codpartido=" . $_GET['partido'];
     }
 
-    $tx3 = "";
+    $filtroComuna = "";
     if (isset($_GET['comuna']) && $_GET['comuna'] != "-") {
-            $tx3 = "AND pc.idcomuna = " . $_GET['comuna'];
+        $filtroComuna = "AND idcomuna = " . $_GET['comuna'];
     }
 
     $urlReportes .= "&formato=";
 
     $nivcorpo = getNivelCorporacion($codcorporacion);
-    $cordivi = substr($coddivipol, 0, getNumDigitos($nivcorpo));
-
+    $codcorpodivipol = substr($coddivipol, 0, getNumDigitos($nivcorpo));
+    
     $query =<<<EOF
-	SELECT pp.codpartido, pc.codcandidato, pc.nombres, pc.apellidos, pp.descripcion, sum(mv.numvotos) as votos
-	FROM ppartidos pp, pcandidatos pc, pmesas pm, mvotos mv, pdivipol pd
-	WHERE pc.coddivipol LIKE '$cordivi'   || '%' AND pc.codnivel = $nivcorpo AND pc.codcorporacion = $codcorporacion
-	AND pd.coddivipol   LIKE '$coddivipol' || '%' AND pm.codtransmision = mv.codtransmision
-	AND pc.idcandidato = mv.idcandidato AND pp.codpartido = pc.codpartido AND pc.codcandidato <> 0 $tx1
-	AND pd.coddivipol = pm.coddivipol AND pd.codnivel = 4 $tx2
-	AND pm.codcorporacion = $codcorporacion $tx3
-        AND pc.elegido <> '0'
-	GROUP BY pp.codpartido,pc.codcandidato,pc.nombres, pc.apellidos,pp.descripcion
+    SELECT pc.codpartido as codpartido, pc.codcandidato as codcandidato, pc.nombres as nombres, pc.apellidos as apellidos,
+    pp.descripcion as descripcion,sum(dd.numvotos) as votos
+    FROM 
+        ( SELECT codpartido, descripcion
+          FROM PPARTIDOS $filtroPartido ) pp,
+        ( SELECT codpartido,codcandidato,idcandidato,nombres,apellidos
+          FROM PCANDIDATOS
+          WHERE codcorporacion = $codcorporacion 
+          AND coddivipol LIKE '$codcorpodivipol' || '%'
+          AND codnivel = $nivcorpo AND codcandidato <> 0 $filtroSexo
+          AND elegido <> 0 $filtroComuna ) pc,
+        ( SELECT * 
+          FROM DDETALLEBOLETIN 
+          WHERE coddivipol LIKE '$coddivipol' || '%' 
+          AND codnivel = $codnivel AND codcorporacion = $codcorporacion $filtroComuna ) dd
+    WHERE pc.codpartido = pp.codpartido AND pc.idcandidato = dd.idcandidato
+    GROUP BY pc.codpartido, pc.codcandidato
+    ORDER BY votos DESC
 EOF;
+    
+//    echo "<br/>" .  $query . "<br/>";
     
     $sqlite = new SPSQLite($pathDB);
     $sqlite->query($query);
     $result = $sqlite->returnRows();
-    
+    $sqlite->close(); 
+    unset($sqlite);
 ?>
 
 <table>
@@ -93,10 +105,10 @@ EOF;
     <?php if (isset($result)) { ?>
         <?php foreach ($result as $row) { ?>
             <tr>
-                <td><?php echo str_pad($row['pp.codpartido'], 3, '0', STR_PAD_LEFT) . '-' . str_pad($row['pc.codcandidato'], 3, '0', STR_PAD_LEFT) ?></td>
-                <td><?php echo htmlentities($row['pc.nombres'])?></td>
-                <td><?php echo htmlentities($row['pc.apellidos'])?></td>
-                <td><?php echo htmlentities($row['pp.descripcion'])?></td>
+                <td><?php echo str_pad($row['codpartido'], 3, '0', STR_PAD_LEFT) . '-' . str_pad($row['codcandidato'], 3, '0', STR_PAD_LEFT) ?></td>
+                <td><?php echo htmlentities($row['nombres'], ENT_QUOTES | ENT_IGNORE, "UTF-8")?></td>
+                <td><?php echo htmlentities($row['apellidos'], ENT_QUOTES | ENT_IGNORE, "UTF-8")?></td>
+                <td><?php echo htmlentities($row['descripcion'], ENT_QUOTES | ENT_IGNORE, "UTF-8")?></td>
                 <td class="numero"><?php echo number_format($row['votos'])?></td>
             </tr>
         <?php } ?>
@@ -124,7 +136,4 @@ EOF;
     </tr>
 </table>
 
-<?php 
-    $sqlite->close(); 
-    unset($sqlite);
-?>
+
