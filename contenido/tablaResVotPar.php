@@ -18,10 +18,10 @@
     WHERE coddivipol LIKE '$codcordivi' || '%' ) dd 
     WHERE pp.codpartido = pc.codpartido AND pc.idcandidato = dd.idcandidato
     GROUP BY pp.codpartido, pp.descripcion
-    ORDER BY pp.codpartido
+    ORDER BY votos DESC
 EOF;
 	
-	// echo "<br/>" . $query . "<br/>";
+    // echo "<br/>" . $query . "<br/>";
 	
     $sqlite = new SPSQLite($pathDB);
     $sqlite->query($query);

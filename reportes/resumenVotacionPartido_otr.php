@@ -25,7 +25,7 @@
     if (isset($result)) {
         foreach($result as $row) {
             $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,str_pad($row['codpartido'], 3, '0', STR_PAD_LEFT));
-            $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,utf8_encode($row['descripcion']));
+            $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont,$row['descripcion']);
             $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont,number_format($row['votos']));
             $cont++;
         }
