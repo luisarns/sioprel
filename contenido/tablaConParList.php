@@ -33,36 +33,27 @@
     $codcordiv = substr($coddivipol, 0, getNumDigitos($nivcorpo));
     
     $hayMesa = false;
-    $texto1 = " ";
     $filtroMesa = "";
     if(isset($_GET['mesa']) && $_GET['mesa'] != "-"){
         $filtroMesa = " AND codtransmision = '" . $_GET['mesa'] . "'";
-        $texto1 = " AND pm.codtransmision = '" . $_GET['mesa'] . "'";
         $urlReportes .= "&codtransmision=" . $_GET['mesa'];
         $hayMesa = true;
     }
 
-    $texto2 ="";
     $filtroComuna = "";
     $hayComuna = false;
     if(isset($_GET['comuna']) && $_GET['comuna'] != "-"){
         $filtroComuna = " AND idcomuna = ".$_GET['comuna'];
-        $texto2 = " AND pc.idcomuna = ".$_GET['comuna'];
-        $texto2 .= " AND pd.idcomuna = ".$_GET['comuna'];
         $urlReportes.="&idcomuna=".$_GET['comuna'];
         $hayComuna = true;
     }
 
-    $texto3 = "";
-    $txt3 = "";
     $filtroPartido = "";
     if(isset($_GET['partido']) && $_GET['partido'] != "-"){
-        $texto3 = " AND pp.codpartido = ".$_GET['partido'];
         $filtroPartido = "AND pc.codpartido = ".$_GET['partido'];
         $urlReportes.="&codpartido=".$_GET['partido'];   
     }
    
-    //Continuar modificando la consulta en este punto
     $query =<<<EOF
     SELECT pp.codpartido as codigo ,pp.descripcion as descripcion, SUM(mv.numvotos) as votos
     FROM PPARTIDOS pp,
@@ -81,6 +72,25 @@
     GROUP BY pp.codpartido, pp.descripcion
     ORDER BY votos DESC
 EOF;
+    
+    if ($codnivel <= 2 ){
+     $query =<<<EIF
+     SELECT pp.codpartido as codigo ,pp.descripcion as descripcion, sum(dd.numvotos) as votos
+     FROM  PPARTIDOS  pp,
+     ( SELECT codpartido,idcandidato
+       FROM PCANDIDATOS
+       WHERE codcorporacion = $codcorporacion
+       AND coddivipol LIKE '$codcordiv' || '%'
+       AND codnivel = $nivcorpo $filtroComuna ) pc,
+     ( SELECT * 
+       FROM DDETALLEBOLETIN 
+       WHERE coddivipol LIKE '$coddivipol' || '%' 
+       AND codnivel = $codnivel AND codcorporacion = $codcorporacion $filtroComuna ) dd
+    WHERE pp.codpartido = pc.codpartido AND pc.idcandidato = dd.idcandidato $filtroPartido
+    GROUP BY pp.codpartido, pp.descripcion
+    ORDER BY votos DESC
+EIF;
+    }
     
 //    echo "Consolidado Partido<br/>" . $query;
     
@@ -112,9 +122,6 @@ FEO;
 //    echo "<br/>Potencial<br/>" . $queryPotencial;
     
     $circunscripcion = ($codcorporacion != 5)? $nivcorpo : 3;
-    $txt1 = ($hayComuna)? " AND pd.idcomuna = " . $_GET['comuna'] : "";
-    $txt1 = ($hayPuesto)? "" : "";
-    $txt1 = ($hayMesa)? " AND pm.codtransmision = " . $_GET['mesa'] : "";
     
     $queryVotosEsp = <<<EOF
     SELECT pc.codtipovoto as codtipovoto ,pc.descripcion as descripcion, SUM(mv.numvotos) as votos
@@ -131,6 +138,22 @@ FEO;
     GROUP BY pc.codtipovoto,pc.descripcion 
     ORDER BY votos DESC
 EOF;
+    
+    if ($codnivel <= 2 ) {
+     $queryVotosEsp =<<<EOF
+     SELECT pc.codtipovoto as codtipovoto ,pc.descripcion as descripcion, SUM(de.numvotos) as votos
+     FROM PTIPOSVOTOS pc,
+     ( SELECT codtipovoto, numvotos 
+       FROM DETALLEBOLETINESP 
+       WHERE coddivipol LIKE '$coddivipol' || '%' AND codnivel = $codnivel 
+       AND codcircunscripcion = '$circunscripcion'
+       AND codcorporacion = $codcorporacion $filtroComuna ) de
+    WHERE de.codtipovoto = pc.codtipovoto
+    GROUP BY pc.codtipovoto,pc.descripcion 
+    ORDER BY votos DESC
+EOF;
+    }
+    
     
 //    echo "<br/>Votos Especiales<br/>" .  $queryVotosEsp;
     

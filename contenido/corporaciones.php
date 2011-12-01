@@ -18,7 +18,7 @@
         foreach($rs as $row) {
                 $corporacion = array();
                 $corporacion['id'] = $row['CODCORPORACION'];
-                $corporacion['nombre'] = $row['DESCRIPCION'];
+                $corporacion['nombre'] = htmlentities($row['DESCRIPCION'], ENT_QUOTES | ENT_IGNORE, "UTF-8");
                 array_push($corporaciones, $corporacion);
         }
     }

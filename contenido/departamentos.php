@@ -15,7 +15,7 @@
             $departamento = array();
             $departamento['coddivipol'] = $row['CODDIVIPOL'];
             $departamento['id'] = $row['CODDEPARTAMENTO'];
-            $departamento['nombre'] =  str_pad($row['CODDEPARTAMENTO'], 2, '0', STR_PAD_LEFT). '-' . $row['DESCRIPCION'];
+            $departamento['nombre'] =  str_pad($row['CODDEPARTAMENTO'], 2, '0', STR_PAD_LEFT). '-' . htmlentities($row['DESCRIPCION'], ENT_QUOTES | ENT_IGNORE, "UTF-8");
             array_push($departamentos, $departamento);
         }
     }

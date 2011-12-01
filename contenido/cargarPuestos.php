@@ -25,7 +25,7 @@
         echo "Puesto : <select id='selpuesto' name='puesto' onChange='cargarMesas(this.value)' >";
         echo "<option value = '-' >-Ninguna-</option>";
         foreach ($rs as $row) {
-            echo "<option value = '" . $row['CODDIVIPOL'] . "' >" . str_pad($row['CODPUESTO'], 2, '0', STR_PAD_LEFT) . '-' . $row['DESCRIPCION'] . "</option>";
+            echo "<option value = '" . $row['CODDIVIPOL'] . "' >" . str_pad($row['CODPUESTO'], 2, '0', STR_PAD_LEFT) . '-' . htmlentities($row['DESCRIPCION'], ENT_QUOTES | ENT_IGNORE, "UTF-8") . "</option>";
         }
         echo "</select>";
 

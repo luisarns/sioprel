@@ -16,7 +16,7 @@
         echo "<option value = '-' >-Ninguna-</option>";
         
         foreach ($rs as $row) {
-            echo "<option value = '" . $row['CODZONA'] . "' >" . str_pad($row['CODZONA'], 2, '0', STR_PAD_LEFT) . '-' . $row['DESCRIPCION'] . "</option>";
+            echo "<option value = '" . $row['CODZONA'] . "' >" . str_pad($row['CODZONA'], 2, '0', STR_PAD_LEFT) . '-' . htmlentities($row['DESCRIPCION'], ENT_QUOTES | ENT_IGNORE, "UTF-8") . "</option>";
         }
         
         echo "</select>";

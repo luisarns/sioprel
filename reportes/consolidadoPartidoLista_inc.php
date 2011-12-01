@@ -6,10 +6,8 @@
     $nivcorpo = $_GET['nivcorpo'];
     $codcordiv = substr($coddivipol,0,getNumDigitos($nivcorpo));
 
-    $texto1 = "";
     $hayMesa = false;
     if (isset($_GET['codtransmision'])) {
-        $texto1 = " AND pm.codtransmision = '".$_GET['codtransmision']."'";
         $filtroMesa = " AND codtransmision = '".$_GET['codtransmision']."'";
         $hayMesa = true;
     }
@@ -44,6 +42,25 @@
     ORDER BY votos DESC
 EOF;
     
+    if ($codnivel <= 2 ){
+     $query =<<<EIF
+     SELECT pp.codpartido as codigo ,pp.descripcion as descripcion, sum(dd.numvotos) as votos
+     FROM  PPARTIDOS  pp,
+     ( SELECT codpartido,idcandidato
+       FROM PCANDIDATOS
+       WHERE codcorporacion = $codcorporacion
+       AND coddivipol LIKE '$codcordiv' || '%'
+       AND codnivel = $nivcorpo $filtroComuna ) pc,
+     ( SELECT * 
+       FROM DDETALLEBOLETIN 
+       WHERE coddivipol LIKE '$coddivipol' || '%' 
+       AND codnivel = $codnivel AND codcorporacion = $codcorporacion $filtroComuna ) dd
+    WHERE pp.codpartido = pc.codpartido AND pc.idcandidato = dd.idcandidato $filtroPartido
+    GROUP BY pp.codpartido, pp.descripcion
+    ORDER BY votos DESC
+EIF;
+    }
+    
 //    echo "Consolidado Partido<br/>" . $query;
     
     ///Inicio query potencial
@@ -77,12 +94,8 @@ FEO;
 
 //    echo "<br/>Potencial<br/>" . $queryPotencial;
     
-    
     //Inicio query votacion especial
     $circunscripcion = ($codcorporacion != 5)? $nivcorpo : 3;
-    $txt1 = ($hayComuna)? " AND pd.idcomuna = " . $_GET['idcomuna'] : "";
-    $txt1 = ($codnivel == 4)? "" : "";
-    $txt1 = ($hayMesa)? " AND pm.codtransmision = '" . $_GET['codtransmision'] . "'" : "";
     
     $queryVotosEsp = <<<EOF
     SELECT pc.codtipovoto as codtipovoto ,pc.descripcion as descripcion, SUM(mv.numvotos) as votos
@@ -99,6 +112,21 @@ FEO;
     GROUP BY pc.codtipovoto,pc.descripcion 
     ORDER BY votos DESC
 EOF;
+    
+    if ($codnivel <= 2 ) {
+     $queryVotosEsp =<<<EOF
+     SELECT pc.codtipovoto as codtipovoto ,pc.descripcion as descripcion, SUM(de.numvotos) as votos
+     FROM PTIPOSVOTOS pc,
+     ( SELECT codtipovoto, numvotos 
+       FROM DETALLEBOLETINESP 
+       WHERE coddivipol LIKE '$coddivipol' || '%' AND codnivel = $codnivel 
+       AND codcircunscripcion = '$circunscripcion'
+       AND codcorporacion = $codcorporacion $filtroComuna ) de
+    WHERE de.codtipovoto = pc.codtipovoto
+    GROUP BY pc.codtipovoto,pc.descripcion 
+    ORDER BY votos DESC
+EOF;
+    }
     
 //    echo "<br/>Votos Especiales<br/>" .  $queryVotosEsp;
     

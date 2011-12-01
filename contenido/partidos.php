@@ -2,7 +2,7 @@
     include_once 'conexionSQlite3.php';
 
     $sqlite = new SPSQLite($pathDB);
-    $query = "SELECT CODPARTIDO, DESCRIPCION FROM ppartidos ORDER BY codpartido";
+    $query = "SELECT codpartido, descripcion FROM ppartidos ORDER BY codpartido";
 
     $sqlite->query($query);
 
@@ -13,7 +13,7 @@
         $i = 0;
         foreach ($rs as $row) {
             $partidos[$i]['id'] = $row['CODPARTIDO'];
-            $partidos[$i]['nombre'] = str_pad($row['CODPARTIDO'], 3, '0', STR_PAD_LEFT) . '-' . $row['DESCRIPCION'];
+            $partidos[$i]['nombre'] = str_pad($row['CODPARTIDO'], 3, '0', STR_PAD_LEFT) . '-' . htmlentities($row['DESCRIPCION'], ENT_QUOTES | ENT_IGNORE, "UTF-8");
             $i++;
         }
     }

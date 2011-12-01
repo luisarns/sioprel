@@ -15,7 +15,7 @@
         echo "<option value = '-' >-Ninguna-</option>";
         if(isset ($rs)){
             foreach ($rs as $row) {
-                echo "<option value = '" . $row['IDCOMUNA'] . "'>" . $row['CODCOMUNA'] . "-" . $row['DESCRIPCION'] . "</option>";
+                echo "<option value = '" . $row['IDCOMUNA'] . "'>" . $row['CODCOMUNA'] . "-" . htmlentities($row['DESCRIPCION'], ENT_QUOTES | ENT_IGNORE, "UTF-8") . "</option>";
             }
         }
         echo '</select>';
