@@ -21,7 +21,7 @@
         echo "<option value = '-' >-Ninguna-</option>";
         foreach ($rs as $row) {
             echo "<option value = '" . $row['CODMUNICIPIO'] . "' >" . str_pad($row['CODMUNICIPIO'], 3, '0', STR_PAD_LEFT) . '-' 
-             . utf8_encode($row['DESCRIPCION']) . "</option>";
+             . $row['DESCRIPCION'] . "</option>";
         }
         echo "</select>";
 

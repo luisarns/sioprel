@@ -246,7 +246,7 @@ EOF;
 	<?php foreach($partidos as $row) { ?>
                 <tr>
                     <td><?php echo str_pad($row['codigo'], 3, '0', STR_PAD_LEFT)?></td>
-                    <td><?php echo htmlentities($row['descripcion'])?></td>
+                    <td><?php echo htmlentities($row['descripcion'], ENT_QUOTES | ENT_IGNORE, "UTF-8")?></td>
                     <td class="numero"><?php echo number_format($row['votos'])?></td>
                     <td class="numero"><?php echo round($row['votos']*100/$potencial,2) . '%' ?></td>
                 </tr>
@@ -255,7 +255,7 @@ EOF;
         <?php foreach ($votacionEspecial as $row ) { ?>
                 <tr>
                     <td>&nbsp;</td>
-                    <td><strong><?php echo htmlentities($row['descripcion'])?></strong></td>
+                    <td><strong><?php echo htmlentities($row['descripcion'], ENT_QUOTES | ENT_IGNORE, "UTF-8")?></strong></td>
                     <td class="numero"><?php echo number_format($row['votos'])?></td>
                     <td class="numero"><?php echo round($row['votos']*100/$potencial,2) . '%' ?></td>
                 </tr>
