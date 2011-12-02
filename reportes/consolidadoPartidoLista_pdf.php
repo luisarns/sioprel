@@ -90,7 +90,7 @@ CBC;
     $fill = true; //Para rellenar el fondo de la fila
     foreach($partidos as $partido ) {
             $pdf->Cell($w[0], 6, str_pad($partido['codigo'], 3, '0', STR_PAD_LEFT), 'LR', 0, 'L', $fill,'',$stretch);
-            $pdf->Cell($w[1], 6, utf8_encode($partido['descripcion']), 'LR', 0, 'L', $fill,'',$stretch);
+            $pdf->Cell($w[1], 6, $partido['descripcion'], 'LR', 0, 'L', $fill,'',$stretch);
             $pdf->Cell($w[2], 6, number_format($partido['votos']), 'LR', 0, 'R', $fill,'',$stretch);
             $pdf->Cell($w[3], 6, round(($partido['votos']*100)/$potencial,2) . '%', 'LR', 0, 'R', $fill,'',$stretch);
             $pdf->Ln();
@@ -100,7 +100,7 @@ CBC;
     //Incluye la votacion especial en el pdf
     foreach($votacionEspecial as $votoEsp){
         $pdf->Cell($w[0], 6, '', 'LR', 0, 'L', $fill,'',$stretch);
-        $pdf->Cell($w[1], 6, utf8_encode($votoEsp['descripcion']), 'LR', 0, 'L', $fill,'',$stretch);
+        $pdf->Cell($w[1], 6, $votoEsp['descripcion'], 'LR', 0, 'L', $fill,'',$stretch);
         $pdf->Cell($w[2], 6, number_format($votoEsp['votos']), 'LR', 0, 'R', $fill,'',$stretch);
         $pdf->Cell($w[3], 6, round(($votoEsp['votos']*100)/$potencial,2) . '%', 'LR', 0, 'R', $fill,'',$stretch);
         $pdf->Ln();

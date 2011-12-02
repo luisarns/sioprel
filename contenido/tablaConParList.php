@@ -50,7 +50,7 @@
 
     $filtroPartido = "";
     if(isset($_GET['partido']) && $_GET['partido'] != "-"){
-        $filtroPartido = "AND pc.codpartido = ".$_GET['partido'];
+        $filtroPartido = "AND pp.codpartido = ".$_GET['partido'];
         $urlReportes.="&codpartido=".$_GET['partido'];   
     }
    
@@ -72,6 +72,8 @@
     GROUP BY pp.codpartido, pp.descripcion
     ORDER BY votos DESC
 EOF;
+    
+//    echo "Consolidado Partido<br/>" . $query;
     
     if ($codnivel <= 2 ){
      $query =<<<EIF
@@ -139,6 +141,8 @@ FEO;
     ORDER BY votos DESC
 EOF;
     
+//    echo "<br/>Votos Especiales<br/>" .  $queryVotosEsp;    
+    
     if ($codnivel <= 2 ) {
      $queryVotosEsp =<<<EOF
      SELECT pc.codtipovoto as codtipovoto ,pc.descripcion as descripcion, SUM(de.numvotos) as votos
@@ -205,6 +209,8 @@ EOF;
             $totalVotos += $row['votos'];
         }
     }
+    
+//    echo "<br/> Total Votos : " . $totalVotos . "<br/>";
     
     $urlReportes.="&formato=";
 

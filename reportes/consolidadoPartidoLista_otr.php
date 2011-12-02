@@ -45,24 +45,16 @@
     $cont = 7;
     foreach($partidos as $partido) {
         $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont, str_pad($partido['codigo'], 3, '0', STR_PAD_LEFT));
-        $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, utf8_encode($partido['descripcion']));
+        $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, $partido['descripcion']);
         $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, number_format($partido['votos']));
         $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont, round($partido['votos']*100/$potencial,2) . '%');
         $cont++;
 
-        foreach($candidatos as $candidato) {
-            if($candidato['codpartido'] == $partido['codigo']) {
-                $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont, str_pad($partido['codigo'], 3, '0', STR_PAD_LEFT) . '-' . str_pad($candidato['codcandidato'], 3, '0', STR_PAD_LEFT));
-                $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, utf8_encode($candidato['descripcion']));
-                $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, number_format($candidato['votos']));
-                $cont++;
-            }
-        }
     }
     
     foreach ($votacionEspecial as $votoEsp) {
         $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,'');
-        $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, utf8_encode($votoEsp['descripcion']));
+        $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, $votoEsp['descripcion']);
         $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, number_format($votoEsp['votos']));
         $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont, round($votoEsp['votos']*100/$potencial,2) . '%');
         $cont++;

@@ -13,14 +13,15 @@
     }
 
     $hayComuna = false;
+    $filtroComuna = "";
     if (isset($_GET['idcomuna'])) {
         $filtroComuna = " AND idcomuna = ".$_GET['idcomuna'];
         $hayComuna = true;
     }
 
-    $filtroComuna = "";
+    $filtroPartido = "";
     if (isset($_GET['codpartido'])) {
-        $filtroPartido = "AND codpartido = ".$_GET['codpartido'];
+        $filtroPartido = "AND pp.codpartido = ".$_GET['partido'];
     }
     
     $query =<<<EOF
@@ -41,6 +42,8 @@
     GROUP BY pp.codpartido, pp.descripcion
     ORDER BY votos DESC
 EOF;
+    
+//    echo "Consolidado Partido<br/>" . $query;
     
     if ($codnivel <= 2 ){
      $query =<<<EIF
@@ -145,6 +148,8 @@ EOF;
     $sqlite->close();
     //
     
+//    echo "<br/>" . $potencial . "<br/>";
+    
     //Ejecuto la query en la base, para obtener lo votacion especial
     $sqlite = new SPSQLite($pathDB);
     $sqlite->query($queryVotosEsp);
@@ -171,6 +176,8 @@ EOF;
         }
     }
 
+//    echo "<br/> Total Votos : " . $totalVotos . "<br/>";
+    
     //-----------------//--------------------//------------------//
     //Obtener la corporacion y el potencial
     $sqlite = new SPSQLite($pathDB);
@@ -178,7 +185,7 @@ EOF;
                       . " WHERE codcorporacion = $codcorporacion";
     $sqlite->query($queryCorporacion);
     $resulCorporacion  = $sqlite->returnRows();
-    $nomCorporacion = utf8_encode($resulCorporacion[0]['DESCRIPCION']);
+    $nomCorporacion = $resulCorporacion[0]['DESCRIPCION'];
     $sqlite->close();
     //Cuando es comuna y cuando es mesa
 
@@ -203,19 +210,19 @@ EOF;
     
     if (isset($resultDivipol)) {
         foreach ($resultDivipol as $row) {
-            $nomDivipol = $nomDivipol . ' ' . $row['descripcion'];
+//            $nomDivipol = $nomDivipol . ' ' . $row['descripcion'];
             switch($row['codnivel']) {
                 case 1:
-                    $nmDepartamento = utf8_encode($row['descripcion']);
+                    $nmDepartamento = $row['descripcion'];
                     break;
                 case 2:
-                    $nmMunicipio = utf8_encode($row['descripcion']);
+                    $nmMunicipio = $row['descripcion'];
                     break;
                 case 3:
-                    $nmZona = utf8_encode($row['descripcion']);
+                    $nmZona = $row['descripcion'];
                     break;
                 case 4:
-                    $nmPueto = utf8_encode($row['descripcion']);
+                    $nmPueto = $row['descripcion'];
                     break;
             }
         }
@@ -228,7 +235,7 @@ EOF;
         $sqlite->query($queryDivipol);
         $resultDivipol = $sqlite->returnRows();
         $sqlite->close(); 
-        $nmComuna = utf8_encode($resultDivipol[0]['DESCRIPCION']);
+        $nmComuna = $resultDivipol[0]['DESCRIPCION'];
         $nmZona = "";
     }
     if ($hayMesa) {
@@ -246,5 +253,4 @@ EOF;
     
     $participacion = round((($totalVotos*100)/$potencial),2);
     $asbtencion  = round(100 - $participacion,2);
-    
 ?>
