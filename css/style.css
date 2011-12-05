@@ -2,30 +2,29 @@
 /* CSS Document */
 
 body {
-	margin:0px;
-	padding:0px;
-	/*background-color:#D8D8D8;*//*#C2E0FF*/
+    margin:0px;
+    padding:0px;
 }
 
 #headerbg {
-	width:100%;
-	height:100px;
-	float:left;
-	background-image: url(../images/headerBg.jpg);
-	background-repeat:repeat-x;
+    width:100%;
+    height:100px;
+    float:left;
+    background-image: url(../images/headerBg.jpg);
+    background-repeat:repeat-x;
 }
 
 #headerblank {
-	width:100%;
-	height:100px;
-	float: none;
-	margin:0 auto;
+    width:100%;
+    height:100px;
+    float: none;
+    margin:0 auto;
 }
 
 #header {
-	width:1024px;
-	height:100px;
-	float: left;
+    width:1024px;
+    height:100px;
+    float: left;
 }
 
 .sio {
@@ -34,171 +33,174 @@ body {
 
 /*-------------------------------------------------------------------------------------HEADERPART--------------------------------------------------END--------------------------------------*/	
 #contentbg {
-	width:100%;
-	float:left;
-	margin:0px;
-	padding:0px;
+    width:100%;
+    float:left;
+    margin:0px;
+    padding:0px;
 }
 
 #contentblank {
-	width:100%;
-	float: none;
-	margin:0 auto;
-	padding:0px;
+    width:100%;
+    float: none;
+    margin:0 auto;
+    padding:0px;
 }
 	
 #content {
-	width:100%;
-	float: left;
-	margin:0px;
-	padding:0px;
+    width:100%;
+    float: left;
+    margin:0px;
+    padding:0px;
 }
 
 #contentleft {
-	width:220px;
-	float: left;
-	margin:0px;
-	padding:0;
+    width:220px;
+    float: left;
+    margin:0px;
+    padding:0;
 }
 
 #contentmid {
-	width:70%;
-	float:left;
-	margin:0px;
-	padding: 37px 0 0 35px;
+    width:70%;
+    float:left;
+    margin:0px;
+    padding: 37px 0 0 35px;
 }
 
 /*--------------------------------------------------------------CONTENTPART-------------------------------------------------END--------------------------------------------------------------*/	
 #footerbg {
-	width:100%;
-	height:100px;
-	float:left;
-	margin:0px;
-	padding:0px;
+    width:100%;
+    height:100px;
+    float:left;
+    margin:0px;
+    padding:0px;
 }
 
 #footerblank {
-	width:1024px;
-	height:100px;
-	float:none;
-	margin:0 auto;
-	padding:0px;
+    width:1024px;
+    height:100px;
+    float:none;
+    margin:0 auto;
+    padding:0px;
 }
 
 #footer {
-	width:858px;
-	height:100px;
-	float:left;
-	margin:0px;
-	padding:41px 0 0 146px;
+    width:858px;
+    height:100px;
+    float:left;
+    margin:0px;
+    padding:41px 0 0 146px;
 }
 
 #copyrights {
-	width:715px;
-	float:left;
-	margin:5px 0 0 0;
-	padding:0px;
-	font-family:Arial;
-	font-size:11px;
-	color:black;
-	text-align:center;
+    width:715px;
+    float:left;
+    margin:5px 0 0 0;
+    padding:0px;
+    font-family:Arial;
+    font-size:11px;
+    color:black;
+    text-align:center;
 }
 
 /*----------------------------Codigo externo Diego----------------------------*/
 .regOscuro {
-	color: black;
-	border-style:none;
-	background-color:#E1E1E1;
-	Border-Right: #BBD3E1 0px solid;
-	Border-Top: #477EAB 0px solid;
-	Border-Left: #477EAB 0px solid;
-	Border-Bottom: #BBD3E1 0px solid;
-	text-align:left;
+    color: black;
+    border-style:none;
+    background-color:#E1E1E1;
+    Border-Right: #BBD3E1 0px solid;
+    Border-Top: #477EAB 0px solid;
+    Border-Left: #477EAB 0px solid;
+    Border-Bottom: #BBD3E1 0px solid;
+    text-align:left;
 }
 
 .lt {
-	font-family:verdana,tahoma,arial,helvetica;
-	font-size: 11px;
-	font-weight: normal;
-	text-align:right;
+    font-family:verdana,tahoma,arial,helvetica;
+    font-size: 11px;
+    font-weight: normal;
+    text-align:right;
 }
 
 .regSuaveLeft {
-	color: black;
-	border-style:none;
-	background: #D9E5F3;
-	Border-Right: #003366 0px solid;
-	Border-Top: #577CB5 0px solid;
-	Border-Left: #577CB5 0px solid;
-	Border-Bottom: #003366 0px solid;
-	text-align: left;
+    color: black;
+    border-style:none;
+    background: #D9E5F3;
+    Border-Right: #003366 0px solid;
+    Border-Top: #577CB5 0px solid;
+    Border-Left: #577CB5 0px solid;
+    Border-Bottom: #003366 0px solid;
+    text-align: left;
 }
 
 .separaFormulario {
-	color: black;
-	border-style:none;
-	background-color:#D9E5F3;
-	Border-Right: #003366 0px solid;
-	Border-Top: #577CB5 0px solid;
-	Border-Left: #577CB5 0px solid;
-	Border-Bottom: #003366 0px solid;
-	text-align: center;
+    color: black;
+    border-style:none;
+    background-color:#D9E5F3;
+    Border-Right: #003366 0px solid;
+    Border-Top: #577CB5 0px solid;
+    Border-Left: #577CB5 0px solid;
+    Border-Bottom: #003366 0px solid;
+    text-align: center;
 }
 .regSuaveCenter {
-	color: black;
-	border-style:none;
-	background-color:#D9E5F3;
-	Border-Right: #003366 0px solid;
-	Border-Top: #577CB5 0px solid;
-	Border-Left: #577CB5 0px solid;
-	Border-Bottom: #003366 0px solid;
-	text-align: center;
+    color: black;
+    border-style:none;
+    background-color:#D9E5F3;
+    Border-Right: #003366 0px solid;
+    Border-Top: #577CB5 0px solid;
+    Border-Left: #577CB5 0px solid;
+    Border-Bottom: #003366 0px solid;
+    text-align: center;
 }
 
 .regSuaveRight {
-	color: black;
-	border-style:none;
-	background: #D9E5F3;
-	Border-Right: #E7ECF5 0px solid;
-	Border-Top: #E7ECF5 0px solid;
-	Border-Left: #E7ECF5 0px solid;
-	Border-Bottom:#E7ECF5 0px solid;
-	text-align: right;
+    color: black;
+    border-style:none;
+    background: #D9E5F3;
+    Border-Right: #E7ECF5 0px solid;
+    Border-Top: #E7ECF5 0px solid;
+    Border-Left: #E7ECF5 0px solid;
+    Border-Bottom:#E7ECF5 0px solid;
+    text-align: right;
 }
 
 input.hospital {
-	font:verdana,tahoma,arial,helvetica;
-	font-size:7pt; font-weight : normal;
-	border-style:groove;
-	Border-Right: #003366 2px solid;
-	Border-Top: #C5DFEB 2px solid;
-	Border-Left: #C5DFEB 2px solid;
-	Border-Bottom: #003366 2px solid;
-	Color: #D2E7F0;
-	BackGround-Color: #4474A4;
-	width: 70px;
-	vertical-align: middle;
+    font-family:verdana,tahoma,arial,helvetica;
+/*    font:verdana,tahoma,arial,helvetica;*/
+    font-size:7pt; 
+    font-weight : normal;
+    border-style:groove;
+    Border-Right: #003366 2px solid;
+    Border-Top: #C5DFEB 2px solid;
+    Border-Left: #C5DFEB 2px solid;
+    Border-Bottom: #003366 2px solid;
+    Color: #D2E7F0;
+    BackGround-Color: #4474A4;
+    width: 70px;
+    vertical-align: middle;
 }
+
 .regSuave {
-	color: black;
-	border-style:none;
-	background-color:#D9E5F3;
-	Border-Right: #003366 0px solid;
-	Border-Top: #577CB5 0px solid;
-	Border-Left: #577CB5 0px solid;
-	Border-Bottom: #003366 0px solid;
-	text-align:left;
+    color: black;
+    border-style:none;
+    background-color:#D9E5F3;
+    Border-Right: #003366 0px solid;
+    Border-Top: #577CB5 0px solid;
+    Border-Left: #577CB5 0px solid;
+    Border-Bottom: #003366 0px solid;
+    text-align:left;
 }
 
 .regOscuroCenter {
-	color: black;
-	border-style:none;
-	background-color:#E1E1E1;
-	Border-Right: #BBD3E1 0px solid;
-	Border-Top: #477EAB 0px solid;
-	Border-Left: #477EAB 0px solid;
-	Border-Bottom: #BBD3E1 0px solid;
-	text-align:center;
+    color: black;
+    border-style:none;
+    background-color:#E1E1E1;
+    Border-Right: #BBD3E1 0px solid;
+    Border-Top: #477EAB 0px solid;
+    Border-Left: #477EAB 0px solid;
+    Border-Bottom: #BBD3E1 0px solid;
+    text-align:center;
 }
 
 select .partido {
