@@ -15,7 +15,7 @@
 
     $filtroSexo = "";
     if ($_GET['sexo'] != "-") {
-        $filtroSexo = " AND pc.genero='" . $_GET['sexo'] . "'";
+        $filtroSexo = " AND genero='" . $_GET['sexo'] . "'";
     }
 
     $filtroPartido = "";

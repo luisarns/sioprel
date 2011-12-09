@@ -92,7 +92,6 @@ function cargarMunicipios(sel)
     ocultarIniciar('divselcomuna', 'selcomuna');
 }
 
-
 function cargarComunas(sel) 
 {
     if (sel != '-') {
