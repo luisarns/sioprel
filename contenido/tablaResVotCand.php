@@ -38,7 +38,7 @@
 	ORDER BY votos DESC
 EOF;
 	
-        // echo "<br/>" . $query . "<br/>";
+//        echo "<br/>" . $query . "<br/>";
         
        $sqlite = new SPSQLite($pathDB);
        $sqlite->query($query);

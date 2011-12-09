@@ -167,21 +167,21 @@ EOF;
     $sqlite->query($query);
     $result = $sqlite->returnRows();
    
-    $sqlite->close();
+//    $sqlite->close();
     //Fin de la primera consulta
     
     //Consultas para obtener el potencial
-    $sqlite = new SPSQLite($pathDB);
+//    $sqlite = new SPSQLite($pathDB);
     
     $sqlite->query($queryPotencial);
     $row  = $sqlite->returnRows();
     $potencial = $row[0]['POTENCIALF'] + $row[0]['POTENCIALM'];
     
-    $sqlite->close();
+//    $sqlite->close();
     //End Potencial
     
     //Votos especiales
-    $sqlite = new SPSQLite($pathDB);
+//    $sqlite = new SPSQLite($pathDB);
     
     $sqlite->query($queryVotosEsp);
     $resultVotosEsp  = $sqlite->returnRows();

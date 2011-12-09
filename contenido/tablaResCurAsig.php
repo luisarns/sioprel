@@ -31,7 +31,7 @@
         ORDER BY pcp.numcurules DESC
 EOF;
     
-    echo "<br/>" . $query . "<br/>";
+//    echo "<br/>" . $query . "<br/>";
     
 
     $sqlite = new SPSQLite($pathDB);
