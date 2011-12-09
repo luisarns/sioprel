@@ -12,8 +12,8 @@
     $pdf->SetKeywords('Votacion, Curules, Resumen, Elecciones, Colombia');
 
     $header  = utf8_encode("Resumen Curules Asignadas");
-    $nomCorporacion = $nomCorporacion;
-    $nomDivipol = $nomDivipol;
+    $nomCorporacion = trim($nomCorporacion);
+    $nomDivipol = trim($nomDivipol);
 	
     $headerstring =<<<CBC
     $header

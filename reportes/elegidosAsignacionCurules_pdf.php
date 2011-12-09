@@ -14,8 +14,8 @@
     $pdf->SetKeywords('Votacion, Asignación, Curules, Resumen, Elecciones');
 
     $header  = utf8_encode("Elegidos Asignación Curules");
-    $nomCorporacion = $nomCorporacion;
-    $nomDivipol = $nomDivipol;
+    $nomCorporacion = trim($nomCorporacion);
+    $nomDivipol = trim($nomDivipol);
 	
     $headerstring =<<<CBC
     $header
