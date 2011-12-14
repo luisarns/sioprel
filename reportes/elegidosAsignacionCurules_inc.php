@@ -60,9 +60,9 @@ FEO;
     $sqlite->query($queryCurules);
     $resultCurules = $sqlite->returnRows();
     
-    $nocurules = $resultCurules[0]['NUMCURULES'];
-    $cuociente = $resultCurules[0]['CUOCIENTE'];
-    $cifrarepartidora = $resultCurules[0]['CIFRAREPARTIDORA'];
+    $nocurules = (int)$resultCurules[0]['NUMCURULES'];
+    $cuociente = (int)$resultCurules[0]['CUOCIENTE'];
+    $cifrarepartidora = (int)$resultCurules[0]['CIFRAREPARTIDORA'];
     
     
     //Para obtener el nombre de la corporacion

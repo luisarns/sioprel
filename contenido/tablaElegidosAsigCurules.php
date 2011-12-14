@@ -44,6 +44,8 @@
     ORDER BY votos DESC
 EOF;
     
+    
+    
     $coddivipol = str_pad($coddivcorto,9,'0');
     
     //Agregar la consulta para obtener la cifra repartidora y el cociente
@@ -56,6 +58,8 @@ EOF;
         $filtroComuna
 FEO;
     
+//    echo "<br/>" . $queryCurules . "<br/>";
+    
     $sqlite = new SPSQLite($pathDB);
     
     $sqlite->query($query);
@@ -67,6 +71,11 @@ FEO;
     $nocurules = $resultCurules[0]['NUMCURULES'];
     $cuociente = $resultCurules[0]['CUOCIENTE'];
     $cifrarepartidora = $resultCurules[0]['CIFRAREPARTIDORA'];
+    
+    
+//    echo "<br/>Nro.Curules " . $nocurules . "<br/>";
+//    echo "Cuociente " . $cuociente . "<br/>";
+//    echo "Cifra Repartidora " . $cifrarepartidora . "<br/>";
     
     $sqlite->close();
     unset($sqlite);
@@ -86,15 +95,15 @@ FEO;
     <table width="100%" align="center" border="1" cellspacing="3" cellpadding="0" class="regSuaveLeft">
          <tr>
             <td><strong>No. Curules</strong></td>
-            <td><?php echo number_format($nocurules)?></td>
+            <td><?php echo number_format((int)$nocurules)?></td>
         </tr>
         <tr>
             <td><strong>Cociente</strong></td>
-            <td><?php echo number_format($cuociente) ?></td>
+            <td><?php echo number_format((int)$cuociente) ?></td>
         </tr>
         <tr>
             <td><strong>Cifra Repartidora</strong></td>
-            <td><?php echo number_format($cifrarepartidora) ?></td>
+            <td><?php echo number_format((int)$cifrarepartidora) ?></td>
         </tr>
     </table>
 

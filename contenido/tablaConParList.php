@@ -1,7 +1,9 @@
 <?php
     require_once('conexionSQlite3.php');
     include_once('FunDivipol.php');
-
+    
+//    echo "<br/>" . date('H:i:s.u') . "<br/>";
+    
     $urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repConPartidolista.php?";
 
     $codcorporacion = $_GET['corporacion'];
@@ -73,8 +75,6 @@
     ORDER BY votos DESC
 EOF;
     
-//    echo "Consolidado Partido<br/>" . $query;
-    
     if ($codnivel <= 2 ){
      $query =<<<EIF
      SELECT pp.codpartido as codigo ,pp.descripcion as descripcion, sum(dd.numvotos) as votos
@@ -84,7 +84,7 @@ EOF;
        WHERE codcorporacion = $codcorporacion
        AND coddivipol LIKE '$codcordiv' || '%'
        AND codnivel = $nivcorpo $filtroComuna ) pc,
-     ( SELECT * 
+     ( SELECT idcandidato,numvotos 
        FROM DDETALLEBOLETIN 
        WHERE coddivipol LIKE '$coddivipol' || '%' 
        AND codnivel = $codnivel AND codcorporacion = $codcorporacion $filtroComuna ) dd
@@ -141,8 +141,6 @@ FEO;
     ORDER BY votos DESC
 EOF;
     
-//    echo "<br/>Votos Especiales<br/>" .  $queryVotosEsp;    
-    
     if ($codnivel <= 2 ) {
      $queryVotosEsp =<<<EOF
      SELECT pc.codtipovoto as codtipovoto ,pc.descripcion as descripcion, SUM(de.numvotos) as votos
@@ -158,34 +156,28 @@ EOF;
 EOF;
     }
     
-    
 //    echo "<br/>Votos Especiales<br/>" .  $queryVotosEsp;
     
     //Desde aqui cambia el codigo para la coneccion
+//    echo "<br/> Consolidado Partido<br/>" . date('H:i:s.u');
     $sqlite = new SPSQLite($pathDB);
-    
     $sqlite->query($query);
     $result = $sqlite->returnRows();
-   
-//    $sqlite->close();
-    //Fin de la primera consulta
+//    echo "-" . date('H:i:s.u') . "<br/>";
+
     
-    //Consultas para obtener el potencial
-//    $sqlite = new SPSQLite($pathDB);
-    
+//    echo "Potencial<br/>" . date('H:i:s.u');
     $sqlite->query($queryPotencial);
     $row  = $sqlite->returnRows();
     $potencial = $row[0]['POTENCIALF'] + $row[0]['POTENCIALM'];
+//    echo "-" . date('H:i:s.u') . "<br/>";
+
     
-//    $sqlite->close();
-    //End Potencial
-    
-    //Votos especiales
-//    $sqlite = new SPSQLite($pathDB);
-    
+//    echo "Votos Especiales<br/>" . date('H:i:s.u');
     $sqlite->query($queryVotosEsp);
     $resultVotosEsp  = $sqlite->returnRows();
-
+//    echo "-" . date('H:i:s.u') . "<br/>";
+    
     ///----------------///
     $sqlite->close();  ///
     unset($sqlite);    ///
