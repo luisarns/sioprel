@@ -41,12 +41,13 @@
         $inArrDivipol = array();
         $inArrNivel = array();
         while ($codniveltmp <= $codnivel) {
-            array_push($inArrDivipol,str_pad(substr($coddivipol, 0, getNumDigitos($codniveltmp)), 9, '0'));
+            $strDidivipol = str_pad(substr($coddivipol, 0, getNumDigitos($codniveltmp)), 9, '0');
+            array_push($inArrDivipol,$strDidivipol);
             array_push($inArrNivel,$codniveltmp);
             $codniveltmp = $codniveltmp + 1;
         }
-        $inDivipol = '(' . implode(',',$inArrDivipol) . ')';
-        $inNivel = '(' . implode(',',$inArrNivel) . ')';
+        $inDivipol = "('" . implode("','",$inArrDivipol) . "')";
+        $inNivel = "(" . implode(",",$inArrNivel) . ")";
 
         $queryDivipoles = "SELECT descripcion as descripcion , codnivel as codnivel "
                         . "FROM pdivipol "

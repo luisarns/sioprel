@@ -1,4 +1,4 @@
-function validar(form){
+function validar(form) {
 	
     if(form.corporacion.value == '-'){
             alert("Seleccione una corporación");
@@ -40,7 +40,7 @@ function validar(form){
     return false;
 }
 
-function mostrarDepto(sel){
+function mostrarDepto(sel) {
 	document.formPrincipal.departamento.value = '-';
 	var divDepto = document.getElementById('divseldepto');
 	
@@ -54,7 +54,7 @@ function mostrarDepto(sel){
 	ocultarIniciar('divselcomuna', 'selcomuna');
 }
 
-function cargarMunicipios(sel){
+function cargarMunicipios(sel) {
 	var corpo = document.formPrincipal.corporacion.value;
 
         if (sel != '-' && corpo != 1 && corpo != 2) {

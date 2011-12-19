@@ -137,24 +137,24 @@ EOF;
     $sqlite = new SPSQLite($pathDB);
     $sqlite->query($query);
     $result = $sqlite->returnRows();
-    $sqlite->close();
+//    $sqlite->close();
     //
     
     //Ejecuto la query en la base, para obtener el potencial
-    $sqlite = new SPSQLite($pathDB);
+//    $sqlite = new SPSQLite($pathDB);
     $sqlite->query($queryPotencial);
     $resultPotencial = $sqlite->returnRows();
     $potencial = $resultPotencial[0]['POTENCIALF'] + $resultPotencial[0]['POTENCIALM'];
-    $sqlite->close();
+//    $sqlite->close();
     //
     
 //    echo "<br/>" . $potencial . "<br/>";
     
     //Ejecuto la query en la base, para obtener lo votacion especial
-    $sqlite = new SPSQLite($pathDB);
+//    $sqlite = new SPSQLite($pathDB);
     $sqlite->query($queryVotosEsp);
     $resultVotosEsp  = $sqlite->returnRows();
-    $sqlite->close();
+//    $sqlite->close();
     //
     
     $totalVotos = 0;
@@ -180,13 +180,13 @@ EOF;
     
     //-----------------//--------------------//------------------//
     //Obtener la corporacion y el potencial
-    $sqlite = new SPSQLite($pathDB);
+//    $sqlite = new SPSQLite($pathDB);
     $queryCorporacion = "SELECT descripcion FROM pcorporaciones"
                       . " WHERE codcorporacion = $codcorporacion";
     $sqlite->query($queryCorporacion);
     $resulCorporacion  = $sqlite->returnRows();
     $nomCorporacion = $resulCorporacion[0]['DESCRIPCION'];
-    $sqlite->close();
+//    $sqlite->close();
     //Cuando es comuna y cuando es mesa
 
     //Codigo para obtener la descripcion completa de la divipol
@@ -202,15 +202,15 @@ EOF;
     $nmMesa = "";
     
     //
-    $sqlite = new SPSQLite($pathDB);
+//    $sqlite = new SPSQLite($pathDB);
     $sqlite->query($queryDivipoles);
     $resultDivipol = $sqlite->returnRows();
-    $sqlite->close();
+//    $sqlite->close();
     //
+//    echo "<br/>" . $queryDivipoles . "<br/>";
     
     if (isset($resultDivipol)) {
         foreach ($resultDivipol as $row) {
-//            $nomDivipol = $nomDivipol . ' ' . $row['descripcion'];
             switch($row['codnivel']) {
                 case 1:
                     $nmDepartamento = $row['descripcion'];
@@ -238,6 +238,7 @@ EOF;
         $nmComuna = $resultDivipol[0]['DESCRIPCION'];
         $nmZona = "";
     }
+    
     if ($hayMesa) {
         $queryDivipol = "SELECT codmesa FROM pmesas WHERE coddivipol = '" . str_pad($coddivipol, 9,'0') . "'" 
                   . " AND codnivel = $codnivel AND codtransmision = " . $_GET['codtransmision'];
@@ -248,7 +249,7 @@ EOF;
         $nmMesa = 'Mesa ' . str_pad($resultDivipol[0]['CODMESA'],3,'0',STR_PAD_LEFT);
     }
     
-//    $sqlite->close(); 
+    $sqlite->close();
     unset($sqlite);
     
     $participacion = round((($totalVotos*100)/$potencial),2);
