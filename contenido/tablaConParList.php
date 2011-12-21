@@ -37,15 +37,18 @@
     $hayMesa = false;
     $filtroMesa = "";
     if(isset($_GET['mesa']) && $_GET['mesa'] != "-"){
-        $filtroMesa = " AND codtransmision = '" . $_GET['mesa'] . "'";
+        $filtroMesa = " AND me.codtransmision = '" . $_GET['mesa'] . "'";
         $urlReportes .= "&codtransmision=" . $_GET['mesa'];
         $hayMesa = true;
     }
 
     $filtroComuna = "";
+    $filtroDivipol = "";
     $hayComuna = false;
     if(isset($_GET['comuna']) && $_GET['comuna'] != "-"){
         $filtroComuna = " AND idcomuna = ".$_GET['comuna'];
+        $filtroDivipol = " INNER JOIN PDIVIPOL pd ON me.coddivipol = pd.coddivipol " 
+                        . "AND  pd.coddivipol LIKE '$coddivipol' || '%' AND pd.codnivel = 4 AND pd.idcomuna = " . $_GET['comuna'];
         $urlReportes.="&idcomuna=".$_GET['comuna'];
         $hayComuna = true;
     }
@@ -55,25 +58,23 @@
         $filtroPartido = "AND pp.codpartido = ".$_GET['partido'];
         $urlReportes.="&codpartido=".$_GET['partido'];   
     }
-   
+    
+    //Editando 
     $query =<<<EOF
     SELECT pp.codpartido as codigo ,pp.descripcion as descripcion, SUM(mv.numvotos) as votos
-    FROM PPARTIDOS pp,
-     ( SELECT coddivipol, codnivel 
-       FROM PDIVIPOL 
-       WHERE coddivipol LIKE '$coddivipol' || '%' AND codnivel = 4 $filtroComuna ) pd,
-     ( SELECT codpartido,idcandidato
-       FROM PCANDIDATOS 
-       WHERE coddivipol LIKE '$codcordiv' || '%' AND codnivel = $nivcorpo $filtroComuna ) pc,
-     ( SELECT codtransmision,coddivipol
-       FROM PMESAS 
-       WHERE codcorporacion = $codcorporacion $filtroMesa ) pm,
-    MVOTOS mv
-    WHERE pp.codpartido = pc.codpartido AND pd.coddivipol = pm.coddivipol $filtroPartido
-    AND pm.codtransmision = mv.codtransmision AND mv.idcandidato = pc.idcandidato
+    FROM ( SELECT me.codtransmision,me.coddivipol
+        FROM PMESAS me
+        $filtroDivipol
+        WHERE me.codcorporacion = $codcorporacion AND me.coddivipol LIKE '$coddivipol' || '%' $filtroMesa ) pm,
+        ( SELECT codpartido,idcandidato
+        FROM PCANDIDATOS 
+        WHERE coddivipol LIKE '$codcordiv' || '%' AND codnivel = $nivcorpo AND codcorporacion = $codcorporacion ) pc
+    INNER JOIN MVOTOS mv ON pm.codtransmision = mv.codtransmision AND mv.idcandidato = pc.idcandidato     
+    INNER JOIN PPARTIDOS pp ON pp.codpartido = pc.codpartido $filtroPartido
     GROUP BY pp.codpartido, pp.descripcion
     ORDER BY votos DESC
 EOF;
+    //Fin edicion
     
     if ($codnivel <= 2 ){
      $query =<<<EIF
@@ -128,9 +129,9 @@ FEO;
     $queryVotosEsp = <<<EOF
     SELECT pc.codtipovoto as codtipovoto ,pc.descripcion as descripcion, SUM(mv.numvotos) as votos
     FROM PTIPOSVOTOS pc,
-     ( SELECT codtransmision,coddivipol
-       FROM PMESAS 
-       WHERE codcorporacion = $codcorporacion $filtroMesa ) pm,
+     ( SELECT me.codtransmision,me.coddivipol
+       FROM PMESAS me
+       WHERE me.codcorporacion = $codcorporacion $filtroMesa ) pm,
      ( SELECT coddivipol, codnivel 
        FROM PDIVIPOL 
        WHERE coddivipol LIKE '$coddivipol' || '%' AND codnivel = 4 $filtroComuna ) pd,
