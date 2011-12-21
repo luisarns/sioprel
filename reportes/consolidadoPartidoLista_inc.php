@@ -95,8 +95,6 @@ FEO;
         
     }
     ///Fin query potencial
-
-//    echo "<br/>Potencial<br/>" . $queryPotencial;
     
     //Inicio query votacion especial
     $circunscripcion = ($codcorporacion != 5)? $nivcorpo : 3;
@@ -114,7 +112,7 @@ FEO;
     WHERE pm.coddivipol = pd.coddivipol AND pm.codtransmision = mv.codtransmision
     AND pc.codtipovoto = mv.codtipovoto AND mv.codcircunscripcion = '$circunscripcion'
     GROUP BY pc.codtipovoto,pc.descripcion 
-    ORDER BY votos DESC
+    ORDER BY codtipovoto ASC
 EOF;
     
     if ($codnivel <= 2 ) {
@@ -128,44 +126,23 @@ EOF;
        AND codcorporacion = $codcorporacion $filtroComuna ) de
     WHERE de.codtipovoto = pc.codtipovoto
     GROUP BY pc.codtipovoto,pc.descripcion 
-    ORDER BY votos DESC
+    ORDER BY codtipovoto ASC
 EOF;
     }
-    
-//    echo "<br/>Votos Especiales<br/>" .  $queryVotosEsp;
     
     //Desde aqui cambia el codigo para la coneccion
     $sqlite = new SPSQLite($pathDB);
     $sqlite->query($query);
     $result = $sqlite->returnRows();
-//    $sqlite->close();
-    //
-    
-    //Ejecuto la query en la base, para obtener el potencial
-//    $sqlite = new SPSQLite($pathDB);
+
     $sqlite->query($queryPotencial);
     $resultPotencial = $sqlite->returnRows();
     $potencial = $resultPotencial[0]['POTENCIALF'] + $resultPotencial[0]['POTENCIALM'];
-//    $sqlite->close();
-    //
-    
-//    echo "<br/>" . $potencial . "<br/>";
-    
-    //Ejecuto la query en la base, para obtener lo votacion especial
-//    $sqlite = new SPSQLite($pathDB);
+
     $sqlite->query($queryVotosEsp);
     $resultVotosEsp  = $sqlite->returnRows();
-//    $sqlite->close();
-    //
     
-    $totalVotos = 0;
-    $votacionEspecial = array();
-    if (isset($resultVotosEsp)) {
-        foreach($resultVotosEsp as $row) {
-            array_push($votacionEspecial,$row);
-            $totalVotos += $row['votos'];
-        }
-    }
+    $totalVotos = 0;    
     
     $partidos = array();
     $candidatos = array();
@@ -176,19 +153,27 @@ EOF;
             $totalVotos += $row['votos'];
         }
     }
-
-//    echo "<br/> Total Votos : " . $totalVotos . "<br/>";
+    
+    $votosValidos = $totalVotos;
+    
+    $votacionEspecial = array();
+    if (isset($resultVotosEsp)) {
+        foreach($resultVotosEsp as $row) {
+            array_push($votacionEspecial,$row);
+            $totalVotos += $row['votos'];
+            if($row['codtipovoto'] == 996){
+                $votosValidos +=  $row['votos'];
+            }
+        }
+    }
+    
     
     //-----------------//--------------------//------------------//
-    //Obtener la corporacion y el potencial
-//    $sqlite = new SPSQLite($pathDB);
     $queryCorporacion = "SELECT descripcion FROM pcorporaciones"
                       . " WHERE codcorporacion = $codcorporacion";
     $sqlite->query($queryCorporacion);
     $resulCorporacion  = $sqlite->returnRows();
     $nomCorporacion = $resulCorporacion[0]['DESCRIPCION'];
-//    $sqlite->close();
-    //Cuando es comuna y cuando es mesa
 
     //Codigo para obtener la descripcion completa de la divipol
     include_once('../contenido/FunDivipol.php');
@@ -202,13 +187,9 @@ EOF;
     $nmComuna = "";
     $nmMesa = "";
     
-    //
-//    $sqlite = new SPSQLite($pathDB);
     $sqlite->query($queryDivipoles);
     $resultDivipol = $sqlite->returnRows();
-//    $sqlite->close();
-    //
-//    echo "<br/>" . $queryDivipoles . "<br/>";
+    
     
     if (isset($resultDivipol)) {
         foreach ($resultDivipol as $row) {
@@ -255,4 +236,5 @@ EOF;
     
     $participacion = round((($totalVotos*100)/$potencial),2);
     $asbtencion  = round(100 - $participacion,2);
+    
 ?>

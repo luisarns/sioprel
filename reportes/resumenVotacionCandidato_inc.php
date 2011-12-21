@@ -3,16 +3,14 @@
     $codcorporacion = $_GET['corporacion'];
     $coddepto = $_GET['departamento'];
     $codmunip = $_GET['municipio'];
-	$codnivel = 2;
+    $codnivel = 2;
 
     // $txt = "";
 	$filtroComuna = "";
     $hayComuna = false;
     if(isset($_GET['comuna']) && $_GET['comuna'] != "-"){
-			$filtroComuna = " AND idcomuna = " .$_GET['comuna'];
-            // $txt = "AND pc.idcomuna = ".$_GET['comuna'];
-            // $txt .= " AND pd.idcomuna = ".$_GET['comuna'];
-            $hayComuna = true;
+	$filtroComuna = " AND idcomuna = " .$_GET['comuna'];
+        $hayComuna = true;
     }
 
     $codcordivi = $coddepto."".$codmunip;
@@ -30,7 +28,7 @@
        AND codnivel = '$nivcorpo' AND codcandidato <> 0 $filtroComuna ) pc,
      ( SELECT * 
        FROM DDETALLEBOLETIN 
-       WHERE coddivipol LIKE $codcordivi || '%' 
+       WHERE coddivipol LIKE '$codcordivi' || '%' 
        AND codnivel = $codnivel AND codcorporacion = $codcorporacion $filtroComuna ) dd
 	WHERE pc.codpartido = pp.codpartido AND pc.idcandidato = dd.idcandidato
 	GROUP BY pc.codpartido, pc.codcandidato

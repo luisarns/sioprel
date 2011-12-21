@@ -2,8 +2,6 @@
     require_once('conexionSQlite3.php');
     include_once('FunDivipol.php');
     
-//    echo "<br/>" . date('H:i:s.u') . "<br/>";
-    
     $urlReportes = "http://" . $_SERVER['HTTP_HOST'] . "/reportes/repConPartidolista.php?";
 
     $codcorporacion = $_GET['corporacion'];
@@ -139,7 +137,7 @@ FEO;
     WHERE pm.coddivipol = pd.coddivipol AND pm.codtransmision = mv.codtransmision
     AND pc.codtipovoto = mv.codtipovoto AND mv.codcircunscripcion = '$circunscripcion'
     GROUP BY pc.codtipovoto,pc.descripcion 
-    ORDER BY votos DESC
+    ORDER BY codtipovoto ASC
 EOF;
     
     if ($codnivel <= 2 ) {
@@ -153,31 +151,21 @@ EOF;
        AND codcorporacion = $codcorporacion $filtroComuna ) de
     WHERE de.codtipovoto = pc.codtipovoto
     GROUP BY pc.codtipovoto,pc.descripcion 
-    ORDER BY votos DESC
+    ORDER BY codtipovoto ASC
 EOF;
     }
     
-//    echo "<br/>Votos Especiales<br/>" .  $queryVotosEsp;
-    
-    //Desde aqui cambia el codigo para la coneccion
-//    echo "<br/> Consolidado Partido<br/>" . date('H:i:s.u');
+
     $sqlite = new SPSQLite($pathDB);
     $sqlite->query($query);
     $result = $sqlite->returnRows();
-//    echo "-" . date('H:i:s.u') . "<br/>";
 
-    
-//    echo "Potencial<br/>" . date('H:i:s.u');
     $sqlite->query($queryPotencial);
     $row  = $sqlite->returnRows();
     $potencial = $row[0]['POTENCIALF'] + $row[0]['POTENCIALM'];
-//    echo "-" . date('H:i:s.u') . "<br/>";
 
-    
-//    echo "Votos Especiales<br/>" . date('H:i:s.u');
     $sqlite->query($queryVotosEsp);
     $resultVotosEsp  = $sqlite->returnRows();
-//    echo "-" . date('H:i:s.u') . "<br/>";
     
     ///----------------///
     $sqlite->close();  ///
@@ -193,17 +181,23 @@ EOF;
             $totalVotos += $row['votos'];
         }
     }
-
+    
+    $votosValidos = $totalVotos;
+    
+    
     $votacionEspecial = array();
     
     if (isset($resultVotosEsp)) {
         foreach($resultVotosEsp as $row) {
             array_push($votacionEspecial,$row);
             $totalVotos += $row['votos'];
+            if($row['codtipovoto'] == 996){
+                $votosValidos +=  $row['votos'];
+            }
         }
     }
     
-//    echo "<br/> Total Votos : " . $totalVotos . "<br/>";
+//    echo "<br/> Total Votos Validos: " . $votosValidos . "<br/>";
     
     $urlReportes.="&formato=";
 
@@ -270,19 +264,39 @@ EOF;
                     <td><?php echo str_pad($row['codigo'], 3, '0', STR_PAD_LEFT)?></td>
                     <td><?php echo htmlentities($row['descripcion'], ENT_QUOTES | ENT_IGNORE, "UTF-8")?></td>
                     <td class="numero"><?php echo number_format($row['votos'])?></td>
-                    <td class="numero"><?php echo round($row['votos']*100/$potencial,2) . '%' ?></td>
+                    <td class="numero"><?php echo round($row['votos']*100/$votosValidos,2) . '%' ?></td>
                 </tr>
 	<?php } ?>
                 
         <?php foreach ($votacionEspecial as $row ) { ?>
+                <?php if ($row['codtipovoto'] != 996) { ?>
                 <tr>
                     <td>&nbsp;</td>
-                    <td><strong><?php echo htmlentities($row['descripcion'], ENT_QUOTES | ENT_IGNORE, "UTF-8")?></strong></td>
+                    <td><?php echo htmlentities($row['descripcion'], ENT_QUOTES | ENT_IGNORE, "UTF-8")?></td>
                     <td class="numero"><?php echo number_format($row['votos'])?></td>
-                    <td class="numero"><?php echo round($row['votos']*100/$potencial,2) . '%' ?></td>
+                    <td class="numero"><?php echo round($row['votos']*100/$totalVotos,2) . '%' ?></td>
                 </tr>
+               <?php } else {  ?>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><?php echo htmlentities($row['descripcion'], ENT_QUOTES | ENT_IGNORE, "UTF-8")?></td>
+                    <td class="numero"><?php echo number_format($row['votos'])?></td>
+                    <td class="numero"><?php echo round($row['votos']*100/$votosValidos,2) . '%' ?></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><strong>VOTOS VALIDOS</strong></td>
+                    <td class="numero"><?php echo number_format($votosValidos) ?></td>
+                    <td class="numero"><?php echo round($votosValidos*100/$totalVotos,2) . '%' ?></td>
+                </tr>
+                <?php } ?>
         <?php }?>
-                
+        <tr>
+            <td>&nbsp;</td>
+            <td><strong><?php echo 'TOTAL VOTOS' ?></strong></td>
+            <td class="numero"><?php echo number_format($totalVotos)?></td>
+            <td class="numero"><?php echo round($totalVotos*100/$potencial,2) . '%' ?></td>
+        </tr>    
 </table>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">

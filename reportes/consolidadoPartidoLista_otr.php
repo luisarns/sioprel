@@ -47,19 +47,36 @@
         $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont, str_pad($partido['codigo'], 3, '0', STR_PAD_LEFT));
         $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, $partido['descripcion']);
         $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, number_format($partido['votos']));
-        $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont, round($partido['votos']*100/$potencial,2) . '%');
+        $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont, round($partido['votos']*100/$votosValidos,2) . '%');
         $cont++;
-
     }
     
     foreach ($votacionEspecial as $votoEsp) {
-        $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,'');
-        $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, $votoEsp['descripcion']);
-        $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, number_format($votoEsp['votos']));
-        $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont, round($votoEsp['votos']*100/$potencial,2) . '%');
+        if ($votoEsp['codtipovoto'] != 996) {
+            $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,'');
+            $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, $votoEsp['descripcion']);
+            $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, number_format($votoEsp['votos']));
+            $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont, round($votoEsp['votos']*100/$totalVotos,2) . '%');
+        } else {
+            $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,'');
+            $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, $votoEsp['descripcion']);
+            $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, number_format($votoEsp['votos']));
+            $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont, round($votoEsp['votos']*100/$votosValidos,2) . '%');
+            $cont++;
+            $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,'');
+            $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, 'VOTOS VALIDOS');
+            $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, number_format($votosValidos));
+            $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont, round($votosValidos*100/$totalVotos,2) . '%');
+        }
         $cont++;
+        
     }
-
+    $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,'');
+    $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, 'TOTAL VOTOS');
+    $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, number_format($totalVotos));
+    $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont, round($totalVotos*100/$potencial,2) . '%');
+    $cont++;
+    
     $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
     $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
     $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);

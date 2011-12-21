@@ -31,7 +31,7 @@
        AND codnivel = '$nivcorpo' AND codcandidato <> 0 $filtroComuna ) pc,
      ( SELECT * 
        FROM DDETALLEBOLETIN 
-       WHERE coddivipol LIKE $codcordivi || '%' 
+       WHERE coddivipol LIKE '$codcordivi' || '%' 
        AND codnivel = $codnivel AND codcorporacion = $codcorporacion $filtroComuna ) dd
 	WHERE pc.codpartido = pp.codpartido AND pc.idcandidato = dd.idcandidato
 	GROUP BY pc.codpartido, pc.codcandidato
