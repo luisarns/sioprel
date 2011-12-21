@@ -6,9 +6,11 @@
         
         $sqlite = new SPSQLite($pathDB);
 
-        $query = "SELECT codzona,descripcion FROM pdivipol WHERE coddivipol LIKE $codcortodivipol || '%' "
+        $query = "SELECT codzona,descripcion FROM pdivipol WHERE coddivipol LIKE '$codcortodivipol' || '%' "
                . "AND codnivel = 3 ORDER BY codzona,descripcion";
 
+//        echo "<br/>" . $query . "<br/>";
+        
         $sqlite->query($query);
         $rs = $sqlite->returnRows();
 

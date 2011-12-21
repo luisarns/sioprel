@@ -16,7 +16,7 @@
         
         $sqlite = new SPSQLite($pathDB);
         
-        $query = "SELECT coddivipol,codpuesto,descripcion FROM pdivipol WHERE coddivipol LIKE $divipol || '%' "
+        $query = "SELECT coddivipol,codpuesto,descripcion FROM pdivipol WHERE coddivipol LIKE '$divipol' || '%' "
                . "AND codnivel = 4 $txt ORDER BY codpuesto,descripcion";
         
         $sqlite->query($query);

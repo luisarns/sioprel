@@ -6,7 +6,7 @@
         $sqlite = new SPSQLite($pathDB);
         
         $query = "SELECT idcomuna,codcomuna,descripcion FROM pcomuna WHERE coddivipol LIKE" 
-               . " $codcortodivipol || '%' ORDER BY codcomuna,descripcion";
+               . " '$codcortodivipol' || '%' ORDER BY codcomuna,descripcion";
 
         $sqlite->query($query);
         $rs = $sqlite->returnRows();

@@ -11,6 +11,15 @@
         $query = "SELECT codmunicipio,descripcion FROM pdivipol WHERE codnivel = 2 " 
                . "AND coddepartamento = '$coddepto' ORDER BY codmunicipio";
         
+        if($corpo == 5){
+            $query = " SELECT DISTINCT pd.codmunicipio,pd.descripcion 
+            FROM pdivipol pd INNER JOIN pcomuna pc
+            ON pd.coddivipol = pc.coddivipol
+            WHERE pc.idcomuna <> 0 AND pc.codnivel = pd.codnivel AND pd.coddivipol LIKE '$coddepto' || '%'";
+        }
+        
+//        echo "<br/>" . $query . "<br/>";
+        
         $sqlite->query($query);
         $rs = $sqlite->returnRows();
 
