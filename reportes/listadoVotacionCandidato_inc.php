@@ -26,7 +26,7 @@
         FROM PCANDIDATOS 
         WHERE codcorporacion = $codcorporacion
         AND coddivipol LIKE '$codcordiv' || '%'
-        AND codnivel = $nivcorpo AND codcandidato <> 0 $filtroComuna ) pc,       
+        AND codnivel = $nivcorpo $filtroComuna ) pc,
       ( SELECT * 
         FROM DDETALLEBOLETIN 
         WHERE coddivipol LIKE '$coddivcorto' || '%' 

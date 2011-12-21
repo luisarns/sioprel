@@ -24,8 +24,8 @@
     }
     
     $query=<<<EOF
-    SELECT pc.codpartido as codpartido, pc.codcandidato as codcandidato, pc.nombres as nombres, pc.apellidos as apellidos,
-    pp.descripcion as descripcion,sum(dd.numvotos) as votos
+    SELECT pc.codpartido AS codpartido, pc.codcandidato AS codcandidato, pc.nombres AS nombres, pc.apellidos AS apellidos,
+    pp.descripcion AS descripcion,COALESCE(sum(dd.numvotos),0) AS votos
     FROM 
         ( SELECT codpartido, descripcion
           FROM PPARTIDOS ) pp,
@@ -34,17 +34,16 @@
           WHERE codcorporacion = $codcorporacion 
           AND coddivipol LIKE '$codcordiv' || '%'
           AND codnivel = $nivcorpo AND codcandidato <> 0 
-          AND elegido <> 0 $filtroComuna ) pc,
+          AND elegido <> 0 $filtroComuna ) pc LEFT JOIN
         ( SELECT * 
           FROM DDETALLEBOLETIN 
           WHERE coddivipol LIKE '$coddivcorto' || '%' 
-          AND codnivel = $nivcorpo AND codcorporacion = $codcorporacion $filtroComuna ) dd
-    WHERE pc.codpartido = pp.codpartido AND pc.idcandidato = dd.idcandidato
+          AND codnivel = $nivcorpo AND codcorporacion = $codcorporacion $filtroComuna ) dd 
+    ON (pc.idcandidato = dd.idcandidato)
+    WHERE pc.codpartido = pp.codpartido
     GROUP BY pc.codpartido, pc.codcandidato
     ORDER BY votos DESC
 EOF;
-    
-    
     
     $coddivipol = str_pad($coddivcorto,9,'0');
     
