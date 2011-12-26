@@ -123,11 +123,20 @@ CBC;
     $pdf->Cell($w[0], 6, '', 'LR', 0, 'L', $fill,'',$stretch);
     $pdf->Cell($w[1], 6, 'TOTAL VOTOS', 'LR', 0, 'L', $fill,'',$stretch);
     $pdf->Cell($w[2], 6, number_format($totalVotos), 'LR', 0, 'R', $fill,'',$stretch);
-    $pdf->Cell($w[3], 6, round(($totalVotos*100)/$potencial,2) . '%', 'LR', 0, 'R', $fill,'',$stretch);             
+    $pdf->Cell($w[3], 6, round(($totalVotos*100)/$totalVotos,2) . '%', 'LR', 0, 'R', $fill,'',$stretch);             
     $pdf->Ln();
     
+    
+    
+    
     $pdf->Cell(array_sum($w), 0, '', 'T');
-
+    $pdf->Ln();
+    
+    $nota = utf8_encode("Nota: los porcentajes para los partidos y el voto en blanco están calculados sobre el TOTAL DE VOTOS VALIDOS, "
+          . "y los votos nulos y votos no marcados sobre el TOTAL DE VOTOS y con truncamiento a 2 decimales.");
+    
+    $pdf->Cell(array_sum($w), 0, $nota, 1, 1, 'C', 0, '', 1);
+    
     //Guardo el documento en el servidor
     $pdf->Output('consolidadoPartidoLista.pdf', 'D');
     unset($pdf);

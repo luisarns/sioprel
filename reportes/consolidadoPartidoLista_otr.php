@@ -74,8 +74,15 @@
     $objPHPExcel->getActiveSheet()->setCellValue('A'.$cont,'');
     $objPHPExcel->getActiveSheet()->setCellValue('B'.$cont, 'TOTAL VOTOS');
     $objPHPExcel->getActiveSheet()->setCellValue('C'.$cont, number_format($totalVotos));
-    $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont, round($totalVotos*100/$potencial,2) . '%');
+    $objPHPExcel->getActiveSheet()->setCellValue('D'.$cont, round($totalVotos*100/$totalVotos,2) . '%');
     $cont++;
+    
+    $nota = utf8_encode("Nota: los porcentajes para los partidos y el voto en blanco están calculados sobre el TOTAL DE VOTOS VALIDOS, "
+          . "y los votos nulos y votos no marcados sobre el TOTAL DE VOTOS y con truncamiento a 2 decimales.");
+    
+    $objPHPExcel->setActiveSheetIndex(0)
+            ->setCellValue('A'.$cont,$nota);
+    $objPHPExcel->getActiveSheet()->mergeCells("A$cont:D$cont");
     
     $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
     $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);

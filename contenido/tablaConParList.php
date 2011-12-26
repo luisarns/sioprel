@@ -295,10 +295,22 @@ EOF;
             <td>&nbsp;</td>
             <td><strong><?php echo 'TOTAL VOTOS' ?></strong></td>
             <td class="numero"><?php echo number_format($totalVotos)?></td>
-            <td class="numero"><?php echo round($totalVotos*100/$potencial,2) . '%' ?></td>
-        </tr>    
+            <td class="numero"><?php echo round($totalVotos*100/$totalVotos,2) . '%' ?></td>
+        </tr>
+        <tr>
+            <td colspan="4">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="4" style="font-size:12px;text-align: center">
+                Nota: los porcentajes para los partidos y el voto en blanco est&aacute;n calculados sobre el TOTAL DE VOTOS VALIDOS, y
+                los votos nulos y votos no marcados sobre el TOTAL DE VOTOS y con truncamiento a 2 decimales.
+            </td>
+        </tr>
 </table>
-
+<!--<code>
+    Nota: los porcentajes para los partidos y el voto en blanco, est&aacute;n calculados sobre el TOTAL DE VOTOS VALIDOS, y
+    los votos nulos y votos no marcados sobre el TOTAL DE VOTOS y con truncamiento a 2 decimales.
+</code>-->
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
     <tr>
         <td class="regOscuro" align="left">
