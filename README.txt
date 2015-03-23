@@ -1,3 +1,3 @@
-Autor : Ing. Luis A. Nuñez
-Email : luisarnsistemaing@gmail.com
+Autor : Ing. Luis A. NuÃ±ez
+Email : luisarns1985@gmail.com
 Cell  : Pendiente
